@@ -1,5 +1,6 @@
 set(qbluez_SRCS
     manager.cpp
+    manager_p.cpp
 )
 
 add_library(KF5QBluez ${qbluez_SRCS})
@@ -11,6 +12,7 @@ target_include_directories(KF5QBluez INTERFACE "$<INSTALL_INTERFACE:${INCLUDE_IN
 target_link_libraries(KF5QBluez
     PUBLIC
         Qt5::Core
+        Qt5::DBus
 #    PRIVATE
 )
 
@@ -38,9 +40,7 @@ install(FILES
         DESTINATION ${INCLUDE_INSTALL_DIR}/QBluez
         COMPONENT Devel)
 
-# Workaround for warning in ECMGeneratePriFile
-cmake_policy(SET CMP0053 OLD)
-
+cmake_policy(SET CMP0053 OLD) # Workaround for warning in ECMGeneratePriFile
 include(ECMGeneratePriFile)
 
 ecm_generate_pri_file(

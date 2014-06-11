@@ -10,6 +10,6 @@ macro(qbluez_executable_tests)
     endforeach(_testname)
 endmacro()
 
-#qbluez_executable_tests(
-#    anothertest
-#)
+qbluez_executable_tests(
+    managertest
+)
