@@ -13,15 +13,14 @@ ManagerPrivate::ManagerPrivate(QObject *parent)
 {
     // Keep an eye on bluez service
     QDBusServiceWatcher *serviceWatcher = new QDBusServiceWatcher(QStringLiteral("org.bluez"), QDBusConnection::systemBus(),
-                                                                  QDBusServiceWatcher::WatchForRegistration |
-                                                                  QDBusServiceWatcher::WatchForUnregistration, this);
+            QDBusServiceWatcher::WatchForRegistration | QDBusServiceWatcher::WatchForUnregistration, this);
 
-    connect(serviceWatcher, &QDBusServiceWatcher::serviceRegistered, [=]() {
+    connect(serviceWatcher, &QDBusServiceWatcher::serviceRegistered, [ = ]() {
         m_bluezRunning = true;
         qDebug("Service registered");
     });
 
-    connect(serviceWatcher, &QDBusServiceWatcher::serviceUnregistered, [=]() {
+    connect(serviceWatcher, &QDBusServiceWatcher::serviceUnregistered, [ = ]() {
         m_bluezRunning = false;
         qDebug("Service unregistered");
     });

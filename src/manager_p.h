@@ -3,7 +3,8 @@
 
 #include <QObject>
 
-namespace QBluez {
+namespace QBluez
+{
 
 class ManagerPrivate : public QObject
 {

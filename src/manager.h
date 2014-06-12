@@ -5,7 +5,8 @@
 
 #include "qbluez_export.h"
 
-namespace QBluez {
+namespace QBluez
+{
 
 class ManagerPrivate;
 
@@ -34,7 +35,7 @@ public:
 private:
     Manager();
 
-    ManagerPrivate * const d;
+    ManagerPrivate *const d;
 };
 
 } // namespace QBluez
