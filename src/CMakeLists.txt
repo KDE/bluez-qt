@@ -1,7 +1,19 @@
 set(qbluez_SRCS
     manager.cpp
     manager_p.cpp
+    adapterinfo.cpp
+    deviceinfo.cpp
 )
+
+
+set(dbusobjectmanager_xml ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.freedesktop.DBus.ObjectManager.xml)
+set_source_files_properties(${dbusobjectmanager_xml} PROPERTIES INCLUDE "qbluez_dbustypes.h")
+qt5_add_dbus_interface(qbluez_SRCS ${dbusobjectmanager_xml} dbusobjectmanager)
+qt5_add_dbus_interface(qbluez_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.freedesktop.DBus.Properties.xml dbusproperties)
+
+qt5_add_dbus_interface(qbluez_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.Adapter1.xml bluezadapter1)
+qt5_add_dbus_interface(qbluez_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.AgentManager1.xml bluezagentmanager1)
+qt5_add_dbus_interface(qbluez_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.Device1.xml bluezdevice1)
 
 add_library(KF5QBluez ${qbluez_SRCS})
 generate_export_header(KF5QBluez BASE_NAME QBluez)
@@ -26,6 +38,7 @@ ecm_generate_headers(QBluez_HEADERS
     HEADER_NAMES
         Manager
 
+    PREFIX QBluez
     REQUIRED_HEADERS QBluez_HEADERS
 )
 

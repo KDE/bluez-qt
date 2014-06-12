@@ -8,6 +8,7 @@
 namespace QBluez
 {
 
+class AdapterInfo;
 class ManagerPrivate;
 
 class QBLUEZ_EXPORT Manager : public QObject
@@ -15,7 +16,7 @@ class QBLUEZ_EXPORT Manager : public QObject
     Q_OBJECT
 
     Q_PROPERTY(Manager* self READ self)
-    Q_PROPERTY(bool isBluetoothOperational READ isBluetoothOperational)
+    Q_PROPERTY(bool operational READ isOperational NOTIFY operationalChanged)
 
 public:
     enum RegisterCapability {
@@ -25,17 +26,23 @@ public:
         NoInputNoOutput = 3
     };
 
-    virtual ~Manager();
-
     static Manager *self();
     static void release();
 
-    bool isBluetoothOperational() const;
+    bool isOperational() const;
+
+Q_SIGNALS:
+    void operationalChanged(bool operational);
+
+    void adapterAdded(AdapterInfo *adapter);
+    void adapterRemoved(AdapterInfo *adapter);
 
 private:
-    Manager();
+    explicit Manager();
+    ~Manager();
 
     ManagerPrivate *const d;
+    friend class ManagerPrivate;
 };
 
 } // namespace QBluez

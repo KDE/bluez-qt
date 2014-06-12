@@ -33,7 +33,7 @@ void Manager::release()
     instance = 0;
 }
 
-bool Manager::isBluetoothOperational() const
+bool Manager::isOperational() const
 {
-    return false;
+    return d->m_bluezRunning && d->m_initialized;
 }
