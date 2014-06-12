@@ -11,6 +11,8 @@ AdapterInfo::AdapterInfo(const QString &path, QObject *parent)
 
 AdapterInfo::~AdapterInfo()
 {
+    qDeleteAll(m_devices);
+    m_devices.clear();
     //delete m_adapter;
 }
 

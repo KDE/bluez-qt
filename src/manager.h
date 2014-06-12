@@ -8,6 +8,7 @@
 namespace QBluez
 {
 
+class DeviceInfo;
 class AdapterInfo;
 class ManagerPrivate;
 
@@ -16,6 +17,8 @@ class QBLUEZ_EXPORT Manager : public QObject
     Q_OBJECT
 
     Q_PROPERTY(Manager* self READ self)
+    Q_PROPERTY(QList<AdapterInfo *> adapters READ adapters)
+    Q_PROPERTY(QList<DeviceInfo *> devices READ devices)
     Q_PROPERTY(bool operational READ isOperational NOTIFY operationalChanged)
 
 public:
@@ -28,6 +31,9 @@ public:
 
     static Manager *self();
     static void release();
+
+    QList<AdapterInfo *> adapters() const;
+    QList<DeviceInfo *> devices() const;
 
     bool isOperational() const;
 

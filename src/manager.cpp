@@ -1,5 +1,6 @@
 #include "manager.h"
 #include "manager_p.h"
+#include "adapterinfo.h"
 
 using namespace QBluez;
 
@@ -31,6 +32,22 @@ void Manager::release()
 {
     delete instance;
     instance = 0;
+}
+
+QList<AdapterInfo *> Manager::adapters() const
+{
+    return d->m_adapters.values();
+}
+
+QList<DeviceInfo *> Manager::devices() const
+{
+    QList<DeviceInfo *> list;
+
+    Q_FOREACH (AdapterInfo *adapter, d->m_adapters.values()) {
+        list.append(adapter->devices());
+    }
+
+    return list;
 }
 
 bool Manager::isOperational() const

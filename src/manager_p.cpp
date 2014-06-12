@@ -96,7 +96,13 @@ void ManagerPrivate::clear()
     qDebug("ManagerPrivate: Clear");
 
     m_initialized = false;
+
+    qDeleteAll(m_adapters);
     m_adapters.clear();
+
+    delete m_dbusObjectManager;
+    m_dbusObjectManager = 0;
+
     emit q->operationalChanged(false);
 }
 
