@@ -37,6 +37,10 @@ public:
 
     bool isOperational() const;
 
+    void registerAgent(const QString &agentPath, RegisterCapability registerCapability);
+    void unregisterAgent(const QString &agentPath);
+    void requestDefaultAgent(const QString& agentPath);
+
 Q_SIGNALS:
     void operationalChanged(bool operational);
 

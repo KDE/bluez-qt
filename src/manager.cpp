@@ -54,3 +54,39 @@ bool Manager::isOperational() const
 {
     return d->m_bluezRunning && d->m_initialized;
 }
+
+void Manager::registerAgent(const QString &agentPath, RegisterCapability registerCapability)
+{
+    QString capability;
+
+    switch (registerCapability) {
+        case DisplayOnly:
+            capability = QStringLiteral("DisplayOnly");
+            break;
+        case DisplayYesNo:
+            capability = QStringLiteral("DisplayYesNo");
+            break;
+        case KeyboardOnly:
+            capability = QStringLiteral("KeyboardOnly");
+            break;
+        case NoInputNoOutput:
+            capability = QStringLiteral("NoInputNoOutput");
+            break;
+        default:
+            return;
+    }
+
+    QDBusObjectPath agentObjectPath(agentPath);
+    d->m_bluezAgentManager->RegisterAgent(agentObjectPath, capability);
+}
+
+void Manager::unregisterAgent(const QString &agentPath)
+{
+    d->m_bluezAgentManager->UnregisterAgent(QDBusObjectPath(agentPath));
+}
+
+void Manager::requestDefaultAgent(const QString& agentPath)
+{
+    QDBusObjectPath agentObjectPath(agentPath);
+    d->m_bluezAgentManager->RequestDefaultAgent(agentObjectPath);
+}

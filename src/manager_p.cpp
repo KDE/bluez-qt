@@ -81,6 +81,8 @@ void ManagerPrivate::initialize()
                 }
             }
 
+            Q_ASSERT(m_bluezAgentManager);
+
             qDebug("ManagerPrivate: Initialized");
 
             m_initialized = true;
@@ -102,6 +104,9 @@ void ManagerPrivate::clear()
 
     delete m_dbusObjectManager;
     m_dbusObjectManager = 0;
+
+    delete m_bluezAgentManager;
+    m_bluezAgentManager = 0;
 
     emit q->operationalChanged(false);
 }
