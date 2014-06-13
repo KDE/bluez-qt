@@ -1,6 +1,7 @@
 #include "manager_p.h"
 #include "device.h"
 #include "adapter.h"
+#include "adapter_p.h"
 
 #include <QDebug>
 #include <QtDBus/QDBusReply>
@@ -77,7 +78,7 @@ void ManagerPrivate::initialize()
                     const QString &adapterPath = it.value().value(QStringLiteral("org.bluez.Device1")).value(QStringLiteral("Adapter")).value<QDBusObjectPath>().path();
                     Adapter *adapter = m_adapters.value(adapterPath);
                     Q_ASSERT(adapter);
-                    adapter->addDevice(new Device(path, adapter, this));
+                    adapter->d->addDevice(new Device(path, adapter, this));
                 } else if (interfaces.contains(QStringLiteral("org.bluez.AgentManager1"))) {
                     m_bluezAgentManager = new BluezAgentManager(QStringLiteral("org.bluez"), path, QDBusConnection::systemBus(), this);
                 }
@@ -127,7 +128,7 @@ void ManagerPrivate::interfacesAdded(const QDBusObjectPath &objectPath, const QV
             const QString &adapterPath = it.value().value(QStringLiteral("Adapter")).value<QDBusObjectPath>().path();
             Adapter *adapter = m_adapters.value(adapterPath);
             Q_ASSERT(adapter);
-            adapter->addDevice(new Device(path, adapter, this));
+            adapter->d->addDevice(new Device(path, adapter, this));
         }
     }
 }
@@ -144,7 +145,7 @@ void ManagerPrivate::interfacesRemoved(const QDBusObjectPath &objectPath, const 
         } else if (interface == QLatin1String("org.bluez.Device1")) {
             Device *device = findDeviceByPath(path);
             if (device) {
-                device->adapter()->removeDevice(device);
+                device->adapter()->d->removeDevice(device);
                 delete device;
                 break;
             }

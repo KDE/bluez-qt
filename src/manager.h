@@ -16,6 +16,7 @@ class QBLUEZ_EXPORT Manager : public QObject
 {
     Q_OBJECT
 
+    Q_ENUMS(RegisterCapability)
     Q_PROPERTY(Manager* self READ self)
     Q_PROPERTY(QList<Adapter *> adapters READ adapters)
     Q_PROPERTY(QList<Device *> devices READ devices)
