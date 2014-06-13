@@ -1,8 +1,10 @@
 set(qbluez_SRCS
     manager.cpp
     manager_p.cpp
-    adapterinfo.cpp
-    deviceinfo.cpp
+    adapter.cpp
+    adapter_p.cpp
+    device.cpp
+    device_p.cpp
 )
 
 
@@ -37,6 +39,8 @@ set_target_properties(KF5QBluez
 ecm_generate_headers(QBluez_HEADERS
     HEADER_NAMES
         Manager
+        Adapter
+        Device
 
     PREFIX QBluez
     REQUIRED_HEADERS QBluez_HEADERS

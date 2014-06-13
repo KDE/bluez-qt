@@ -14,7 +14,7 @@ namespace QBluez
 typedef org::freedesktop::DBus::ObjectManager DBusObjectManager;
 typedef org::bluez::AgentManager1 BluezAgentManager;
 
-class AdapterInfo;
+class Adapter;
 
 class ManagerPrivate : public QObject
 {
@@ -34,7 +34,7 @@ public:
     DBusObjectManager *m_dbusObjectManager;
     BluezAgentManager *m_bluezAgentManager;
 
-    QHash<QString, AdapterInfo *> m_adapters;
+    QHash<QString, Adapter *> m_adapters;
 
     bool m_bluezRunning;
     bool m_initialized;

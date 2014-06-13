@@ -1,6 +1,6 @@
 #include "manager_p.h"
-#include "deviceinfo.h"
-#include "adapterinfo.h"
+#include "device.h"
+#include "adapter.h"
 
 #include <QDebug>
 #include <QtDBus/QDBusReply>
@@ -72,10 +72,10 @@ void ManagerPrivate::initialize()
                 const QVariantMapMap &interfaces = it.value();
 
                 if (interfaces.contains(QStringLiteral("org.bluez.Adapter1"))) {
-                    m_adapters.insert(path, new AdapterInfo(path));
+                    m_adapters.insert(path, new Adapter(path));
                 } else if (interfaces.contains(QStringLiteral("org.bluez.Device1"))) {
                     const QString &adapterPath = it.value().value(QStringLiteral("org.bluez.Device1")).value(QStringLiteral("Adapter")).value<QDBusObjectPath>().path();
-                    m_adapters[adapterPath]->addDevice(new DeviceInfo(path));
+                    m_adapters[adapterPath]->addDevice(new Device(path));
                 } else if (interfaces.contains(QStringLiteral("org.bluez.AgentManager1"))) {
                     m_bluezAgentManager = new BluezAgentManager(QStringLiteral("org.bluez"), path, QDBusConnection::systemBus(), this);
                 }
@@ -118,12 +118,12 @@ void ManagerPrivate::interfacesAdded(const QDBusObjectPath &objectPath, const QV
 
     for (it = interfaces.constBegin(); it != interfaces.constEnd(); ++it) {
         if (it.key() == QLatin1String("org.bluez.Adapter1")) {
-            AdapterInfo *adapter = new AdapterInfo(object, this);
+            Adapter *adapter = new Adapter(object, this);
             m_adapters.insert(object, adapter);
             emit q->adapterAdded(adapter);
         } else if (it.key() == QLatin1String("org.bluez.Device1")) {
             const QString &adapterPath = it.value().value(QStringLiteral("Adapter")).value<QDBusObjectPath>().path();
-            m_adapters[adapterPath]->addDevice(new DeviceInfo(object));
+            m_adapters[adapterPath]->addDevice(new Device(object));
         }
     }
 }
@@ -134,14 +134,14 @@ void ManagerPrivate::interfacesRemoved(const QDBusObjectPath &objectPath, const 
 
     Q_FOREACH (const QString &interface, interfaces) {
         if (interface == QLatin1String("org.bluez.Adapter1")) {
-            AdapterInfo *adapter = m_adapters.take(object);
+            Adapter *adapter = m_adapters.take(object);
             Q_ASSERT(adapter);
 
             emit q->adapterRemoved(adapter);
             delete adapter;
         } else if (interface == QLatin1String("org.bluez.Device1")) {
-            Q_FOREACH (AdapterInfo *adapter, m_adapters.values()) {
-                Q_FOREACH (DeviceInfo *device, adapter->devices()) {
+            Q_FOREACH (Adapter *adapter, m_adapters.values()) {
+                Q_FOREACH (Device *device, adapter->devices()) {
                     if (device->path() == object) {
                         adapter->removeDevice(device);
                         delete device;

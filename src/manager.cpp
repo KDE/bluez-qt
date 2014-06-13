@@ -1,6 +1,6 @@
 #include "manager.h"
 #include "manager_p.h"
-#include "adapterinfo.h"
+#include "adapter.h"
 
 using namespace QBluez;
 
@@ -34,16 +34,16 @@ void Manager::release()
     instance = 0;
 }
 
-QList<AdapterInfo *> Manager::adapters() const
+QList<Adapter *> Manager::adapters() const
 {
     return d->m_adapters.values();
 }
 
-QList<DeviceInfo *> Manager::devices() const
+QList<Device *> Manager::devices() const
 {
-    QList<DeviceInfo *> list;
+    QList<Device *> list;
 
-    Q_FOREACH (AdapterInfo *adapter, d->m_adapters.values()) {
+    Q_FOREACH (Adapter *adapter, d->m_adapters.values()) {
         list.append(adapter->devices());
     }
 
@@ -60,20 +60,20 @@ void Manager::registerAgent(const QString &agentPath, RegisterCapability registe
     QString capability;
 
     switch (registerCapability) {
-        case DisplayOnly:
-            capability = QStringLiteral("DisplayOnly");
-            break;
-        case DisplayYesNo:
-            capability = QStringLiteral("DisplayYesNo");
-            break;
-        case KeyboardOnly:
-            capability = QStringLiteral("KeyboardOnly");
-            break;
-        case NoInputNoOutput:
-            capability = QStringLiteral("NoInputNoOutput");
-            break;
-        default:
-            return;
+    case DisplayOnly:
+        capability = QStringLiteral("DisplayOnly");
+        break;
+    case DisplayYesNo:
+        capability = QStringLiteral("DisplayYesNo");
+        break;
+    case KeyboardOnly:
+        capability = QStringLiteral("KeyboardOnly");
+        break;
+    case NoInputNoOutput:
+        capability = QStringLiteral("NoInputNoOutput");
+        break;
+    default:
+        return;
     }
 
     QDBusObjectPath agentObjectPath(agentPath);
@@ -85,7 +85,7 @@ void Manager::unregisterAgent(const QString &agentPath)
     d->m_bluezAgentManager->UnregisterAgent(QDBusObjectPath(agentPath));
 }
 
-void Manager::requestDefaultAgent(const QString& agentPath)
+void Manager::requestDefaultAgent(const QString &agentPath)
 {
     QDBusObjectPath agentObjectPath(agentPath);
     d->m_bluezAgentManager->RequestDefaultAgent(agentObjectPath);
