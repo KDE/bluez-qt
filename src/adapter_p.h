@@ -17,7 +17,7 @@ public:
     AdapterPrivate(Adapter *parent);
 
     Adapter *q;
-    QString m_path;
+    QString m_address;
     QList<Device *> m_devices;
 };
 

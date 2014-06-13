@@ -6,5 +6,6 @@ using namespace QBluez;
 DevicePrivate::DevicePrivate(Device *parent)
     : QObject(parent)
     , q(parent)
+    , m_adapter(0)
 {
 }

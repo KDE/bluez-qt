@@ -23,7 +23,7 @@ public:
     bool isLoaded() const;
     LoadAdapterJob *load() const;
 
-    QString path() const;
+    QString address() const;
 
     QList<Device *> devices() const;
 
@@ -32,7 +32,7 @@ Q_SIGNALS:
     void deviceRemoved(Device *device);
 
 private:
-    Adapter(const QString &path, QObject *parent = 0);
+    Adapter(const QString &address, QObject *parent);
 
     void addDevice(Device *device);
     void removeDevice(Device *device);

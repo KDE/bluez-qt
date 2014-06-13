@@ -3,11 +3,12 @@
 
 using namespace QBluez;
 
-Device::Device(const QString &path, QObject *parent)
+Device::Device(const QString &path, Adapter *adapter, QObject *parent)
     : QObject(parent)
     , d(new DevicePrivate(this))
 {
-    d->m_path = path;
+    d->m_address = path;
+    d->m_adapter = adapter;
 }
 
 Device::~Device()
@@ -25,7 +26,12 @@ LoadDeviceJob *Device::load() const
     return 0;
 }
 
-QString Device::path() const
+QString Device::address() const
 {
-    return d->m_path;
+    return d->m_address;
+}
+
+Adapter *Device::adapter() const
+{
+    return d->m_adapter;
 }

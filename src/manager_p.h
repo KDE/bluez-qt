@@ -26,9 +26,11 @@ public:
     void initialize();
     void clear();
 
-//public Q_SLOTS:
+    // slots
     void interfacesAdded(const QDBusObjectPath &objectPath, const QVariantMapMap &interfaces);
     void interfacesRemoved(const QDBusObjectPath &objectPath, const QStringList &interfaces);
+
+    Device *findDeviceByPath(const QString &path) const;
 
     Manager *q;
     DBusObjectManager *m_dbusObjectManager;

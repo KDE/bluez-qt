@@ -22,10 +22,11 @@ public:
     bool isLoaded() const;
     LoadDeviceJob *load() const;
 
-    QString path() const;
+    QString address() const;
+    Adapter *adapter() const;
 
 private:
-    Device(const QString &path, QObject *parent = 0);
+    Device(const QString &address, Adapter *adapter, QObject *parent);
 
     DevicePrivate *const d;
 

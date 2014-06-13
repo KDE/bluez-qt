@@ -72,10 +72,12 @@ void ManagerPrivate::initialize()
                 const QVariantMapMap &interfaces = it.value();
 
                 if (interfaces.contains(QStringLiteral("org.bluez.Adapter1"))) {
-                    m_adapters.insert(path, new Adapter(path));
+                    m_adapters.insert(path, new Adapter(path, this));
                 } else if (interfaces.contains(QStringLiteral("org.bluez.Device1"))) {
                     const QString &adapterPath = it.value().value(QStringLiteral("org.bluez.Device1")).value(QStringLiteral("Adapter")).value<QDBusObjectPath>().path();
-                    m_adapters[adapterPath]->addDevice(new Device(path));
+                    Adapter *adapter = m_adapters.value(adapterPath);
+                    Q_ASSERT(adapter);
+                    adapter->addDevice(new Device(path, adapter, this));
                 } else if (interfaces.contains(QStringLiteral("org.bluez.AgentManager1"))) {
                     m_bluezAgentManager = new BluezAgentManager(QStringLiteral("org.bluez"), path, QDBusConnection::systemBus(), this);
                 }
@@ -113,42 +115,52 @@ void ManagerPrivate::clear()
 
 void ManagerPrivate::interfacesAdded(const QDBusObjectPath &objectPath, const QVariantMapMap &interfaces)
 {
-    const QString &object = objectPath.path();
+    const QString &path = objectPath.path();
     QVariantMapMap::const_iterator it;
 
     for (it = interfaces.constBegin(); it != interfaces.constEnd(); ++it) {
         if (it.key() == QLatin1String("org.bluez.Adapter1")) {
-            Adapter *adapter = new Adapter(object, this);
-            m_adapters.insert(object, adapter);
+            Adapter *adapter = new Adapter(path, this);
+            m_adapters.insert(path, adapter);
             emit q->adapterAdded(adapter);
         } else if (it.key() == QLatin1String("org.bluez.Device1")) {
             const QString &adapterPath = it.value().value(QStringLiteral("Adapter")).value<QDBusObjectPath>().path();
-            m_adapters[adapterPath]->addDevice(new Device(object));
+            Adapter *adapter = m_adapters.value(adapterPath);
+            Q_ASSERT(adapter);
+            adapter->addDevice(new Device(path, adapter, this));
         }
     }
 }
 
 void ManagerPrivate::interfacesRemoved(const QDBusObjectPath &objectPath, const QStringList &interfaces)
 {
-    const QString &object = objectPath.path();
+    const QString &path = objectPath.path();
 
     Q_FOREACH (const QString &interface, interfaces) {
         if (interface == QLatin1String("org.bluez.Adapter1")) {
-            Adapter *adapter = m_adapters.take(object);
-            Q_ASSERT(adapter);
-
+            Adapter *adapter = m_adapters.take(path);
             emit q->adapterRemoved(adapter);
             delete adapter;
         } else if (interface == QLatin1String("org.bluez.Device1")) {
-            Q_FOREACH (Adapter *adapter, m_adapters.values()) {
-                Q_FOREACH (Device *device, adapter->devices()) {
-                    if (device->path() == object) {
-                        adapter->removeDevice(device);
-                        delete device;
-                        break;
-                    }
-                }
+            Device *device = findDeviceByPath(path);
+            if (device) {
+                device->adapter()->removeDevice(device);
+                delete device;
+                break;
             }
         }
     }
+}
+
+Device *ManagerPrivate::findDeviceByPath(const QString &path) const
+{
+    // TODO: Devices also should be kept in QHash for faster lookup
+    Q_FOREACH (Adapter *adapter, m_adapters.values()) {
+        Q_FOREACH (Device *device, adapter->devices()) {
+            if (device->address() == path) {
+                return device;
+            }
+        }
+    }
+    return 0;
 }

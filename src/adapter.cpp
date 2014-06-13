@@ -7,7 +7,7 @@ Adapter::Adapter(const QString &path, QObject *parent)
     : QObject(parent)
     , d(new AdapterPrivate(this))
 {
-    d->m_path = path;
+    d->m_address = path;
 }
 
 Adapter::~Adapter()
@@ -25,9 +25,9 @@ LoadAdapterJob *Adapter::load() const
     return 0;
 }
 
-QString Adapter::path() const
+QString Adapter::address() const
 {
-    return d->m_path;
+    return d->m_address;
 }
 
 QList<Device *> Adapter::devices() const

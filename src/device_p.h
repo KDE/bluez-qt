@@ -7,6 +7,7 @@ namespace QBluez
 {
 
 class Device;
+class Adapter;
 
 class DevicePrivate : public QObject
 {
@@ -16,7 +17,8 @@ public:
     DevicePrivate(Device *parent);
 
     Device *q;
-    QString m_path;
+    Adapter *m_adapter;
+    QString m_address;
 };
 
 } // namespace QBluez
