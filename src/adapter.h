@@ -21,17 +21,17 @@ class QBLUEZ_EXPORT Adapter : public QObject
     Q_OBJECT
 
     Q_PROPERTY(QString address READ address)
-    Q_PROPERTY(QString name READ name)
-    Q_PROPERTY(QString alias READ alias WRITE setAlias)
-    Q_PROPERTY(quint32 adapterClass READ adapterClass)
-    Q_PROPERTY(bool powered READ isPowered WRITE setPowered)
-    Q_PROPERTY(bool discoverable READ isDiscoverable WRITE setDiscoverable)
-    Q_PROPERTY(quint32 discoverableTimeout READ discoverableTimeout WRITE setDiscoverableTimeout)
-    Q_PROPERTY(bool pairable READ isPairable WRITE setPairable)
-    Q_PROPERTY(quint32 pairableTimeout READ pairableTimeout WRITE setPairableTimeout)
-    Q_PROPERTY(bool discovering READ isDiscovering)
-    Q_PROPERTY(QStringList UUIDs READ UUIDs)
-    Q_PROPERTY(QString modalias READ modalias)
+    Q_PROPERTY(QString name READ name NOTIFY nameChanged)
+    Q_PROPERTY(QString alias READ alias WRITE setAlias NOTIFY aliasChanged)
+    Q_PROPERTY(quint32 adapterClass READ adapterClass NOTIFY adapterClassChanged)
+    Q_PROPERTY(bool powered READ isPowered WRITE setPowered NOTIFY poweredChanged)
+    Q_PROPERTY(bool discoverable READ isDiscoverable WRITE setDiscoverable NOTIFY discoverableChanged)
+    Q_PROPERTY(quint32 discoverableTimeout READ discoverableTimeout WRITE setDiscoverableTimeout NOTIFY discoverableTimeoutChanged)
+    Q_PROPERTY(bool pairable READ isPairable WRITE setPairable NOTIFY pairableChanged)
+    Q_PROPERTY(quint32 pairableTimeout READ pairableTimeout WRITE setPairableTimeout NOTIFY pairableTimeoutChanged)
+    Q_PROPERTY(bool discovering READ isDiscovering NOTIFY discoveringChanged)
+    Q_PROPERTY(QStringList UUIDs READ UUIDs NOTIFY UUIDsChanged)
+    Q_PROPERTY(QString modalias READ modalias NOTIFY modaliasChanged)
     Q_PROPERTY(QList<Device *> devices READ devices)
 
 public:

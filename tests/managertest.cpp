@@ -23,12 +23,12 @@ int main(int argc, char *argv[])
         }
 
         QBluez::Adapter *adapter = manager->adapters().first();
-        QBluez::LoadAdapterJob *job = adapter->load();
 
-        job->start();
+        QBluez::LoadAdapterJob *loadJob = adapter->load();
+        loadJob->start();
 
-        QObject::connect(job, &QBluez::Job::result, [ = ](QBluez::Job *) {
-            if (job->error() != QBluez::LoadAdapterJob::NoError) {
+        QObject::connect(loadJob, &QBluez::Job::result, [ = ]() {
+            if (loadJob->error() != QBluez::LoadAdapterJob::NoError) {
                 qDebug() << "Error loading adapter";
                 return;
             }
@@ -51,6 +51,8 @@ int main(int argc, char *argv[])
             QObject::connect(adapter, &QBluez::Adapter::deviceFound, [ = ](QBluez::Device *device) {
                 qDebug() << "Found device:";
                 qDebug() << "\t Path:" << device->address();
+
+                adapter->removeDevice(device);
             });
 
             QBluez::SetPropertyJob *powerOnJob = adapter->setPowered(true);
