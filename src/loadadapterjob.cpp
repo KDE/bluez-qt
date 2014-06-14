@@ -21,6 +21,8 @@ void LoadAdapterJob::doStart()
         return;
     }
 
+    dd->initProperties();
+
     const QDBusPendingReply<QVariantMap> &call = dd->m_dbusProperties->GetAll(QStringLiteral("org.bluez.Adapter1"));
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, this);
 

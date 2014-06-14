@@ -6,6 +6,7 @@ using namespace QBluez;
 AdapterPrivate::AdapterPrivate(const QString &path, Adapter *parent)
     : QObject(parent)
     , q(parent)
+    , m_dbusProperties(0)
     , m_loaded(false)
     , m_path(path)
     , m_adapterClass(0)
@@ -17,16 +18,6 @@ AdapterPrivate::AdapterPrivate(const QString &path, Adapter *parent)
 {
     m_bluezAdapter = new BluezAdapter(QStringLiteral("org.bluez"), m_path,
                                       QDBusConnection::systemBus(), this);
-    m_dbusProperties = new DBusProperties(QStringLiteral("org.bluez"), m_path,
-                                          QDBusConnection::systemBus(), this);
-
-    // QueuedConnection is important here to be able to perform actions, that depend on
-    // a previously set property, directly from slot connected to propertyChanged signal.
-    // Eg. Powering on adapter and then starting discovery.
-    //  * with DirectConnection the StartDiscovery would fail because the adapter is still
-    //    powered off when the PropertiesChanged signal is emitted ...
-    connect(m_dbusProperties, &DBusProperties::PropertiesChanged,
-            this, &AdapterPrivate::propertiesChanged, Qt::QueuedConnection);
 }
 
 void AdapterPrivate::addDevice(Device *device)
@@ -39,6 +30,20 @@ void AdapterPrivate::removeDevice(Device *device)
 {
     m_devices.removeOne(device);
     Q_EMIT q->deviceRemoved(device);
+}
+
+void AdapterPrivate::initProperties()
+{
+    m_dbusProperties = new DBusProperties(QStringLiteral("org.bluez"), m_path,
+                                          QDBusConnection::systemBus(), this);
+
+    // QueuedConnection is important here to be able to perform actions, that depend on
+    // a previously set property, directly from slot connected to propertyChanged signal.
+    // Eg. Powering on adapter and then starting discovery.
+    //  * with DirectConnection the StartDiscovery would fail because the adapter is still
+    //    powered off when the PropertiesChanged signal is emitted ...
+    connect(m_dbusProperties, &DBusProperties::PropertiesChanged,
+            this, &AdapterPrivate::propertiesChanged, Qt::QueuedConnection);
 }
 
 QDBusPendingReply<> AdapterPrivate::setDBusProperty(const QString &name, const QVariant &value)
