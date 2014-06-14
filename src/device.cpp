@@ -5,10 +5,8 @@ using namespace QBluez;
 
 Device::Device(const QString &path, Adapter *adapter, QObject *parent)
     : QObject(parent)
-    , d(new DevicePrivate(this))
+    , d(new DevicePrivate(path, adapter, this))
 {
-    d->m_address = path;
-    d->m_adapter = adapter;
 }
 
 Device::~Device()

@@ -14,10 +14,12 @@ class DevicePrivate : public QObject
     Q_OBJECT
 
 public:
-    DevicePrivate(Device *parent);
+    DevicePrivate(const QString &path, Adapter *adapter, Device *parent);
 
     Device *q;
     Adapter *m_adapter;
+    QString m_path;
+
     QString m_address;
 };
 

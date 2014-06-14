@@ -32,6 +32,7 @@ private:
 
     friend class DevicePrivate;
     friend class ManagerPrivate;
+    friend class Adapter;
 };
 
 } // namespace QBluez

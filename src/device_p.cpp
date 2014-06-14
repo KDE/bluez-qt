@@ -3,9 +3,10 @@
 
 using namespace QBluez;
 
-DevicePrivate::DevicePrivate(Device *parent)
+DevicePrivate::DevicePrivate(const QString &path, Adapter *adapter, Device *parent)
     : QObject(parent)
     , q(parent)
-    , m_adapter(0)
+    , m_adapter(adapter)
+    , m_path(path)
 {
 }

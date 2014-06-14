@@ -1,5 +1,7 @@
 #include "adapter.h"
 #include "adapter_p.h"
+#include "device.h"
+#include "device_p.h"
 
 using namespace QBluez;
 
@@ -126,8 +128,7 @@ QList<Device *> Adapter::devices() const
 
 void Adapter::removeDevice(Device *device)
 {
-    // FIXME !
-    d->removeDevice(device);
+    d->m_bluezAdapter->RemoveDevice(QDBusObjectPath(device->d->m_path));
 }
 
 void Adapter::startDiscovery()
