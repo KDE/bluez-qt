@@ -32,13 +32,13 @@ AdapterPrivate::AdapterPrivate(const QString &path, Adapter *parent)
 void AdapterPrivate::addDevice(Device *device)
 {
     m_devices.append(device);
-    emit q->deviceFound(device);
+    Q_EMIT q->deviceFound(device);
 }
 
 void AdapterPrivate::removeDevice(Device *device)
 {
     m_devices.removeOne(device);
-    emit q->deviceRemoved(device);
+    Q_EMIT q->deviceRemoved(device);
 }
 
 QDBusPendingReply<> AdapterPrivate::setDBusProperty(const QString &name, const QVariant &value)

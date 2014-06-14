@@ -87,7 +87,7 @@ void ManagerPrivate::initialize()
             Q_ASSERT(m_bluezAgentManager);
 
             m_initialized = true;
-            emit q->operationalChanged(true);
+            Q_EMIT q->operationalChanged(true);
         }
 
         delete watcher;
@@ -107,7 +107,7 @@ void ManagerPrivate::clear()
     delete m_bluezAgentManager;
     m_bluezAgentManager = 0;
 
-    emit q->operationalChanged(false);
+    Q_EMIT q->operationalChanged(false);
 }
 
 void ManagerPrivate::interfacesAdded(const QDBusObjectPath &objectPath, const QVariantMapMap &interfaces)
@@ -119,7 +119,7 @@ void ManagerPrivate::interfacesAdded(const QDBusObjectPath &objectPath, const QV
         if (it.key() == QLatin1String("org.bluez.Adapter1")) {
             Adapter *adapter = new Adapter(path, this);
             m_adapters.insert(path, adapter);
-            emit q->adapterAdded(adapter);
+            Q_EMIT q->adapterAdded(adapter);
         } else if (it.key() == QLatin1String("org.bluez.Device1")) {
             const QString &adapterPath = it.value().value(QStringLiteral("Adapter")).value<QDBusObjectPath>().path();
             Adapter *adapter = m_adapters.value(adapterPath);
@@ -136,7 +136,7 @@ void ManagerPrivate::interfacesRemoved(const QDBusObjectPath &objectPath, const 
     Q_FOREACH (const QString &interface, interfaces) {
         if (interface == QLatin1String("org.bluez.Adapter1")) {
             Adapter *adapter = m_adapters.take(path);
-            emit q->adapterRemoved(adapter);
+            Q_EMIT q->adapterRemoved(adapter);
             delete adapter;
         } else if (interface == QLatin1String("org.bluez.Device1")) {
             Device *device = findDeviceByPath(path);
