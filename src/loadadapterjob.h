@@ -8,6 +8,7 @@
 namespace QBluez
 {
 
+class Adapter;
 class AdapterPrivate;
 
 class QBLUEZ_EXPORT LoadAdapterJob : public Job
@@ -16,6 +17,8 @@ class QBLUEZ_EXPORT LoadAdapterJob : public Job
 
 public:
     LoadAdapterJob(AdapterPrivate *dd, QObject *parent = 0);
+
+    Adapter *adapter() const;
 
 Q_SIGNALS:
     void result(Job *job);

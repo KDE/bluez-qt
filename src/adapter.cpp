@@ -39,10 +39,9 @@ QString Adapter::alias() const
     return d->m_alias;
 }
 
-void Adapter::setAlias(const QString &alias)
+SetPropertyJob *Adapter::setAlias(const QString &alias)
 {
-    d->setDBusProperty(QStringLiteral("Alias"), alias);
-    d->m_alias = alias;
+    return new SetPropertyJob(QStringLiteral("Alias"), alias, d);
 }
 
 quint32 Adapter::adapterClass() const
@@ -50,10 +49,9 @@ quint32 Adapter::adapterClass() const
     return d->m_adapterClass;
 }
 
-void Adapter::setAdapterClass(quint32 adapterClass)
+SetPropertyJob *Adapter::setAdapterClass(quint32 adapterClass)
 {
-    d->setDBusProperty(QStringLiteral("Class"), adapterClass);
-    d->m_adapterClass = adapterClass;
+    return new SetPropertyJob(QStringLiteral("Class"), adapterClass, d);
 }
 
 bool Adapter::isPowered() const
@@ -61,10 +59,9 @@ bool Adapter::isPowered() const
     return d->m_powered;
 }
 
-void Adapter::setPowered(bool powered)
+SetPropertyJob *Adapter::setPowered(bool powered)
 {
-    d->setDBusProperty(QStringLiteral("Powered"), powered);
-    d->m_powered = powered;
+    return new SetPropertyJob(QStringLiteral("Powered"), powered, d);
 }
 
 bool Adapter::isDiscoverable() const
@@ -72,10 +69,9 @@ bool Adapter::isDiscoverable() const
     return d->m_discoverable;
 }
 
-void Adapter::setDiscoverable(bool discoverable)
+SetPropertyJob *Adapter::setDiscoverable(bool discoverable)
 {
-    d->setDBusProperty(QStringLiteral("Discoverable"), discoverable);
-    d->m_discoverable = discoverable;
+    return new SetPropertyJob(QStringLiteral("Discoverable"), discoverable, d);
 }
 
 quint32 Adapter::discoverableTimeout() const
@@ -83,10 +79,9 @@ quint32 Adapter::discoverableTimeout() const
     return d->m_discoverableTimeout;
 }
 
-void Adapter::setDiscoverableTimeout(quint32 timeout)
+SetPropertyJob *Adapter::setDiscoverableTimeout(quint32 timeout)
 {
-    d->setDBusProperty(QStringLiteral("DiscoverableTimeout"), timeout);
-    d->m_discoverableTimeout = timeout;
+    return new SetPropertyJob(QStringLiteral("DiscoverableTimeout"), timeout, d);
 }
 
 bool Adapter::isPairable() const
@@ -94,10 +89,9 @@ bool Adapter::isPairable() const
     return d->m_pairable;
 }
 
-void Adapter::setPairable(bool pairable)
+SetPropertyJob *Adapter::setPairable(bool pairable)
 {
-    d->setDBusProperty(QStringLiteral("Pairable"), pairable);
-    d->m_pairable = pairable;
+    return new SetPropertyJob(QStringLiteral("Pairable"), pairable, d);
 }
 
 quint32 Adapter::pairableTimeout() const
@@ -105,21 +99,14 @@ quint32 Adapter::pairableTimeout() const
     return d->m_pairableTimeout;
 }
 
-void Adapter::setPairableTimeout(quint32 timeout)
+SetPropertyJob *Adapter::setPairableTimeout(quint32 timeout)
 {
-    d->setDBusProperty(QStringLiteral("PairableTimeout"), timeout);
-    d->m_pairableTimeout = timeout;
+    return new SetPropertyJob(QStringLiteral("PairableTimeout"), timeout, d);
 }
 
 bool Adapter::isDiscovering()
 {
     return d->m_discovering;
-}
-
-void Adapter::setDiscovering(bool discovering)
-{
-    d->setDBusProperty(QStringLiteral("Discovering"), discovering);
-    d->m_discovering = discovering;
 }
 
 QStringList Adapter::UUIDs() const
@@ -135,4 +122,20 @@ QString Adapter::modalias() const
 QList<Device *> Adapter::devices() const
 {
     return d->m_devices;
+}
+
+void Adapter::removeDevice(Device *device)
+{
+    // FIXME !
+    d->removeDevice(device);
+}
+
+void Adapter::startDiscovery()
+{
+    d->m_bluezAdapter->StartDiscovery();
+}
+
+void Adapter::stopDiscovery()
+{
+    d->m_bluezAdapter->StopDiscovery();
 }

@@ -6,6 +6,7 @@
 #include <QStringList>
 
 #include <QBluez/LoadAdapterJob>
+#include <QBluez/SetPropertyJob>
 
 #include "qbluez_export.h"
 
@@ -44,28 +45,27 @@ public:
     QString name() const;
 
     QString alias() const;
-    void setAlias(const QString &alias);
+    SetPropertyJob *setAlias(const QString &alias);
 
     quint32 adapterClass() const;
-    void setAdapterClass(quint32 adapterClass);
+    SetPropertyJob *setAdapterClass(quint32 adapterClass);
 
     bool isPowered() const;
-    void setPowered(bool powered);
+    SetPropertyJob *setPowered(bool powered);
 
     bool isDiscoverable() const;
-    void setDiscoverable(bool discoverable);
+    SetPropertyJob *setDiscoverable(bool discoverable);
 
     quint32 discoverableTimeout() const;
-    void setDiscoverableTimeout(quint32 timeout);
+    SetPropertyJob *setDiscoverableTimeout(quint32 timeout);
 
     bool isPairable() const;
-    void setPairable(bool pairable);
+    SetPropertyJob *setPairable(bool pairable);
 
     quint32 pairableTimeout() const;
-    void setPairableTimeout(quint32 timeout);
+    SetPropertyJob *setPairableTimeout(quint32 timeout);
 
     bool isDiscovering();
-    void setDiscovering(bool discovering);
 
     QStringList UUIDs() const;
 
@@ -73,9 +73,27 @@ public:
 
     QList<Device *> devices() const;
 
+    void removeDevice(Device *device);
+
+    void startDiscovery();
+    void stopDiscovery();
+
 Q_SIGNALS:
+    void nameChanged(const QString &name);
+    void aliasChanged(const QString &name);
+    void adapterClassChanged(quint32 adapterClass);
+    void poweredChanged(bool powered);
+    void discoverableChanged(bool discoverable);
+    void discoverableTimeoutChanged(quint32 timeout);
+    void pairableChanged(bool pairable);
+    void pairableTimeoutChanged(quint32 timeout);
+    void discoveringChanged(bool discovering);
+    void UUIDsChanged(const QStringList &UUIDs);
+    void modaliasChanged(const QString &modalias);
+
     void deviceFound(Device *device);
     void deviceRemoved(Device *device);
+    void deviceChanged(Device *device);
 
 private:
     Adapter(const QString &address, QObject *parent);

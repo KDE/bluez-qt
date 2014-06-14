@@ -9,6 +9,11 @@ LoadAdapterJob::LoadAdapterJob(AdapterPrivate *dd, QObject *parent)
 {
 }
 
+Adapter *LoadAdapterJob::adapter() const
+{
+    return dd->q;
+}
+
 void LoadAdapterJob::doStart()
 {
     if (dd->m_loaded) {

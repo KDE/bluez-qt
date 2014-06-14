@@ -4,10 +4,10 @@
 #include "adapter_p.h"
 
 #include <QDebug>
-#include <QtDBus/QDBusReply>
-#include <QtDBus/QDBusConnection>
-#include <QtDBus/QDBusConnectionInterface>
-#include <QtDBus/QDBusServiceWatcher>
+#include <QDBusReply>
+#include <QDBusConnection>
+#include <QDBusConnectionInterface>
+#include <QDBusServiceWatcher>
 
 using namespace QBluez;
 
@@ -86,8 +86,6 @@ void ManagerPrivate::initialize()
 
             Q_ASSERT(m_bluezAgentManager);
 
-            qDebug("ManagerPrivate: Initialized");
-
             m_initialized = true;
             emit q->operationalChanged(true);
         }
@@ -98,8 +96,6 @@ void ManagerPrivate::initialize()
 
 void ManagerPrivate::clear()
 {
-    qDebug("ManagerPrivate: Clear");
-
     m_initialized = false;
 
     qDeleteAll(m_adapters);

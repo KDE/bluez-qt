@@ -1,8 +1,10 @@
 #include <QDebug>
+#include <QTimer>
 #include <QCoreApplication>
 
 #include <QBluez/Manager>
 #include <QBluez/Adapter>
+#include <QBluez/Device>
 
 int main(int argc, char *argv[])
 {
@@ -45,6 +47,32 @@ int main(int argc, char *argv[])
             qDebug() << "\t UUIDs:" << adapter->UUIDs();
             qDebug() << "\t Modalias:" << adapter->modalias();
             qDebug() << "\t Devices:" << adapter->devices().count();
+
+            QObject::connect(adapter, &QBluez::Adapter::deviceFound, [ = ](QBluez::Device *device) {
+                qDebug() << "Found device:";
+                qDebug() << "\t Path:" << device->address();
+            });
+
+            QBluez::SetPropertyJob *powerOnJob = adapter->setPowered(true);
+            powerOnJob->start();
+
+            QObject::connect(powerOnJob, &QBluez::Job::result, [ = ]() {
+                qDebug() << "Starting discovery...";
+                adapter->startDiscovery();
+
+                QTimer *timer = new QTimer();
+                timer->setSingleShot(true);
+                timer->start(10 * 1000);
+
+                QObject::connect(timer, &QTimer::timeout, [ = ]() {
+                    qDebug() << "Stopping discovery...";
+                    adapter->stopDiscovery();
+                });
+            });
+
+            QObject::connect(adapter, &QBluez::Adapter::discoveringChanged, [ = ](bool discovering) {
+                qDebug() << (discovering ? "Discovery STARTED" : "Discovery STOPPED");
+            });
         });
     });
 

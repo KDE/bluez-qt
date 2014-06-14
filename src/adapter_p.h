@@ -26,7 +26,9 @@ public:
     void addDevice(Device *device);
     void removeDevice(Device *device);
 
-    void setDBusProperty(const QString &name, const QVariant &value);
+    QDBusPendingReply<> setDBusProperty(const QString &name, const QVariant &value);
+
+    void propertiesChanged(const QString &interface, const QVariantMap &changed, const QStringList &invalidated);
 
     Adapter *q;
     BluezAdapter *m_bluezAdapter;
