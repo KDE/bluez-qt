@@ -16,17 +16,97 @@ Device::~Device()
 
 bool Device::isLoaded() const
 {
-    return false;
+    return d->m_loaded;
 }
 
-LoadDeviceJob *Device::load() const
+LoadDeviceJob *Device::load()
 {
-    return 0;
+    return new LoadDeviceJob(d, this);
 }
 
 QString Device::address() const
 {
     return d->m_address;
+}
+
+QString Device::name() const
+{
+    return d->m_name;
+}
+
+QString Device::alias() const
+{
+    return d->m_alias;
+}
+
+SetPropertyJob *Device::setAlias(const QString &alias)
+{
+    return new SetPropertyJob(QStringLiteral("Alias"), alias, d);
+}
+
+quint32 Device::deviceClass() const
+{
+    return d->m_deviceClass;
+}
+
+quint16 Device::appearance() const
+{
+    return d->m_appearance;
+}
+
+QString Device::icon() const
+{
+    return d->m_icon;
+}
+
+bool Device::isPaired() const
+{
+    return d->m_paired;
+}
+
+bool Device::isTrusted() const
+{
+    return d->m_trusted;
+}
+
+SetPropertyJob *Device::setTrusted(bool trusted)
+{
+    return new SetPropertyJob(QStringLiteral("Trusted"), trusted, d);
+}
+
+bool Device::isBlocked() const
+{
+    return d->m_blocked;
+}
+
+SetPropertyJob *Device::setBlocked(bool blocked)
+{
+    return new SetPropertyJob(QStringLiteral("Blocked"), blocked, d);
+}
+
+bool Device::legacyPairing() const
+{
+    return d->m_legacyPairing;
+}
+
+qint16 Device::rssi() const
+{
+    return d->m_rssi;
+}
+
+bool Device::isConnected() const
+{
+    return d->m_connected;
+}
+
+QStringList Device::uuids() const
+{
+    return d->m_uuids;
+}
+
+QString Device::modalias() const
+{
+    return d->m_modalias;
 }
 
 Adapter *Device::adapter() const

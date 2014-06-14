@@ -49,10 +49,30 @@ int main(int argc, char *argv[])
             qDebug() << "\t Devices:" << adapter->devices().count();
 
             QObject::connect(adapter, &QBluez::Adapter::deviceFound, [ = ](QBluez::Device *device) {
-                qDebug() << "Found device:";
-                qDebug() << "\t Path:" << device->address();
+                qDebug() << "Found device...";
 
-                adapter->removeDevice(device);
+                QBluez::LoadDeviceJob *deviceJob = device->load();
+                deviceJob->start();
+
+                QObject::connect(deviceJob, &QBluez::Job::result, [ = ]() {
+                    qDebug() << "Loaded device:";
+                    qDebug() << "\t Address:" << device->address();
+                    qDebug() << "\t Name:" << device->name();
+                    qDebug() << "\t Alias:" << device->alias();
+                    qDebug() << "\t Class:" << device->deviceClass();
+                    qDebug() << "\t Appearance:" << device->appearance();
+                    qDebug() << "\t Icon:" << device->icon();
+                    qDebug() << "\t Paired:" << device->isPaired();
+                    qDebug() << "\t Trusted:" << device->isTrusted();
+                    qDebug() << "\t Blocked:" << device->isBlocked();
+                    qDebug() << "\t LegacyPairing:" << device->legacyPairing();
+                    qDebug() << "\t RSSI:" << device->rssi();
+                    qDebug() << "\t Connected:" << device->isConnected();
+                    qDebug() << "\t UUIDs:" << device->uuids();
+                    qDebug() << "\t Modalias:" << device->modalias();
+
+                    adapter->removeDevice(device);
+                });
             });
 
             QBluez::SetPropertyJob *powerOnJob = adapter->setPowered(true);

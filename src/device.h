@@ -3,6 +3,9 @@
 
 #include <QObject>
 
+#include <QBluez/LoadDeviceJob>
+#include <QBluez/SetPropertyJob>
+
 #include "qbluez_export.h"
 
 namespace QBluez
@@ -16,14 +19,76 @@ class QBLUEZ_EXPORT Device : public QObject
 {
     Q_OBJECT
 
+    Q_PROPERTY(QString address READ address NOTIFY addressChanged)
+    Q_PROPERTY(QString name READ name NOTIFY nameChanged)
+    Q_PROPERTY(QString alias READ alias WRITE setAlias NOTIFY aliasChanged)
+    Q_PROPERTY(quint32 deviceClass READ deviceClass NOTIFY deviceClassChanged)
+    Q_PROPERTY(quint16 appearance READ appearance NOTIFY appearanceChanged)
+    Q_PROPERTY(QString icon READ icon NOTIFY iconChanged)
+    Q_PROPERTY(bool isPaired READ isPaired NOTIFY pairedChanged)
+    Q_PROPERTY(bool isTrusted READ isTrusted WRITE setTrusted NOTIFY trustedChanged)
+    Q_PROPERTY(bool isBlocked READ isBlocked WRITE setBlocked NOTIFY blockedChanged)
+    Q_PROPERTY(bool legacyPairing READ legacyPairing NOTIFY legacyPairingChanged)
+    Q_PROPERTY(qint16 rssi READ rssi NOTIFY rssiChanged)
+    Q_PROPERTY(bool isConnected READ isConnected NOTIFY connectedChanged)
+    Q_PROPERTY(QStringList uuids READ uuids NOTIFY uuidsChanged)
+    Q_PROPERTY(QString modalias READ modalias NOTIFY modaliasChanged)
+    Q_PROPERTY(Adapter* adapter READ adapter)
+
 public:
     virtual ~Device();
 
     bool isLoaded() const;
-    LoadDeviceJob *load() const;
+    LoadDeviceJob *load();
 
     QString address() const;
+
+    QString name() const;
+
+    QString alias() const;
+    SetPropertyJob *setAlias(const QString &alias);
+
+    quint32 deviceClass() const;
+
+    quint16 appearance() const;
+
+    QString icon() const;
+
+    bool isPaired() const;
+
+    bool isTrusted() const;
+    SetPropertyJob *setTrusted(bool isTrusted);
+
+    bool isBlocked() const;
+    SetPropertyJob *setBlocked(bool isBlocked);
+
+    bool legacyPairing() const;
+
+    qint16 rssi() const;
+
+    bool isConnected() const;
+
+    QStringList uuids() const;
+
+    QString modalias() const;
+
     Adapter *adapter() const;
+
+Q_SIGNALS:
+    void addressChanged(const QString &address);
+    void nameChanged(const QString &name);
+    void aliasChanged(const QString &alias);
+    void deviceClassChanged(quint32 deviceClass);
+    void appearanceChanged(quint16 appearance);
+    void iconChanged(const QString &icon);
+    void pairedChanged(bool isPaired);
+    void trustedChanged(bool isTrusted);
+    void blockedChanged(bool isBlocked);
+    void legacyPairingChanged(bool legacyPairing);
+    void rssiChanged(qint16 rssi);
+    void connectedChanged(bool isConnected);
+    void uuidsChanged(const QStringList &uuids);
+    void modaliasChanged(const QString &modalias);
 
 private:
     Device(const QString &address, Adapter *adapter, QObject *parent);

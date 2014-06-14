@@ -20,13 +20,9 @@ void SetPropertyJob::doStart()
 
     if (AdapterPrivate *adapter = qobject_cast<AdapterPrivate *>(parent())) {
         call = adapter->setDBusProperty(m_name, m_value);
-    }
-#if 0
-    else if (DevicePrivate *device = qobject_cast<DevicePrivate *>(parent())) {
+    } else if (DevicePrivate *device = qobject_cast<DevicePrivate *>(parent())) {
         call = device->setDBusProperty(m_name, m_value);
-    }
-#endif
-    else {
+    } else {
         qFatal("SetPropertyJob must be parented to AdapterPrivate or DevicePrivate!");
     }
 

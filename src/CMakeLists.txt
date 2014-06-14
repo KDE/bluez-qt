@@ -8,6 +8,7 @@ set(qbluez_SRCS
     job.cpp
     setpropertyjob.cpp
     loadadapterjob.cpp
+    loaddevicejob.cpp
 )
 
 set(dbusobjectmanager_xml ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.freedesktop.DBus.ObjectManager.xml)
@@ -45,6 +46,7 @@ ecm_generate_headers(QBluez_HEADERS
         Job
         SetPropertyJob
         LoadAdapterJob
+        LoadDeviceJob
 
     PREFIX QBluez
     REQUIRED_HEADERS QBluez_HEADERS
