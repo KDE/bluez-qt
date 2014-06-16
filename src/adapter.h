@@ -30,7 +30,7 @@ class QBLUEZ_EXPORT Adapter : public QObject
     Q_PROPERTY(bool pairable READ isPairable WRITE setPairable NOTIFY pairableChanged)
     Q_PROPERTY(quint32 pairableTimeout READ pairableTimeout WRITE setPairableTimeout NOTIFY pairableTimeoutChanged)
     Q_PROPERTY(bool discovering READ isDiscovering NOTIFY discoveringChanged)
-    Q_PROPERTY(QStringList UUIDs READ UUIDs NOTIFY UUIDsChanged)
+    Q_PROPERTY(QStringList uuids READ uuids NOTIFY uuidsChanged)
     Q_PROPERTY(QString modalias READ modalias NOTIFY modaliasChanged)
     Q_PROPERTY(QList<Device *> devices READ devices)
 
@@ -67,7 +67,7 @@ public:
 
     bool isDiscovering();
 
-    QStringList UUIDs() const;
+    QStringList uuids() const;
 
     QString modalias() const;
 
@@ -88,7 +88,7 @@ Q_SIGNALS:
     void pairableChanged(bool pairable);
     void pairableTimeoutChanged(quint32 timeout);
     void discoveringChanged(bool discovering);
-    void UUIDsChanged(const QStringList &UUIDs);
+    void uuidsChanged(const QStringList &uuids);
     void modaliasChanged(const QString &modalias);
 
     void deviceFound(Device *device);

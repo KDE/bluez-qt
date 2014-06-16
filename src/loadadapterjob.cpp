@@ -46,7 +46,7 @@ void LoadAdapterJob::doStart()
         dd->m_pairable = properties.value(QStringLiteral("Pairable")).toBool();
         dd->m_pairableTimeout = properties.value(QStringLiteral("PairableTimeout")).toUInt();
         dd->m_discovering = properties.value(QStringLiteral("Discovering")).toBool();
-        dd->m_UUIDs = properties.value(QStringLiteral("UUIDs")).toStringList();
+        dd->m_uuids = properties.value(QStringLiteral("UUIDs")).toStringList();
         dd->m_modalias = properties.value(QStringLiteral("Modalias")).toString();
 
         dd->m_loaded = true;

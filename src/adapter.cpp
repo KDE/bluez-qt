@@ -111,9 +111,9 @@ bool Adapter::isDiscovering()
     return d->m_discovering;
 }
 
-QStringList Adapter::UUIDs() const
+QStringList Adapter::uuids() const
 {
-    return d->m_UUIDs;
+    return d->m_uuids;
 }
 
 QString Adapter::modalias() const

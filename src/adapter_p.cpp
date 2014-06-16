@@ -89,8 +89,8 @@ void AdapterPrivate::propertiesChanged(const QString &interface, const QVariantM
             m_discovering = value.toBool();
             Q_EMIT q->discoveringChanged(m_discovering);
         } else if (property == QLatin1String("UUIDs")) {
-            m_UUIDs = value.toStringList();
-            Q_EMIT q->UUIDsChanged(m_UUIDs);
+            m_uuids = value.toStringList();
+            Q_EMIT q->uuidsChanged(m_uuids);
         } else if (property == QLatin1String("Modalias")) {
             m_modalias = value.toString();
             Q_EMIT q->modaliasChanged(m_modalias);

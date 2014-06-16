@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
             qDebug() << "\t PairableTimeout:" << adapter->pairableTimeout();
             qDebug() << "\t DiscoverableTimeout:" << adapter->discoverableTimeout();
             qDebug() << "\t Discovering:" << adapter->isDiscovering();
-            qDebug() << "\t UUIDs:" << adapter->UUIDs();
+            qDebug() << "\t UUIDs:" << adapter->uuids();
             qDebug() << "\t Modalias:" << adapter->modalias();
             qDebug() << "\t Devices:" << adapter->devices().count();
 
