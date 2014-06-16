@@ -1,5 +1,6 @@
 #include "device_p.h"
 #include "device.h"
+#include "adapter.h"
 
 using namespace QBluez;
 
@@ -91,4 +92,6 @@ void DevicePrivate::propertiesChanged(const QString &interface, const QVariantMa
             Q_EMIT q->modaliasChanged(m_modalias);
         }
     }
+
+    Q_EMIT q->adapter()->deviceChanged(q);
 }
