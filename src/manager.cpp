@@ -10,7 +10,6 @@ Manager::Manager()
     : QObject()
     , d(new ManagerPrivate(this))
 {
-    d->initialize();
 }
 
 Manager::~Manager()

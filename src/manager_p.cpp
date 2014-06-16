@@ -38,8 +38,26 @@ ManagerPrivate::ManagerPrivate(Manager *parent)
 
     // Update the current state of bluez service
     if (QDBusConnection::systemBus().isConnected()) {
-        QDBusReply<bool> reply = QDBusConnection::systemBus().interface()->isServiceRegistered(QStringLiteral("org.bluez"));
-        m_bluezRunning = reply.isValid() && reply.value();
+        QDBusMessage call = QDBusMessage::createMethodCall(QStringLiteral("org.freedesktop.DBus"),
+                            QStringLiteral("/"),
+                            QStringLiteral("org.freedesktop.DBus"),
+                            QStringLiteral("NameHasOwner"));
+        QList<QVariant> args;
+        args.append(QStringLiteral("org.bluez"));
+        call.setArguments(args);
+
+        QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(QDBusConnection::systemBus().asyncCall(call));
+
+        connect(watcher, &QDBusPendingCallWatcher::finished, [ = ]() {
+            const QDBusPendingReply<bool> &reply = *watcher;
+
+            if (reply.isError()) {
+                qWarning() << "Error:" << reply.error().message();
+            } else {
+                m_bluezRunning = reply.isValid() && reply.value();
+                initialize();
+            }
+        });
     }
 }
 
@@ -60,7 +78,7 @@ void ManagerPrivate::initialize()
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(m_dbusObjectManager->GetManagedObjects(), this);
 
     connect(watcher, &QDBusPendingCallWatcher::finished, [ = ]() {
-        QDBusPendingReply<DBusManagerStruct> reply = *watcher;
+        const QDBusPendingReply<DBusManagerStruct> &reply = *watcher;
 
         if (reply.isError()) {
             qWarning() << "Error:" << reply.error().message();
