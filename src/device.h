@@ -21,6 +21,7 @@ class QBLUEZ_EXPORT Device : public QObject
 
     Q_PROPERTY(QString address READ address NOTIFY addressChanged)
     Q_PROPERTY(QString name READ name NOTIFY nameChanged)
+    Q_PROPERTY(QString friendlyName READ friendlyName NOTIFY friendlyNameChanged)
     Q_PROPERTY(QString alias READ alias WRITE setAlias NOTIFY aliasChanged)
     Q_PROPERTY(quint32 deviceClass READ deviceClass NOTIFY deviceClassChanged)
     Q_PROPERTY(quint16 appearance READ appearance NOTIFY appearanceChanged)
@@ -44,6 +45,7 @@ public:
     QString address() const;
 
     QString name() const;
+    QString friendlyName() const;
 
     QString alias() const;
     SetPropertyJob *setAlias(const QString &alias);
@@ -74,9 +76,15 @@ public:
 
     Adapter *adapter() const;
 
+    void pair();
+
+    void connect();
+    void disconnect();
+
 Q_SIGNALS:
     void addressChanged(const QString &address);
     void nameChanged(const QString &name);
+    void friendlyNameChanged(const QString &friendlyName);
     void aliasChanged(const QString &alias);
     void deviceClassChanged(quint32 deviceClass);
     void appearanceChanged(quint16 appearance);

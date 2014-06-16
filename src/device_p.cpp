@@ -51,9 +51,11 @@ void DevicePrivate::propertiesChanged(const QString &interface, const QVariantMa
         if (property == QLatin1String("Name")) {
             m_name = value.toString();
             Q_EMIT q->nameChanged(m_name);
+            Q_EMIT q->friendlyNameChanged(q->friendlyName());
         } else if (property == QLatin1String("Alias")) {
             m_alias = value.toString();
             Q_EMIT q->aliasChanged(m_alias);
+            Q_EMIT q->friendlyNameChanged(q->friendlyName());
         } else if (property == QLatin1String("Class")) {
             m_deviceClass = value.toUInt();
             Q_EMIT q->deviceClassChanged(m_deviceClass);

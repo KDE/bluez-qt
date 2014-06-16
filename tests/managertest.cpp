@@ -58,6 +58,7 @@ int main(int argc, char *argv[])
                     qDebug() << "Loaded device:";
                     qDebug() << "\t Address:" << device->address();
                     qDebug() << "\t Name:" << device->name();
+                    qDebug() << "\t FriendlyName:" << device->friendlyName();
                     qDebug() << "\t Alias:" << device->alias();
                     qDebug() << "\t Class:" << device->deviceClass();
                     qDebug() << "\t Appearance:" << device->appearance();

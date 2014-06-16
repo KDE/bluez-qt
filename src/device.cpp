@@ -34,6 +34,14 @@ QString Device::name() const
     return d->m_name;
 }
 
+QString Device::friendlyName() const
+{
+    if (alias().isEmpty() || alias() == name()) {
+        return name();
+    }
+    return QString(QStringLiteral("%1 (%2)")).arg(alias(), name());
+}
+
 QString Device::alias() const
 {
     return d->m_alias;
@@ -56,7 +64,7 @@ quint16 Device::appearance() const
 
 QString Device::icon() const
 {
-    return d->m_icon;
+    return d->m_icon.isEmpty() ? QStringLiteral("preferences-system-bluetooth") : d->m_icon;
 }
 
 bool Device::isPaired() const
@@ -112,4 +120,19 @@ QString Device::modalias() const
 Adapter *Device::adapter() const
 {
     return d->m_adapter;
+}
+
+void Device::pair()
+{
+    d->m_bluezDevice->Pair();
+}
+
+void Device::connect()
+{
+    d->m_bluezDevice->Connect();
+}
+
+void Device::disconnect()
+{
+    d->m_bluezDevice->Disconnect();
 }
