@@ -29,6 +29,7 @@ void LoadAdapterJob::doStart()
     connect(watcher, &QDBusPendingCallWatcher::finished, [ = ]() {
         const QDBusPendingReply<QVariantMap> &reply = *watcher;
         if (reply.isError()) {
+            setError(UserDefinedError);
             setErrorText(reply.error().message());
             emitResult();
             return;

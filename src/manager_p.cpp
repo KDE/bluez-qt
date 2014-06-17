@@ -16,6 +16,7 @@ ManagerPrivate::ManagerPrivate(Manager *parent)
     , q(parent)
     , m_dbusObjectManager(0)
     , m_bluezAgentManager(0)
+    , m_usableAdapter(0)
     , m_bluezRunning(false)
     , m_initialized(false)
 {
@@ -96,7 +97,9 @@ void ManagerPrivate::initialize()
                     const QString &adapterPath = it.value().value(QStringLiteral("org.bluez.Device1")).value(QStringLiteral("Adapter")).value<QDBusObjectPath>().path();
                     Adapter *adapter = m_adapters.value(adapterPath);
                     Q_ASSERT(adapter);
-                    adapter->d->addDevice(new Device(path, adapter, this));
+                    Device *device = new Device(path, adapter, this);
+                    adapter->d->addDevice(device);
+                    m_devices.insert(path, device);
                 } else if (interfaces.contains(QStringLiteral("org.bluez.AgentManager1"))) {
                     m_bluezAgentManager = new BluezAgentManager(QStringLiteral("org.bluez"), path, QDBusConnection::systemBus(), this);
                 }
@@ -142,7 +145,9 @@ void ManagerPrivate::interfacesAdded(const QDBusObjectPath &objectPath, const QV
             const QString &adapterPath = it.value().value(QStringLiteral("Adapter")).value<QDBusObjectPath>().path();
             Adapter *adapter = m_adapters.value(adapterPath);
             Q_ASSERT(adapter);
-            adapter->d->addDevice(new Device(path, adapter, this));
+            Device *device = new Device(path, adapter, this);
+            adapter->d->addDevice(device);
+            m_devices.insert(path, device);
         }
     }
 }
@@ -157,25 +162,13 @@ void ManagerPrivate::interfacesRemoved(const QDBusObjectPath &objectPath, const 
             Q_EMIT q->adapterRemoved(adapter);
             delete adapter;
         } else if (interface == QLatin1String("org.bluez.Device1")) {
-            Device *device = findDeviceByPath(path);
+            Device *device = m_devices.value(path);
             if (device) {
                 device->adapter()->d->removeDevice(device);
+                m_devices.remove(path);
                 delete device;
                 break;
             }
         }
     }
-}
-
-Device *ManagerPrivate::findDeviceByPath(const QString &path) const
-{
-    // TODO: Devices also should be kept in QHash for faster lookup
-    Q_FOREACH (Adapter *adapter, m_adapters.values()) {
-        Q_FOREACH (Device *device, adapter->devices()) {
-            if (device->address() == path) {
-                return device;
-            }
-        }
-    }
-    return 0;
 }

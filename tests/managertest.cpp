@@ -6,6 +6,8 @@
 #include <QBluez/Adapter>
 #include <QBluez/Device>
 
+QList<QBluez::Device *> foundDevices;
+
 int main(int argc, char *argv[])
 {
     QCoreApplication app(argc, argv);
@@ -29,7 +31,7 @@ int main(int argc, char *argv[])
 
         QObject::connect(loadJob, &QBluez::Job::result, [ = ]() {
             if (loadJob->error() != QBluez::LoadAdapterJob::NoError) {
-                qDebug() << "Error loading adapter";
+                qDebug() << "Error loading adapter:" << loadJob->errorText();
                 return;
             }
 
@@ -72,7 +74,7 @@ int main(int argc, char *argv[])
                     qDebug() << "\t UUIDs:" << device->uuids();
                     qDebug() << "\t Modalias:" << device->modalias();
 
-                    adapter->removeDevice(device);
+                    foundDevices.append(device);
                 });
             });
 
@@ -80,6 +82,10 @@ int main(int argc, char *argv[])
             powerOnJob->start();
 
             QObject::connect(powerOnJob, &QBluez::Job::result, [ = ]() {
+                if (powerOnJob->error() != QBluez::SetPropertyJob::NoError) {
+                    qDebug() << "Error powering on adapter:" << powerOnJob->errorText();
+                    return;
+                }
                 qDebug() << "Starting discovery...";
                 adapter->startDiscovery();
 
@@ -90,6 +96,11 @@ int main(int argc, char *argv[])
                 QObject::connect(timer, &QTimer::timeout, [ = ]() {
                     qDebug() << "Stopping discovery...";
                     adapter->stopDiscovery();
+
+                    Q_FOREACH (QBluez::Device *device, foundDevices) {
+                        adapter->removeDevice(device);
+                    }
+                    foundDevices.clear();
                 });
             });
 

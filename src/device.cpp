@@ -39,6 +39,9 @@ QString Device::friendlyName() const
     if (alias().isEmpty() || alias() == name()) {
         return name();
     }
+    if (name().isEmpty()) {
+        return alias();
+    }
     return QString(QStringLiteral("%1 (%2)")).arg(alias(), name());
 }
 
