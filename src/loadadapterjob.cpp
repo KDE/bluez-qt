@@ -26,7 +26,7 @@ void LoadAdapterJob::doStart()
     const QDBusPendingReply<QVariantMap> &call = dd->m_dbusProperties->GetAll(QStringLiteral("org.bluez.Adapter1"));
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, this);
 
-    connect(watcher, &QDBusPendingCallWatcher::finished, [ = ]() {
+    connect(watcher, &QDBusPendingCallWatcher::finished, [ this, watcher ]() {
         const QDBusPendingReply<QVariantMap> &reply = *watcher;
         if (reply.isError()) {
             setError(UserDefinedError);

@@ -28,7 +28,7 @@ void SetPropertyJob::doStart()
 
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, this);
 
-    connect(watcher, &QDBusPendingCallWatcher::finished, [ = ]() {
+    connect(watcher, &QDBusPendingCallWatcher::finished, [ this, watcher ]() {
         const QDBusPendingReply<> &reply = *watcher;
         if (reply.isError()) {
             setError(UserDefinedError);

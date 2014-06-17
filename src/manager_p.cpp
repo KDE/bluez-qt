@@ -27,12 +27,12 @@ ManagerPrivate::ManagerPrivate(Manager *parent)
     QDBusServiceWatcher *serviceWatcher = new QDBusServiceWatcher(QStringLiteral("org.bluez"), QDBusConnection::systemBus(),
             QDBusServiceWatcher::WatchForRegistration | QDBusServiceWatcher::WatchForUnregistration, this);
 
-    connect(serviceWatcher, &QDBusServiceWatcher::serviceRegistered, [ = ]() {
+    connect(serviceWatcher, &QDBusServiceWatcher::serviceRegistered, [ this ]() {
         m_bluezRunning = true;
         initialize();
     });
 
-    connect(serviceWatcher, &QDBusServiceWatcher::serviceUnregistered, [ = ]() {
+    connect(serviceWatcher, &QDBusServiceWatcher::serviceUnregistered, [ this ]() {
         m_bluezRunning = false;
         clear();
     });
@@ -49,7 +49,7 @@ ManagerPrivate::ManagerPrivate(Manager *parent)
 
         QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(QDBusConnection::systemBus().asyncCall(call));
 
-        connect(watcher, &QDBusPendingCallWatcher::finished, [ = ]() {
+        connect(watcher, &QDBusPendingCallWatcher::finished, [ this, watcher ]() {
             const QDBusPendingReply<bool> &reply = *watcher;
 
             if (reply.isError()) {
@@ -78,7 +78,7 @@ void ManagerPrivate::initialize()
 
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(m_dbusObjectManager->GetManagedObjects(), this);
 
-    connect(watcher, &QDBusPendingCallWatcher::finished, [ = ]() {
+    connect(watcher, &QDBusPendingCallWatcher::finished, [ this, watcher ]() {
         const QDBusPendingReply<DBusManagerStruct> &reply = *watcher;
 
         if (reply.isError()) {
