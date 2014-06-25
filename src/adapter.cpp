@@ -16,16 +16,6 @@ Adapter::~Adapter()
     delete d;
 }
 
-bool Adapter::isLoaded() const
-{
-    return d->m_loaded;
-}
-
-LoadAdapterJob *Adapter::load() const
-{
-    return new LoadAdapterJob(d);
-}
-
 QString Adapter::address() const
 {
     return d->m_address;

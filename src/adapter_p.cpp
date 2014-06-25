@@ -32,7 +32,7 @@ void AdapterPrivate::removeDevice(Device *device)
     Q_EMIT q->deviceRemoved(device);
 }
 
-void AdapterPrivate::initProperties()
+void AdapterPrivate::load()
 {
     m_dbusProperties = new DBusProperties(QStringLiteral("org.bluez"), m_path,
                                           QDBusConnection::systemBus(), this);
@@ -44,6 +44,36 @@ void AdapterPrivate::initProperties()
     //    powered off when the PropertiesChanged signal is emitted ...
     connect(m_dbusProperties, &DBusProperties::PropertiesChanged,
             this, &AdapterPrivate::propertiesChanged, Qt::QueuedConnection);
+
+    const QDBusPendingReply<QVariantMap> &call = m_dbusProperties->GetAll(QStringLiteral("org.bluez.Adapter1"));
+    QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, this);
+
+    connect(watcher, &QDBusPendingCallWatcher::finished, [ this, watcher ]() {
+        const QDBusPendingReply<QVariantMap> &reply = *watcher;
+        if (reply.isError()) {
+            Q_EMIT loadError(reply.error().message());
+            return;
+        }
+
+        const QVariantMap &properties = reply.value();
+
+        m_address = properties.value(QStringLiteral("Address")).toString();
+        m_name = properties.value(QStringLiteral("Name")).toString();
+        m_alias = properties.value(QStringLiteral("Alias")).toString();
+        m_adapterClass = properties.value(QStringLiteral("Class")).toUInt();
+        m_powered = properties.value(QStringLiteral("Powered")).toBool();
+        m_discoverable = properties.value(QStringLiteral("Discoverable")).toBool();
+        m_discoverableTimeout = properties.value(QStringLiteral("DiscoverableTimeout")).toUInt();
+        m_pairable = properties.value(QStringLiteral("Pairable")).toBool();
+        m_pairableTimeout = properties.value(QStringLiteral("PairableTimeout")).toUInt();
+        m_discovering = properties.value(QStringLiteral("Discovering")).toBool();
+        m_uuids = properties.value(QStringLiteral("UUIDs")).toStringList();
+        m_modalias = properties.value(QStringLiteral("Modalias")).toString();
+
+        m_loaded = true;
+
+        Q_EMIT loaded(this);
+    });
 }
 
 QDBusPendingReply<> AdapterPrivate::setDBusProperty(const QString &name, const QVariant &value)

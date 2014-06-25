@@ -26,7 +26,7 @@ public:
     void addDevice(Device *device);
     void removeDevice(Device *device);
 
-    void initProperties();
+    void load();
     QDBusPendingReply<> setDBusProperty(const QString &name, const QVariant &value);
     void propertiesChanged(const QString &interface, const QVariantMap &changed, const QStringList &invalidated);
 
@@ -49,6 +49,10 @@ public:
     QStringList m_uuids;
     QList<Device *> m_devices;
     QString m_modalias;
+
+Q_SIGNALS:
+    void loaded(AdapterPrivate *adapter);
+    void loadError(const QString &errorString);
 };
 
 } // namespace QBluez

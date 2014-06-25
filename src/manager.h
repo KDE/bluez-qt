@@ -11,6 +11,7 @@ namespace QBluez
 class Device;
 class Adapter;
 class ManagerPrivate;
+class LoadAdaptersJob;
 
 class QBLUEZ_EXPORT Manager : public QObject
 {
@@ -35,6 +36,8 @@ public:
 
     QList<Adapter *> adapters() const;
     QList<Device *> devices() const;
+
+    LoadAdaptersJob *loadAdapters();
 
     bool isOperational() const;
 

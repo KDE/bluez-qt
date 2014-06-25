@@ -40,6 +40,7 @@ public:
 
     bool m_bluezRunning;
     bool m_initialized;
+    bool m_adaptersLoaded;
 };
 
 } // namespace QBluez

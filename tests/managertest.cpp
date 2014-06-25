@@ -5,6 +5,7 @@
 #include <QBluez/Manager>
 #include <QBluez/Adapter>
 #include <QBluez/Device>
+#include <QBluez/LoadAdaptersJob>
 
 QList<QBluez::Device *> foundDevices;
 
@@ -24,16 +25,16 @@ int main(int argc, char *argv[])
             return;
         }
 
-        QBluez::Adapter *adapter = manager->adapters().first();
-
-        QBluez::LoadAdapterJob *loadJob = adapter->load();
+        QBluez::LoadAdaptersJob *loadJob = manager->loadAdapters();
         loadJob->start();
 
         QObject::connect(loadJob, &QBluez::Job::result, [ = ]() {
-            if (loadJob->error() != QBluez::LoadAdapterJob::NoError) {
+            if (loadJob->error() != QBluez::LoadAdaptersJob::NoError) {
                 qDebug() << "Error loading adapter:" << loadJob->errorText();
                 return;
             }
+
+            QBluez::Adapter *adapter = manager->adapters().first();
 
             qDebug() << "Loaded adapter:";
             qDebug() << "\t Address:" << adapter->address();
@@ -109,6 +110,7 @@ int main(int argc, char *argv[])
             });
         });
     });
+
 
     return app.exec();
 }

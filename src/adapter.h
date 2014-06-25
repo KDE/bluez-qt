@@ -5,7 +5,6 @@
 #include <QList>
 #include <QStringList>
 
-#include <QBluez/LoadAdapterJob>
 #include <QBluez/SetPropertyJob>
 
 #include "qbluez_export.h"
@@ -36,9 +35,6 @@ class QBLUEZ_EXPORT Adapter : public QObject
 
 public:
     virtual ~Adapter();
-
-    bool isLoaded() const;
-    LoadAdapterJob *load() const;
 
     QString address() const;
 
@@ -102,6 +98,7 @@ private:
 
     friend class AdapterPrivate;
     friend class ManagerPrivate;
+    friend class LoadAdaptersJob;
 };
 
 } // namespace QBluez

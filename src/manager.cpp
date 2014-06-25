@@ -1,6 +1,7 @@
 #include "manager.h"
 #include "manager_p.h"
 #include "adapter.h"
+#include "loadadaptersjob.h"
 
 using namespace QBluez;
 
@@ -47,6 +48,11 @@ QList<Device *> Manager::devices() const
     }
 
     return list;
+}
+
+LoadAdaptersJob *Manager::loadAdapters()
+{
+    return new LoadAdaptersJob(d, this);
 }
 
 bool Manager::isOperational() const

@@ -6,9 +6,9 @@ set(qbluez_SRCS
     device.cpp
     device_p.cpp
     job.cpp
-    setpropertyjob.cpp
-    loadadapterjob.cpp
+    loadadaptersjob.cpp
     loaddevicejob.cpp
+    setpropertyjob.cpp
 )
 
 set(dbusobjectmanager_xml ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.freedesktop.DBus.ObjectManager.xml)
@@ -44,9 +44,9 @@ ecm_generate_headers(QBluez_HEADERS
         Adapter
         Device
         Job
-        SetPropertyJob
-        LoadAdapterJob
+        LoadAdaptersJob
         LoadDeviceJob
+        SetPropertyJob
 
     PREFIX QBluez
     REQUIRED_HEADERS QBluez_HEADERS
@@ -63,7 +63,6 @@ install(FILES
         DESTINATION ${INCLUDE_INSTALL_DIR}/QBluez
         COMPONENT Devel)
 
-cmake_policy(SET CMP0053 OLD) # Workaround for warning in ECMGeneratePriFile
 include(ECMGeneratePriFile)
 
 ecm_generate_pri_file(

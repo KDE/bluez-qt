@@ -19,6 +19,7 @@ ManagerPrivate::ManagerPrivate(Manager *parent)
     , m_usableAdapter(0)
     , m_bluezRunning(false)
     , m_initialized(false)
+    , m_adaptersLoaded(false)
 {
     qDBusRegisterMetaType<DBusManagerStruct>();
     qDBusRegisterMetaType<QVariantMapMap>();
@@ -140,7 +141,13 @@ void ManagerPrivate::interfacesAdded(const QDBusObjectPath &objectPath, const QV
         if (it.key() == QLatin1String("org.bluez.Adapter1")) {
             Adapter *adapter = new Adapter(path, this);
             m_adapters.insert(path, adapter);
-            Q_EMIT q->adapterAdded(adapter);
+
+            if (m_adaptersLoaded) {
+                adapter->d->load();
+                connect(adapter->d, &AdapterPrivate::load, [ this, adapter ]() {
+                    Q_EMIT q->adapterAdded(adapter);
+                });
+            }
         } else if (it.key() == QLatin1String("org.bluez.Device1")) {
             const QString &adapterPath = it.value().value(QStringLiteral("Adapter")).value<QDBusObjectPath>().path();
             Adapter *adapter = m_adapters.value(adapterPath);
