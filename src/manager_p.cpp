@@ -225,8 +225,8 @@ void ManagerPrivate::adapterRemoved(Adapter *adapter)
 
 void ManagerPrivate::adapterPoweredChanged(bool powered)
 {
-    Adapter *adapter = qobject_cast<Adapter *>(sender());
-    Q_ASSERT(adapter);
+    Q_ASSERT(qobject_cast<Adapter *>(sender()));
+    Adapter *adapter = static_cast<Adapter *>(sender());
 
     // Current usable adapter was powered off
     if (m_usableAdapter == adapter && !powered) {
