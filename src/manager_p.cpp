@@ -124,9 +124,13 @@ void ManagerPrivate::initialize()
 void ManagerPrivate::clear()
 {
     m_initialized = false;
+    m_usableAdapter = 0;
 
     qDeleteAll(m_adapters);
     m_adapters.clear();
+
+    qDeleteAll(m_devices);
+    m_devices.clear();
 
     delete m_dbusObjectManager;
     m_dbusObjectManager = 0;
