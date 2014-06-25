@@ -26,9 +26,16 @@ public:
     void initialize();
     void clear();
 
+    Adapter *usableAdapter();
+    Adapter *findUsableAdapter() const;
+
     // slots
     void interfacesAdded(const QDBusObjectPath &objectPath, const QVariantMapMap &interfaces);
     void interfacesRemoved(const QDBusObjectPath &objectPath, const QStringList &interfaces);
+
+    void adapterAdded(Adapter *adapter);
+    void adapterRemoved(Adapter *adapter);
+    void adapterPoweredChanged(bool powered);
 
     Manager *q;
     DBusObjectManager *m_dbusObjectManager;

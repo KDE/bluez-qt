@@ -24,6 +24,9 @@ ManagerPrivate::ManagerPrivate(Manager *parent)
     qDBusRegisterMetaType<DBusManagerStruct>();
     qDBusRegisterMetaType<QVariantMapMap>();
 
+    connect(q, &Manager::adapterAdded, this, &ManagerPrivate::adapterAdded);
+    connect(q, &Manager::adapterRemoved, this, &ManagerPrivate::adapterRemoved);
+
     // Keep an eye on bluez service
     QDBusServiceWatcher *serviceWatcher = new QDBusServiceWatcher(QStringLiteral("org.bluez"), QDBusConnection::systemBus(),
             QDBusServiceWatcher::WatchForRegistration | QDBusServiceWatcher::WatchForUnregistration, this);
@@ -93,7 +96,9 @@ void ManagerPrivate::initialize()
                 const QVariantMapMap &interfaces = it.value();
 
                 if (interfaces.contains(QStringLiteral("org.bluez.Adapter1"))) {
-                    m_adapters.insert(path, new Adapter(path, this));
+                    Adapter *adapter = new Adapter(path, this);
+                    m_adapters.insert(path, adapter);
+                    connect(adapter, &Adapter::poweredChanged, this, &ManagerPrivate::adapterPoweredChanged);
                 } else if (interfaces.contains(QStringLiteral("org.bluez.Device1"))) {
                     const QString &adapterPath = it.value().value(QStringLiteral("org.bluez.Device1")).value(QStringLiteral("Adapter")).value<QDBusObjectPath>().path();
                     Adapter *adapter = m_adapters.value(adapterPath);
@@ -132,6 +137,21 @@ void ManagerPrivate::clear()
     Q_EMIT q->operationalChanged(false);
 }
 
+Adapter *ManagerPrivate::usableAdapter()
+{
+    return m_usableAdapter;
+}
+
+Adapter *ManagerPrivate::findUsableAdapter() const
+{
+    Q_FOREACH (Adapter *adapter, m_adapters) {
+        if (adapter->isPowered()) {
+            return adapter;
+        }
+    }
+    return 0;
+}
+
 void ManagerPrivate::interfacesAdded(const QDBusObjectPath &objectPath, const QVariantMapMap &interfaces)
 {
     const QString &path = objectPath.path();
@@ -141,10 +161,11 @@ void ManagerPrivate::interfacesAdded(const QDBusObjectPath &objectPath, const QV
         if (it.key() == QLatin1String("org.bluez.Adapter1")) {
             Adapter *adapter = new Adapter(path, this);
             m_adapters.insert(path, adapter);
+            connect(adapter, &Adapter::poweredChanged, this, &ManagerPrivate::adapterPoweredChanged);
 
             if (m_adaptersLoaded) {
                 adapter->d->load();
-                connect(adapter->d, &AdapterPrivate::load, [ this, adapter ]() {
+                connect(adapter->d, &AdapterPrivate::loaded, [ this, adapter ]() {
                     Q_EMIT q->adapterAdded(adapter);
                 });
             }
@@ -177,5 +198,41 @@ void ManagerPrivate::interfacesRemoved(const QDBusObjectPath &objectPath, const 
                 break;
             }
         }
+    }
+}
+
+void ManagerPrivate::adapterAdded(Adapter *adapter)
+{
+    if (!m_usableAdapter && adapter->isPowered()) {
+        m_usableAdapter = adapter;
+        Q_EMIT q->usableAdapterChanged(m_usableAdapter);
+    }
+}
+
+void ManagerPrivate::adapterRemoved(Adapter *adapter)
+{
+    disconnect(adapter, &Adapter::poweredChanged, this, &ManagerPrivate::adapterPoweredChanged);
+
+    if (adapter == m_usableAdapter) {
+        m_usableAdapter = findUsableAdapter();
+        Q_EMIT q->usableAdapterChanged(m_usableAdapter);
+    }
+}
+
+void ManagerPrivate::adapterPoweredChanged(bool powered)
+{
+    Adapter *adapter = qobject_cast<Adapter *>(sender());
+    Q_ASSERT(adapter);
+
+    // Current usable adapter was powered off
+    if (m_usableAdapter == adapter && !powered) {
+        m_usableAdapter = findUsableAdapter();
+        Q_EMIT q->usableAdapterChanged(m_usableAdapter);
+    }
+
+    // Adapter was powered on, set it as usable
+    if (!m_usableAdapter && powered) {
+        m_usableAdapter = adapter;
+        Q_EMIT q->usableAdapterChanged(m_usableAdapter);
     }
 }

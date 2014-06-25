@@ -39,6 +39,8 @@ public:
 
     LoadAdaptersJob *loadAdapters();
 
+    Adapter *usableAdapter();
+
     bool isOperational() const;
 
     void registerAgent(const QString &agentPath, RegisterCapability registerCapability);

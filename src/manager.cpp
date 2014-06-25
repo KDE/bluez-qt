@@ -55,6 +55,11 @@ LoadAdaptersJob *Manager::loadAdapters()
     return new LoadAdaptersJob(d, this);
 }
 
+Adapter *Manager::usableAdapter()
+{
+    return d->usableAdapter();
+}
+
 bool Manager::isOperational() const
 {
     return d->m_bluezRunning && d->m_initialized;

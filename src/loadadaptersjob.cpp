@@ -27,6 +27,7 @@ void LoadAdaptersJob::doStart()
                     return;
                 }
             }
+            m_manager->m_usableAdapter = m_manager->findUsableAdapter();
             m_manager->m_adaptersLoaded = true;
             emitResult();
         });
