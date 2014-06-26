@@ -53,6 +53,7 @@ Q_SIGNALS:
     void adapterAdded(Adapter *adapter);
     void adapterRemoved(Adapter *adapter);
     void usableAdapterChanged(Adapter *adapter);
+    void allAdaptersRemoved();
 
 private:
     explicit Manager();

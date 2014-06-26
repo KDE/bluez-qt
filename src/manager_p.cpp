@@ -193,6 +193,9 @@ void ManagerPrivate::interfacesRemoved(const QDBusObjectPath &objectPath, const 
             Adapter *adapter = m_adapters.take(path);
             Q_EMIT q->adapterRemoved(adapter);
             delete adapter;
+            if (m_adapters.isEmpty()) {
+                Q_EMIT q->allAdaptersRemoved();
+            }
         } else if (interface == QLatin1String("org.bluez.Device1")) {
             Device *device = m_devices.value(path);
             if (device) {
