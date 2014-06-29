@@ -6,6 +6,7 @@ set(qbluez_SRCS
     device.cpp
     device_p.cpp
     job.cpp
+    getmanagerjob.cpp
     loadadaptersjob.cpp
     loaddevicejob.cpp
     setpropertyjob.cpp
@@ -45,6 +46,7 @@ ecm_generate_headers(QBluez_HEADERS
         Adapter
         Device
         Job
+        GetManagerJob
         LoadAdaptersJob
         LoadDeviceJob
         SetPropertyJob

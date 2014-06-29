@@ -57,10 +57,14 @@ ManagerPrivate::ManagerPrivate(Manager *parent)
             const QDBusPendingReply<bool> &reply = *watcher;
 
             if (reply.isError()) {
-                qWarning() << "Error:" << reply.error().message();
+                Q_EMIT initError(reply.error().message());
             } else {
                 m_bluezRunning = reply.isValid() && reply.value();
-                initialize();
+                if (m_bluezRunning) {
+                    initialize();
+                } else {
+                    Q_EMIT initFinished();
+                }
             }
         });
     }
@@ -86,7 +90,7 @@ void ManagerPrivate::initialize()
         const QDBusPendingReply<DBusManagerStruct> &reply = *watcher;
 
         if (reply.isError()) {
-            qWarning() << "Error:" << reply.error().message();
+            Q_EMIT initError(reply.error().message());
         } else {
             DBusManagerStruct::const_iterator it;
             const DBusManagerStruct &managedObjects = reply.value();
@@ -115,6 +119,7 @@ void ManagerPrivate::initialize()
 
             m_initialized = true;
             Q_EMIT q->operationalChanged(true);
+            Q_EMIT initFinished();
         }
 
         delete watcher;

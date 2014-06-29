@@ -4,6 +4,7 @@
 #include <QObject>
 
 #include "qbluez_export.h"
+#include <QBluez/GetManagerJob>
 
 namespace QBluez
 {
@@ -31,8 +32,8 @@ public:
         NoInputNoOutput = 3
     };
 
-    static Manager *self();
-    static void release();
+    static GetManagerJob *get();
+    void release();
 
     QList<Adapter *> adapters() const;
     QList<Device *> devices() const;
@@ -59,8 +60,11 @@ private:
     explicit Manager();
     ~Manager();
 
+    static Manager *self();
+
     ManagerPrivate *const d;
     friend class ManagerPrivate;
+    friend class GetManagerJob;
 };
 
 } // namespace QBluez

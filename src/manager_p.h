@@ -48,6 +48,10 @@ public:
     bool m_bluezRunning;
     bool m_initialized;
     bool m_adaptersLoaded;
+
+Q_SIGNALS:
+    void initError(const QString &errorText);
+    void initFinished();
 };
 
 } // namespace QBluez

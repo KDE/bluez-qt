@@ -19,18 +19,14 @@ Manager::~Manager()
 }
 
 // static
-Manager *Manager::self()
+GetManagerJob *Manager::get()
 {
-    if (!instance) {
-        instance = new Manager();
-    }
-    return instance;
+    return new GetManagerJob(instance, qApp);
 }
 
-// static
 void Manager::release()
 {
-    delete instance;
+    instance->deleteLater();
     instance = 0;
 }
 
@@ -99,4 +95,13 @@ void Manager::requestDefaultAgent(const QString &agentPath)
 {
     QDBusObjectPath agentObjectPath(agentPath);
     d->m_bluezAgentManager->RequestDefaultAgent(agentObjectPath);
+}
+
+// static
+Manager *Manager::self()
+{
+    if (!instance) {
+        instance = new Manager();
+    }
+    return instance;
 }

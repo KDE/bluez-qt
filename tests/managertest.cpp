@@ -13,12 +13,18 @@ int main(int argc, char *argv[])
 {
     QCoreApplication app(argc, argv);
 
-    QBluez::Manager *manager = QBluez::Manager::self();
-    qDebug() << manager << manager->isOperational();
+    QBluez::GetManagerJob *managerJob = QBluez::Manager::get();
+    managerJob->start();
 
-    QObject::connect(manager, &QBluez::Manager::operationalChanged, [ = ]() {
-        qDebug() << "Operational:" << manager->isOperational()
-                 << "Adapters:" << manager->adapters().count()
+    QObject::connect(managerJob, &QBluez::Job::result, [ = ]() {
+        if (managerJob->error() != QBluez::GetManagerJob::NoError) {
+            qDebug() << "Error getting manager:" << managerJob->errorText();
+            return;
+        }
+        QBluez::Manager *manager = managerJob->manager();
+        qDebug() << manager << manager->isOperational();
+
+        qDebug() << "Adapters:" << manager->adapters().count()
                  << "Devices:" << manager->devices().count();
 
         if (!manager->isOperational() || manager->adapters().isEmpty()) {
@@ -110,7 +116,6 @@ int main(int argc, char *argv[])
             });
         });
     });
-
 
     return app.exec();
 }
