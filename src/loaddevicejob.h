@@ -5,6 +5,8 @@
 
 #include <QBluez/Job>
 
+#include "qbluez_export.h"
+
 namespace QBluez
 {
 

@@ -3,8 +3,9 @@
 
 #include <QObject>
 
-#include "qbluez_export.h"
 #include <QBluez/GetManagerJob>
+
+#include "qbluez_export.h"
 
 namespace QBluez
 {
