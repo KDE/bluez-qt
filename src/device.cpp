@@ -95,7 +95,7 @@ SetPropertyJob *Device::setBlocked(bool blocked)
     return new SetPropertyJob(QStringLiteral("Blocked"), blocked, d);
 }
 
-bool Device::legacyPairing() const
+bool Device::hasLegacyPairing() const
 {
     return d->m_legacyPairing;
 }

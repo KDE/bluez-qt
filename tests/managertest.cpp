@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
                     qDebug() << "\t Paired:" << device->isPaired();
                     qDebug() << "\t Trusted:" << device->isTrusted();
                     qDebug() << "\t Blocked:" << device->isBlocked();
-                    qDebug() << "\t LegacyPairing:" << device->legacyPairing();
+                    qDebug() << "\t LegacyPairing:" << device->hasLegacyPairing();
                     qDebug() << "\t RSSI:" << device->rssi();
                     qDebug() << "\t Connected:" << device->isConnected();
                     qDebug() << "\t UUIDs:" << device->uuids();

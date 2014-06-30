@@ -29,7 +29,7 @@ class QBLUEZ_EXPORT Device : public QObject
     Q_PROPERTY(bool isPaired READ isPaired NOTIFY pairedChanged)
     Q_PROPERTY(bool isTrusted READ isTrusted WRITE setTrusted NOTIFY trustedChanged)
     Q_PROPERTY(bool isBlocked READ isBlocked WRITE setBlocked NOTIFY blockedChanged)
-    Q_PROPERTY(bool legacyPairing READ legacyPairing NOTIFY legacyPairingChanged)
+    Q_PROPERTY(bool legacyPairing READ hasLegacyPairing NOTIFY legacyPairingChanged)
     Q_PROPERTY(qint16 rssi READ rssi NOTIFY rssiChanged)
     Q_PROPERTY(bool isConnected READ isConnected NOTIFY connectedChanged)
     Q_PROPERTY(QStringList uuids READ uuids NOTIFY uuidsChanged)
@@ -64,7 +64,7 @@ public:
     bool isBlocked() const;
     SetPropertyJob *setBlocked(bool isBlocked);
 
-    bool legacyPairing() const;
+    bool hasLegacyPairing() const;
 
     qint16 rssi() const;
 
