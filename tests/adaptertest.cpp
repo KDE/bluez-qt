@@ -45,35 +45,35 @@ AdapterTest::~AdapterTest()
 void AdapterTest::adapterAdded(QBluez::Adapter *adapter)
 {
     qDebug() << "Adapter added: " << adapter;
-    //qDebug() << "\tBluetooth Operational: " << m_manager->isBluetoothOperational();
+    qDebug() << "\tBluetooth Operational: " << m_manager->isBluetoothOperational();
     qDebug() << "\tUsable Adapter: " << m_manager->usableAdapter();
 }
 
 void AdapterTest::adapterRemoved(QBluez::Adapter *adapter)
 {
     qDebug() << "Adapter removed: " << adapter;
-    //qDebug() << "\tBluetooth Operational: " << m_manager->isBluetoothOperational();
+    qDebug() << "\tBluetooth Operational: " << m_manager->isBluetoothOperational();
     qDebug() << "\tUsable Adapter: " << m_manager->usableAdapter();
 }
 
 void AdapterTest::usableAdapterChanged(QBluez::Adapter *adapter)
 {
     qDebug() << "Usable adapter changed: " << adapter;
-    //qDebug() << "\tBluetooth Operational: " << m_manager->isBluetoothOperational();
+    qDebug() << "\tBluetooth Operational: " << m_manager->isBluetoothOperational();
     qDebug() << "\tUsable Adapter: " << m_manager->usableAdapter();
 }
 
 void AdapterTest::allAdaptersRemoved()
 {
     qDebug() << "All adapters have been removed";
-    //qDebug() << "\tBluetooth Operational: " << m_manager->isBluetoothOperational();
+    qDebug() << "\tBluetooth Operational: " << m_manager->isBluetoothOperational();
     qDebug() << "\tUsable Adapter: " << m_manager->usableAdapter();
 }
 
 void AdapterTest::run()
 {
     while (true) {
-        //qDebug() << "Bluetooth Operational: " << m_manager->isBluetoothOperational();
+        qDebug() << "Bluetooth Operational: " << m_manager->isBluetoothOperational();
         qDebug() << "Usable Adapter: " << m_manager->usableAdapter();
         sleep(5);
     }

@@ -22,7 +22,7 @@ class QBLUEZ_EXPORT Manager : public QObject
     Q_PROPERTY(Manager* self READ self)
     Q_PROPERTY(QList<Adapter *> adapters READ adapters)
     Q_PROPERTY(QList<Device *> devices READ devices)
-    Q_PROPERTY(bool operational READ isOperational NOTIFY operationalChanged)
+    Q_PROPERTY(bool bluetoothOperational READ isBluetoothOperational)
 
 public:
     enum RegisterCapability {
@@ -42,15 +42,13 @@ public:
 
     Adapter *usableAdapter();
 
-    bool isOperational() const;
+    bool isBluetoothOperational() const;
 
     void registerAgent(const QString &agentPath, RegisterCapability registerCapability);
     void unregisterAgent(const QString &agentPath);
     void requestDefaultAgent(const QString &agentPath);
 
 Q_SIGNALS:
-    void operationalChanged(bool operational);
-
     void adapterAdded(Adapter *adapter);
     void adapterRemoved(Adapter *adapter);
     void usableAdapterChanged(Adapter *adapter);

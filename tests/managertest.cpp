@@ -22,12 +22,12 @@ int main(int argc, char *argv[])
             return;
         }
         QBluez::Manager *manager = managerJob->manager();
-        qDebug() << manager << manager->isOperational();
+        qDebug() << manager << manager->isBluetoothOperational();
 
         qDebug() << "Adapters:" << manager->adapters().count()
                  << "Devices:" << manager->devices().count();
 
-        if (!manager->isOperational() || manager->adapters().isEmpty()) {
+        if (!manager->isBluetoothOperational() || manager->adapters().isEmpty()) {
             return;
         }
 

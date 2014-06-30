@@ -56,9 +56,9 @@ Adapter *Manager::usableAdapter()
     return d->usableAdapter();
 }
 
-bool Manager::isOperational() const
+bool Manager::isBluetoothOperational() const
 {
-    return d->m_bluezRunning && d->m_initialized;
+    return d->m_bluezRunning && d->m_initialized && d->usableAdapter();
 }
 
 void Manager::registerAgent(const QString &agentPath, RegisterCapability registerCapability)

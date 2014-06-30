@@ -118,7 +118,6 @@ void ManagerPrivate::initialize()
             Q_ASSERT(m_bluezAgentManager);
 
             m_initialized = true;
-            Q_EMIT q->operationalChanged(true);
             Q_EMIT initFinished();
         }
 
@@ -128,6 +127,8 @@ void ManagerPrivate::initialize()
 
 void ManagerPrivate::clear()
 {
+    // TODO: Notify about operational change - all objects will be deleted!
+
     m_initialized = false;
     m_usableAdapter = 0;
 
@@ -142,8 +143,6 @@ void ManagerPrivate::clear()
 
     delete m_bluezAgentManager;
     m_bluezAgentManager = 0;
-
-    Q_EMIT q->operationalChanged(false);
 }
 
 Adapter *ManagerPrivate::usableAdapter()
