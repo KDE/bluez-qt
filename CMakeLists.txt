@@ -54,7 +54,7 @@ install(EXPORT KF5QBluezTargets
         FILE KF5QBluezTargets.cmake
         NAMESPACE KF5::)
 
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/qbluez_version.h"
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/src/qbluez_version.h"
         DESTINATION "${INCLUDE_INSTALL_DIR}"
         COMPONENT Devel)
 

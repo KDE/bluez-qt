@@ -31,7 +31,6 @@ target_link_libraries(KF5QBluez
     PUBLIC
         Qt5::Core
         Qt5::DBus
-#    PRIVATE
 )
 
 set_target_properties(KF5QBluez
