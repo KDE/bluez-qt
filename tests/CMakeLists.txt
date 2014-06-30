@@ -12,4 +12,6 @@ endmacro()
 
 qbluez_executable_tests(
     managertest
+    adaptertest
+    devicereceivertest
 )
