@@ -13,7 +13,13 @@ LoadAdaptersJob::LoadAdaptersJob(ManagerPrivate *manager, QObject *parent)
 
 void LoadAdaptersJob::doStart()
 {
-    if (m_manager->m_adaptersLoaded || m_manager->m_adapters.isEmpty()) {
+    if (m_manager->m_adaptersLoaded) {
+        emitResult();
+        return;
+    }
+
+    if (m_manager->m_adapters.isEmpty()) {
+        m_manager->m_adaptersLoaded = true;
         emitResult();
         return;
     }
