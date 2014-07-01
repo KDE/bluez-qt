@@ -12,6 +12,7 @@
     </method>
     <method name="Pair"/>
     <method name="CancelPairing"/>
+<!--
     <property name="Address" type="s" access="read"/>
     <property name="Name" type="s" access="read"/>
     <property name="Alias" type="s" access="readwrite"/>
@@ -29,5 +30,6 @@
     <property name="UUIDs" type="as" access="read"/>
     <property name="Modalias" type="s" access="read"/>
     <property name="Adapter" type="o" access="read"/>
+-->
   </interface>
 </node>
