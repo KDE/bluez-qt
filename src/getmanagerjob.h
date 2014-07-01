@@ -3,8 +3,7 @@
 
 #include <QObject>
 
-#include <QBluez/Job>
-
+#include "job.h"
 #include "qbluez_export.h"
 
 namespace QBluez
@@ -18,6 +17,7 @@ class QBLUEZ_EXPORT GetManagerJob : public Job
 
 public:
     GetManagerJob(Manager *manager, QObject *parent = 0);
+    ~GetManagerJob();
 
     Manager *manager() const;
 
@@ -27,7 +27,8 @@ Q_SIGNALS:
 private:
     void doStart() Q_DECL_OVERRIDE;
 
-    Manager *m_manager;
+    class GetManagerJobPrivate *d;
+    friend class GetManagerJobPrivate;
 };
 
 } // namespace QBluez

@@ -3,8 +3,7 @@
 
 #include <QVariant>
 
-#include <QBluez/Job>
-
+#include "job.h"
 #include "qbluez_export.h"
 
 namespace QBluez
@@ -16,6 +15,7 @@ class QBLUEZ_EXPORT SetPropertyJob : public Job
 
 public:
     SetPropertyJob(const QString &name, const QVariant &value, QObject *parent);
+    ~SetPropertyJob();
 
 Q_SIGNALS:
     void result(Job *job);
@@ -23,8 +23,8 @@ Q_SIGNALS:
 private:
     void doStart() Q_DECL_OVERRIDE;
 
-    QString m_name;
-    QVariant m_value;
+    class SetPropertyJobPrivate *d;
+    friend class SetPropertyJobPrivate;
 };
 
 } // namespace QBluez

@@ -27,10 +27,10 @@
 #include <QTimer>
 #include <QCoreApplication>
 
-#include <QBluez/Manager>
-#include <QBluez/Adapter>
-#include <QBluez/Device>
-#include <QBluez/LoadAdaptersJob>
+#include "manager.h"
+#include "adapter.h"
+#include "device.h"
+#include "loadadaptersjob.h"
 
 using namespace QBluez;
 

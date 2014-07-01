@@ -5,8 +5,7 @@
 #include <QList>
 #include <QStringList>
 
-#include <QBluez/SetPropertyJob>
-
+#include "setpropertyjob.h"
 #include "qbluez_export.h"
 
 namespace QBluez
@@ -98,7 +97,7 @@ private:
 
     friend class AdapterPrivate;
     friend class ManagerPrivate;
-    friend class LoadAdaptersJob;
+    friend class LoadAdaptersJobPrivate;
 };
 
 } // namespace QBluez

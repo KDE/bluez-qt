@@ -3,8 +3,7 @@
 
 #include <QObject>
 
-#include <QBluez/Job>
-
+#include "job.h"
 #include "qbluez_export.h"
 
 namespace QBluez
@@ -25,7 +24,8 @@ Q_SIGNALS:
 private:
     void doStart() Q_DECL_OVERRIDE;
 
-    ManagerPrivate *m_manager;
+    class LoadAdaptersJobPrivate *d;
+    friend class LoadAdaptersJobPrivate;
 };
 
 } // namespace QBluez

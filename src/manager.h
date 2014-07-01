@@ -3,8 +3,7 @@
 
 #include <QObject>
 
-#include <QBluez/GetManagerJob>
-
+#include "getmanagerjob.h"
 #include "qbluez_export.h"
 
 namespace QBluez
@@ -63,7 +62,7 @@ private:
 
     ManagerPrivate *const d;
     friend class ManagerPrivate;
-    friend class GetManagerJob;
+    friend class GetManagerJobPrivate;
 };
 
 } // namespace QBluez

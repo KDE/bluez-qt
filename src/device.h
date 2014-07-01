@@ -3,9 +3,8 @@
 
 #include <QObject>
 
-#include <QBluez/LoadDeviceJob>
-#include <QBluez/SetPropertyJob>
-
+#include "loaddevicejob.h"
+#include "setpropertyjob.h"
 #include "qbluez_export.h"
 
 namespace QBluez

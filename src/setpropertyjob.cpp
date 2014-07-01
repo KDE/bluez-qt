@@ -5,16 +5,31 @@
 #include <QDBusPendingReply>
 #include <QDBusPendingCallWatcher>
 
-using namespace QBluez;
+namespace QBluez
+{
 
-SetPropertyJob::SetPropertyJob(const QString &name, const QVariant &value, QObject *parent)
-    : Job(parent)
+class SetPropertyJobPrivate : public QObject
+{
+    Q_OBJECT
+
+public:
+    SetPropertyJobPrivate(SetPropertyJob *q, const QString &name, const QVariant &value);
+
+    void doStart();
+
+    SetPropertyJob *q;
+    QString m_name;
+    QVariant m_value;
+};
+
+SetPropertyJobPrivate::SetPropertyJobPrivate(SetPropertyJob *q, const QString &name, const QVariant &value)
+    : QObject(q)
     , m_name(name)
     , m_value(value)
 {
 }
 
-void SetPropertyJob::doStart()
+void SetPropertyJobPrivate::doStart()
 {
     QDBusPendingReply<> call;
 
@@ -31,9 +46,30 @@ void SetPropertyJob::doStart()
     connect(watcher, &QDBusPendingCallWatcher::finished, [ this, watcher ]() {
         const QDBusPendingReply<> &reply = *watcher;
         if (reply.isError()) {
-            setError(UserDefinedError);
-            setErrorText(reply.error().message());
+            q->setError(SetPropertyJob::UserDefinedError);
+            q->setErrorText(reply.error().message());
         }
-        emitResult();
+        q->emitResult();
+        watcher->deleteLater();
     });
 }
+
+SetPropertyJob::SetPropertyJob(const QString &name, const QVariant &value, QObject *parent)
+    : Job(parent)
+    , d(new SetPropertyJobPrivate(this, name, value))
+{
+}
+
+SetPropertyJob::~SetPropertyJob()
+{
+    delete d;
+}
+
+void SetPropertyJob::doStart()
+{
+    d->doStart();
+}
+
+} // namespace QBluez
+
+#include "setpropertyjob.moc"

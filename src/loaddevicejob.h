@@ -3,8 +3,7 @@
 
 #include <QObject>
 
-#include <QBluez/Job>
-
+#include "job.h"
 #include "qbluez_export.h"
 
 namespace QBluez
@@ -18,7 +17,8 @@ class QBLUEZ_EXPORT LoadDeviceJob : public Job
     Q_OBJECT
 
 public:
-    LoadDeviceJob(DevicePrivate *dd, QObject *parent = 0);
+    LoadDeviceJob(DevicePrivate *device, QObject *parent = 0);
+    ~LoadDeviceJob();
 
     Device *device() const;
 
@@ -28,7 +28,8 @@ Q_SIGNALS:
 private:
     void doStart() Q_DECL_OVERRIDE;
 
-    DevicePrivate *dd;
+    class LoadDeviceJobPrivate *d;
+    friend class LoadDeviceJobPrivate;
 };
 
 } // namespace QBluez

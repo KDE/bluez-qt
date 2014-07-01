@@ -51,7 +51,6 @@ ecm_generate_headers(QBluez_HEADERS
         SetPropertyJob
         Utils
 
-    PREFIX QBluez
     REQUIRED_HEADERS QBluez_HEADERS
 )
 

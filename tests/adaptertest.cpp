@@ -26,9 +26,9 @@
 #include <QDebug>
 #include <QCoreApplication>
 
-#include <QBluez/Manager>
-#include <QBluez/Adapter>
-#include <QBluez/LoadAdaptersJob>
+#include "manager.h"
+#include "adapter.h"
+#include "loadadaptersjob.h"
 
 using namespace QBluez;
 
@@ -101,12 +101,16 @@ int main(int argc, char **argv)
     Manager *manager = managerJob->manager();
     AdapterTest *adapterTest = new AdapterTest(manager);
 
+    qDebug() << "Got manager" << manager;
+
     LoadAdaptersJob *adaptersJob = manager->loadAdapters();
     adaptersJob->exec();
     if (adaptersJob->error() != LoadAdaptersJob::NoError) {
         qWarning() << "Error loading adapters:" << adaptersJob->errorText();
         return 1;
     }
+
+    qDebug() << "Loaded adapters";
 
     QObject::connect(manager, &Manager::adapterAdded, adapterTest, &AdapterTest::adapterAdded);
     QObject::connect(manager, &Manager::adapterRemoved, adapterTest, &AdapterTest::adapterRemoved);
