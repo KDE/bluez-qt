@@ -55,7 +55,7 @@ install(EXPORT KF5QBluezTargets
         NAMESPACE KF5::)
 
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/src/qbluez_version.h"
-        DESTINATION "${INCLUDE_INSTALL_DIR}"
+        DESTINATION "${INCLUDE_INSTALL_DIR}/QBluez"
         COMPONENT Devel)
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
