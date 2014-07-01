@@ -45,12 +45,12 @@ void SetPropertyJobPrivate::doStart()
 
     connect(watcher, &QDBusPendingCallWatcher::finished, [ this, watcher ]() {
         const QDBusPendingReply<> &reply = *watcher;
+        watcher->deleteLater();
         if (reply.isError()) {
             q->setError(SetPropertyJob::UserDefinedError);
             q->setErrorText(reply.error().message());
         }
         q->emitResult();
-        watcher->deleteLater();
     });
 }
 

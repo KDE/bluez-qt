@@ -55,6 +55,7 @@ ManagerPrivate::ManagerPrivate(Manager *parent)
 
         connect(watcher, &QDBusPendingCallWatcher::finished, [ this, watcher ]() {
             const QDBusPendingReply<bool> &reply = *watcher;
+            watcher->deleteLater();
 
             if (reply.isError()) {
                 Q_EMIT initError(reply.error().message());
@@ -88,6 +89,7 @@ void ManagerPrivate::initialize()
 
     connect(watcher, &QDBusPendingCallWatcher::finished, [ this, watcher ]() {
         const QDBusPendingReply<DBusManagerStruct> &reply = *watcher;
+        watcher->deleteLater();
 
         if (reply.isError()) {
             Q_EMIT initError(reply.error().message());

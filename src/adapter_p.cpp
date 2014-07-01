@@ -50,6 +50,8 @@ void AdapterPrivate::load()
 
     connect(watcher, &QDBusPendingCallWatcher::finished, [ this, watcher ]() {
         const QDBusPendingReply<QVariantMap> &reply = *watcher;
+        watcher->deleteLater();
+
         if (reply.isError()) {
             Q_EMIT loadError(reply.error().message());
             return;

@@ -38,6 +38,8 @@ void LoadDeviceJobPrivate::doStart()
 
     connect(watcher, &QDBusPendingCallWatcher::finished, [ this, watcher ]() {
         const QDBusPendingReply<QVariantMap> &reply = *watcher;
+        watcher->deleteLater();
+
         if (reply.isError()) {
             q->setError(LoadDeviceJob::UserDefinedError);
             q->setErrorText(reply.error().message());
@@ -63,7 +65,6 @@ void LoadDeviceJobPrivate::doStart()
         m_device->m_modalias = properties.value(QStringLiteral("Modalias")).toString();
 
         m_device->m_loaded = true;
-        watcher->deleteLater();
 
         q->emitResult();
     });
