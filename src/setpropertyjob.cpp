@@ -24,6 +24,7 @@ public:
 
 SetPropertyJobPrivate::SetPropertyJobPrivate(SetPropertyJob *q, const QString &name, const QVariant &value)
     : QObject(q)
+    , q(q)
     , m_name(name)
     , m_value(value)
 {
@@ -33,9 +34,9 @@ void SetPropertyJobPrivate::doStart()
 {
     QDBusPendingReply<> call;
 
-    if (AdapterPrivate *adapter = qobject_cast<AdapterPrivate *>(parent())) {
+    if (AdapterPrivate *adapter = qobject_cast<AdapterPrivate *>(q->parent())) {
         call = adapter->setDBusProperty(m_name, m_value);
-    } else if (DevicePrivate *device = qobject_cast<DevicePrivate *>(parent())) {
+    } else if (DevicePrivate *device = qobject_cast<DevicePrivate *>(q->parent())) {
         call = device->setDBusProperty(m_name, m_value);
     } else {
         qFatal("SetPropertyJob must be parented to AdapterPrivate or DevicePrivate!");
