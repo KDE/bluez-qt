@@ -1,7 +1,8 @@
 #include "device.h"
 #include "device_p.h"
 
-using namespace QBluez;
+namespace QBluez
+{
 
 Device::Device(const QString &path, Adapter *adapter, QObject *parent)
     : QObject(parent)
@@ -139,3 +140,5 @@ void Device::disconnect()
 {
     d->m_bluezDevice->Disconnect();
 }
+
+} // namespace QBluez

@@ -3,7 +3,8 @@
 #include "device.h"
 #include "device_p.h"
 
-using namespace QBluez;
+namespace QBluez
+{
 
 Adapter::Adapter(const QString &path, QObject *parent)
     : QObject(parent)
@@ -130,3 +131,5 @@ void Adapter::stopDiscovery()
 {
     d->m_bluezAdapter->StopDiscovery();
 }
+
+} // namespace QBluez

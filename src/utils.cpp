@@ -25,7 +25,8 @@
 
 #include <QString>
 
-using namespace QBluez;
+namespace QBluez
+{
 
 quint32 stringToType(const QString &stringType)
 {
@@ -110,3 +111,5 @@ DeviceType classToType(quint32 classNum)
 
     return Any;
 }
+
+} // namespace QBluez

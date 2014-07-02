@@ -22,6 +22,7 @@ class ManagerPrivate : public QObject
 
 public:
     explicit ManagerPrivate(Manager *parent);
+    ~ManagerPrivate();
 
     void initialize();
     void clear();

@@ -2,7 +2,8 @@
 #include "device.h"
 #include "adapter.h"
 
-using namespace QBluez;
+namespace QBluez
+{
 
 DevicePrivate::DevicePrivate(const QString &path, Adapter *adapter, Device *parent)
     : QObject(parent)
@@ -95,3 +96,5 @@ void DevicePrivate::propertiesChanged(const QString &interface, const QVariantMa
 
     Q_EMIT m_adapter->deviceChanged(q);
 }
+
+} // namespace QBluez

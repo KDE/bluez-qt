@@ -3,7 +3,8 @@
 #include "adapter.h"
 #include "loadadaptersjob.h"
 
-using namespace QBluez;
+namespace QBluez
+{
 
 static Manager *instance = 0;
 
@@ -105,3 +106,5 @@ Manager *Manager::self()
     }
     return instance;
 }
+
+} // namespace QBluez

@@ -23,7 +23,9 @@
 
 #include <QEventLoop>
 
-using namespace QBluez;
+namespace QBluez
+{
+
 JobPrivate::JobPrivate()
 {
     eventLoop = 0;
@@ -95,3 +97,5 @@ Job::Job(JobPrivate &dd, QObject *parent) : QObject(parent), d_ptr(&dd)
 {
 
 }
+
+} // namespace QBluez

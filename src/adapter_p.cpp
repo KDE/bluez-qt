@@ -1,7 +1,8 @@
 #include "adapter_p.h"
 #include "adapter.h"
 
-using namespace QBluez;
+namespace QBluez
+{
 
 AdapterPrivate::AdapterPrivate(const QString &path, Adapter *parent)
     : QObject(parent)
@@ -129,3 +130,5 @@ void AdapterPrivate::propertiesChanged(const QString &interface, const QVariantM
         }
     }
 }
+
+} // namespace QBluez

@@ -9,7 +9,8 @@
 #include <QDBusConnectionInterface>
 #include <QDBusServiceWatcher>
 
-using namespace QBluez;
+namespace QBluez
+{
 
 ManagerPrivate::ManagerPrivate(Manager *parent)
     : QObject(parent)
@@ -69,6 +70,11 @@ ManagerPrivate::ManagerPrivate(Manager *parent)
             }
         });
     }
+}
+
+ManagerPrivate::~ManagerPrivate()
+{
+    clear();
 }
 
 void ManagerPrivate::initialize()
@@ -249,3 +255,5 @@ void ManagerPrivate::adapterPoweredChanged(bool powered)
         Q_EMIT q->usableAdapterChanged(m_usableAdapter);
     }
 }
+
+} // namespace QBluez
