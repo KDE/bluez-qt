@@ -91,6 +91,11 @@ void LoadDeviceJob::doStart()
     d->doStart();
 }
 
+void LoadDeviceJob::doEmitResult()
+{
+    Q_EMIT result(this);
+}
+
 } // namespace QBluez
 
 #include "loaddevicejob.moc"

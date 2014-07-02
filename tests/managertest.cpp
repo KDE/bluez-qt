@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     QBluez::GetManagerJob *managerJob = QBluez::Manager::get();
     managerJob->start();
 
-    QObject::connect(managerJob, &QBluez::Job::result, [ = ]() {
+    QObject::connect(managerJob, &QBluez::GetManagerJob::result, [ = ]() {
         if (managerJob->error() != QBluez::GetManagerJob::NoError) {
             qDebug() << "Error getting manager:" << managerJob->errorText();
             return;
@@ -27,14 +27,14 @@ int main(int argc, char *argv[])
         qDebug() << "Adapters:" << manager->adapters().count()
                  << "Devices:" << manager->devices().count();
 
-        if (!manager->isBluetoothOperational() || manager->adapters().isEmpty()) {
+        if (manager->adapters().isEmpty()) {
             return;
         }
 
         QBluez::LoadAdaptersJob *loadJob = manager->loadAdapters();
         loadJob->start();
 
-        QObject::connect(loadJob, &QBluez::Job::result, [ = ]() {
+        QObject::connect(loadJob, &QBluez::LoadAdaptersJob::result, [ = ]() {
             if (loadJob->error() != QBluez::LoadAdaptersJob::NoError) {
                 qDebug() << "Error loading adapter:" << loadJob->errorText();
                 return;
@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
                 QBluez::LoadDeviceJob *deviceJob = device->load();
                 deviceJob->start();
 
-                QObject::connect(deviceJob, &QBluez::Job::result, [ = ]() {
+                QObject::connect(deviceJob, &QBluez::LoadDeviceJob::result, [ = ]() {
                     qDebug() << "Loaded device:";
                     qDebug() << "\t Address:" << device->address();
                     qDebug() << "\t Name:" << device->name();
@@ -88,7 +88,7 @@ int main(int argc, char *argv[])
             QBluez::SetPropertyJob *powerOnJob = adapter->setPowered(true);
             powerOnJob->start();
 
-            QObject::connect(powerOnJob, &QBluez::Job::result, [ = ]() {
+            QObject::connect(powerOnJob, &QBluez::SetPropertyJob::result, [ = ]() {
                 if (powerOnJob->error() != QBluez::SetPropertyJob::NoError) {
                     qDebug() << "Error powering on adapter:" << powerOnJob->errorText();
                     return;

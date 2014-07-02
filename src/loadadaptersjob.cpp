@@ -79,6 +79,11 @@ void LoadAdaptersJob::doStart()
     d->doStart();
 }
 
+void LoadAdaptersJob::doEmitResult()
+{
+    Q_EMIT result(this);
+}
+
 } // namespace QBluez
 
 #include "loadadaptersjob.moc"

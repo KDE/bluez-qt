@@ -18,10 +18,11 @@ public:
     ~SetPropertyJob();
 
 Q_SIGNALS:
-    void result(Job *job);
+    void result(SetPropertyJob *job);
 
 private:
     void doStart() Q_DECL_OVERRIDE;
+    void doEmitResult() Q_DECL_OVERRIDE;
 
     class SetPropertyJobPrivate *d;
     friend class SetPropertyJobPrivate;

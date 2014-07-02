@@ -51,8 +51,8 @@ class QBLUEZ_EXPORT Job : public QObject
 {
     Q_OBJECT
     Q_ENUMS(Error)
-    Q_PROPERTY(int error READ error NOTIFY result)
-    Q_PROPERTY(QString errorText READ errorText NOTIFY result)
+    Q_PROPERTY(int error READ error)
+    Q_PROPERTY(QString errorText READ errorText)
 
 public:
     explicit Job(QObject *parent = 0);
@@ -174,13 +174,19 @@ protected:
      */
     void emitResult();
 
+    /**
+     * Implementation for emitting the result signal
+     *
+     * This function is needed to be able to emit result() signal
+     * with the job pointer's type being subclass
+     */
+    virtual void doEmitResult() = 0;
+
     JobPrivate *const d_ptr;
     Job(JobPrivate &dd, QObject *parent);
+
 private:
     Q_DECLARE_PRIVATE(Job)
-
-Q_SIGNALS:
-    void result(Job *job);
 };
 }
 Q_DECLARE_METATYPE(QBluez::Job::Error)

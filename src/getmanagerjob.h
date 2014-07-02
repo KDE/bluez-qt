@@ -22,10 +22,11 @@ public:
     Manager *manager() const;
 
 Q_SIGNALS:
-    void result(Job *job);
+    void result(GetManagerJob *job);
 
 private:
     void doStart() Q_DECL_OVERRIDE;
+    void doEmitResult() Q_DECL_OVERRIDE;
 
     class GetManagerJobPrivate *d;
     friend class GetManagerJobPrivate;

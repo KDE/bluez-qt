@@ -73,6 +73,11 @@ void GetManagerJob::doStart()
     d->doStart();
 }
 
+void GetManagerJob::doEmitResult()
+{
+    Q_EMIT result(this);
+}
+
 } // namespace QBluez
 
 #include "getmanagerjob.moc"

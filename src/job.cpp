@@ -54,7 +54,7 @@ void Job::emitResult()
         d->eventLoop->quit();
     }
 
-    Q_EMIT result(this);
+    doEmitResult();
     deleteLater();
 }
 

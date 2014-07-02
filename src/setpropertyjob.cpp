@@ -70,6 +70,11 @@ void SetPropertyJob::doStart()
     d->doStart();
 }
 
+void SetPropertyJob::doEmitResult()
+{
+    Q_EMIT result(this);
+}
+
 } // namespace QBluez
 
 #include "setpropertyjob.moc"

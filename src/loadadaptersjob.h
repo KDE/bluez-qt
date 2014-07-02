@@ -19,10 +19,11 @@ public:
     LoadAdaptersJob(ManagerPrivate *manager, QObject *parent = 0);
 
 Q_SIGNALS:
-    void result(Job *job);
+    void result(LoadAdaptersJob *job);
 
 private:
     void doStart() Q_DECL_OVERRIDE;
+    void doEmitResult() Q_DECL_OVERRIDE;
 
     class LoadAdaptersJobPrivate *d;
     friend class LoadAdaptersJobPrivate;
