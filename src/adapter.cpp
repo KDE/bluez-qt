@@ -17,6 +17,11 @@ Adapter::~Adapter()
     delete d;
 }
 
+QString Adapter::path() const
+{
+    return d->m_path;
+}
+
 QString Adapter::address() const
 {
     return d->m_address;

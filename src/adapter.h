@@ -18,6 +18,7 @@ class QBLUEZ_EXPORT Adapter : public QObject
 {
     Q_OBJECT
 
+    Q_PROPERTY(QString path READ path)
     Q_PROPERTY(QString address READ address)
     Q_PROPERTY(QString name READ name NOTIFY nameChanged)
     Q_PROPERTY(QString alias READ alias WRITE setAlias NOTIFY aliasChanged)
@@ -34,6 +35,8 @@ class QBLUEZ_EXPORT Adapter : public QObject
 
 public:
     virtual ~Adapter();
+
+    QString path() const;
 
     QString address() const;
 

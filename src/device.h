@@ -18,6 +18,7 @@ class QBLUEZ_EXPORT Device : public QObject
 {
     Q_OBJECT
 
+    Q_PROPERTY(QString path READ path)
     Q_PROPERTY(QString address READ address NOTIFY addressChanged)
     Q_PROPERTY(QString name READ name NOTIFY nameChanged)
     Q_PROPERTY(QString friendlyName READ friendlyName NOTIFY friendlyNameChanged)
@@ -40,6 +41,8 @@ public:
 
     bool isLoaded() const;
     LoadDeviceJob *load();
+
+    QString path() const;
 
     QString address() const;
 
