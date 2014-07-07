@@ -47,11 +47,6 @@ quint32 Adapter::adapterClass() const
     return d->m_adapterClass;
 }
 
-SetPropertyJob *Adapter::setAdapterClass(quint32 adapterClass)
-{
-    return new SetPropertyJob(QStringLiteral("Class"), adapterClass, d);
-}
-
 bool Adapter::isPowered() const
 {
     return d->m_powered;

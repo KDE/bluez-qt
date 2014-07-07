@@ -46,7 +46,6 @@ public:
     SetPropertyJob *setAlias(const QString &alias);
 
     quint32 adapterClass() const;
-    SetPropertyJob *setAdapterClass(quint32 adapterClass);
 
     bool isPowered() const;
     SetPropertyJob *setPowered(bool powered);
