@@ -40,6 +40,13 @@ QDBusPendingReply<> DevicePrivate::setDBusProperty(const QString &name, const QV
     return m_dbusProperties->Set(QStringLiteral("org.bluez.Device1"), name, QDBusVariant(value));
 }
 
+// Make sure not to emit propertyChanged signal when the property already contains changed value
+#define PROPERTY_CHANGED(var, type_cast, signal) \
+    if (var != value.type_cast()) { \
+        var = value.type_cast(); \
+        Q_EMIT q->signal(var); \
+    }
+
 void DevicePrivate::propertiesChanged(const QString &interface, const QVariantMap &changed, const QStringList &invalidated)
 {
     Q_UNUSED(interface)
@@ -51,50 +58,45 @@ void DevicePrivate::propertiesChanged(const QString &interface, const QVariantMa
         const QString &property = i.key();
 
         if (property == QLatin1String("Name")) {
-            m_name = value.toString();
-            Q_EMIT q->nameChanged(m_name);
-            Q_EMIT q->friendlyNameChanged(q->friendlyName());
+            if (m_name != value.toString()) {
+                m_name = value.toString();
+                Q_EMIT q->nameChanged(m_name);
+                Q_EMIT q->friendlyNameChanged(q->friendlyName());
+            }
         } else if (property == QLatin1String("Alias")) {
-            m_alias = value.toString();
-            Q_EMIT q->aliasChanged(m_alias);
-            Q_EMIT q->friendlyNameChanged(q->friendlyName());
+            if (m_alias != value.toString()) {
+                m_alias = value.toString();
+                Q_EMIT q->aliasChanged(m_alias);
+                Q_EMIT q->friendlyNameChanged(q->friendlyName());
+            }
         } else if (property == QLatin1String("Class")) {
-            m_deviceClass = value.toUInt();
-            Q_EMIT q->deviceClassChanged(m_deviceClass);
+            PROPERTY_CHANGED(m_deviceClass, toUInt, deviceClassChanged);
         } else if (property == QLatin1String("Appearance")) {
-            m_appearance = value.toUInt();
-            Q_EMIT q->appearanceChanged(m_appearance);
+            PROPERTY_CHANGED(m_appearance, toUInt, appearanceChanged);
         } else if (property == QLatin1String("Icon")) {
-            m_icon = value.toString();
-            Q_EMIT q->iconChanged(m_icon);
+            PROPERTY_CHANGED(m_icon, toString, iconChanged);
         } else if (property == QLatin1String("Paired")) {
-            m_paired = value.toBool();
-            Q_EMIT q->pairedChanged(m_paired);
+            PROPERTY_CHANGED(m_paired, toBool, pairedChanged);
         } else if (property == QLatin1String("Trusted")) {
-            m_trusted = value.toBool();
-            Q_EMIT q->trustedChanged(m_trusted);
+            PROPERTY_CHANGED(m_trusted, toBool, trustedChanged);
         } else if (property == QLatin1String("Blocked")) {
-            m_blocked = value.toBool();
-            Q_EMIT q->blockedChanged(m_blocked);
+            PROPERTY_CHANGED(m_blocked, toBool, blockedChanged);
         } else if (property == QLatin1String("LegacyPairing")) {
-            m_legacyPairing = value.toBool();
-            Q_EMIT q->legacyPairingChanged(m_legacyPairing);
+            PROPERTY_CHANGED(m_legacyPairing, toBool, legacyPairingChanged);
         } else if (property == QLatin1String("RSSI")) {
-            m_rssi = value.toInt();
-            Q_EMIT q->rssiChanged(m_rssi);
+            PROPERTY_CHANGED(m_rssi, toInt, rssiChanged);
         } else if (property == QLatin1String("Connected")) {
-            m_connected = value.toBool();
-            Q_EMIT q->connectedChanged(m_connected);
+            PROPERTY_CHANGED(m_connected, toBool, connectedChanged);
         } else if (property == QLatin1String("UUIDs")) {
-            m_uuids = value.toStringList();
-            Q_EMIT q->uuidsChanged(m_uuids);
+            PROPERTY_CHANGED(m_uuids, toStringList, uuidsChanged);
         } else if (property == QLatin1String("Modalias")) {
-            m_modalias = value.toString();
-            Q_EMIT q->modaliasChanged(m_modalias);
+            PROPERTY_CHANGED(m_modalias, toString, modaliasChanged);
         }
     }
 
     Q_EMIT m_adapter->deviceChanged(q);
 }
+
+#undef PROPERTY_CHANGED
 
 } // namespace QBluez

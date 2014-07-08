@@ -84,6 +84,13 @@ QDBusPendingReply<> AdapterPrivate::setDBusProperty(const QString &name, const Q
     return m_dbusProperties->Set(QStringLiteral("org.bluez.Adapter1"), name, QDBusVariant(value));
 }
 
+// Make sure not to emit propertyChanged signal when the property already contains changed value
+#define PROPERTY_CHANGED(var, type_cast, signal) \
+    if (var != value.type_cast()) { \
+        var = value.type_cast(); \
+        Q_EMIT q->signal(var); \
+    }
+
 void AdapterPrivate::propertiesChanged(const QString &interface, const QVariantMap &changed, const QStringList &invalidated)
 {
     Q_UNUSED(interface)
@@ -95,40 +102,31 @@ void AdapterPrivate::propertiesChanged(const QString &interface, const QVariantM
         const QString &property = i.key();
 
         if (property == QLatin1String("Name")) {
-            m_name = value.toString();
-            Q_EMIT q->nameChanged(m_name);
+            PROPERTY_CHANGED(m_name, toString, nameChanged);
         } else if (property == QLatin1String("Alias")) {
-            m_alias = value.toString();
-            Q_EMIT q->aliasChanged(m_alias);
+            PROPERTY_CHANGED(m_alias, toString, aliasChanged);
         } else if (property == QLatin1String("Class")) {
-            m_adapterClass = value.toUInt();
-            Q_EMIT q->adapterClassChanged(m_adapterClass);
+            PROPERTY_CHANGED(m_adapterClass, toUInt, adapterClassChanged);
         } else if (property == QLatin1String("Powered")) {
-            m_powered = value.toBool();
-            Q_EMIT q->poweredChanged(m_powered);
+            PROPERTY_CHANGED(m_powered, toBool, poweredChanged);
         } else if (property == QLatin1String("Discoverable")) {
-            m_discoverable = value.toBool();
-            Q_EMIT q->discoverableChanged(m_discoverable);
+            PROPERTY_CHANGED(m_discoverable, toBool, discoverableChanged);
         } else if (property == QLatin1String("DiscoverableTimeout")) {
-            m_discoverableTimeout = value.toUInt();
-            Q_EMIT q->discoverableTimeoutChanged(m_discoverableTimeout);
+            PROPERTY_CHANGED(m_discoverableTimeout, toUInt, discoverableTimeoutChanged);
         } else if (property == QLatin1String("Pairable")) {
-            m_pairable = value.toBool();
-            Q_EMIT q->pairableChanged(m_pairable);
+            PROPERTY_CHANGED(m_pairable, toBool, pairableChanged);
         } else if (property == QLatin1String("PairableTimeout")) {
-            m_pairableTimeout = value.toUInt();
-            Q_EMIT q->pairableTimeoutChanged(m_pairableTimeout);
+            PROPERTY_CHANGED(m_pairableTimeout, toUInt, pairableTimeoutChanged);
         } else if (property == QLatin1String("Discovering")) {
-            m_discovering = value.toBool();
-            Q_EMIT q->discoveringChanged(m_discovering);
+            PROPERTY_CHANGED(m_discovering, toBool, discoveringChanged);
         } else if (property == QLatin1String("UUIDs")) {
-            m_uuids = value.toStringList();
-            Q_EMIT q->uuidsChanged(m_uuids);
+            PROPERTY_CHANGED(m_uuids, toStringList, uuidsChanged);
         } else if (property == QLatin1String("Modalias")) {
-            m_modalias = value.toString();
-            Q_EMIT q->modaliasChanged(m_modalias);
+            PROPERTY_CHANGED(m_modalias, toString, modaliasChanged);
         }
     }
 }
+
+#undef PROPERTY_CHANGED
 
 } // namespace QBluez

@@ -199,8 +199,6 @@ void AdapterTest::setPairableTest()
 
 void AdapterTest::setPairableTimeoutTest()
 {
-    QSKIP("Does not pass on my system because multiple properties changed signals are emitted...", QTest::SkipSingle);
-
     Q_FOREACH (const AdapterUnit &unit, m_units) {
         QSignalSpy adapterSpy(unit.adapter, SIGNAL(pairableTimeoutChanged(quint32)));
         QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString,QVariantMap,QStringList)));
@@ -234,7 +232,6 @@ void AdapterTest::discoveryTest()
         bool wasPowered = unit.adapter->isPowered();
         unit.adapter->setPowered(true)->exec();
         unit.dbusAdapter->StopDiscovery();
-        QTest::qWait(50);
 
         QSignalSpy adapterSpy(unit.adapter, SIGNAL(discoveringChanged(bool)));
         QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString,QVariantMap,QStringList)));

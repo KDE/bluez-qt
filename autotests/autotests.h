@@ -16,8 +16,7 @@ static void verifyPropertiesChangedSignal(const QSignalSpy &spy, const QString &
         for (it = properties.constBegin(); it != properties.constEnd(); ++it) {
             const QVariant &changedValue = it.value();
             const QString &property = it.key();
-            if (property == propertyName) {
-                QCOMPARE(changedValue, propertyValue);
+            if (property == propertyName && changedValue == propertyValue) {
                 changes++;
             }
         }
