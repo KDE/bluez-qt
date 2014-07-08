@@ -1,18 +1,19 @@
-#ifndef ADAPTERTEST_H
-#define ADAPTERTEST_H
+#ifndef DEVICETEST_H
+#define DEVICETEST_H
 
 #include <QObject>
 #include <QList>
 
-#include "bluezadapter1_tst.h"
+#include "bluezdevice1_tst.h"
 #include "dbusproperties_tst.h"
 
 #include "manager.h"
 #include "adapter.h"
+#include "device.h"
 
 class QSignalSpy;
 
-class AdapterTest : public QObject
+class DeviceTest : public QObject
 {
     Q_OBJECT
 
@@ -22,25 +23,20 @@ private Q_SLOTS:
 
     void getPropertiesTest();
     void setAliasTest();
-    void setPoweredTest();
-    void setDiscoverableTest();
-    void setDiscoverableTimeoutTest();
-    void setPairableTest();
-    void setPairableTimeoutTest();
-
-    void discoveryTest();
+    void setTrustedTest();
+    void setBlockedTest();
 
 private:
     void verifyPropertiesChangedSignal(const QSignalSpy &spy, const QString &propertyName, const QVariant &propertyValue);
 
-    struct AdapterUnit
+    struct DeviceUnit
     {
-        QBluez::Adapter *adapter;
-        org::bluez::Adapter1 *dbusAdapter;
+        QBluez::Device *device;
+        org::bluez::Device1 *dbusDevice;
         org::freedesktop::DBus::Properties *dbusProperties;
     };
 
-    QList<AdapterUnit> m_units;
+    QList<DeviceUnit> m_units;
 };
 
 #endif // ADAPTERTEST_H

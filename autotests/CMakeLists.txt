@@ -2,8 +2,9 @@ find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Test)
 
 include(ECMMarkAsTest)
 
-qt5_add_dbus_interface(qbluez_autotests_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.freedesktop.DBus.Properties.xml dbusproperties)
-qt5_add_dbus_interface(qbluez_autotests_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.Adapter1.xml bluezadapter1)
+qt5_add_dbus_interface(qbluez_autotests_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.freedesktop.DBus.Properties.xml dbusproperties_tst)
+qt5_add_dbus_interface(qbluez_autotests_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.Adapter1.xml bluezadapter1_tst)
+qt5_add_dbus_interface(qbluez_autotests_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.Device1.xml bluezdevice1_tst)
 
 macro(qbluez_tests)
     foreach(_testname ${ARGN})
@@ -16,4 +17,5 @@ endmacro()
 
 qbluez_tests(
     adapter
+    device
 )
