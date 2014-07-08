@@ -11,8 +11,6 @@
 #include "adapter.h"
 #include "device.h"
 
-class QSignalSpy;
-
 class DeviceTest : public QObject
 {
     Q_OBJECT
@@ -27,8 +25,6 @@ private Q_SLOTS:
     void setBlockedTest();
 
 private:
-    void verifyPropertiesChangedSignal(const QSignalSpy &spy, const QString &propertyName, const QVariant &propertyValue);
-
     struct DeviceUnit
     {
         QBluez::Device *device;
@@ -39,4 +35,4 @@ private:
     QList<DeviceUnit> m_units;
 };
 
-#endif // ADAPTERTEST_H
+#endif // DEVICETEST_H

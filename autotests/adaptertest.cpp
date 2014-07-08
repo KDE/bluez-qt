@@ -1,4 +1,5 @@
 #include "adaptertest.h"
+#include "autotests.h"
 
 #include <QtTest/QTest>
 #include <QtTest/QSignalSpy>
@@ -271,28 +272,6 @@ void AdapterTest::discoveryTest()
 
         unit.adapter->setPowered(wasPowered)->exec();
     }
-}
-
-void AdapterTest::verifyPropertiesChangedSignal(const QSignalSpy &spy, const QString &propertyName, const QVariant &propertyValue)
-{
-    int changes = 0;
-
-    for (int i = 0; i < spy.count(); ++i) {
-        QList<QVariant> arguments = spy.at(i);
-        QVariantMap properties = arguments.at(1).toMap();
-
-        QVariantMap::const_iterator it;
-        for (it = properties.constBegin(); it != properties.constEnd(); ++it) {
-            const QVariant &changedValue = it.value();
-            const QString &property = it.key();
-            if (property == propertyName) {
-                QCOMPARE(changedValue, propertyValue);
-                changes++;
-            }
-        }
-    }
-
-    QCOMPARE(changes, 1);
 }
 
 QTEST_MAIN(AdapterTest)

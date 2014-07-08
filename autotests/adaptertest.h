@@ -10,8 +10,6 @@
 #include "manager.h"
 #include "adapter.h"
 
-class QSignalSpy;
-
 class AdapterTest : public QObject
 {
     Q_OBJECT
@@ -31,8 +29,6 @@ private Q_SLOTS:
     void discoveryTest();
 
 private:
-    void verifyPropertiesChangedSignal(const QSignalSpy &spy, const QString &propertyName, const QVariant &propertyValue);
-
     struct AdapterUnit
     {
         QBluez::Adapter *adapter;
