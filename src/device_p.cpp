@@ -94,6 +94,7 @@ void DevicePrivate::propertiesChanged(const QString &interface, const QVariantMa
         }
     }
 
+    Q_EMIT q->deviceChanged(q);
     Q_EMIT m_adapter->deviceChanged(q);
 }
 

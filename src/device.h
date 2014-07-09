@@ -84,6 +84,8 @@ public:
     void disconnect();
 
 Q_SIGNALS:
+    void deviceChanged(Device *device);
+
     void nameChanged(const QString &name);
     void friendlyNameChanged(const QString &friendlyName);
     void aliasChanged(const QString &alias);
