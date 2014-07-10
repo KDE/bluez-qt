@@ -5,6 +5,7 @@
 
 #include "loaddevicejob.h"
 #include "setpropertyjob.h"
+#include "utils.h"
 #include "qbluez_export.h"
 
 namespace QBluez
@@ -24,6 +25,7 @@ class QBLUEZ_EXPORT Device : public QObject
     Q_PROPERTY(QString friendlyName READ friendlyName NOTIFY friendlyNameChanged)
     Q_PROPERTY(QString alias READ alias WRITE setAlias NOTIFY aliasChanged)
     Q_PROPERTY(quint32 deviceClass READ deviceClass NOTIFY deviceClassChanged)
+    Q_PROPERTY(DeviceType deviceType READ deviceType NOTIFY deviceTypeChanged)
     Q_PROPERTY(quint16 appearance READ appearance NOTIFY appearanceChanged)
     Q_PROPERTY(QString icon READ icon NOTIFY iconChanged)
     Q_PROPERTY(bool isPaired READ isPaired NOTIFY pairedChanged)
@@ -53,6 +55,8 @@ public:
     SetPropertyJob *setAlias(const QString &alias);
 
     quint32 deviceClass() const;
+
+    DeviceType deviceType() const;
 
     quint16 appearance() const;
 
@@ -90,6 +94,7 @@ Q_SIGNALS:
     void friendlyNameChanged(const QString &friendlyName);
     void aliasChanged(const QString &alias);
     void deviceClassChanged(quint32 deviceClass);
+    void deviceTypeChanged(DeviceType deviceType);
     void appearanceChanged(quint16 appearance);
     void iconChanged(const QString &icon);
     void pairedChanged(bool isPaired);

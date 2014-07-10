@@ -70,7 +70,11 @@ void DevicePrivate::propertiesChanged(const QString &interface, const QVariantMa
                 Q_EMIT q->friendlyNameChanged(q->friendlyName());
             }
         } else if (property == QLatin1String("Class")) {
-            PROPERTY_CHANGED(m_deviceClass, toUInt, deviceClassChanged);
+            if (m_deviceClass != value.toUInt()) {
+                m_deviceClass = value.toUInt();
+                Q_EMIT q->deviceClassChanged(m_deviceClass);
+                Q_EMIT q->deviceTypeChanged(q->deviceType());
+            }
         } else if (property == QLatin1String("Appearance")) {
             PROPERTY_CHANGED(m_appearance, toUInt, appearanceChanged);
         } else if (property == QLatin1String("Icon")) {

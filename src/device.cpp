@@ -66,6 +66,11 @@ quint32 Device::deviceClass() const
     return d->m_deviceClass;
 }
 
+DeviceType Device::deviceType() const
+{
+    return classToType(d->m_deviceClass);
+}
+
 quint16 Device::appearance() const
 {
     return d->m_appearance;
