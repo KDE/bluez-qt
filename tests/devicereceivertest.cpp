@@ -30,7 +30,6 @@
 #include "manager.h"
 #include "adapter.h"
 #include "device.h"
-#include "loadadaptersjob.h"
 
 using namespace QBluez;
 

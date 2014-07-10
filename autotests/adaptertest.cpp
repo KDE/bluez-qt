@@ -5,8 +5,6 @@
 #include <QtTest/QSignalSpy>
 #include <QDebug>
 
-#include "loadadaptersjob.h"
-
 using namespace QBluez;
 
 void AdapterTest::initTestCase()
