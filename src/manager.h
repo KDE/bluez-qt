@@ -4,6 +4,7 @@
 #include <QObject>
 
 #include "getmanagerjob.h"
+#include "loadadaptersjob.h"
 #include "qbluez_export.h"
 
 namespace QBluez
@@ -12,7 +13,6 @@ namespace QBluez
 class Device;
 class Adapter;
 class ManagerPrivate;
-class LoadAdaptersJob;
 
 class QBLUEZ_EXPORT Manager : public QObject
 {
