@@ -11,6 +11,8 @@ set(qbluez_SRCS
     loaddevicejob.cpp
     setpropertyjob.cpp
     utils.cpp
+    agent.cpp
+    agentadaptor.cpp
 )
 
 set(dbusobjectmanager_xml ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.freedesktop.DBus.ObjectManager.xml)
@@ -50,6 +52,7 @@ ecm_generate_headers(QBluez_HEADERS
         LoadDeviceJob
         SetPropertyJob
         Utils
+        Agent
 
     REQUIRED_HEADERS QBluez_HEADERS
 )

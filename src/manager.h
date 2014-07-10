@@ -12,6 +12,7 @@ namespace QBluez
 
 class Device;
 class Adapter;
+class Agent;
 class ManagerPrivate;
 
 class QBLUEZ_EXPORT Manager : public QObject
@@ -44,9 +45,9 @@ public:
 
     bool isBluetoothOperational() const;
 
-    void registerAgent(const QString &agentPath, RegisterCapability registerCapability);
-    void unregisterAgent(const QString &agentPath);
-    void requestDefaultAgent(const QString &agentPath);
+    void registerAgent(Agent *agent, RegisterCapability registerCapability);
+    void unregisterAgent(Agent *agent);
+    void requestDefaultAgent(Agent *agent);
 
 Q_SIGNALS:
     void adapterAdded(Adapter *adapter);

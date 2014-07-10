@@ -2,6 +2,8 @@
 #include "manager_p.h"
 #include "adapter.h"
 #include "loadadaptersjob.h"
+#include "agent.h"
+#include "agentadaptor.h"
 
 namespace QBluez
 {
@@ -62,7 +64,7 @@ bool Manager::isBluetoothOperational() const
     return d->m_bluezRunning && d->m_initialized && d->usableAdapter();
 }
 
-void Manager::registerAgent(const QString &agentPath, RegisterCapability registerCapability)
+void Manager::registerAgent(Agent *agent, RegisterCapability registerCapability)
 {
     QString capability;
 
@@ -83,19 +85,23 @@ void Manager::registerAgent(const QString &agentPath, RegisterCapability registe
         return;
     }
 
-    QDBusObjectPath agentObjectPath(agentPath);
-    d->m_bluezAgentManager->RegisterAgent(agentObjectPath, capability);
+    new AgentAdaptor(agent, this);
+
+    if (!QDBusConnection::systemBus().registerObject(agent->objectPath().path(), agent)) {
+        qWarning() << "Cannot register object" << agent->objectPath().path();
+    }
+
+    d->m_bluezAgentManager->RegisterAgent(agent->objectPath(), capability);
 }
 
-void Manager::unregisterAgent(const QString &agentPath)
+void Manager::unregisterAgent(Agent *agent)
 {
-    d->m_bluezAgentManager->UnregisterAgent(QDBusObjectPath(agentPath));
+    d->m_bluezAgentManager->UnregisterAgent(agent->objectPath());
 }
 
-void Manager::requestDefaultAgent(const QString &agentPath)
+void Manager::requestDefaultAgent(Agent *agent)
 {
-    QDBusObjectPath agentObjectPath(agentPath);
-    d->m_bluezAgentManager->RequestDefaultAgent(agentObjectPath);
+    d->m_bluezAgentManager->RequestDefaultAgent(agent->objectPath());
 }
 
 // static
