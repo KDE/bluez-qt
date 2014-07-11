@@ -21,7 +21,7 @@ class DevicePrivate : public QObject
     Q_OBJECT
 
 public:
-    DevicePrivate(const QString &path, Adapter *adapter, Device *parent);
+    explicit DevicePrivate(const QString &path, Adapter *adapter, Device *parent);
 
     void initProperties();
     QDBusPendingReply<> setDBusProperty(const QString &name, const QVariant &value);

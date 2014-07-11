@@ -22,7 +22,7 @@ class AgentAdaptor : public QDBusAbstractAdaptor
     Q_CLASSINFO("D-Bus Interface", "org.bluez.Agent1")
 
 public:
-    AgentAdaptor(Agent *parent, Manager *manager);
+    explicit AgentAdaptor(Agent *parent, Manager *manager);
     ~AgentAdaptor();
 
 public Q_SLOTS:

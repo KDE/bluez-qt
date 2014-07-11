@@ -74,6 +74,11 @@ LoadAdaptersJob::LoadAdaptersJob(ManagerPrivate *manager, QObject *parent)
 {
 }
 
+LoadAdaptersJob::~LoadAdaptersJob()
+{
+    delete d;
+}
+
 void LoadAdaptersJob::doStart()
 {
     d->doStart();

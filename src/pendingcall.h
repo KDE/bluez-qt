@@ -37,7 +37,6 @@ public:
         UnknownError = 100
     };
 
-    PendingCall(const QDBusPendingReply<> &reply, QObject *parent);
     ~PendingCall();
 
     int error() const;
@@ -50,8 +49,13 @@ Q_SIGNALS:
     void finished(PendingCall *call);
 
 private:
+    explicit PendingCall(const QDBusPendingReply<> &reply, QObject *parent = 0);
+
     class PendingCallPrivate *d;
     friend class PendingCallPrivate;
+    friend class Manager;
+    friend class Adapter;
+    friend class Device;
 };
 
 } // namespace QBluez

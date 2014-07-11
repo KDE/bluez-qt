@@ -97,7 +97,7 @@ Q_SIGNALS:
     void deviceChanged(Device *device);
 
 private:
-    Adapter(const QString &address, QObject *parent);
+    explicit Adapter(const QString &address, QObject *parent);
 
     AdapterPrivate *const d;
 

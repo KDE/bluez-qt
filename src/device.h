@@ -118,7 +118,7 @@ Q_SIGNALS:
     void modaliasChanged(const QString &modalias);
 
 private:
-    Device(const QString &address, Adapter *adapter, QObject *parent);
+    explicit Device(const QString &address, Adapter *adapter, QObject *parent);
 
     DevicePrivate *const d;
 

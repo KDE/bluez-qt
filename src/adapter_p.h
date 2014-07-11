@@ -21,7 +21,7 @@ class AdapterPrivate : public QObject
     Q_OBJECT
 
 public:
-    AdapterPrivate(const QString &path, Adapter *parent);
+    explicit AdapterPrivate(const QString &path, Adapter *parent);
 
     void addDevice(Device *device);
     void removeDevice(Device *device);
