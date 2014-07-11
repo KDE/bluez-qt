@@ -9,7 +9,6 @@ set(qbluez_SRCS
     getmanagerjob.cpp
     loadadaptersjob.cpp
     loaddevicejob.cpp
-    setpropertyjob.cpp
     utils.cpp
     agent.cpp
     agentadaptor.cpp
@@ -51,7 +50,6 @@ ecm_generate_headers(QBluez_HEADERS
         GetManagerJob
         LoadAdaptersJob
         LoadDeviceJob
-        SetPropertyJob
         Utils
         Agent
         PendingCall
