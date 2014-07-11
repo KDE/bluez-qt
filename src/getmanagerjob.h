@@ -30,6 +30,7 @@ private:
     void doEmitResult() Q_DECL_OVERRIDE;
 
     class GetManagerJobPrivate *d;
+
     friend class GetManagerJobPrivate;
     friend class Manager;
 };

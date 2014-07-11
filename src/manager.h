@@ -14,7 +14,6 @@ namespace QBluez
 class Device;
 class Adapter;
 class Agent;
-class ManagerPrivate;
 
 class QBLUEZ_EXPORT Manager : public QObject
 {
@@ -67,7 +66,8 @@ private:
 
     static Manager *self();
 
-    ManagerPrivate *const d;
+    class ManagerPrivate *const d;
+
     friend class ManagerPrivate;
     friend class GetManagerJobPrivate;
 };

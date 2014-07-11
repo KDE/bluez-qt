@@ -28,6 +28,7 @@ private:
     void doEmitResult() Q_DECL_OVERRIDE;
 
     class LoadAdaptersJobPrivate *d;
+
     friend class LoadAdaptersJobPrivate;
     friend class Manager;
 };

@@ -31,6 +31,7 @@ private:
     void doEmitResult() Q_DECL_OVERRIDE;
 
     class LoadDeviceJobPrivate *d;
+
     friend class LoadDeviceJobPrivate;
     friend class Device;
 };

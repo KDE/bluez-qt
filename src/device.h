@@ -13,7 +13,6 @@ namespace QBluez
 
 class Adapter;
 class LoadDeviceJob;
-class DevicePrivate;
 
 class QBLUEZ_EXPORT Device : public QObject
 {
@@ -120,7 +119,7 @@ Q_SIGNALS:
 private:
     explicit Device(const QString &address, Adapter *adapter, QObject *parent);
 
-    DevicePrivate *const d;
+    class DevicePrivate *const d;
 
     friend class DevicePrivate;
     friend class ManagerPrivate;

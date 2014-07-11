@@ -52,6 +52,7 @@ private:
     explicit PendingCall(const QDBusPendingReply<> &reply, QObject *parent = 0);
 
     class PendingCallPrivate *d;
+
     friend class PendingCallPrivate;
     friend class Manager;
     friend class Adapter;

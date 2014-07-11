@@ -12,7 +12,6 @@ namespace QBluez
 {
 
 class Device;
-class AdapterPrivate;
 
 class QBLUEZ_EXPORT Adapter : public QObject
 {
@@ -99,7 +98,7 @@ Q_SIGNALS:
 private:
     explicit Adapter(const QString &address, QObject *parent);
 
-    AdapterPrivate *const d;
+    class AdapterPrivate *const d;
 
     friend class AdapterPrivate;
     friend class ManagerPrivate;
