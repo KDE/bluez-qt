@@ -117,19 +117,19 @@ QList<Device *> Adapter::devices() const
     return d->m_devices;
 }
 
-void Adapter::removeDevice(Device *device)
+PendingCall *Adapter::startDiscovery()
 {
-    d->m_bluezAdapter->RemoveDevice(QDBusObjectPath(device->d->m_path));
+    return new PendingCall(d->m_bluezAdapter->StartDiscovery(), this);
 }
 
-void Adapter::startDiscovery()
+PendingCall *Adapter::stopDiscovery()
 {
-    d->m_bluezAdapter->StartDiscovery();
+    return new PendingCall(d->m_bluezAdapter->StopDiscovery(), this);
 }
 
-void Adapter::stopDiscovery()
+PendingCall *Adapter::removeDevice(Device *device)
 {
-    d->m_bluezAdapter->StopDiscovery();
+    return new PendingCall(d->m_bluezAdapter->RemoveDevice(QDBusObjectPath(device->d->m_path)), this);
 }
 
 } // namespace QBluez

@@ -136,19 +136,24 @@ Adapter *Device::adapter() const
     return d->m_adapter;
 }
 
-void Device::pair()
+PendingCall *Device::connect()
 {
-    d->m_bluezDevice->Pair();
+    return new PendingCall(d->m_bluezDevice->Connect(), this);
 }
 
-void Device::connect()
+PendingCall *Device::disconnect()
 {
-    d->m_bluezDevice->Connect();
+    return new PendingCall(d->m_bluezDevice->Disconnect(), this);
 }
 
-void Device::disconnect()
+PendingCall *Device::pair()
 {
-    d->m_bluezDevice->Disconnect();
+    return new PendingCall(d->m_bluezDevice->Pair(), this);
+}
+
+PendingCall *Device::cancelPairing()
+{
+    return new PendingCall(d->m_bluezDevice->CancelPairing(), this);
 }
 
 } // namespace QBluez

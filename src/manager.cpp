@@ -64,7 +64,7 @@ bool Manager::isBluetoothOperational() const
     return d->m_bluezRunning && d->m_initialized && d->usableAdapter();
 }
 
-void Manager::registerAgent(Agent *agent, RegisterCapability registerCapability)
+PendingCall *Manager::registerAgent(Agent *agent, RegisterCapability registerCapability)
 {
     QString capability;
 
@@ -82,7 +82,8 @@ void Manager::registerAgent(Agent *agent, RegisterCapability registerCapability)
         capability = QStringLiteral("NoInputNoOutput");
         break;
     default:
-        return;
+        capability = QStringLiteral("DisplayYesNo");
+        break;
     }
 
     new AgentAdaptor(agent, this);
@@ -91,17 +92,17 @@ void Manager::registerAgent(Agent *agent, RegisterCapability registerCapability)
         qWarning() << "Cannot register object" << agent->objectPath().path();
     }
 
-    d->m_bluezAgentManager->RegisterAgent(agent->objectPath(), capability);
+    return new PendingCall(d->m_bluezAgentManager->RegisterAgent(agent->objectPath(), capability), this);
 }
 
-void Manager::unregisterAgent(Agent *agent)
+PendingCall *Manager::unregisterAgent(Agent *agent)
 {
-    d->m_bluezAgentManager->UnregisterAgent(agent->objectPath());
+    return new PendingCall(d->m_bluezAgentManager->UnregisterAgent(agent->objectPath()), this);
 }
 
-void Manager::requestDefaultAgent(Agent *agent)
+PendingCall *Manager::requestDefaultAgent(Agent *agent)
 {
-    d->m_bluezAgentManager->RequestDefaultAgent(agent->objectPath());
+    return new PendingCall(d->m_bluezAgentManager->RequestDefaultAgent(agent->objectPath()), this);
 }
 
 // static

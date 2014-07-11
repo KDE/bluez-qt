@@ -3,9 +3,10 @@
 
 #include <QObject>
 
+#include "utils.h"
 #include "loaddevicejob.h"
 #include "setpropertyjob.h"
-#include "utils.h"
+#include "pendingcall.h"
 #include "qbluez_export.h"
 
 namespace QBluez
@@ -82,10 +83,21 @@ public:
 
     Adapter *adapter() const;
 
-    void pair();
+    // Possible errors: NotReady, Failed, InProgress, AlreadyConnected
+    PendingCall *connect();
 
-    void connect();
-    void disconnect();
+    // Possible errors: NotConnected
+    PendingCall *disconnect();
+
+    // Possible errors: InvalidArguments, Failed, AlreadyExists,
+    //                  AuthenticationCanceled, AuthenticationFailed
+    //                  AuthenticationRejected, AuthenticationTimeout,
+    //                  ConnectionAttemptFailed
+    PendingCall *pair();
+
+    // Possible errors: DoesNotExist, Failed
+    PendingCall *cancelPairing();
+
 
 Q_SIGNALS:
     void deviceChanged(Device *device);

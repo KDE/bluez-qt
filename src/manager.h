@@ -5,6 +5,7 @@
 
 #include "getmanagerjob.h"
 #include "loadadaptersjob.h"
+#include "pendingcall.h"
 #include "qbluez_export.h"
 
 namespace QBluez
@@ -45,9 +46,14 @@ public:
 
     bool isBluetoothOperational() const;
 
-    void registerAgent(Agent *agent, RegisterCapability registerCapability);
-    void unregisterAgent(Agent *agent);
-    void requestDefaultAgent(Agent *agent);
+    // Possible errors: InvalidArguments, AlreadyExists
+    PendingCall *registerAgent(Agent *agent, RegisterCapability registerCapability = DisplayYesNo);
+
+    // Possible errors: DoesNotExist
+    PendingCall *unregisterAgent(Agent *agent);
+
+    // Possible errors: DoesNotExist
+    PendingCall *requestDefaultAgent(Agent *agent);
 
 Q_SIGNALS:
     void adapterAdded(Adapter *adapter);

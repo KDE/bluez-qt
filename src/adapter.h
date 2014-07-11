@@ -6,6 +6,7 @@
 #include <QStringList>
 
 #include "setpropertyjob.h"
+#include "pendingcall.h"
 #include "qbluez_export.h"
 
 namespace QBluez
@@ -70,10 +71,14 @@ public:
 
     QList<Device *> devices() const;
 
-    void removeDevice(Device *device);
+    // Possible errors: NotReady, Failed
+    PendingCall *startDiscovery();
 
-    void startDiscovery();
-    void stopDiscovery();
+    // Possible errors: NotReady, Failed, NotAuthorized
+    PendingCall *stopDiscovery();
+
+    // Possible errors: InvalidArguments, Failed
+    PendingCall *removeDevice(Device *device);
 
 Q_SIGNALS:
     void nameChanged(const QString &name);
