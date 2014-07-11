@@ -48,7 +48,9 @@ enum DeviceType {
     Tablet
 };
 
-quint32 QBLUEZ_EXPORT stringToType(const QString &stringType);
+QString QBLUEZ_EXPORT typeToString(DeviceType type);
+DeviceType QBLUEZ_EXPORT stringToType(const QString &stringType);
+
 DeviceType QBLUEZ_EXPORT classToType(quint32 classNum);
 
 } // namespace QBluez

@@ -28,24 +28,72 @@
 namespace QBluez
 {
 
-quint32 stringToType(const QString &stringType)
+QString typeToString(DeviceType type)
+{
+    switch (type) {
+    case Any:
+        return QStringLiteral("any");
+    case Phone:
+        return QStringLiteral("phone");
+    case Modem:
+        return QStringLiteral("modem");
+    case Computer:
+        return QStringLiteral("computer");
+    case Network:
+        return QStringLiteral("network");
+    case Headset:
+        return QStringLiteral("headset");
+    case Headphones:
+        return QStringLiteral("headphones");
+    case OtherAudio:
+        return QStringLiteral("audio");
+    case Keyboard:
+        return QStringLiteral("keyboard");
+    case Mouse:
+        return QStringLiteral("mouse");
+    case Camera:
+        return QStringLiteral("camera");
+    case Printer:
+        return QStringLiteral("printer");
+    case Joypad:
+        return QStringLiteral("joypad");
+    case Tablet:
+        return QStringLiteral("tablet");
+    default:
+        return QStringLiteral("any");
+    }
+}
+
+DeviceType stringToType(const QString &stringType)
 {
     if (stringType == QLatin1String("any")) {
         return Any;
-    } else if (stringType == QLatin1String("mouse")) {
-        return Mouse;
-    } else if (stringType == QLatin1String("keyboard")) {
-        return Keyboard;
+    } else if (stringType == QLatin1String("phone")) {
+        return Phone;
+    } else if (stringType == QLatin1String("modem")) {
+        return Modem;
+    } else if (stringType == QLatin1String("computer")) {
+        return Computer;
+    } else if (stringType == QLatin1String("network")) {
+        return Network;
     } else if (stringType == QLatin1String("headset")) {
         return Headset;
     } else if (stringType == QLatin1String("headphones")) {
         return Headphones;
     } else if (stringType == QLatin1String("audio")) {
         return OtherAudio;
+    } else if (stringType == QLatin1String("keyboard")) {
+        return Keyboard;
+    } else if (stringType == QLatin1String("mouse")) {
+        return Mouse;
+    } else if (stringType == QLatin1String("camera")) {
+        return Camera;
     } else if (stringType == QLatin1String("printer")) {
         return Printer;
-    } else if (stringType == QLatin1String("network")) {
-        return Network;
+    } else if (stringType == QLatin1String("joypad")) {
+        return Joypad;
+    } else if (stringType == QLatin1String("tablet")) {
+        return Tablet;
     }
     return Any;
 }
