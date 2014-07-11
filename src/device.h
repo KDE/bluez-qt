@@ -5,7 +5,6 @@
 
 #include "utils.h"
 #include "loaddevicejob.h"
-#include "setpropertyjob.h"
 #include "pendingcall.h"
 #include "qbluez_export.h"
 
@@ -53,7 +52,7 @@ public:
     QString friendlyName() const;
 
     QString alias() const;
-    SetPropertyJob *setAlias(const QString &alias);
+    PendingCall *setAlias(const QString &alias);
 
     quint32 deviceClass() const;
 
@@ -66,10 +65,10 @@ public:
     bool isPaired() const;
 
     bool isTrusted() const;
-    SetPropertyJob *setTrusted(bool isTrusted);
+    PendingCall *setTrusted(bool isTrusted);
 
     bool isBlocked() const;
-    SetPropertyJob *setBlocked(bool isBlocked);
+    PendingCall *setBlocked(bool isBlocked);
 
     bool hasLegacyPairing() const;
 

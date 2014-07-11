@@ -43,6 +43,9 @@ public:
     int error() const;
     QString errorText() const;
 
+    bool isFinished() const;
+    void waitForFinished();
+
 Q_SIGNALS:
     void finished(PendingCall *call);
 

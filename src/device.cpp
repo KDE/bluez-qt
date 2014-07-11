@@ -56,9 +56,9 @@ QString Device::alias() const
     return d->m_alias;
 }
 
-SetPropertyJob *Device::setAlias(const QString &alias)
+PendingCall *Device::setAlias(const QString &alias)
 {
-    return new SetPropertyJob(QStringLiteral("Alias"), alias, d);
+    return new PendingCall(d->setDBusProperty(QStringLiteral("Alias"), alias), this);
 }
 
 quint32 Device::deviceClass() const
@@ -91,9 +91,9 @@ bool Device::isTrusted() const
     return d->m_trusted;
 }
 
-SetPropertyJob *Device::setTrusted(bool trusted)
+PendingCall *Device::setTrusted(bool trusted)
 {
-    return new SetPropertyJob(QStringLiteral("Trusted"), trusted, d);
+    return new PendingCall(d->setDBusProperty(QStringLiteral("Trusted"), trusted), this);
 }
 
 bool Device::isBlocked() const
@@ -101,9 +101,9 @@ bool Device::isBlocked() const
     return d->m_blocked;
 }
 
-SetPropertyJob *Device::setBlocked(bool blocked)
+PendingCall *Device::setBlocked(bool blocked)
 {
-    return new SetPropertyJob(QStringLiteral("Blocked"), blocked, d);
+    return new PendingCall(d->setDBusProperty(QStringLiteral("Blocked"), blocked), this);
 }
 
 bool Device::hasLegacyPairing() const

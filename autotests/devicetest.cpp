@@ -86,7 +86,7 @@ void DeviceTest::setAliasTest()
         QString originalValue = unit.device->alias();
         QString value = originalValue + QLatin1String("_tst_alias");
 
-        unit.device->setAlias(value)->start();
+        unit.device->setAlias(value);
         deviceSpy.wait();
         QCOMPARE(deviceSpy.count(), 1);
 
@@ -97,7 +97,7 @@ void DeviceTest::setAliasTest()
         QCOMPARE(unit.device->alias(), value);
         QCOMPARE(unit.dbusDevice->alias(), value);
 
-        unit.device->setAlias(originalValue)->exec();
+        unit.device->setAlias(originalValue)->waitForFinished();
     }
 }
 
@@ -110,7 +110,7 @@ void DeviceTest::setTrustedTest()
         bool originalValue = unit.device->isTrusted();
         bool value = !originalValue;
 
-        unit.device->setTrusted(value)->start();
+        unit.device->setTrusted(value);
         deviceSpy.wait();
         QCOMPARE(deviceSpy.count(), 1);
 
@@ -121,7 +121,7 @@ void DeviceTest::setTrustedTest()
         QCOMPARE(unit.device->isTrusted(), value);
         QCOMPARE(unit.dbusDevice->trusted(), value);
 
-        unit.device->setTrusted(originalValue)->exec();
+        unit.device->setTrusted(originalValue)->waitForFinished();
     }
 }
 
@@ -134,7 +134,7 @@ void DeviceTest::setBlockedTest()
         bool originalValue = unit.device->isBlocked();
         bool value = !originalValue;
 
-        unit.device->setBlocked(value)->start();
+        unit.device->setBlocked(value);
         deviceSpy.wait();
         QCOMPARE(deviceSpy.count(), 1);
 
@@ -145,9 +145,8 @@ void DeviceTest::setBlockedTest()
         QCOMPARE(unit.device->isBlocked(), value);
         QCOMPARE(unit.dbusDevice->blocked(), value);
 
-        unit.device->setBlocked(originalValue)->exec();
+        unit.device->setBlocked(originalValue)->waitForFinished();
     }
 }
 
 QTEST_MAIN(DeviceTest)
-

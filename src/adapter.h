@@ -5,7 +5,6 @@
 #include <QList>
 #include <QStringList>
 
-#include "setpropertyjob.h"
 #include "pendingcall.h"
 #include "qbluez_export.h"
 
@@ -44,24 +43,24 @@ public:
     QString name() const;
 
     QString alias() const;
-    SetPropertyJob *setAlias(const QString &alias);
+    PendingCall *setAlias(const QString &alias);
 
     quint32 adapterClass() const;
 
     bool isPowered() const;
-    SetPropertyJob *setPowered(bool powered);
+    PendingCall *setPowered(bool powered);
 
     bool isDiscoverable() const;
-    SetPropertyJob *setDiscoverable(bool discoverable);
+    PendingCall *setDiscoverable(bool discoverable);
 
     quint32 discoverableTimeout() const;
-    SetPropertyJob *setDiscoverableTimeout(quint32 timeout);
+    PendingCall *setDiscoverableTimeout(quint32 timeout);
 
     bool isPairable() const;
-    SetPropertyJob *setPairable(bool pairable);
+    PendingCall *setPairable(bool pairable);
 
     quint32 pairableTimeout() const;
-    SetPropertyJob *setPairableTimeout(quint32 timeout);
+    PendingCall *setPairableTimeout(quint32 timeout);
 
     bool isDiscovering();
 

@@ -74,7 +74,7 @@ void AdapterTest::setAliasTest()
         QString originalValue = unit.adapter->alias();
         QString value = originalValue + QLatin1String("_tst_alias");
 
-        unit.adapter->setAlias(value)->start();
+        unit.adapter->setAlias(value);
         adapterSpy.wait();
         QCOMPARE(adapterSpy.count(), 1);
 
@@ -85,7 +85,7 @@ void AdapterTest::setAliasTest()
         QCOMPARE(unit.adapter->alias(), value);
         QCOMPARE(unit.dbusAdapter->alias(), value);
 
-        unit.adapter->setAlias(originalValue)->exec();
+        unit.adapter->setAlias(originalValue)->waitForFinished();
     }
 }
 
@@ -98,7 +98,7 @@ void AdapterTest::setPoweredTest()
         bool originalValue = unit.adapter->isPowered();
         bool value = !originalValue;
 
-        unit.adapter->setPowered(value)->start();
+        unit.adapter->setPowered(value);
         adapterSpy.wait();
         QCOMPARE(adapterSpy.count(), 1);
 
@@ -111,7 +111,7 @@ void AdapterTest::setPoweredTest()
         QCOMPARE(unit.adapter->isPowered(), value);
         QCOMPARE(unit.dbusAdapter->powered(), value);
 
-        unit.adapter->setPowered(originalValue)->exec();
+        unit.adapter->setPowered(originalValue)->waitForFinished();
     }
 }
 
@@ -121,7 +121,7 @@ void AdapterTest::setDiscoverableTest()
 
     Q_FOREACH (const AdapterUnit &unit, m_units) {
         bool wasPowered = unit.adapter->isPowered();
-        unit.adapter->setPowered(true)->exec();
+        unit.adapter->setPowered(true)->waitForFinished();
 
         QSignalSpy adapterSpy(unit.adapter, SIGNAL(discoverableChanged(bool)));
         QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString,QVariantMap,QStringList)));
@@ -129,7 +129,7 @@ void AdapterTest::setDiscoverableTest()
         bool originalValue = unit.adapter->isDiscoverable();
         bool value = !originalValue;
 
-        unit.adapter->setDiscoverable(value)->start();
+        unit.adapter->setDiscoverable(value);
         adapterSpy.wait();
         QCOMPARE(adapterSpy.count(), 1);
 
@@ -140,8 +140,8 @@ void AdapterTest::setDiscoverableTest()
         QCOMPARE(unit.adapter->isDiscoverable(), value);
         QCOMPARE(unit.dbusAdapter->discoverable(), value);
 
-        unit.adapter->setDiscoverable(originalValue)->exec();
-        unit.adapter->setPowered(wasPowered)->exec();
+        unit.adapter->setDiscoverable(originalValue)->waitForFinished();
+        unit.adapter->setPowered(wasPowered)->waitForFinished();
     }
 }
 
@@ -154,7 +154,7 @@ void AdapterTest::setDiscoverableTimeoutTest()
         quint32 originalValue = unit.adapter->discoverableTimeout();
         quint32 value = originalValue + 1;
 
-        unit.adapter->setDiscoverableTimeout(value)->start();
+        unit.adapter->setDiscoverableTimeout(value);
         adapterSpy.wait();
         QCOMPARE(adapterSpy.count(), 1);
 
@@ -167,7 +167,7 @@ void AdapterTest::setDiscoverableTimeoutTest()
         QCOMPARE(unit.adapter->discoverableTimeout(), value);
         QCOMPARE(unit.dbusAdapter->discoverableTimeout(), value);
 
-        unit.adapter->setDiscoverableTimeout(originalValue)->exec();
+        unit.adapter->setDiscoverableTimeout(originalValue)->waitForFinished();
     }
 }
 
@@ -180,7 +180,7 @@ void AdapterTest::setPairableTest()
         bool originalValue = unit.adapter->isPairable();
         bool value = !originalValue;
 
-        unit.adapter->setPairable(value)->start();
+        unit.adapter->setPairable(value);
         adapterSpy.wait();
         QCOMPARE(adapterSpy.count(), 1);
 
@@ -191,7 +191,7 @@ void AdapterTest::setPairableTest()
         QCOMPARE(unit.adapter->isPairable(), value);
         QCOMPARE(unit.dbusAdapter->pairable(), value);
 
-        unit.adapter->setPairable(originalValue)->exec();
+        unit.adapter->setPairable(originalValue)->waitForFinished();
     }
 }
 
@@ -204,7 +204,7 @@ void AdapterTest::setPairableTimeoutTest()
         quint32 originalValue = unit.adapter->pairableTimeout();
         quint32 value = originalValue + 1;
 
-        unit.adapter->setPairableTimeout(value)->start();
+        unit.adapter->setPairableTimeout(value);
         adapterSpy.wait();
         QCOMPARE(adapterSpy.count(), 1);
 
@@ -217,7 +217,7 @@ void AdapterTest::setPairableTimeoutTest()
         QCOMPARE(unit.adapter->pairableTimeout(), value);
         QCOMPARE(unit.dbusAdapter->pairableTimeout(), value);
 
-        unit.adapter->setPairableTimeout(originalValue)->exec();
+        unit.adapter->setPairableTimeout(originalValue)->waitForFinished();
     }
 }
 
@@ -228,8 +228,8 @@ void AdapterTest::discoveryTest()
     Q_FOREACH (const AdapterUnit &unit, m_units) {
         // Make sure the Adapter is powered on and not discovering
         bool wasPowered = unit.adapter->isPowered();
-        unit.adapter->setPowered(true)->exec();
-        unit.dbusAdapter->StopDiscovery();
+        unit.adapter->setPowered(true)->waitForFinished();
+        unit.adapter->stopDiscovery()->waitForFinished();
 
         QSignalSpy adapterSpy(unit.adapter, SIGNAL(discoveringChanged(bool)));
         QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString,QVariantMap,QStringList)));
@@ -265,7 +265,7 @@ void AdapterTest::discoveryTest()
         QCOMPARE(unit.adapter->isDiscovering(), false);
         QCOMPARE(unit.dbusAdapter->discovering(), false);
 
-        unit.adapter->setPowered(wasPowered)->exec();
+        unit.adapter->setPowered(wasPowered)->waitForFinished();
     }
 }
 

@@ -52,8 +52,8 @@ void DeviceReceiver::scanDevices()
         return;
     } else if (!usableAdapter) {
         usableAdapter = m_manager->adapters().first();
-        SetPropertyJob *powerOnJob = usableAdapter->setPowered(true);
-        powerOnJob->exec();
+        PendingCall *powerOnCall = usableAdapter->setPowered(true);
+        powerOnCall->waitForFinished();
     }
 
     qDebug() << "*** Will scan devices until stopped...";

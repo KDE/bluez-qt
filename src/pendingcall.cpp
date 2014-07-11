@@ -59,6 +59,7 @@ PendingCall::PendingCall(const QDBusPendingReply<> &reply, QObject *parent)
     connect(d->watcher, &QDBusPendingCallWatcher::finished, [ this ]() {
         const QDBusPendingReply<> &reply = *d->watcher;
         d->watcher->deleteLater();
+        d->watcher = 0;
 
         if (reply.isError()) {
             d->error = nameToError(reply.error().name());
@@ -83,6 +84,21 @@ int PendingCall::error() const
 QString PendingCall::errorText() const
 {
     return d->errorText;
+}
+
+bool PendingCall::isFinished() const
+{
+    if (d->watcher) {
+        return d->watcher->isFinished();
+    }
+    return true;
+}
+
+void PendingCall::waitForFinished()
+{
+    if (d->watcher) {
+        d->watcher->waitForFinished();
+    }
 }
 
 } // namespace QBluez

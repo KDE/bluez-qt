@@ -37,9 +37,9 @@ QString Adapter::alias() const
     return d->m_alias;
 }
 
-SetPropertyJob *Adapter::setAlias(const QString &alias)
+PendingCall *Adapter::setAlias(const QString &alias)
 {
-    return new SetPropertyJob(QStringLiteral("Alias"), alias, d);
+    return new PendingCall(d->setDBusProperty(QStringLiteral("Alias"), alias), this);
 }
 
 quint32 Adapter::adapterClass() const
@@ -52,9 +52,9 @@ bool Adapter::isPowered() const
     return d->m_powered;
 }
 
-SetPropertyJob *Adapter::setPowered(bool powered)
+PendingCall *Adapter::setPowered(bool powered)
 {
-    return new SetPropertyJob(QStringLiteral("Powered"), powered, d);
+    return new PendingCall(d->setDBusProperty(QStringLiteral("Powered"), powered), this);
 }
 
 bool Adapter::isDiscoverable() const
@@ -62,9 +62,9 @@ bool Adapter::isDiscoverable() const
     return d->m_discoverable;
 }
 
-SetPropertyJob *Adapter::setDiscoverable(bool discoverable)
+PendingCall *Adapter::setDiscoverable(bool discoverable)
 {
-    return new SetPropertyJob(QStringLiteral("Discoverable"), discoverable, d);
+    return new PendingCall(d->setDBusProperty(QStringLiteral("Discoverable"), discoverable), this);
 }
 
 quint32 Adapter::discoverableTimeout() const
@@ -72,9 +72,9 @@ quint32 Adapter::discoverableTimeout() const
     return d->m_discoverableTimeout;
 }
 
-SetPropertyJob *Adapter::setDiscoverableTimeout(quint32 timeout)
+PendingCall *Adapter::setDiscoverableTimeout(quint32 timeout)
 {
-    return new SetPropertyJob(QStringLiteral("DiscoverableTimeout"), timeout, d);
+    return new PendingCall(d->setDBusProperty(QStringLiteral("DiscoverableTimeout"), timeout), this);
 }
 
 bool Adapter::isPairable() const
@@ -82,9 +82,9 @@ bool Adapter::isPairable() const
     return d->m_pairable;
 }
 
-SetPropertyJob *Adapter::setPairable(bool pairable)
+PendingCall *Adapter::setPairable(bool pairable)
 {
-    return new SetPropertyJob(QStringLiteral("Pairable"), pairable, d);
+    return new PendingCall(d->setDBusProperty(QStringLiteral("Pairable"), pairable), this);
 }
 
 quint32 Adapter::pairableTimeout() const
@@ -92,9 +92,9 @@ quint32 Adapter::pairableTimeout() const
     return d->m_pairableTimeout;
 }
 
-SetPropertyJob *Adapter::setPairableTimeout(quint32 timeout)
+PendingCall *Adapter::setPairableTimeout(quint32 timeout)
 {
-    return new SetPropertyJob(QStringLiteral("PairableTimeout"), timeout, d);
+    return new PendingCall(d->setDBusProperty(QStringLiteral("PairableTimeout"), timeout), this);
 }
 
 bool Adapter::isDiscovering()

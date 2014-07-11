@@ -84,12 +84,11 @@ int main(int argc, char *argv[])
                 });
             });
 
-            QBluez::SetPropertyJob *powerOnJob = adapter->setPowered(true);
-            powerOnJob->start();
+            QBluez::PendingCall *powerOnCall = adapter->setPowered(true);
 
-            QObject::connect(powerOnJob, &QBluez::SetPropertyJob::result, [ = ]() {
-                if (powerOnJob->error() != QBluez::SetPropertyJob::NoError) {
-                    qDebug() << "Error powering on adapter:" << powerOnJob->errorText();
+            QObject::connect(powerOnCall, &QBluez::PendingCall::finished, [ = ]() {
+                if (powerOnCall->error()) {
+                    qDebug() << "Error powering on adapter:" << powerOnCall->errorText();
                     return;
                 }
                 qDebug() << "Starting discovery...";
