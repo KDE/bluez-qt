@@ -203,16 +203,17 @@ void ManagerPrivate::interfacesRemoved(const QDBusObjectPath &objectPath, const 
     Q_FOREACH (const QString &interface, interfaces) {
         if (interface == QLatin1String("org.bluez.Adapter1")) {
             Adapter *adapter = m_adapters.take(path);
-            Q_EMIT q->adapterRemoved(adapter);
-            adapter->deleteLater();
-            if (m_adapters.isEmpty()) {
-                Q_EMIT q->allAdaptersRemoved();
+            if (adapter) {
+                Q_EMIT q->adapterRemoved(adapter);
+                adapter->deleteLater();
+                if (m_adapters.isEmpty()) {
+                    Q_EMIT q->allAdaptersRemoved();
+                }
             }
         } else if (interface == QLatin1String("org.bluez.Device1")) {
-            Device *device = m_devices.value(path);
+            Device *device = m_devices.take(path);
             if (device) {
                 device->adapter()->d->removeDevice(device);
-                m_devices.remove(path);
                 device->deleteLater();
                 break;
             }
