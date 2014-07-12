@@ -2,8 +2,8 @@
 #include "device.h"
 #include "adapter.h"
 #include "adapter_p.h"
+#include "debug_p.h"
 
-#include <QDebug>
 #include <QDBusReply>
 #include <QDBusConnection>
 #include <QDBusConnectionInterface>
@@ -33,11 +33,13 @@ ManagerPrivate::ManagerPrivate(Manager *parent)
             QDBusServiceWatcher::WatchForRegistration | QDBusServiceWatcher::WatchForUnregistration, this);
 
     connect(serviceWatcher, &QDBusServiceWatcher::serviceRegistered, [ this ]() {
+        qCDebug(QBLUEZ) << "Manager: Bluez service registered";
         m_bluezRunning = true;
         initialize();
     });
 
     connect(serviceWatcher, &QDBusServiceWatcher::serviceUnregistered, [ this ]() {
+        qCDebug(QBLUEZ) << "Manager: Bluez service unregistered";
         m_bluezRunning = false;
         clear();
     });

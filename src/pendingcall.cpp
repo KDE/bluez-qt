@@ -1,4 +1,5 @@
 #include "pendingcall.h"
+#include "debug_p.h"
 
 #include <QDBusPendingCallWatcher>
 
@@ -62,6 +63,8 @@ PendingCall::PendingCall(const QDBusPendingReply<> &reply, QObject *parent)
         d->watcher = 0;
 
         if (reply.isError()) {
+            qCWarning(QBLUEZ) << "PendingCall Error:" << reply.error().message();
+
             d->error = nameToError(reply.error().name());
             d->errorText = reply.error().message();
         }

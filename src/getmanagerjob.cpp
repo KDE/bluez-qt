@@ -1,6 +1,7 @@
 #include "getmanagerjob.h"
 #include "manager.h"
 #include "manager_p.h"
+#include "debug_p.h"
 
 namespace QBluez
 {
@@ -42,6 +43,8 @@ void GetManagerJobPrivate::doStart()
 
 void GetManagerJobPrivate::initError(const QString &errorText)
 {
+    qCWarning(QBLUEZ) << "GetManagerJob Error:" << errorText;
+
     q->setError(GetManagerJob::UserDefinedError);
     q->setErrorText(errorText);
     q->emitResult();

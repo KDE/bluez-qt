@@ -1,4 +1,5 @@
 set(qbluez_SRCS
+    debug_p.cpp
     manager.cpp
     manager_p.cpp
     adapter.cpp

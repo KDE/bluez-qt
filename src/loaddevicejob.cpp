@@ -1,5 +1,6 @@
 #include "loaddevicejob.h"
 #include "device_p.h"
+#include "debug_p.h"
 
 namespace QBluez
 {
@@ -41,6 +42,8 @@ void LoadDeviceJobPrivate::doStart()
         watcher->deleteLater();
 
         if (reply.isError()) {
+            qCWarning(QBLUEZ) << "LoadDeviceJob Error:" << reply.error().message();
+
             q->setError(LoadDeviceJob::UserDefinedError);
             q->setErrorText(reply.error().message());
             q->emitResult();

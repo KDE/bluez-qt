@@ -2,6 +2,7 @@
 #include "manager_p.h"
 #include "adapter.h"
 #include "adapter_p.h"
+#include "debug_p.h"
 
 namespace QBluez
 {
@@ -63,6 +64,8 @@ void LoadAdaptersJobPrivate::loaded()
 
 void LoadAdaptersJobPrivate::loadError(const QString &errorText)
 {
+    qCWarning(QBLUEZ) << "LoadAdaptersJob Error:" << errorText;
+
     q->setError(LoadAdaptersJob::UserDefinedError);
     q->setErrorText(errorText);
     q->emitResult();

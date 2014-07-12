@@ -3,9 +3,9 @@
 #include "manager.h"
 #include "adapter.h"
 #include "device.h"
+#include "debug_p.h"
 
 #include <QDBusObjectPath>
-#include <QDebug>
 
 namespace QBluez
 {
@@ -76,7 +76,7 @@ Device *AgentAdaptor::deviceForPath(const QDBusObjectPath &path) const
             }
         }
     }
-    qWarning() << "Cannot find device for path:" << path.path();
+    qCWarning(QBLUEZ) << "AgentAdaptor::deviceForPath Cannot find device for path:" << path.path();
     return 0;
 }
 
