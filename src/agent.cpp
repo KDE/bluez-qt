@@ -1,18 +1,21 @@
 #include "agent.h"
+#include "debug_p.h"
+
+#include <QDBusConnection>
 
 namespace QBluez
 {
 
+// Agent
 Agent::Agent(QObject *parent)
     : QObject(parent)
 {
 }
 
-QString Agent::requestPinCode(Device *device, const QDBusMessage &message)
+void Agent::requestPinCode(Device *device, const Request<QString> &request)
 {
     Q_UNUSED(device)
-    Q_UNUSED(message)
-    return QString();
+    Q_UNUSED(request)
 }
 
 void Agent::displayPinCode(Device *device, const QString &pinCode)
@@ -21,11 +24,10 @@ void Agent::displayPinCode(Device *device, const QString &pinCode)
     Q_UNUSED(pinCode)
 }
 
-quint32 Agent::requestPasskey(Device *device, const QDBusMessage &message)
+void Agent::requestPasskey(Device *device, const Request<quint32> &request)
 {
     Q_UNUSED(device)
-    Q_UNUSED(message)
-    return 0;
+    Q_UNUSED(request)
 }
 
 void Agent::displayPasskey(Device *device, quint32 passkey, quint16 entered)
@@ -35,24 +37,24 @@ void Agent::displayPasskey(Device *device, quint32 passkey, quint16 entered)
     Q_UNUSED(entered)
 }
 
-void Agent::requestConfirmation(Device *device, quint32 passkey, const QDBusMessage &message)
+void Agent::requestConfirmation(Device *device, quint32 passkey, const Request<void> &request)
 {
     Q_UNUSED(device)
     Q_UNUSED(passkey)
-    Q_UNUSED(message)
+    Q_UNUSED(request)
 }
 
-void Agent::requestAuthorization(Device *device, const QDBusMessage &message)
+void Agent::requestAuthorization(Device *device, const Request<void> &request)
 {
     Q_UNUSED(device)
-    Q_UNUSED(message)
+    Q_UNUSED(request)
 }
 
-void Agent::authorizeService(Device *device, const QString &uuid, const QDBusMessage &message)
+void Agent::authorizeService(Device *device, const QString &uuid, const Request<void> &request)
 {
     Q_UNUSED(device)
     Q_UNUSED(uuid)
-    Q_UNUSED(message)
+    Q_UNUSED(request)
 }
 
 void Agent::cancel()

@@ -1,10 +1,12 @@
 #include "agentadaptor.h"
 #include "agent.h"
+#include "request.h"
 #include "manager.h"
 #include "adapter.h"
 #include "device.h"
 #include "debug_p.h"
 
+#include <QDBusConnection>
 #include <QDBusObjectPath>
 
 namespace QBluez
@@ -14,6 +16,7 @@ AgentAdaptor::AgentAdaptor(Agent *parent, Manager *manager)
     : QDBusAbstractAdaptor(parent)
     , m_agent(parent)
     , m_manager(manager)
+    , m_iface(QStringLiteral("org.bluez.Agent1"))
 {
 }
 
@@ -24,7 +27,9 @@ AgentAdaptor::~AgentAdaptor()
 
 QString AgentAdaptor::RequestPinCode(const QDBusObjectPath &device, const QDBusMessage &msg)
 {
-    return m_agent->requestPinCode(deviceForPath(device), msg);
+    msg.setDelayedReply(true);
+    m_agent->requestPinCode(deviceForPath(device), Request<QString>(m_iface, msg));
+    return QString();
 }
 
 void AgentAdaptor::DisplayPinCode(const QDBusObjectPath &device, const QString &pincode)
@@ -34,7 +39,9 @@ void AgentAdaptor::DisplayPinCode(const QDBusObjectPath &device, const QString &
 
 quint32 AgentAdaptor::RequestPasskey(const QDBusObjectPath &device, const QDBusMessage &msg)
 {
-    return m_agent->requestPasskey(deviceForPath(device), msg);
+    msg.setDelayedReply(true);
+    m_agent->requestPasskey(deviceForPath(device), Request<quint32>(m_iface, msg));
+    return 0;
 }
 
 void AgentAdaptor::DisplayPasskey(const QDBusObjectPath &device, quint32 passkey, quint8 entered)
@@ -44,17 +51,20 @@ void AgentAdaptor::DisplayPasskey(const QDBusObjectPath &device, quint32 passkey
 
 void AgentAdaptor::RequestConfirmation(const QDBusObjectPath &device, quint32 passkey, const QDBusMessage &msg)
 {
-    m_agent->requestConfirmation(deviceForPath(device), passkey, msg);
+    msg.setDelayedReply(true);
+    m_agent->requestConfirmation(deviceForPath(device), passkey, Request<void>(m_iface, msg));
 }
 
 void AgentAdaptor::RequestAuthorization(const QDBusObjectPath &device, const QDBusMessage &msg)
 {
-    m_agent->requestAuthorization(deviceForPath(device), msg);
+    msg.setDelayedReply(true);
+    m_agent->requestAuthorization(deviceForPath(device), Request<void>(m_iface, msg));
 }
 
 void AgentAdaptor::AuthorizeService(const QDBusObjectPath &device, const QString &uuid, const QDBusMessage &msg)
 {
-    m_agent->authorizeService(deviceForPath(device), uuid, msg);
+    msg.setDelayedReply(true);
+    m_agent->authorizeService(deviceForPath(device), uuid, Request<void>(m_iface, msg));
 }
 
 void AgentAdaptor::Cancel()

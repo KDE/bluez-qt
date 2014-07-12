@@ -34,14 +34,15 @@ public Q_SLOTS:
     void RequestAuthorization(const QDBusObjectPath &device, const QDBusMessage &msg);
     void AuthorizeService(const QDBusObjectPath &device, const QString &uuid, const QDBusMessage &msg);
 
-    void Cancel();
-    void Release();
+    Q_NOREPLY void Cancel();
+    Q_NOREPLY void Release();
 
 private:
     Device *deviceForPath(const QDBusObjectPath &path) const;
 
     Agent *m_agent;
     Manager *m_manager;
+    QString m_iface;
 };
 
 } // namespace QBluez

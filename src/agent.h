@@ -2,8 +2,9 @@
 #define QBLUEZ_AGENT_H
 
 #include <QObject>
-#include <QDBusContext>
+#include <QDBusMessage>
 
+#include "request.h"
 #include "qbluez_export.h"
 
 class QDBusObjectPath;
@@ -23,13 +24,13 @@ public:
     virtual QDBusObjectPath objectPath() const = 0;
 
 public Q_SLOTS:
-    virtual QString requestPinCode(Device *device, const QDBusMessage &message);
+    virtual void requestPinCode(Device *device, const Request<QString> &request);
     virtual void displayPinCode(Device *device, const QString &pinCode);
-    virtual quint32 requestPasskey(Device *device, const QDBusMessage &message);
+    virtual void requestPasskey(Device *device, const Request<quint32> &request);
     virtual void displayPasskey(Device *device, quint32 passkey, quint16 entered);
-    virtual void requestConfirmation(Device *device, quint32 passkey, const QDBusMessage &message);
-    virtual void requestAuthorization(Device *device, const QDBusMessage &message);
-    virtual void authorizeService(Device *device, const QString &uuid, const QDBusMessage &message);
+    virtual void requestConfirmation(Device *device, quint32 passkey, const Request<void> &request);
+    virtual void requestAuthorization(Device *device, const Request<void> &request);
+    virtual void authorizeService(Device *device, const QString &uuid, const Request<void> &request);
 
     virtual void cancel();
     virtual void release();

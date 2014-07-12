@@ -14,6 +14,7 @@ set(qbluez_SRCS
     agent.cpp
     agentadaptor.cpp
     pendingcall.cpp
+    request.cpp
 )
 
 set(dbusobjectmanager_xml ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.freedesktop.DBus.ObjectManager.xml)
@@ -54,6 +55,7 @@ ecm_generate_headers(QBluez_HEADERS
         Utils
         Agent
         PendingCall
+        Request
 
     REQUIRED_HEADERS QBluez_HEADERS
 )
