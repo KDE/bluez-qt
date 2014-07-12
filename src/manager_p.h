@@ -34,7 +34,6 @@ public:
     void interfacesAdded(const QDBusObjectPath &objectPath, const QVariantMapMap &interfaces);
     void interfacesRemoved(const QDBusObjectPath &objectPath, const QStringList &interfaces);
 
-    void adapterAdded(Adapter *adapter);
     void adapterRemoved(Adapter *adapter);
     void adapterPoweredChanged(bool powered);
 
