@@ -130,8 +130,6 @@ void ManagerPrivate::initialize()
             m_initialized = true;
             Q_EMIT initFinished();
         }
-
-        delete watcher;
     });
 }
 
@@ -148,10 +146,10 @@ void ManagerPrivate::clear()
     qDeleteAll(m_devices);
     m_devices.clear();
 
-    delete m_dbusObjectManager;
+    m_dbusObjectManager->deleteLater();
     m_dbusObjectManager = 0;
 
-    delete m_bluezAgentManager;
+    m_bluezAgentManager->deleteLater();
     m_bluezAgentManager = 0;
 }
 
@@ -206,7 +204,7 @@ void ManagerPrivate::interfacesRemoved(const QDBusObjectPath &objectPath, const 
         if (interface == QLatin1String("org.bluez.Adapter1")) {
             Adapter *adapter = m_adapters.take(path);
             Q_EMIT q->adapterRemoved(adapter);
-            delete adapter;
+            adapter->deleteLater();
             if (m_adapters.isEmpty()) {
                 Q_EMIT q->allAdaptersRemoved();
             }
@@ -215,7 +213,7 @@ void ManagerPrivate::interfacesRemoved(const QDBusObjectPath &objectPath, const 
             if (device) {
                 device->adapter()->d->removeDevice(device);
                 m_devices.remove(path);
-                delete device;
+                device->deleteLater();
                 break;
             }
         }
