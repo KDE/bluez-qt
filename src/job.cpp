@@ -28,7 +28,7 @@ namespace QBluez
 
 JobPrivate::JobPrivate()
 {
-    eventLoop = 0;
+    eventLoop = Q_NULLPTR;
     error = Job::NoError;
 }
 

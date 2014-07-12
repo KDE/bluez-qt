@@ -77,7 +77,7 @@ Device *AgentAdaptor::deviceForPath(const QDBusObjectPath &path) const
         }
     }
     qCWarning(QBLUEZ) << "AgentAdaptor::deviceForPath Cannot find device for path:" << path.path();
-    return 0;
+    return Q_NULLPTR;
 }
 
 } // namespace QBluez

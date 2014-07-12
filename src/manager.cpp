@@ -8,7 +8,7 @@
 namespace QBluez
 {
 
-static Manager *instance = 0;
+static Manager *instance = Q_NULLPTR;
 
 Manager::Manager()
     : QObject()

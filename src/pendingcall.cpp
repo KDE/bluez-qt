@@ -60,7 +60,7 @@ PendingCall::PendingCall(const QDBusPendingReply<> &reply, QObject *parent)
     connect(d->watcher, &QDBusPendingCallWatcher::finished, [ this ]() {
         const QDBusPendingReply<> &reply = *d->watcher;
         d->watcher->deleteLater();
-        d->watcher = 0;
+        d->watcher = Q_NULLPTR;
 
         if (reply.isError()) {
             qCWarning(QBLUEZ) << "PendingCall Error:" << reply.error().message();

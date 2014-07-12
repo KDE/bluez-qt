@@ -138,7 +138,7 @@ void ManagerPrivate::clear()
     // TODO: Notify about operational change - all objects will be deleted!
 
     m_initialized = false;
-    m_usableAdapter = 0;
+    m_usableAdapter = Q_NULLPTR;
 
     qDeleteAll(m_adapters);
     m_adapters.clear();
@@ -147,10 +147,10 @@ void ManagerPrivate::clear()
     m_devices.clear();
 
     m_dbusObjectManager->deleteLater();
-    m_dbusObjectManager = 0;
+    m_dbusObjectManager = Q_NULLPTR;
 
     m_bluezAgentManager->deleteLater();
-    m_bluezAgentManager = 0;
+    m_bluezAgentManager = Q_NULLPTR;
 }
 
 Adapter *ManagerPrivate::usableAdapter()
@@ -165,7 +165,7 @@ Adapter *ManagerPrivate::findUsableAdapter() const
             return adapter;
         }
     }
-    return 0;
+    return Q_NULLPTR;
 }
 
 void ManagerPrivate::interfacesAdded(const QDBusObjectPath &objectPath, const QVariantMapMap &interfaces)
