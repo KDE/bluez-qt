@@ -8,9 +8,14 @@
 namespace QBluez
 {
 
-QBLUEZ_EXPORT void qbluez_acceptRequest(const QDBusMessage &req, const QVariant &val);
-QBLUEZ_EXPORT void qbluez_rejectRequest(const QDBusMessage &req, const QString &iface);
-QBLUEZ_EXPORT void qbluez_cancelRequest(const QDBusMessage &req, const QString &iface);
+enum AgentType {
+    PairingAgent,
+    ObexAgent
+};
+
+QBLUEZ_EXPORT void qbluez_acceptRequest(AgentType type, const QVariant &val, const QDBusMessage &req);
+QBLUEZ_EXPORT void qbluez_rejectRequest(AgentType type, const QDBusMessage &req);
+QBLUEZ_EXPORT void qbluez_cancelRequest(AgentType type, const QDBusMessage &req);
 
 template<typename T>
 class Request
@@ -20,29 +25,29 @@ public:
     {
     }
 
-    Request(const QString &iface, const QDBusMessage &message)
-        : m_iface(iface)
+    Request(AgentType type, const QDBusMessage &message)
+        : m_type(type)
         , m_message(message)
     {
     }
 
     void accept(T returnValue) const
     {
-        qbluez_acceptRequest(m_message, returnValue);
+        qbluez_acceptRequest(m_type, returnValue, m_message);
     }
 
     void reject() const
     {
-        qbluez_rejectRequest(m_message, m_iface);
+        qbluez_rejectRequest(m_type, m_message);
     }
 
     void cancel() const
     {
-        qbluez_cancelRequest(m_message, m_iface);
+        qbluez_cancelRequest(m_type, m_message);
     }
 
 private:
-    QString m_iface;
+    AgentType m_type;
     QDBusMessage m_message;
 };
 
@@ -55,29 +60,29 @@ public:
     {
     }
 
-    Request(const QString &iface, const QDBusMessage &message)
-        : m_iface(iface)
+    Request(AgentType type, const QDBusMessage &message)
+        : m_type(type)
         , m_message(message)
     {
     }
 
     void accept() const
     {
-        qbluez_acceptRequest(m_message, QVariant());
+        qbluez_acceptRequest(m_type, QVariant(), m_message);
     }
 
     void reject() const
     {
-        qbluez_rejectRequest(m_message, m_iface);
+        qbluez_rejectRequest(m_type, m_message);
     }
 
     void cancel() const
     {
-        qbluez_cancelRequest(m_message, m_iface);
+        qbluez_cancelRequest(m_type, m_message);
     }
 
 private:
-    QString m_iface;
+    AgentType m_type;
     QDBusMessage m_message;
 };
 

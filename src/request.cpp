@@ -7,7 +7,29 @@
 namespace QBluez
 {
 
-void qbluez_acceptRequest(const QDBusMessage &req, const QVariant &val)
+static bool sendMessage(AgentType type, const QDBusMessage &msg)
+{
+    if (type == PairingAgent) {
+        return QDBusConnection::systemBus().send(msg);
+    }
+    if (type == ObexAgent) {
+        return QDBusConnection::sessionBus().send(msg);
+    }
+    return false;
+}
+
+static QString interfaceName(AgentType type)
+{
+    if (type == PairingAgent) {
+        return QStringLiteral("org.bluez.Agent1");
+    }
+    if (type == ObexAgent) {
+        return QStringLiteral("org.bluez.obex.Agent1");
+    }
+    return QString();
+}
+
+void qbluez_acceptRequest(AgentType type, const QVariant &val, const QDBusMessage &req)
 {
     QDBusMessage reply;
     if (val.isValid()) {
@@ -16,25 +38,25 @@ void qbluez_acceptRequest(const QDBusMessage &req, const QVariant &val)
         reply = req.createReply();
     }
 
-    if (!QDBusConnection::systemBus().send(reply)) {
+    if (!sendMessage(type, reply)) {
         qCWarning(QBLUEZ) << "Request: Failed to put reply on DBus queue";
     }
 }
 
-void qbluez_rejectRequest(const QDBusMessage &req, const QString &iface)
+void qbluez_rejectRequest(AgentType type, const QDBusMessage &req)
 {
-    const QDBusMessage &reply = req.createErrorReply(iface % QStringLiteral(".Rejected"),
+    const QDBusMessage &reply = req.createErrorReply(interfaceName(type) % QStringLiteral(".Rejected"),
                                                      QStringLiteral("Rejected"));
-    if (!QDBusConnection::systemBus().send(reply)) {
+    if (!sendMessage(type, reply)) {
         qCWarning(QBLUEZ) << "Request: Failed to put reply on DBus queue";
     }
 }
 
-void qbluez_cancelRequest(const QDBusMessage &req, const QString &iface)
+void qbluez_cancelRequest(AgentType type, const QDBusMessage &req)
 {
-    const QDBusMessage &reply = req.createErrorReply(iface % QStringLiteral(".Canceled"),
+    const QDBusMessage &reply = req.createErrorReply(interfaceName(type) % QStringLiteral(".Canceled"),
                                                      QStringLiteral("Canceled"));
-    if (!QDBusConnection::systemBus().send(reply)) {
+    if (!sendMessage(type, reply)) {
         qCWarning(QBLUEZ) << "Request: Failed to put reply on DBus queue";
     }
 }
