@@ -27,8 +27,8 @@ public Q_SLOTS:
     virtual void requestPinCode(Device *device, const Request<QString> &request);
     virtual void displayPinCode(Device *device, const QString &pinCode);
     virtual void requestPasskey(Device *device, const Request<quint32> &request);
-    virtual void displayPasskey(Device *device, quint32 passkey, quint16 entered);
-    virtual void requestConfirmation(Device *device, quint32 passkey, const Request<void> &request);
+    virtual void displayPasskey(Device *device, const QString &passkey, const QString &entered);
+    virtual void requestConfirmation(Device *device, const QString &passkey, const Request<void> &request);
     virtual void requestAuthorization(Device *device, const Request<void> &request);
     virtual void authorizeService(Device *device, const QString &uuid, const Request<void> &request);
 

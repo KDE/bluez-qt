@@ -39,6 +39,7 @@ public Q_SLOTS:
 
 private:
     Device *deviceForPath(const QDBusObjectPath &path) const;
+    QString passkeyToString(quint32 passkey) const;
 
     Agent *m_agent;
     Manager *m_manager;

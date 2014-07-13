@@ -30,14 +30,14 @@ void Agent::requestPasskey(Device *device, const Request<quint32> &request)
     Q_UNUSED(request)
 }
 
-void Agent::displayPasskey(Device *device, quint32 passkey, quint16 entered)
+void Agent::displayPasskey(Device *device, const QString &passkey, const QString &entered)
 {
     Q_UNUSED(device)
     Q_UNUSED(passkey)
     Q_UNUSED(entered)
 }
 
-void Agent::requestConfirmation(Device *device, quint32 passkey, const Request<void> &request)
+void Agent::requestConfirmation(Device *device, const QString &passkey, const Request<void> &request)
 {
     Q_UNUSED(device)
     Q_UNUSED(passkey)

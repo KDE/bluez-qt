@@ -46,13 +46,13 @@ quint32 AgentAdaptor::RequestPasskey(const QDBusObjectPath &device, const QDBusM
 
 void AgentAdaptor::DisplayPasskey(const QDBusObjectPath &device, quint32 passkey, quint8 entered)
 {
-    m_agent->displayPasskey(deviceForPath(device), passkey, entered);
+    m_agent->displayPasskey(deviceForPath(device), passkeyToString(passkey), QString::number(entered));
 }
 
 void AgentAdaptor::RequestConfirmation(const QDBusObjectPath &device, quint32 passkey, const QDBusMessage &msg)
 {
     msg.setDelayedReply(true);
-    m_agent->requestConfirmation(deviceForPath(device), passkey, Request<void>(m_iface, msg));
+    m_agent->requestConfirmation(deviceForPath(device), passkeyToString(passkey), Request<void>(m_iface, msg));
 }
 
 void AgentAdaptor::RequestAuthorization(const QDBusObjectPath &device, const QDBusMessage &msg)
@@ -88,6 +88,12 @@ Device *AgentAdaptor::deviceForPath(const QDBusObjectPath &path) const
     }
     qCWarning(QBLUEZ) << "AgentAdaptor::deviceForPath Cannot find device for path:" << path.path();
     return Q_NULLPTR;
+}
+
+QString AgentAdaptor::passkeyToString(quint32 passkey) const
+{
+    // Passkey will always be a 6-digit number, zero-pad it at the start
+    return QString(QStringLiteral("%1")).arg(passkey, 6, 10, QLatin1Char('0'));
 }
 
 } // namespace QBluez
