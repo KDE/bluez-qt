@@ -11,6 +11,7 @@ set(qbluez_SRCS
     loadadaptersjob.cpp
     loaddevicejob.cpp
     utils.cpp
+    utils_p.cpp
     agent.cpp
     agentadaptor.cpp
     pendingcall.cpp

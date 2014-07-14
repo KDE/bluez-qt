@@ -1,6 +1,7 @@
 #include "device_p.h"
 #include "device.h"
 #include "adapter.h"
+#include "utils_p.h"
 
 namespace QBluez
 {
@@ -91,10 +92,14 @@ void DevicePrivate::propertiesChanged(const QString &interface, const QVariantMa
             PROPERTY_CHANGED(m_rssi, toInt, rssiChanged);
         } else if (property == QLatin1String("Connected")) {
             PROPERTY_CHANGED(m_connected, toBool, connectedChanged);
-        } else if (property == QLatin1String("UUIDs")) {
-            PROPERTY_CHANGED(m_uuids, toStringList, uuidsChanged);
         } else if (property == QLatin1String("Modalias")) {
             PROPERTY_CHANGED(m_modalias, toString, modaliasChanged);
+        } else if (property == QLatin1String("UUIDs")) {
+            const QStringList &changedUuids = stringListToUpper(value.toStringList());
+            if (m_uuids != changedUuids) {
+                m_uuids = changedUuids;
+                Q_EMIT q->uuidsChanged(m_uuids);
+            }
         }
     }
 

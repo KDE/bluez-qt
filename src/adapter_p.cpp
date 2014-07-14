@@ -1,5 +1,6 @@
 #include "adapter_p.h"
 #include "adapter.h"
+#include "utils_p.h"
 
 namespace QBluez
 {
@@ -70,7 +71,7 @@ void AdapterPrivate::load()
         m_pairable = properties.value(QStringLiteral("Pairable")).toBool();
         m_pairableTimeout = properties.value(QStringLiteral("PairableTimeout")).toUInt();
         m_discovering = properties.value(QStringLiteral("Discovering")).toBool();
-        m_uuids = properties.value(QStringLiteral("UUIDs")).toStringList();
+        m_uuids = stringListToUpper(properties.value(QStringLiteral("UUIDs")).toStringList());
         m_modalias = properties.value(QStringLiteral("Modalias")).toString();
 
         m_loaded = true;
@@ -119,10 +120,14 @@ void AdapterPrivate::propertiesChanged(const QString &interface, const QVariantM
             PROPERTY_CHANGED(m_pairableTimeout, toUInt, pairableTimeoutChanged);
         } else if (property == QLatin1String("Discovering")) {
             PROPERTY_CHANGED(m_discovering, toBool, discoveringChanged);
-        } else if (property == QLatin1String("UUIDs")) {
-            PROPERTY_CHANGED(m_uuids, toStringList, uuidsChanged);
         } else if (property == QLatin1String("Modalias")) {
             PROPERTY_CHANGED(m_modalias, toString, modaliasChanged);
+        } else if (property == QLatin1String("UUIDs")) {
+            const QStringList &changedUuids = stringListToUpper(value.toStringList());
+            if (m_uuids != changedUuids) {
+                m_uuids = changedUuids;
+                Q_EMIT q->uuidsChanged(m_uuids);
+            }
         }
     }
 }

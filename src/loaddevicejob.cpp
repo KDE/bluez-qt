@@ -1,6 +1,7 @@
 #include "loaddevicejob.h"
 #include "device_p.h"
 #include "debug_p.h"
+#include "utils_p.h"
 
 namespace QBluez
 {
@@ -64,7 +65,7 @@ void LoadDeviceJobPrivate::doStart()
         m_device->m_legacyPairing = properties.value(QStringLiteral("LegacyPairing")).toBool();
         m_device->m_rssi = properties.value(QStringLiteral("RSSI")).toInt();
         m_device->m_connected = properties.value(QStringLiteral("Connected")).toBool();
-        m_device->m_uuids = properties.value(QStringLiteral("UUIDs")).toStringList();
+        m_device->m_uuids = stringListToUpper(properties.value(QStringLiteral("UUIDs")).toStringList());
         m_device->m_modalias = properties.value(QStringLiteral("Modalias")).toString();
 
         m_device->m_loaded = true;
