@@ -53,9 +53,19 @@ void DeviceTest::cleanupTestCase()
     }
 }
 
+static void compareUuids(const QStringList &actual, const QStringList &expected)
+{
+    QCOMPARE(actual.size(), expected.size());
+
+    for (int i = 0; i < actual.size(); ++i) {
+        QCOMPARE(actual.at(i).toUpper(), expected.at(i).toUpper());
+    }
+}
+
 void DeviceTest::getPropertiesTest()
 {
     Q_FOREACH (const DeviceUnit &unit, m_units) {
+        QCOMPARE(unit.device->ubi(), unit.dbusDevice->path());
         QCOMPARE(unit.device->address(), unit.dbusDevice->address());
         QCOMPARE(unit.device->name(), unit.dbusDevice->name());
         QCOMPARE(unit.device->alias(), unit.dbusDevice->alias());
@@ -68,9 +78,10 @@ void DeviceTest::getPropertiesTest()
         QCOMPARE(unit.device->hasLegacyPairing(), unit.dbusDevice->legacyPairing());
         QCOMPARE(unit.device->rssi(), unit.dbusDevice->rSSI());
         QCOMPARE(unit.device->isConnected(), unit.dbusDevice->connected());
-        QCOMPARE(unit.device->uuids(), unit.dbusDevice->uUIDs());
         QCOMPARE(unit.device->modalias(), unit.dbusDevice->modalias());
         QCOMPARE(unit.device->adapter()->ubi(), unit.dbusDevice->adapter().path());
+
+        compareUuids(unit.device->uuids(), unit.dbusDevice->uUIDs());
     }
 }
 
