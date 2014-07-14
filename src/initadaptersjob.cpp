@@ -1,4 +1,4 @@
-#include "loadadaptersjob.h"
+#include "initadaptersjob.h"
 #include "manager_p.h"
 #include "adapter.h"
 #include "adapter_p.h"
@@ -7,29 +7,29 @@
 namespace QBluez
 {
 
-class LoadAdaptersJobPrivate : public QObject
+class InitAdaptersJobPrivate : public QObject
 {
     Q_OBJECT
 
 public:
-    LoadAdaptersJobPrivate(LoadAdaptersJob *q, ManagerPrivate *manager);
+    InitAdaptersJobPrivate(InitAdaptersJob *q, ManagerPrivate *manager);
 
     void doStart();
     void loaded();
     void loadError(const QString &errorText);
 
-    LoadAdaptersJob *q;
+    InitAdaptersJob *q;
     ManagerPrivate *m_manager;
 };
 
-LoadAdaptersJobPrivate::LoadAdaptersJobPrivate(LoadAdaptersJob *q, ManagerPrivate *manager)
+InitAdaptersJobPrivate::InitAdaptersJobPrivate(InitAdaptersJob *q, ManagerPrivate *manager)
     : QObject(q)
     , q(q)
     , m_manager(manager)
 {
 }
 
-void LoadAdaptersJobPrivate::doStart()
+void InitAdaptersJobPrivate::doStart()
 {
     if (m_manager->m_adaptersLoaded) {
         q->emitResult();
@@ -45,12 +45,12 @@ void LoadAdaptersJobPrivate::doStart()
     Q_FOREACH (Adapter *adapter, m_manager->m_adapters) {
         adapter->d->load();
 
-        connect(adapter->d, &AdapterPrivate::loaded, this, &LoadAdaptersJobPrivate::loaded);
-        connect(adapter->d, &AdapterPrivate::loadError, this, &LoadAdaptersJobPrivate::loadError);
+        connect(adapter->d, &AdapterPrivate::loaded, this, &InitAdaptersJobPrivate::loaded);
+        connect(adapter->d, &AdapterPrivate::loadError, this, &InitAdaptersJobPrivate::loadError);
     }
 }
 
-void LoadAdaptersJobPrivate::loaded()
+void InitAdaptersJobPrivate::loaded()
 {
     Q_FOREACH (Adapter *adapter, m_manager->m_adapters) {
         if (!adapter->d->m_loaded) {
@@ -62,36 +62,36 @@ void LoadAdaptersJobPrivate::loaded()
     q->emitResult();
 }
 
-void LoadAdaptersJobPrivate::loadError(const QString &errorText)
+void InitAdaptersJobPrivate::loadError(const QString &errorText)
 {
     qCWarning(QBLUEZ) << "LoadAdaptersJob Error:" << errorText;
 
-    q->setError(LoadAdaptersJob::UserDefinedError);
+    q->setError(InitAdaptersJob::UserDefinedError);
     q->setErrorText(errorText);
     q->emitResult();
 }
 
-LoadAdaptersJob::LoadAdaptersJob(ManagerPrivate *manager, QObject *parent)
+InitAdaptersJob::InitAdaptersJob(ManagerPrivate *manager, QObject *parent)
     : Job(parent)
-    , d(new LoadAdaptersJobPrivate(this, manager))
+    , d(new InitAdaptersJobPrivate(this, manager))
 {
 }
 
-LoadAdaptersJob::~LoadAdaptersJob()
+InitAdaptersJob::~InitAdaptersJob()
 {
     delete d;
 }
 
-void LoadAdaptersJob::doStart()
+void InitAdaptersJob::doStart()
 {
     d->doStart();
 }
 
-void LoadAdaptersJob::doEmitResult()
+void InitAdaptersJob::doEmitResult()
 {
     Q_EMIT result(this);
 }
 
 } // namespace QBluez
 
-#include "loadadaptersjob.moc"
+#include "initadaptersjob.moc"

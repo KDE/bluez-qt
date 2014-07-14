@@ -28,6 +28,7 @@
 
 #include "manager.h"
 #include "adapter.h"
+#include "initmanagerjob.h"
 
 using namespace QBluez;
 
@@ -90,26 +91,15 @@ int main(int argc, char **argv)
 
     qDebug() << "Looping until stopped";
 
-    GetManagerJob *managerJob = Manager::get();
-    managerJob->exec();
-    if (managerJob->error() != GetManagerJob::NoError) {
-        qWarning() << "Error getting manager:" << managerJob->errorText();
+    Manager *manager = new Manager();
+    InitManagerJob *initJob = manager->init(Manager::InitManagerAndAdapters);
+    initJob->exec();
+    if (initJob->error()) {
+        qWarning() << "Error initializing manager:" << initJob->errorText();
         return 1;
     }
 
-    Manager *manager = managerJob->manager();
     AdapterTest *adapterTest = new AdapterTest(manager);
-
-    qDebug() << "Got manager" << manager;
-
-    LoadAdaptersJob *adaptersJob = manager->loadAdapters();
-    adaptersJob->exec();
-    if (adaptersJob->error() != LoadAdaptersJob::NoError) {
-        qWarning() << "Error loading adapters:" << adaptersJob->errorText();
-        return 1;
-    }
-
-    qDebug() << "Loaded adapters";
 
     QObject::connect(manager, &Manager::adapterAdded, adapterTest, &AdapterTest::adapterAdded);
     QObject::connect(manager, &Manager::adapterRemoved, adapterTest, &AdapterTest::adapterRemoved);

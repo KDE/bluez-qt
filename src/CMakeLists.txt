@@ -7,8 +7,8 @@ set(qbluez_SRCS
     device.cpp
     device_p.cpp
     job.cpp
-    getmanagerjob.cpp
-    loadadaptersjob.cpp
+    initmanagerjob.cpp
+    initadaptersjob.cpp
     loaddevicejob.cpp
     utils.cpp
     utils_p.cpp
@@ -50,8 +50,8 @@ ecm_generate_headers(QBluez_HEADERS
         Adapter
         Device
         Job
-        GetManagerJob
-        LoadAdaptersJob
+        InitManagerJob
+        InitAdaptersJob
         LoadDeviceJob
         Utils
         Agent

@@ -30,12 +30,14 @@
 #include "manager.h"
 #include "adapter.h"
 #include "device.h"
+#include "initmanagerjob.h"
 
 using namespace QBluez;
 
-DeviceReceiver::DeviceReceiver(Manager *manager, QObject *parent)
+Manager *g_manager = 0;
+
+DeviceReceiver::DeviceReceiver(QObject *parent)
     : QObject(parent)
-    , m_manager(manager)
 {
 }
 
@@ -45,13 +47,13 @@ DeviceReceiver::~DeviceReceiver()
 
 void DeviceReceiver::scanDevices()
 {
-    Adapter *usableAdapter = m_manager->usableAdapter();
-    if (!usableAdapter && m_manager->adapters().isEmpty()) {
+    Adapter *usableAdapter = g_manager->usableAdapter();
+    if (!usableAdapter && g_manager->adapters().isEmpty()) {
         qDebug() << "!!! No bluetooth adapters were found. Waiting for bluetooth adapters. Ctrl + C to cancel...";
-        connect(m_manager, &Manager::adapterAdded, this, &DeviceReceiver::adapterAdded);
+        connect(g_manager, &Manager::adapterAdded, this, &DeviceReceiver::adapterAdded);
         return;
     } else if (!usableAdapter) {
-        usableAdapter = m_manager->adapters().first();
+        usableAdapter = g_manager->adapters().first();
         PendingCall *powerOnCall = usableAdapter->setPowered(true);
         powerOnCall->waitForFinished();
     }
@@ -97,11 +99,8 @@ void DeviceReceiver::adapterAdded(QBluez::Adapter *adapter)
 
 static void stopDiscovering()
 {
-    GetManagerJob *managerJob = Manager::get();
-    managerJob->exec();
-
-    if (managerJob->manager()) {
-        Q_FOREACH (Adapter *adapter, managerJob->manager()->adapters()) {
+    if (g_manager) {
+        Q_FOREACH (Adapter *adapter, g_manager->adapters()) {
             adapter->stopDiscovery();
         }
     }
@@ -113,23 +112,16 @@ int main(int argc, char **argv)
 
     qAddPostRoutine(stopDiscovering);
 
-    GetManagerJob *managerJob = Manager::get();
-    managerJob->exec();
-    if (managerJob->error() != GetManagerJob::NoError) {
-        qWarning() << "Error getting manager:" << managerJob->errorText();
+    g_manager = new Manager();
+    InitManagerJob *initJob = g_manager->init(Manager::InitManagerAndAdapters);
+    initJob->exec();
+
+    if (initJob->error()) {
+        qWarning() << "Error initializing manager:" << initJob->errorText();
         return 1;
     }
 
-    Manager *manager = managerJob->manager();
-    DeviceReceiver *deviceReceiver = new DeviceReceiver(manager);
-
-    LoadAdaptersJob *adaptersJob = manager->loadAdapters();
-    adaptersJob->exec();
-    if (adaptersJob->error() != LoadAdaptersJob::NoError) {
-        qWarning() << "Error loading adapters:" << adaptersJob->errorText();
-        return 1;
-    }
-
+    DeviceReceiver *deviceReceiver = new DeviceReceiver();
     deviceReceiver->scanDevices();
 
     return app.exec();

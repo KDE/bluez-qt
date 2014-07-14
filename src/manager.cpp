@@ -1,17 +1,16 @@
 #include "manager.h"
 #include "manager_p.h"
 #include "adapter.h"
-#include "loadadaptersjob.h"
 #include "agent.h"
 #include "agentadaptor.h"
+#include "initmanagerjob.h"
+#include "initadaptersjob.h"
 
 namespace QBluez
 {
 
-static Manager *instance = Q_NULLPTR;
-
-Manager::Manager()
-    : QObject()
+Manager::Manager(QObject *parent)
+    : QObject(parent)
     , d(new ManagerPrivate(this))
 {
 }
@@ -21,16 +20,14 @@ Manager::~Manager()
     delete d;
 }
 
-// static
-GetManagerJob *Manager::get()
+InitManagerJob *Manager::init(Manager::InitType type)
 {
-    return new GetManagerJob(instance, qApp);
+    return new InitManagerJob(this, type);
 }
 
-void Manager::release()
+InitAdaptersJob *Manager::initAdapters()
 {
-    instance->deleteLater();
-    instance = 0;
+    return new InitAdaptersJob(d);
 }
 
 QList<Adapter *> Manager::adapters() const
@@ -47,11 +44,6 @@ QList<Device *> Manager::devices() const
     }
 
     return list;
-}
-
-LoadAdaptersJob *Manager::loadAdapters()
-{
-    return new LoadAdaptersJob(d, this);
 }
 
 Adapter *Manager::usableAdapter()
@@ -103,15 +95,6 @@ PendingCall *Manager::unregisterAgent(Agent *agent)
 PendingCall *Manager::requestDefaultAgent(Agent *agent)
 {
     return new PendingCall(d->m_bluezAgentManager->RequestDefaultAgent(agent->objectPath()), this);
-}
-
-// static
-Manager *Manager::self()
-{
-    if (!instance) {
-        instance = new Manager();
-    }
-    return instance;
 }
 
 } // namespace QBluez

@@ -3,8 +3,6 @@
 
 #include <QObject>
 
-#include "getmanagerjob.h"
-#include "loadadaptersjob.h"
 #include "pendingcall.h"
 #include "qbluez_export.h"
 
@@ -14,13 +12,14 @@ namespace QBluez
 class Device;
 class Adapter;
 class Agent;
+class InitManagerJob;
+class InitAdaptersJob;
 
 class QBLUEZ_EXPORT Manager : public QObject
 {
     Q_OBJECT
 
     Q_ENUMS(RegisterCapability)
-    Q_PROPERTY(Manager* self READ self)
     Q_PROPERTY(QList<Adapter *> adapters READ adapters)
     Q_PROPERTY(QList<Device *> devices READ devices)
     Q_PROPERTY(bool bluetoothOperational READ isBluetoothOperational)
@@ -33,13 +32,19 @@ public:
         NoInputNoOutput = 3
     };
 
-    static GetManagerJob *get();
-    void release();
+    enum InitType {
+        InitManagerOnly,
+        InitManagerAndAdapters
+    };
+
+    explicit Manager(QObject *parent = 0);
+    ~Manager();
+
+    InitManagerJob *init(InitType type = InitManagerOnly);
+    InitAdaptersJob *initAdapters();
 
     QList<Adapter *> adapters() const;
     QList<Device *> devices() const;
-
-    LoadAdaptersJob *loadAdapters();
 
     Adapter *usableAdapter();
 
@@ -61,15 +66,10 @@ Q_SIGNALS:
     void allAdaptersRemoved();
 
 private:
-    explicit Manager();
-    ~Manager();
-
-    static Manager *self();
-
     class ManagerPrivate *const d;
 
     friend class ManagerPrivate;
-    friend class GetManagerJobPrivate;
+    friend class InitManagerJobPrivate;
 };
 
 } // namespace QBluez

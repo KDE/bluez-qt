@@ -26,7 +26,15 @@ ManagerPrivate::ManagerPrivate(Manager *parent)
     qDBusRegisterMetaType<QVariantMapMap>();
 
     connect(q, &Manager::adapterRemoved, this, &ManagerPrivate::adapterRemoved);
+}
 
+ManagerPrivate::~ManagerPrivate()
+{
+    clear();
+}
+
+void ManagerPrivate::init()
+{
     // Keep an eye on bluez service
     QDBusServiceWatcher *serviceWatcher = new QDBusServiceWatcher(QStringLiteral("org.bluez"), QDBusConnection::systemBus(),
             QDBusServiceWatcher::WatchForRegistration | QDBusServiceWatcher::WatchForUnregistration, this);
@@ -34,7 +42,7 @@ ManagerPrivate::ManagerPrivate(Manager *parent)
     connect(serviceWatcher, &QDBusServiceWatcher::serviceRegistered, [ this ]() {
         qCDebug(QBLUEZ) << "Manager: Bluez service registered";
         m_bluezRunning = true;
-        initialize();
+        load();
     });
 
     connect(serviceWatcher, &QDBusServiceWatcher::serviceUnregistered, [ this ]() {
@@ -64,7 +72,7 @@ ManagerPrivate::ManagerPrivate(Manager *parent)
             } else {
                 m_bluezRunning = reply.isValid() && reply.value();
                 if (m_bluezRunning) {
-                    initialize();
+                    load();
                 } else {
                     Q_EMIT initFinished();
                 }
@@ -73,12 +81,7 @@ ManagerPrivate::ManagerPrivate(Manager *parent)
     }
 }
 
-ManagerPrivate::~ManagerPrivate()
-{
-    clear();
-}
-
-void ManagerPrivate::initialize()
+void ManagerPrivate::load()
 {
     if (!m_bluezRunning || m_initialized) {
         return;

@@ -1,5 +1,6 @@
 #include "devicetest.h"
 #include "autotests.h"
+#include "initmanagerjob.h"
 
 #include <QtTest/QTest>
 #include <QtTest/QSignalSpy>
@@ -9,16 +10,10 @@ using namespace QBluez;
 
 void DeviceTest::initTestCase()
 {
-    GetManagerJob *managerJob = Manager::get();
-    managerJob->exec();
-    QVERIFY(managerJob->error() == GetManagerJob::NoError);
-
-    Manager *manager = managerJob->manager();
-    QVERIFY(manager);
-
-    LoadAdaptersJob *adaptersJob = manager->loadAdapters();
-    adaptersJob->exec();
-    QVERIFY(adaptersJob->error() == LoadAdaptersJob::NoError);
+    Manager *manager = new Manager();
+    InitManagerJob *initJob = manager->init(Manager::InitManagerAndAdapters);
+    initJob->exec();
+    QVERIFY(!initJob->error());
 
     Q_FOREACH (Adapter *adapter, manager->adapters()) {
         QVERIFY(!adapter->ubi().isEmpty());

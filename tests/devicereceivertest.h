@@ -38,7 +38,7 @@ class DeviceReceiver : public QObject
     Q_OBJECT
 
 public:
-    DeviceReceiver(QBluez::Manager *manager, QObject *parent = 0);
+    DeviceReceiver(QObject *parent = 0);
     virtual ~DeviceReceiver();
 
     void scanDevices();
@@ -48,8 +48,6 @@ public Q_SLOTS:
     void devicePropertyChanged(QBluez::Device *device);
     void adapterAdded(QBluez::Adapter *adapter);
 
-private:
-    QBluez::Manager *m_manager;
 };
 
 #endif // DEVICERECEIVERTEST_H

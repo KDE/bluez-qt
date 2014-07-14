@@ -102,7 +102,7 @@ private:
 
     friend class AdapterPrivate;
     friend class ManagerPrivate;
-    friend class LoadAdaptersJobPrivate;
+    friend class InitAdaptersJobPrivate;
 };
 
 } // namespace QBluez

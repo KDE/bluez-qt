@@ -24,7 +24,8 @@ public:
     explicit ManagerPrivate(Manager *parent);
     ~ManagerPrivate();
 
-    void initialize();
+    void init();
+    void load();
     void clear();
 
     Adapter *usableAdapter();
