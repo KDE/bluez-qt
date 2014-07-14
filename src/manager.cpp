@@ -31,12 +31,12 @@ InitAdaptersJob *Manager::initAdapters()
     return new InitAdaptersJob(d);
 }
 
-QList<Adapter *> Manager::adapters() const
+QList<Adapter*> Manager::adapters() const
 {
     return d->m_adapters.values();
 }
 
-QList<Device *> Manager::devices() const
+QList<Device*> Manager::devices() const
 {
     QList<Device *> list;
 

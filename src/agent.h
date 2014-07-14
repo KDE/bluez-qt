@@ -19,7 +19,7 @@ class QBLUEZ_EXPORT Agent : public QObject
     Q_OBJECT
 
 public:
-    explicit Agent(QObject *parent);
+    explicit Agent(QObject *parent = 0);
 
     virtual QDBusObjectPath objectPath() const = 0;
 

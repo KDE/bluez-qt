@@ -46,7 +46,7 @@ void qbluez_acceptRequest(AgentType type, const QVariant &val, const QDBusMessag
 void qbluez_rejectRequest(AgentType type, const QDBusMessage &req)
 {
     const QDBusMessage &reply = req.createErrorReply(interfaceName(type) % QStringLiteral(".Rejected"),
-                                                     QStringLiteral("Rejected"));
+                                QStringLiteral("Rejected"));
     if (!sendMessage(type, reply)) {
         qCWarning(QBLUEZ) << "Request: Failed to put reply on DBus queue";
     }
@@ -55,7 +55,7 @@ void qbluez_rejectRequest(AgentType type, const QDBusMessage &req)
 void qbluez_cancelRequest(AgentType type, const QDBusMessage &req)
 {
     const QDBusMessage &reply = req.createErrorReply(interfaceName(type) % QStringLiteral(".Canceled"),
-                                                     QStringLiteral("Canceled"));
+                                QStringLiteral("Canceled"));
     if (!sendMessage(type, reply)) {
         qCWarning(QBLUEZ) << "Request: Failed to put reply on DBus queue";
     }

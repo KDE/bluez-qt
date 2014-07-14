@@ -46,7 +46,7 @@ public:
     quint32 m_pairableTimeout;
     bool m_discovering;
     QStringList m_uuids;
-    QList<Device *> m_devices;
+    QList<Device*> m_devices;
     QString m_modalias;
 
 Q_SIGNALS:

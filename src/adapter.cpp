@@ -113,7 +113,7 @@ QString Adapter::modalias() const
     return d->m_modalias;
 }
 
-QList<Device *> Adapter::devices() const
+QList<Device*> Adapter::devices() const
 {
     return d->m_devices;
 }

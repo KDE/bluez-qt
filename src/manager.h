@@ -20,8 +20,8 @@ class QBLUEZ_EXPORT Manager : public QObject
     Q_OBJECT
 
     Q_ENUMS(RegisterCapability)
-    Q_PROPERTY(QList<Adapter *> adapters READ adapters)
-    Q_PROPERTY(QList<Device *> devices READ devices)
+    Q_PROPERTY(QList<Adapter*> adapters READ adapters)
+    Q_PROPERTY(QList<Device*> devices READ devices)
     Q_PROPERTY(bool bluetoothOperational READ isBluetoothOperational)
 
 public:
@@ -43,8 +43,8 @@ public:
     InitManagerJob *init(InitType type = InitManagerOnly);
     InitAdaptersJob *initAdapters();
 
-    QList<Adapter *> adapters() const;
-    QList<Device *> devices() const;
+    QList<Adapter*> adapters() const;
+    QList<Device*> devices() const;
 
     Adapter *usableAdapter();
 

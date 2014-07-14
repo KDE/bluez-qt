@@ -1,5 +1,5 @@
-#ifndef QBLUEZ_PRIVATE_H
-#define QBLUEZ_PRIVATE_H
+#ifndef QBLUEZ_UTILS_P_H
+#define QBLUEZ_UTILS_P_H
 
 class QStringList;
 
@@ -10,4 +10,4 @@ QStringList stringListToUpper(const QStringList &list);
 
 } // namespace QBluez
 
-#endif // QBLUEZ_PRIVATE_H
+#endif // QBLUEZ_UTILS_P_H

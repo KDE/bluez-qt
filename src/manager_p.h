@@ -42,8 +42,8 @@ public:
     DBusObjectManager *m_dbusObjectManager;
     BluezAgentManager *m_bluezAgentManager;
 
-    QHash<QString, Adapter *> m_adapters;
-    QHash<QString, Device *> m_devices;
+    QHash<QString, Adapter*> m_adapters;
+    QHash<QString, Device*> m_devices;
     Adapter *m_usableAdapter;
 
     bool m_bluezRunning;

@@ -30,7 +30,7 @@ class QBLUEZ_EXPORT Adapter : public QObject
     Q_PROPERTY(bool discovering READ isDiscovering NOTIFY discoveringChanged)
     Q_PROPERTY(QStringList uuids READ uuids NOTIFY uuidsChanged)
     Q_PROPERTY(QString modalias READ modalias NOTIFY modaliasChanged)
-    Q_PROPERTY(QList<Device *> devices READ devices)
+    Q_PROPERTY(QList<Device*> devices READ devices)
 
 public:
     virtual ~Adapter();
@@ -67,7 +67,7 @@ public:
 
     QString modalias() const;
 
-    QList<Device *> devices() const;
+    QList<Device*> devices() const;
 
     // Possible errors: NotReady, Failed
     PendingCall *startDiscovery();

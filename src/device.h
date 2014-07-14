@@ -95,7 +95,6 @@ public:
     // Possible errors: DoesNotExist, Failed
     PendingCall *cancelPairing();
 
-
 Q_SIGNALS:
     void deviceChanged(Device *device);
 
