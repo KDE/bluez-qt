@@ -1,5 +1,7 @@
 #include "device.h"
 #include "device_p.h"
+#include "loaddevicejob.h"
+#include "pendingcall.h"
 
 namespace QBluez
 {

@@ -30,6 +30,7 @@
 #include "manager.h"
 #include "adapter.h"
 #include "device.h"
+#include "pendingcall.h"
 #include "initmanagerjob.h"
 
 using namespace QBluez;

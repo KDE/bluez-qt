@@ -5,7 +5,9 @@
 #include "manager.h"
 #include "adapter.h"
 #include "device.h"
+#include "pendingcall.h"
 #include "initmanagerjob.h"
+#include "loaddevicejob.h"
 
 QList<QBluez::Device *> foundDevices;
 

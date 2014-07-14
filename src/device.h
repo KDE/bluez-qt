@@ -4,14 +4,13 @@
 #include <QObject>
 
 #include "utils.h"
-#include "loaddevicejob.h"
-#include "pendingcall.h"
 #include "qbluez_export.h"
 
 namespace QBluez
 {
 
 class Adapter;
+class PendingCall;
 class LoadDeviceJob;
 
 class QBLUEZ_EXPORT Device : public QObject

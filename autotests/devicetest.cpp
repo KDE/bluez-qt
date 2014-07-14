@@ -1,6 +1,8 @@
 #include "devicetest.h"
 #include "autotests.h"
+#include "pendingcall.h"
 #include "initmanagerjob.h"
+#include "loaddevicejob.h"
 
 #include <QtTest/QTest>
 #include <QtTest/QSignalSpy>

@@ -5,13 +5,13 @@
 #include <QList>
 #include <QStringList>
 
-#include "pendingcall.h"
 #include "qbluez_export.h"
 
 namespace QBluez
 {
 
 class Device;
+class PendingCall;
 
 class QBLUEZ_EXPORT Adapter : public QObject
 {

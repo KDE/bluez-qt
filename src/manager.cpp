@@ -3,6 +3,7 @@
 #include "adapter.h"
 #include "agent.h"
 #include "agentadaptor.h"
+#include "pendingcall.h"
 #include "initmanagerjob.h"
 #include "initadaptersjob.h"
 

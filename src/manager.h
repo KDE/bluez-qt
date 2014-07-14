@@ -3,7 +3,6 @@
 
 #include <QObject>
 
-#include "pendingcall.h"
 #include "qbluez_export.h"
 
 namespace QBluez
@@ -12,6 +11,7 @@ namespace QBluez
 class Device;
 class Adapter;
 class Agent;
+class PendingCall;
 class InitManagerJob;
 class InitAdaptersJob;
 

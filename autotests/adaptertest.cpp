@@ -1,5 +1,6 @@
 #include "adaptertest.h"
 #include "autotests.h"
+#include "pendingcall.h"
 #include "initmanagerjob.h"
 
 #include <QtTest/QTest>
