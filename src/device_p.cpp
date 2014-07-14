@@ -11,7 +11,6 @@ DevicePrivate::DevicePrivate(const QString &path, Adapter *adapter, Device *pare
     , q(parent)
     , m_dbusProperties(0)
     , m_loaded(false)
-    , m_path(path)
     , m_deviceClass(0)
     , m_appearance(0)
     , m_paired(false)
@@ -22,13 +21,13 @@ DevicePrivate::DevicePrivate(const QString &path, Adapter *adapter, Device *pare
     , m_connected(false)
     , m_adapter(adapter)
 {
-    m_bluezDevice = new BluezDevice(QStringLiteral("org.bluez"), m_path,
+    m_bluezDevice = new BluezDevice(QStringLiteral("org.bluez"), path,
                                     QDBusConnection::systemBus(), this);
 }
 
 void DevicePrivate::initProperties()
 {
-    m_dbusProperties = new DBusProperties(QStringLiteral("org.bluez"), m_path,
+    m_dbusProperties = new DBusProperties(QStringLiteral("org.bluez"), m_bluezDevice->path(),
                                           QDBusConnection::systemBus(), this);
 
     // QueuedConnection is important here - see AdapterPrivate::initProperties

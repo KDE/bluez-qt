@@ -21,10 +21,10 @@ void DeviceTest::initTestCase()
     QVERIFY(adaptersJob->error() == LoadAdaptersJob::NoError);
 
     Q_FOREACH (Adapter *adapter, manager->adapters()) {
-        QVERIFY(!adapter->path().isEmpty());
+        QVERIFY(!adapter->ubi().isEmpty());
 
         Q_FOREACH (Device *device, adapter->devices()) {
-            QVERIFY(!device->path().isEmpty());
+            QVERIFY(!device->ubi().isEmpty());
 
             LoadDeviceJob *deviceJob = device->load();
             deviceJob->exec();
@@ -34,11 +34,11 @@ void DeviceTest::initTestCase()
             DeviceUnit u;
             u.device = device;
             u.dbusDevice = new org::bluez::Device1(QStringLiteral("org.bluez"),
-                                                   device->path(),
+                                                   device->ubi(),
                                                    QDBusConnection::systemBus(),
                                                    this);
             u.dbusProperties = new org::freedesktop::DBus::Properties(QStringLiteral("org.bluez"),
-                                                                      device->path(),
+                                                                      device->ubi(),
                                                                       QDBusConnection::systemBus(),
                                                                       this);
             m_units.append(u);
@@ -73,7 +73,7 @@ void DeviceTest::getPropertiesTest()
         QCOMPARE(unit.device->isConnected(), unit.dbusDevice->connected());
         QCOMPARE(unit.device->uuids(), unit.dbusDevice->uUIDs());
         QCOMPARE(unit.device->modalias(), unit.dbusDevice->modalias());
-        QCOMPARE(unit.device->adapter()->path(), unit.dbusDevice->adapter().path());
+        QCOMPARE(unit.device->adapter()->ubi(), unit.dbusDevice->adapter().path());
     }
 }
 

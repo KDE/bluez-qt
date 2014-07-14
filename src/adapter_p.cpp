@@ -10,7 +10,6 @@ AdapterPrivate::AdapterPrivate(const QString &path, Adapter *parent)
     , q(parent)
     , m_dbusProperties(0)
     , m_loaded(false)
-    , m_path(path)
     , m_adapterClass(0)
     , m_powered(0)
     , m_discoverable(false)
@@ -18,7 +17,7 @@ AdapterPrivate::AdapterPrivate(const QString &path, Adapter *parent)
     , m_pairable(false)
     , m_pairableTimeout(0)
 {
-    m_bluezAdapter = new BluezAdapter(QStringLiteral("org.bluez"), m_path,
+    m_bluezAdapter = new BluezAdapter(QStringLiteral("org.bluez"), path,
                                       QDBusConnection::systemBus(), this);
 }
 
@@ -36,7 +35,7 @@ void AdapterPrivate::removeDevice(Device *device)
 
 void AdapterPrivate::load()
 {
-    m_dbusProperties = new DBusProperties(QStringLiteral("org.bluez"), m_path,
+    m_dbusProperties = new DBusProperties(QStringLiteral("org.bluez"), m_bluezAdapter->path(),
                                           QDBusConnection::systemBus(), this);
 
     // QueuedConnection is important here to be able to perform actions, that depend on

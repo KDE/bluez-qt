@@ -17,9 +17,9 @@ Adapter::~Adapter()
     delete d;
 }
 
-QString Adapter::path() const
+QString Adapter::ubi() const
 {
-    return d->m_path;
+    return d->m_bluezAdapter->path();
 }
 
 QString Adapter::address() const
@@ -129,7 +129,7 @@ PendingCall *Adapter::stopDiscovery()
 
 PendingCall *Adapter::removeDevice(Device *device)
 {
-    return new PendingCall(d->m_bluezAdapter->RemoveDevice(QDBusObjectPath(device->d->m_path)), this);
+    return new PendingCall(d->m_bluezAdapter->RemoveDevice(QDBusObjectPath(device->ubi())), this);
 }
 
 } // namespace QBluez

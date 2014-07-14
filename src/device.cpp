@@ -25,9 +25,9 @@ LoadDeviceJob *Device::load()
     return new LoadDeviceJob(d, this);
 }
 
-QString Device::path() const
+QString Device::ubi() const
 {
-    return d->m_path;
+    return d->m_bluezDevice->path();
 }
 
 QString Device::address() const

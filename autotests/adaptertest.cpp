@@ -21,16 +21,16 @@ void AdapterTest::initTestCase()
     QVERIFY(adaptersJob->error() == LoadAdaptersJob::NoError);
 
     Q_FOREACH (Adapter *adapter, manager->adapters()) {
-        QVERIFY(!adapter->path().isEmpty());
+        QVERIFY(!adapter->ubi().isEmpty());
 
         AdapterUnit u;
         u.adapter = adapter;
         u.dbusAdapter = new org::bluez::Adapter1(QStringLiteral("org.bluez"),
-                                                 adapter->path(),
+                                                 adapter->ubi(),
                                                  QDBusConnection::systemBus(),
                                                  this);
         u.dbusProperties = new org::freedesktop::DBus::Properties(QStringLiteral("org.bluez"),
-                                                                  adapter->path(),
+                                                                  adapter->ubi(),
                                                                   QDBusConnection::systemBus(),
                                                                   this);
         m_units.append(u);

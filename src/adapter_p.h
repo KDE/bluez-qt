@@ -35,7 +35,6 @@ public:
     DBusProperties *m_dbusProperties;
     bool m_loaded;
 
-    QString m_path;
     QString m_address;
     QString m_name;
     QString m_alias;

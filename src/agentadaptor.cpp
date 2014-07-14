@@ -81,7 +81,7 @@ Device *AgentAdaptor::deviceForPath(const QDBusObjectPath &path) const
 {
     Q_FOREACH (Adapter *adapter, m_manager->adapters()) {
         Q_FOREACH (Device *device, adapter->devices()) {
-            if (device->path() == path.path()) {
+            if (device->ubi() == path.path()) {
                 return device;
             }
         }
