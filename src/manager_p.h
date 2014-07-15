@@ -46,8 +46,9 @@ public:
     QHash<QString, Device*> m_devices;
     Adapter *m_usableAdapter;
 
-    bool m_bluezRunning;
     bool m_initialized;
+    bool m_bluezRunning;
+    bool m_loaded;
     bool m_adaptersLoaded;
 
 Q_SIGNALS:

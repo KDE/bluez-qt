@@ -18,8 +18,9 @@ ManagerPrivate::ManagerPrivate(Manager *parent)
     , m_dbusObjectManager(0)
     , m_bluezAgentManager(0)
     , m_usableAdapter(0)
-    , m_bluezRunning(false)
     , m_initialized(false)
+    , m_bluezRunning(false)
+    , m_loaded(false)
     , m_adaptersLoaded(false)
 {
     qDBusRegisterMetaType<DBusManagerStruct>();
@@ -70,6 +71,7 @@ void ManagerPrivate::init()
             if (reply.isError()) {
                 Q_EMIT initError(reply.error().message());
             } else {
+                m_initialized = true;
                 m_bluezRunning = reply.isValid() && reply.value();
                 if (m_bluezRunning) {
                     load();
@@ -83,7 +85,7 @@ void ManagerPrivate::init()
 
 void ManagerPrivate::load()
 {
-    if (!m_bluezRunning || m_initialized) {
+    if (!m_bluezRunning || m_loaded) {
         return;
     }
 
@@ -129,7 +131,7 @@ void ManagerPrivate::load()
 
             Q_ASSERT(m_bluezAgentManager);
 
-            m_initialized = true;
+            m_loaded = true;
             Q_EMIT initFinished();
         }
     });
@@ -137,7 +139,7 @@ void ManagerPrivate::load()
 
 void ManagerPrivate::clear()
 {
-    m_initialized = false;
+    m_loaded = false;
 
     Q_FOREACH (Device *device, m_devices.values()) {
         device->adapter()->d->removeDevice(device);

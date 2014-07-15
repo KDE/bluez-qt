@@ -31,6 +31,16 @@ InitAdaptersJob *Manager::initAdapters()
     return new InitAdaptersJob(d);
 }
 
+bool Manager::isInitialized() const
+{
+    return d->m_initialized;
+}
+
+bool Manager::isBluetoothOperational() const
+{
+    return d->m_bluezRunning && d->m_loaded && d->usableAdapter();
+}
+
 QList<Adapter*> Manager::adapters() const
 {
     return d->m_adapters.values();
@@ -50,11 +60,6 @@ QList<Device*> Manager::devices() const
 Adapter *Manager::usableAdapter()
 {
     return d->usableAdapter();
-}
-
-bool Manager::isBluetoothOperational() const
-{
-    return d->m_bluezRunning && d->m_initialized && d->usableAdapter();
 }
 
 PendingCall *Manager::registerAgent(Agent *agent, RegisterCapability registerCapability)
