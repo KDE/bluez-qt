@@ -34,7 +34,8 @@ InitManagerJobPrivate::InitManagerJobPrivate(InitManagerJob *q, Manager *manager
 void InitManagerJobPrivate::doStart()
 {
     if (m_manager->d->m_initialized) {
-        qFatal("InitManagerJob: Manager already initialized, Manager::init() must be called only once!");
+        qCWarning(QBLUEZ) << "InitManagerJob: Manager already initialized!";
+        q->emitResult();
         return;
     }
 
