@@ -28,7 +28,6 @@ public:
     void load();
     void clear();
 
-    Adapter *usableAdapter();
     Adapter *findUsableAdapter() const;
 
     // slots

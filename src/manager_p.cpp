@@ -166,11 +166,6 @@ void ManagerPrivate::clear()
     m_bluezAgentManager = Q_NULLPTR;
 }
 
-Adapter *ManagerPrivate::usableAdapter()
-{
-    return m_usableAdapter;
-}
-
 Adapter *ManagerPrivate::findUsableAdapter() const
 {
     Q_FOREACH (Adapter *adapter, m_adapters) {
