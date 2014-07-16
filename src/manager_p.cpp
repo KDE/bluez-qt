@@ -133,6 +133,11 @@ void ManagerPrivate::load()
 
             Q_ASSERT(m_bluezAgentManager);
 
+            if (!m_bluezAgentManager) {
+                Q_EMIT initError(QStringLiteral("Cannot find org.bluez.AgentManager1 object!"));
+                return;
+            }
+
             m_loaded = true;
             Q_EMIT initFinished();
         }
