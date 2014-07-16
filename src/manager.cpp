@@ -64,6 +64,10 @@ QList<Device*> Manager::devices() const
 
 PendingCall *Manager::registerAgent(Agent *agent, RegisterCapability registerCapability)
 {
+    if (!d->m_bluezAgentManager) {
+        return 0;
+    }
+
     QString capability;
 
     switch (registerCapability) {
@@ -96,12 +100,20 @@ PendingCall *Manager::registerAgent(Agent *agent, RegisterCapability registerCap
 
 PendingCall *Manager::unregisterAgent(Agent *agent)
 {
+    if (!d->m_bluezAgentManager) {
+        return 0;
+    }
+
     return new PendingCall(d->m_bluezAgentManager->UnregisterAgent(agent->objectPath()),
                            PendingCall::ReturnVoid, this);
 }
 
 PendingCall *Manager::requestDefaultAgent(Agent *agent)
 {
+    if (!d->m_bluezAgentManager) {
+        return 0;
+    }
+
     return new PendingCall(d->m_bluezAgentManager->RequestDefaultAgent(agent->objectPath()),
                            PendingCall::ReturnVoid, this);
 }
