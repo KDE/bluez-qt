@@ -45,38 +45,77 @@ class PendingCallPrivate
 public:
     int error;
     QString errorText;
-    QDBusPendingReply<> reply;
+    QVariantList value;
+    PendingCall::ReturnType type;
     QDBusPendingCallWatcher *watcher;
 };
 
-PendingCall::PendingCall(const QDBusPendingReply<> &reply, QObject *parent)
+PendingCall::PendingCall(const QDBusPendingCall &call, ReturnType type, QObject *parent)
     : QObject(parent)
     , d(new PendingCallPrivate)
 {
     d->error = NoError;
-    d->reply = reply;
-    d->watcher = new QDBusPendingCallWatcher(reply, this);
+    d->type = type;
+    d->watcher = new QDBusPendingCallWatcher(call, this);
 
     connect(d->watcher, &QDBusPendingCallWatcher::finished, [ this ]() {
-        const QDBusPendingReply<> &reply = *d->watcher;
+        processReply(d->watcher);
         d->watcher->deleteLater();
         d->watcher = Q_NULLPTR;
-
-        if (reply.isError()) {
-            qCWarning(QBLUEZ) << "PendingCall Error:" << reply.error().message();
-
-            d->error = nameToError(reply.error().name());
-            d->errorText = reply.error().message();
-        }
-
         Q_EMIT finished(this);
         deleteLater();
     });
 }
 
+void PendingCall::processReply(QDBusPendingCallWatcher *call)
+{
+    switch (d->type) {
+    case ReturnVoid: {
+        const QDBusPendingReply<> &reply = *call;
+        processError(reply.error());
+        break;
+    }
+
+    case ReturnString: {
+        const QDBusPendingReply<QString> &reply = *call;
+        processError(reply.error());
+        if (!reply.isError()) {
+            d->value.append(reply.argumentAt(0));
+        }
+        break;
+    }
+
+    case ReturnObjectPath: {
+        const QDBusPendingReply<QDBusObjectPath> &reply = *call;
+        processError(reply.error());
+        if (!reply.isError()) {
+            d->value.append(reply.argumentAt(0));
+        }
+        break;
+    }
+
+    default:
+        break;
+    }
+}
+
+void PendingCall::processError(const QDBusError &error)
+{
+    if (error.isValid()) {
+        qCWarning(QBLUEZ) << "PendingCall Error:" << error.message();
+        d->error = nameToError(error.name());
+        d->errorText = error.message();
+    }
+}
+
 PendingCall::~PendingCall()
 {
     delete d;
+}
+
+QVariantList PendingCall::value() const
+{
+    return d->value;
 }
 
 int PendingCall::error() const

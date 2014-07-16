@@ -60,7 +60,8 @@ QString Device::alias() const
 
 PendingCall *Device::setAlias(const QString &alias)
 {
-    return new PendingCall(d->setDBusProperty(QStringLiteral("Alias"), alias), this);
+    return new PendingCall(d->setDBusProperty(QStringLiteral("Alias"), alias),
+                           PendingCall::ReturnVoid, this);
 }
 
 quint32 Device::deviceClass() const
@@ -95,7 +96,8 @@ bool Device::isTrusted() const
 
 PendingCall *Device::setTrusted(bool trusted)
 {
-    return new PendingCall(d->setDBusProperty(QStringLiteral("Trusted"), trusted), this);
+    return new PendingCall(d->setDBusProperty(QStringLiteral("Trusted"), trusted),
+                           PendingCall::ReturnVoid, this);
 }
 
 bool Device::isBlocked() const
@@ -105,7 +107,8 @@ bool Device::isBlocked() const
 
 PendingCall *Device::setBlocked(bool blocked)
 {
-    return new PendingCall(d->setDBusProperty(QStringLiteral("Blocked"), blocked), this);
+    return new PendingCall(d->setDBusProperty(QStringLiteral("Blocked"), blocked),
+                           PendingCall::ReturnVoid, this);
 }
 
 bool Device::hasLegacyPairing() const
@@ -140,22 +143,22 @@ Adapter *Device::adapter() const
 
 PendingCall *Device::connect()
 {
-    return new PendingCall(d->m_bluezDevice->Connect(), this);
+    return new PendingCall(d->m_bluezDevice->Connect(), PendingCall::ReturnVoid, this);
 }
 
 PendingCall *Device::disconnect()
 {
-    return new PendingCall(d->m_bluezDevice->Disconnect(), this);
+    return new PendingCall(d->m_bluezDevice->Disconnect(), PendingCall::ReturnVoid, this);
 }
 
 PendingCall *Device::pair()
 {
-    return new PendingCall(d->m_bluezDevice->Pair(), this);
+    return new PendingCall(d->m_bluezDevice->Pair(), PendingCall::ReturnVoid, this);
 }
 
 PendingCall *Device::cancelPairing()
 {
-    return new PendingCall(d->m_bluezDevice->CancelPairing(), this);
+    return new PendingCall(d->m_bluezDevice->CancelPairing(), PendingCall::ReturnVoid, this);
 }
 
 } // namespace QBluez

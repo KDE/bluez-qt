@@ -90,17 +90,20 @@ PendingCall *Manager::registerAgent(Agent *agent, RegisterCapability registerCap
         qWarning() << "Cannot register object" << agent->objectPath().path();
     }
 
-    return new PendingCall(d->m_bluezAgentManager->RegisterAgent(agent->objectPath(), capability), this);
+    return new PendingCall(d->m_bluezAgentManager->RegisterAgent(agent->objectPath(), capability),
+                           PendingCall::ReturnVoid, this);
 }
 
 PendingCall *Manager::unregisterAgent(Agent *agent)
 {
-    return new PendingCall(d->m_bluezAgentManager->UnregisterAgent(agent->objectPath()), this);
+    return new PendingCall(d->m_bluezAgentManager->UnregisterAgent(agent->objectPath()),
+                           PendingCall::ReturnVoid, this);
 }
 
 PendingCall *Manager::requestDefaultAgent(Agent *agent)
 {
-    return new PendingCall(d->m_bluezAgentManager->RequestDefaultAgent(agent->objectPath()), this);
+    return new PendingCall(d->m_bluezAgentManager->RequestDefaultAgent(agent->objectPath()),
+                           PendingCall::ReturnVoid, this);
 }
 
 } // namespace QBluez

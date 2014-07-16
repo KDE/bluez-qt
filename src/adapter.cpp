@@ -40,7 +40,8 @@ QString Adapter::alias() const
 
 PendingCall *Adapter::setAlias(const QString &alias)
 {
-    return new PendingCall(d->setDBusProperty(QStringLiteral("Alias"), alias), this);
+    return new PendingCall(d->setDBusProperty(QStringLiteral("Alias"), alias),
+                           PendingCall::ReturnVoid, this);
 }
 
 quint32 Adapter::adapterClass() const
@@ -55,7 +56,8 @@ bool Adapter::isPowered() const
 
 PendingCall *Adapter::setPowered(bool powered)
 {
-    return new PendingCall(d->setDBusProperty(QStringLiteral("Powered"), powered), this);
+    return new PendingCall(d->setDBusProperty(QStringLiteral("Powered"), powered),
+                           PendingCall::ReturnVoid, this);
 }
 
 bool Adapter::isDiscoverable() const
@@ -65,7 +67,8 @@ bool Adapter::isDiscoverable() const
 
 PendingCall *Adapter::setDiscoverable(bool discoverable)
 {
-    return new PendingCall(d->setDBusProperty(QStringLiteral("Discoverable"), discoverable), this);
+    return new PendingCall(d->setDBusProperty(QStringLiteral("Discoverable"), discoverable),
+                           PendingCall::ReturnVoid, this);
 }
 
 quint32 Adapter::discoverableTimeout() const
@@ -75,7 +78,8 @@ quint32 Adapter::discoverableTimeout() const
 
 PendingCall *Adapter::setDiscoverableTimeout(quint32 timeout)
 {
-    return new PendingCall(d->setDBusProperty(QStringLiteral("DiscoverableTimeout"), timeout), this);
+    return new PendingCall(d->setDBusProperty(QStringLiteral("DiscoverableTimeout"), timeout),
+                           PendingCall::ReturnVoid, this);
 }
 
 bool Adapter::isPairable() const
@@ -85,7 +89,8 @@ bool Adapter::isPairable() const
 
 PendingCall *Adapter::setPairable(bool pairable)
 {
-    return new PendingCall(d->setDBusProperty(QStringLiteral("Pairable"), pairable), this);
+    return new PendingCall(d->setDBusProperty(QStringLiteral("Pairable"), pairable),
+                           PendingCall::ReturnVoid, this);
 }
 
 quint32 Adapter::pairableTimeout() const
@@ -95,7 +100,8 @@ quint32 Adapter::pairableTimeout() const
 
 PendingCall *Adapter::setPairableTimeout(quint32 timeout)
 {
-    return new PendingCall(d->setDBusProperty(QStringLiteral("PairableTimeout"), timeout), this);
+    return new PendingCall(d->setDBusProperty(QStringLiteral("PairableTimeout"), timeout),
+                           PendingCall::ReturnVoid, this);
 }
 
 bool Adapter::isDiscovering()
@@ -120,17 +126,20 @@ QList<Device*> Adapter::devices() const
 
 PendingCall *Adapter::startDiscovery()
 {
-    return new PendingCall(d->m_bluezAdapter->StartDiscovery(), this);
+    return new PendingCall(d->m_bluezAdapter->StartDiscovery(),
+                           PendingCall::ReturnVoid, this);
 }
 
 PendingCall *Adapter::stopDiscovery()
 {
-    return new PendingCall(d->m_bluezAdapter->StopDiscovery(), this);
+    return new PendingCall(d->m_bluezAdapter->StopDiscovery(),
+                           PendingCall::ReturnVoid, this);
 }
 
 PendingCall *Adapter::removeDevice(Device *device)
 {
-    return new PendingCall(d->m_bluezAdapter->RemoveDevice(QDBusObjectPath(device->ubi())), this);
+    return new PendingCall(d->m_bluezAdapter->RemoveDevice(QDBusObjectPath(device->ubi())),
+                           PendingCall::ReturnVoid, this);
 }
 
 } // namespace QBluez

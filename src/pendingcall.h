@@ -13,6 +13,12 @@ class QBLUEZ_EXPORT PendingCall : public QObject
 {
     Q_OBJECT
 
+    Q_ENUMS(Error)
+    Q_PROPERTY(QVariantList value READ value)
+    Q_PROPERTY(int error READ error)
+    Q_PROPERTY(QString errorText READ errorText)
+    Q_PROPERTY(bool finished READ isFinished)
+
 public:
     enum Error {
         NoError = 0,
@@ -39,6 +45,8 @@ public:
 
     ~PendingCall();
 
+    QVariantList value() const;
+
     int error() const;
     QString errorText() const;
 
@@ -49,7 +57,16 @@ Q_SIGNALS:
     void finished(PendingCall *call);
 
 private:
-    explicit PendingCall(const QDBusPendingReply<> &reply, QObject *parent = 0);
+    enum ReturnType {
+        ReturnVoid,
+        ReturnString,
+        ReturnObjectPath
+    };
+
+    explicit PendingCall(const QDBusPendingCall &call, ReturnType type, QObject *parent = 0);
+
+    void processReply(QDBusPendingCallWatcher *call);
+    void processError(const QDBusError &error);
 
     class PendingCallPrivate *d;
 
