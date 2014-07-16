@@ -58,6 +58,7 @@ ecm_generate_headers(QBluez_HEADERS
         Device
         Job
         InitManagerJob
+        InitObexManagerJob
         InitAdaptersJob
         LoadDeviceJob
         Utils
@@ -65,6 +66,7 @@ ecm_generate_headers(QBluez_HEADERS
         PendingCall
         Request
         ObexManager
+        ObexAgent
 
     REQUIRED_HEADERS QBluez_HEADERS
 )
