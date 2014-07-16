@@ -80,6 +80,8 @@ void ManagerPrivate::init()
                 }
             }
         });
+    } else {
+        Q_EMIT initError(QStringLiteral("DBus system bus is not connected!"));
     }
 }
 
