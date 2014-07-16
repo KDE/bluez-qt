@@ -19,7 +19,7 @@ class QBLUEZ_EXPORT ObexManager : public QObject
     Q_OBJECT
 
     Q_PROPERTY(bool initialized READ isInitialized)
-    Q_PROPERTY(bool operational READ isOperational)
+    Q_PROPERTY(bool operational READ isOperational NOTIFY operationalChanged)
 
 public:
     explicit ObexManager(QObject *parent = 0);
@@ -42,6 +42,9 @@ public:
 
     // Possible errors: InvalidArguments, NotAuthorized
     PendingCall *removeSession(const QDBusObjectPath &session);
+
+Q_SIGNALS:
+    void operationalChanged(bool operational);
 
 private:
     class ObexManagerPrivate *const d;

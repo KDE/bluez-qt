@@ -24,6 +24,7 @@ class QBLUEZ_EXPORT Manager : public QObject
     Q_PROPERTY(QList<Adapter*> adapters READ adapters)
     Q_PROPERTY(QList<Device*> devices READ devices)
     Q_PROPERTY(bool initialized READ isInitialized)
+    Q_PROPERTY(bool operational READ isOperational NOTIFY operationalChanged)
     Q_PROPERTY(bool bluetoothOperational READ isBluetoothOperational)
 
 public:
@@ -46,6 +47,7 @@ public:
     InitAdaptersJob *initAdapters();
 
     bool isInitialized() const;
+    bool isOperational() const;
     bool isBluetoothOperational() const;
 
     Adapter *usableAdapter() const;
@@ -62,6 +64,7 @@ public:
     PendingCall *requestDefaultAgent(Agent *agent);
 
 Q_SIGNALS:
+    void operationalChanged(bool operational);
     void adapterAdded(Adapter *adapter);
     void adapterRemoved(Adapter *adapter);
     void usableAdapterChanged(Adapter *adapter);

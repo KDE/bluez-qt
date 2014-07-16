@@ -44,12 +44,14 @@ void ManagerPrivate::init()
         qCDebug(QBLUEZ) << "Manager: Bluez service registered";
         m_bluezRunning = true;
         load();
+        Q_EMIT q->operationalChanged(m_bluezRunning);
     });
 
     connect(serviceWatcher, &QDBusServiceWatcher::serviceUnregistered, [ this ]() {
         qCDebug(QBLUEZ) << "Manager: Bluez service unregistered";
         m_bluezRunning = false;
         clear();
+        Q_EMIT q->operationalChanged(m_bluezRunning);
     });
 
     // Update the current state of bluez service

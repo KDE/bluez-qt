@@ -36,6 +36,11 @@ bool Manager::isInitialized() const
     return d->m_initialized;
 }
 
+bool Manager::isOperational() const
+{
+    return d->m_initialized && d->m_bluezRunning && d->m_loaded;
+}
+
 bool Manager::isBluetoothOperational() const
 {
     return d->m_bluezRunning && d->m_loaded && d->m_usableAdapter;
@@ -65,7 +70,7 @@ QList<Device*> Manager::devices() const
 PendingCall *Manager::registerAgent(Agent *agent, RegisterCapability registerCapability)
 {
     if (!d->m_bluezAgentManager) {
-        return 0;
+        return Q_NULLPTR;
     }
 
     QString capability;
@@ -101,7 +106,7 @@ PendingCall *Manager::registerAgent(Agent *agent, RegisterCapability registerCap
 PendingCall *Manager::unregisterAgent(Agent *agent)
 {
     if (!d->m_bluezAgentManager) {
-        return 0;
+        return Q_NULLPTR;
     }
 
     return new PendingCall(d->m_bluezAgentManager->UnregisterAgent(agent->objectPath()),
@@ -111,7 +116,7 @@ PendingCall *Manager::unregisterAgent(Agent *agent)
 PendingCall *Manager::requestDefaultAgent(Agent *agent)
 {
     if (!d->m_bluezAgentManager) {
-        return 0;
+        return Q_NULLPTR;
     }
 
     return new PendingCall(d->m_bluezAgentManager->RequestDefaultAgent(agent->objectPath()),
