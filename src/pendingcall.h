@@ -74,6 +74,7 @@ private:
     friend class Manager;
     friend class Adapter;
     friend class Device;
+    friend class ObexManager;
 };
 
 } // namespace QBluez
