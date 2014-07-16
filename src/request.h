@@ -9,15 +9,15 @@ namespace QBluez
 {
 
 enum AgentType {
-    PairingAgent,
-    ObexAgent
+    OrgBluezAgent,
+    OrgBluezObexAgent
 };
 
 QBLUEZ_EXPORT void qbluez_acceptRequest(AgentType type, const QVariant &val, const QDBusMessage &req);
 QBLUEZ_EXPORT void qbluez_rejectRequest(AgentType type, const QDBusMessage &req);
 QBLUEZ_EXPORT void qbluez_cancelRequest(AgentType type, const QDBusMessage &req);
 
-template<typename T>
+template<typename T = void>
 class Request
 {
 public:

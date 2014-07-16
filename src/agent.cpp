@@ -37,20 +37,20 @@ void Agent::displayPasskey(Device *device, const QString &passkey, const QString
     Q_UNUSED(entered)
 }
 
-void Agent::requestConfirmation(Device *device, const QString &passkey, const Request<void> &request)
+void Agent::requestConfirmation(Device *device, const QString &passkey, const Request<> &request)
 {
     Q_UNUSED(device)
     Q_UNUSED(passkey)
     Q_UNUSED(request)
 }
 
-void Agent::requestAuthorization(Device *device, const Request<void> &request)
+void Agent::requestAuthorization(Device *device, const Request<> &request)
 {
     Q_UNUSED(device)
     Q_UNUSED(request)
 }
 
-void Agent::authorizeService(Device *device, const QString &uuid, const Request<void> &request)
+void Agent::authorizeService(Device *device, const QString &uuid, const Request<> &request)
 {
     Q_UNUSED(device)
     Q_UNUSED(uuid)

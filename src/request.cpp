@@ -9,10 +9,10 @@ namespace QBluez
 
 static bool sendMessage(AgentType type, const QDBusMessage &msg)
 {
-    if (type == PairingAgent) {
+    if (type == OrgBluezAgent) {
         return QDBusConnection::systemBus().send(msg);
     }
-    if (type == ObexAgent) {
+    if (type == OrgBluezObexAgent) {
         return QDBusConnection::sessionBus().send(msg);
     }
     return false;
@@ -20,10 +20,10 @@ static bool sendMessage(AgentType type, const QDBusMessage &msg)
 
 static QString interfaceName(AgentType type)
 {
-    if (type == PairingAgent) {
+    if (type == OrgBluezAgent) {
         return QStringLiteral("org.bluez.Agent1");
     }
-    if (type == ObexAgent) {
+    if (type == OrgBluezObexAgent) {
         return QStringLiteral("org.bluez.obex.Agent1");
     }
     return QString();

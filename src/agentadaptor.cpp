@@ -28,7 +28,7 @@ AgentAdaptor::~AgentAdaptor()
 QString AgentAdaptor::RequestPinCode(const QDBusObjectPath &device, const QDBusMessage &msg)
 {
     msg.setDelayedReply(true);
-    m_agent->requestPinCode(deviceForPath(device), Request<QString>(PairingAgent, msg));
+    m_agent->requestPinCode(deviceForPath(device), Request<QString>(OrgBluezAgent, msg));
     return QString();
 }
 
@@ -40,7 +40,7 @@ void AgentAdaptor::DisplayPinCode(const QDBusObjectPath &device, const QString &
 quint32 AgentAdaptor::RequestPasskey(const QDBusObjectPath &device, const QDBusMessage &msg)
 {
     msg.setDelayedReply(true);
-    m_agent->requestPasskey(deviceForPath(device), Request<quint32>(PairingAgent, msg));
+    m_agent->requestPasskey(deviceForPath(device), Request<quint32>(OrgBluezAgent, msg));
     return 0;
 }
 
@@ -52,19 +52,19 @@ void AgentAdaptor::DisplayPasskey(const QDBusObjectPath &device, quint32 passkey
 void AgentAdaptor::RequestConfirmation(const QDBusObjectPath &device, quint32 passkey, const QDBusMessage &msg)
 {
     msg.setDelayedReply(true);
-    m_agent->requestConfirmation(deviceForPath(device), passkeyToString(passkey), Request<void>(PairingAgent, msg));
+    m_agent->requestConfirmation(deviceForPath(device), passkeyToString(passkey), Request<>(OrgBluezAgent, msg));
 }
 
 void AgentAdaptor::RequestAuthorization(const QDBusObjectPath &device, const QDBusMessage &msg)
 {
     msg.setDelayedReply(true);
-    m_agent->requestAuthorization(deviceForPath(device), Request<void>(PairingAgent, msg));
+    m_agent->requestAuthorization(deviceForPath(device), Request<>(OrgBluezAgent, msg));
 }
 
 void AgentAdaptor::AuthorizeService(const QDBusObjectPath &device, const QString &uuid, const QDBusMessage &msg)
 {
     msg.setDelayedReply(true);
-    m_agent->authorizeService(deviceForPath(device), uuid, Request<void>(PairingAgent, msg));
+    m_agent->authorizeService(deviceForPath(device), uuid, Request<>(OrgBluezAgent, msg));
 }
 
 void AgentAdaptor::Cancel()
