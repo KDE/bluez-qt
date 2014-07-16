@@ -5,6 +5,7 @@
 #include "adapter.h"
 #include "device.h"
 #include "debug_p.h"
+#include "loaddevicejob.h"
 
 #include <QDBusConnection>
 #include <QDBusObjectPath>
@@ -28,43 +29,147 @@ AgentAdaptor::~AgentAdaptor()
 QString AgentAdaptor::RequestPinCode(const QDBusObjectPath &device, const QDBusMessage &msg)
 {
     msg.setDelayedReply(true);
-    m_agent->requestPinCode(deviceForPath(device), Request<QString>(OrgBluezAgent, msg));
+    Request<QString> req(OrgBluezAgent, msg);
+
+    Device *dev = deviceForPath(device);
+    if (!dev) {
+        req.cancel();
+    } else {
+        LoadDeviceJob *job = dev->load();
+        job->start();
+        connect(job, &LoadDeviceJob::result, [ this, req ](LoadDeviceJob *job) {
+            Q_ASSERT(!job->error());
+            if (job->error()) {
+                req.cancel();
+                return;
+            }
+            m_agent->requestPinCode(job->device(), req);
+        });
+    }
+
     return QString();
 }
 
 void AgentAdaptor::DisplayPinCode(const QDBusObjectPath &device, const QString &pincode)
 {
-    m_agent->displayPinCode(deviceForPath(device), pincode);
+    Device *dev = deviceForPath(device);
+    if (dev) {
+        LoadDeviceJob *job = dev->load();
+        job->start();
+        connect(job, &LoadDeviceJob::result, [ this, pincode ](LoadDeviceJob *job) {
+            Q_ASSERT(!job->error());
+            if (job->error()) {
+                return;
+            }
+            m_agent->displayPinCode(job->device(), pincode);
+        });
+    }
 }
 
 quint32 AgentAdaptor::RequestPasskey(const QDBusObjectPath &device, const QDBusMessage &msg)
 {
     msg.setDelayedReply(true);
-    m_agent->requestPasskey(deviceForPath(device), Request<quint32>(OrgBluezAgent, msg));
+    Request<quint32> req(OrgBluezAgent, msg);
+
+    Device *dev = deviceForPath(device);
+    if (!dev) {
+        req.cancel();
+    } else {
+        LoadDeviceJob *job = dev->load();
+        job->start();
+        connect(job, &LoadDeviceJob::result, [ this, req ](LoadDeviceJob *job) {
+            Q_ASSERT(!job->error());
+            if (job->error()) {
+                req.cancel();
+                return;
+            }
+            m_agent->requestPasskey(job->device(), req);
+        });
+    }
+
     return 0;
 }
 
 void AgentAdaptor::DisplayPasskey(const QDBusObjectPath &device, quint32 passkey, quint8 entered)
 {
-    m_agent->displayPasskey(deviceForPath(device), passkeyToString(passkey), QString::number(entered));
+    Device *dev = deviceForPath(device);
+    if (dev) {
+        LoadDeviceJob *job = dev->load();
+        job->start();
+        connect(job, &LoadDeviceJob::result, [ this, passkey, entered ](LoadDeviceJob *job) {
+            Q_ASSERT(!job->error());
+            if (job->error()) {
+                return;
+            }
+            m_agent->displayPasskey(job->device(), passkeyToString(passkey), QString::number(entered));
+        });
+    }
 }
 
 void AgentAdaptor::RequestConfirmation(const QDBusObjectPath &device, quint32 passkey, const QDBusMessage &msg)
 {
     msg.setDelayedReply(true);
-    m_agent->requestConfirmation(deviceForPath(device), passkeyToString(passkey), Request<>(OrgBluezAgent, msg));
+    Request<> req(OrgBluezAgent, msg);
+
+    Device *dev = deviceForPath(device);
+    if (!dev) {
+        req.cancel();
+    } else {
+        LoadDeviceJob *job = dev->load();
+        job->start();
+        connect(job, &LoadDeviceJob::result, [ this, passkey, req ](LoadDeviceJob *job) {
+            Q_ASSERT(!job->error());
+            if (job->error()) {
+                req.cancel();
+                return;
+            }
+            m_agent->requestConfirmation(job->device(), passkeyToString(passkey), req);
+        });
+    }
 }
 
 void AgentAdaptor::RequestAuthorization(const QDBusObjectPath &device, const QDBusMessage &msg)
 {
     msg.setDelayedReply(true);
-    m_agent->requestAuthorization(deviceForPath(device), Request<>(OrgBluezAgent, msg));
+    Request<> req(OrgBluezAgent, msg);
+
+    Device *dev = deviceForPath(device);
+    if (!dev) {
+        req.cancel();
+    } else {
+        LoadDeviceJob *job = dev->load();
+        job->start();
+        connect(job, &LoadDeviceJob::result, [ this, req ](LoadDeviceJob *job) {
+            Q_ASSERT(!job->error());
+            if (job->error()) {
+                req.cancel();
+                return;
+            }
+            m_agent->requestAuthorization(job->device(), req);
+        });
+    }
 }
 
 void AgentAdaptor::AuthorizeService(const QDBusObjectPath &device, const QString &uuid, const QDBusMessage &msg)
 {
     msg.setDelayedReply(true);
-    m_agent->authorizeService(deviceForPath(device), uuid, Request<>(OrgBluezAgent, msg));
+    Request<> req(OrgBluezAgent, msg);
+
+    Device *dev = deviceForPath(device);
+    if (!dev) {
+        req.cancel();
+    } else {
+        LoadDeviceJob *job = dev->load();
+        job->start();
+        connect(job, &LoadDeviceJob::result, [ this, uuid, req ](LoadDeviceJob *job) {
+            Q_ASSERT(!job->error());
+            if (job->error()) {
+                req.cancel();
+                return;
+            }
+            m_agent->authorizeService(job->device(), uuid, req);
+        });
+    }
 }
 
 void AgentAdaptor::Cancel()
