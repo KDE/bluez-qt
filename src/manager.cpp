@@ -109,6 +109,8 @@ PendingCall *Manager::unregisterAgent(Agent *agent)
         return Q_NULLPTR;
     }
 
+    QDBusConnection::systemBus().unregisterObject(agent->objectPath().path());
+
     return new PendingCall(d->m_bluezAgentManager->UnregisterAgent(agent->objectPath()),
                            PendingCall::ReturnVoid, this);
 }

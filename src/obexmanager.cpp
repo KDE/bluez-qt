@@ -59,6 +59,8 @@ PendingCall *ObexManager::unregisterAgent(ObexAgent *agent)
         return Q_NULLPTR;
     }
 
+    QDBusConnection::sessionBus().unregisterObject(agent->objectPath().path());
+
     return new PendingCall(d->m_obexAgentManager->UnregisterAgent(agent->objectPath()),
                            PendingCall::ReturnVoid, this);
 }

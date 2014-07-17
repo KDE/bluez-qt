@@ -17,13 +17,7 @@ AgentAdaptor::AgentAdaptor(Agent *parent, Manager *manager)
     : QDBusAbstractAdaptor(parent)
     , m_agent(parent)
     , m_manager(manager)
-    , m_iface(QStringLiteral("org.bluez.Agent1"))
 {
-}
-
-AgentAdaptor::~AgentAdaptor()
-{
-    m_manager->unregisterAgent(m_agent);
 }
 
 QString AgentAdaptor::RequestPinCode(const QDBusObjectPath &device, const QDBusMessage &msg)

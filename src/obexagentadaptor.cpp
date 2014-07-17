@@ -15,11 +15,6 @@ ObexAgentAdaptor::ObexAgentAdaptor(ObexAgent *parent, ObexManager *manager)
 {
 }
 
-ObexAgentAdaptor::~ObexAgentAdaptor()
-{
-    m_manager->unregisterAgent(m_agent);
-}
-
 void ObexAgentAdaptor::AuthorizePush(const QDBusObjectPath &transfer, const QDBusMessage &msg)
 {
     msg.setDelayedReply(true);

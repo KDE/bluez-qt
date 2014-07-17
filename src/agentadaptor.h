@@ -23,7 +23,6 @@ class AgentAdaptor : public QDBusAbstractAdaptor
 
 public:
     explicit AgentAdaptor(Agent *parent, Manager *manager);
-    ~AgentAdaptor();
 
 public Q_SLOTS:
     QString RequestPinCode(const QDBusObjectPath &device, const QDBusMessage &msg);
@@ -43,7 +42,6 @@ private:
 
     Agent *m_agent;
     Manager *m_manager;
-    QString m_iface;
 };
 
 } // namespace QBluez

@@ -22,7 +22,6 @@ class ObexAgentAdaptor : public QDBusAbstractAdaptor
 
 public:
     explicit ObexAgentAdaptor(ObexAgent *parent, ObexManager *manager);
-    ~ObexAgentAdaptor();
 
 public Q_SLOTS:
     void AuthorizePush(const QDBusObjectPath &transfer, const QDBusMessage &msg);
