@@ -1,5 +1,6 @@
 #include "obexmanager.h"
 #include "obexmanager_p.h"
+#include "initobexmanagerjob.h"
 #include "debug_p.h"
 #include "pendingcall.h"
 #include "obexagent.h"
@@ -23,7 +24,7 @@ ObexManager::~ObexManager()
 
 InitObexManagerJob *ObexManager::init()
 {
-    return 0;
+    return new InitObexManagerJob(this);
 }
 
 bool ObexManager::isInitialized() const

@@ -109,7 +109,8 @@ void ObexManagerPrivate::load()
 
                 if (interfaces.contains(QStringLiteral("org.bluez.obex.Client1"))) {
                     m_obexClient = new ObexClient(QStringLiteral("org.bluez.obex"), path, QDBusConnection::sessionBus(), this);
-                } else if (interfaces.contains(QStringLiteral("org.bluez.obex.AgentManager1"))) {
+                }
+                if (interfaces.contains(QStringLiteral("org.bluez.obex.AgentManager1"))) {
                     m_obexAgentManager = new ObexAgentManager(QStringLiteral("org.bluez.obex"), path, QDBusConnection::sessionBus(), this);
                 }
             }
