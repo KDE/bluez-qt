@@ -12,30 +12,30 @@ static PendingCall::Error nameToError(const QString &name)
         return PendingCall::UnknownError;
     }
 
-#define QBLUEZ_ERROR(string, value) \
+#define FROM_BLUEZ_ERROR(string, value) \
     if (errorName == QLatin1String(string)) { \
         return value; \
     }
 
     const QString &errorName = name.mid(15);
-    QBLUEZ_ERROR("NotReady", PendingCall::NotReady);
-    QBLUEZ_ERROR("Failed", PendingCall::Failed);
-    QBLUEZ_ERROR("Rejected", PendingCall::Rejected);
-    QBLUEZ_ERROR("Canceled", PendingCall::Canceled);
-    QBLUEZ_ERROR("InvalidArguments", PendingCall::InvalidArguments);
-    QBLUEZ_ERROR("AlreadyExists", PendingCall::AlreadyExists);
-    QBLUEZ_ERROR("DoesNotExist", PendingCall::DoesNotExist);
-    QBLUEZ_ERROR("AlreadyConnected", PendingCall::AlreadyConnected);
-    QBLUEZ_ERROR("ConnectFailed", PendingCall::ConnectFailed);
-    QBLUEZ_ERROR("NotConnected", PendingCall::NotConnected);
-    QBLUEZ_ERROR("NotSupported", PendingCall::NotSupported);
-    QBLUEZ_ERROR("NotAuthorized", PendingCall::NotAuthorized);
-    QBLUEZ_ERROR("AuthenticationCanceled", PendingCall::AuthenticationCanceled);
-    QBLUEZ_ERROR("AuthenticationFailed", PendingCall::AuthenticationFailed);
-    QBLUEZ_ERROR("AuthenticationRejected", PendingCall::AuthenticationRejected);
-    QBLUEZ_ERROR("AuthenticationTimeout", PendingCall::AuthenticationTimeout);
-    QBLUEZ_ERROR("ConnectionAttemptFailed", PendingCall::ConnectionAttemptFailed);
-#undef QBLUEZ_ERROR
+    FROM_BLUEZ_ERROR("NotReady", PendingCall::NotReady);
+    FROM_BLUEZ_ERROR("Failed", PendingCall::Failed);
+    FROM_BLUEZ_ERROR("Rejected", PendingCall::Rejected);
+    FROM_BLUEZ_ERROR("Canceled", PendingCall::Canceled);
+    FROM_BLUEZ_ERROR("InvalidArguments", PendingCall::InvalidArguments);
+    FROM_BLUEZ_ERROR("AlreadyExists", PendingCall::AlreadyExists);
+    FROM_BLUEZ_ERROR("DoesNotExist", PendingCall::DoesNotExist);
+    FROM_BLUEZ_ERROR("AlreadyConnected", PendingCall::AlreadyConnected);
+    FROM_BLUEZ_ERROR("ConnectFailed", PendingCall::ConnectFailed);
+    FROM_BLUEZ_ERROR("NotConnected", PendingCall::NotConnected);
+    FROM_BLUEZ_ERROR("NotSupported", PendingCall::NotSupported);
+    FROM_BLUEZ_ERROR("NotAuthorized", PendingCall::NotAuthorized);
+    FROM_BLUEZ_ERROR("AuthenticationCanceled", PendingCall::AuthenticationCanceled);
+    FROM_BLUEZ_ERROR("AuthenticationFailed", PendingCall::AuthenticationFailed);
+    FROM_BLUEZ_ERROR("AuthenticationRejected", PendingCall::AuthenticationRejected);
+    FROM_BLUEZ_ERROR("AuthenticationTimeout", PendingCall::AuthenticationTimeout);
+    FROM_BLUEZ_ERROR("ConnectionAttemptFailed", PendingCall::ConnectionAttemptFailed);
+#undef FROM_BLUEZ_ERROR
 
     return PendingCall::UnknownError;
 }
@@ -65,6 +65,41 @@ PendingCall::PendingCall(const QDBusPendingCall &call, ReturnType type, QObject 
         Q_EMIT finished(this);
         deleteLater();
     });
+}
+
+PendingCall::~PendingCall()
+{
+    delete d;
+}
+
+QVariantList PendingCall::value() const
+{
+    return d->value;
+}
+
+int PendingCall::error() const
+{
+    return d->error;
+}
+
+QString PendingCall::errorText() const
+{
+    return d->errorText;
+}
+
+bool PendingCall::isFinished() const
+{
+    if (d->watcher) {
+        return d->watcher->isFinished();
+    }
+    return true;
+}
+
+void PendingCall::waitForFinished()
+{
+    if (d->watcher) {
+        d->watcher->waitForFinished();
+    }
 }
 
 void PendingCall::processReply(QDBusPendingCallWatcher *call)
@@ -105,41 +140,6 @@ void PendingCall::processError(const QDBusError &error)
         qCWarning(QBLUEZ) << "PendingCall Error:" << error.message();
         d->error = nameToError(error.name());
         d->errorText = error.message();
-    }
-}
-
-PendingCall::~PendingCall()
-{
-    delete d;
-}
-
-QVariantList PendingCall::value() const
-{
-    return d->value;
-}
-
-int PendingCall::error() const
-{
-    return d->error;
-}
-
-QString PendingCall::errorText() const
-{
-    return d->errorText;
-}
-
-bool PendingCall::isFinished() const
-{
-    if (d->watcher) {
-        return d->watcher->isFinished();
-    }
-    return true;
-}
-
-void PendingCall::waitForFinished()
-{
-    if (d->watcher) {
-        d->watcher->waitForFinished();
     }
 }
 

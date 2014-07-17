@@ -1,7 +1,4 @@
 #include "agent.h"
-#include "debug_p.h"
-
-#include <QDBusConnection>
 
 namespace QBluez
 {

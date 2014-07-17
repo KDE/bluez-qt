@@ -2,7 +2,6 @@
 #define QBLUEZ_AGENT_H
 
 #include <QObject>
-#include <QDBusMessage>
 
 #include "request.h"
 #include "qbluez_export.h"
