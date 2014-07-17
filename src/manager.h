@@ -54,6 +54,10 @@ public:
     QList<Adapter*> adapters() const;
     QList<Device*> devices() const;
 
+    Adapter *adapterForAddress(const QString &address) const;
+    Adapter *adapterForUbi(const QString &ubi) const;
+    Device *deviceForUbi(const QString &ubi) const;
+
     // Possible errors: InvalidArguments, AlreadyExists
     PendingCall *registerAgent(Agent *agent, RegisterCapability registerCapability = DisplayYesNo);
 

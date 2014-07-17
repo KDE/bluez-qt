@@ -69,6 +69,8 @@ public:
 
     QList<Device*> devices() const;
 
+    Device *deviceForAddress(const QString &address) const;
+
     // Possible errors: NotReady, Failed
     PendingCall *startDiscovery();
 

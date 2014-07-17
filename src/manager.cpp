@@ -67,6 +67,26 @@ QList<Device*> Manager::devices() const
     return list;
 }
 
+Adapter *Manager::adapterForAddress(const QString &address) const
+{
+    Q_FOREACH (Adapter *adapter, d->m_adapters) {
+        if (adapter->address() == address) {
+            return adapter;
+        }
+    }
+    return Q_NULLPTR;
+}
+
+Adapter *Manager::adapterForUbi(const QString &ubi) const
+{
+    return d->m_adapters.value(ubi);
+}
+
+Device *Manager::deviceForUbi(const QString &ubi) const
+{
+    return d->m_devices.value(ubi);
+}
+
 PendingCall *Manager::registerAgent(Agent *agent, RegisterCapability registerCapability)
 {
     if (!d->m_bluezAgentManager) {

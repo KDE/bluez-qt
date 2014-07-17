@@ -124,6 +124,16 @@ QList<Device*> Adapter::devices() const
     return d->m_devices;
 }
 
+Device *Adapter::deviceForAddress(const QString &address) const
+{
+    Q_FOREACH (Device *device, d->m_devices) {
+        if (device->address() == address) {
+            return device;
+        }
+    }
+    return Q_NULLPTR;
+}
+
 PendingCall *Adapter::startDiscovery()
 {
     return new PendingCall(d->m_bluezAdapter->StartDiscovery(),

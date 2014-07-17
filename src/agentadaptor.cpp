@@ -4,7 +4,6 @@
 #include "manager.h"
 #include "adapter.h"
 #include "device.h"
-#include "debug_p.h"
 #include "loaddevicejob.h"
 
 #include <QDBusConnection>
@@ -25,7 +24,7 @@ QString AgentAdaptor::RequestPinCode(const QDBusObjectPath &device, const QDBusM
     msg.setDelayedReply(true);
     Request<QString> req(OrgBluezAgent, msg);
 
-    Device *dev = deviceForPath(device);
+    Device *dev = m_manager->deviceForUbi(device.path());
     if (!dev) {
         req.cancel();
     } else {
@@ -46,7 +45,7 @@ QString AgentAdaptor::RequestPinCode(const QDBusObjectPath &device, const QDBusM
 
 void AgentAdaptor::DisplayPinCode(const QDBusObjectPath &device, const QString &pincode)
 {
-    Device *dev = deviceForPath(device);
+    Device *dev = m_manager->deviceForUbi(device.path());
     if (dev) {
         LoadDeviceJob *job = dev->load();
         job->start();
@@ -65,7 +64,7 @@ quint32 AgentAdaptor::RequestPasskey(const QDBusObjectPath &device, const QDBusM
     msg.setDelayedReply(true);
     Request<quint32> req(OrgBluezAgent, msg);
 
-    Device *dev = deviceForPath(device);
+    Device *dev = m_manager->deviceForUbi(device.path());
     if (!dev) {
         req.cancel();
     } else {
@@ -86,7 +85,7 @@ quint32 AgentAdaptor::RequestPasskey(const QDBusObjectPath &device, const QDBusM
 
 void AgentAdaptor::DisplayPasskey(const QDBusObjectPath &device, quint32 passkey, quint8 entered)
 {
-    Device *dev = deviceForPath(device);
+    Device *dev = m_manager->deviceForUbi(device.path());
     if (dev) {
         LoadDeviceJob *job = dev->load();
         job->start();
@@ -105,7 +104,7 @@ void AgentAdaptor::RequestConfirmation(const QDBusObjectPath &device, quint32 pa
     msg.setDelayedReply(true);
     Request<> req(OrgBluezAgent, msg);
 
-    Device *dev = deviceForPath(device);
+    Device *dev = m_manager->deviceForUbi(device.path());
     if (!dev) {
         req.cancel();
     } else {
@@ -127,7 +126,7 @@ void AgentAdaptor::RequestAuthorization(const QDBusObjectPath &device, const QDB
     msg.setDelayedReply(true);
     Request<> req(OrgBluezAgent, msg);
 
-    Device *dev = deviceForPath(device);
+    Device *dev = m_manager->deviceForUbi(device.path());
     if (!dev) {
         req.cancel();
     } else {
@@ -149,7 +148,7 @@ void AgentAdaptor::AuthorizeService(const QDBusObjectPath &device, const QString
     msg.setDelayedReply(true);
     Request<> req(OrgBluezAgent, msg);
 
-    Device *dev = deviceForPath(device);
+    Device *dev = m_manager->deviceForUbi(device.path());
     if (!dev) {
         req.cancel();
     } else {
@@ -174,19 +173,6 @@ void AgentAdaptor::Cancel()
 void AgentAdaptor::Release()
 {
     m_agent->release();
-}
-
-Device *AgentAdaptor::deviceForPath(const QDBusObjectPath &path) const
-{
-    Q_FOREACH (Adapter *adapter, m_manager->adapters()) {
-        Q_FOREACH (Device *device, adapter->devices()) {
-            if (device->ubi() == path.path()) {
-                return device;
-            }
-        }
-    }
-    qCWarning(QBLUEZ) << "AgentAdaptor::deviceForPath Cannot find device for path:" << path.path();
-    return Q_NULLPTR;
 }
 
 QString AgentAdaptor::passkeyToString(quint32 passkey) const
