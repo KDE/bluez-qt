@@ -40,7 +40,7 @@ bool ObexManager::isOperational() const
 PendingCall *ObexManager::registerAgent(ObexAgent *agent)
 {
     if (!d->m_obexAgentManager) {
-        return Q_NULLPTR;
+        return new PendingCall(PendingCall::InternalError, QStringLiteral("ObexManager not operational!"));
     }
 
     new ObexAgentAdaptor(agent, this);
@@ -56,7 +56,7 @@ PendingCall *ObexManager::registerAgent(ObexAgent *agent)
 PendingCall *ObexManager::unregisterAgent(ObexAgent *agent)
 {
     if (!d->m_obexAgentManager) {
-        return Q_NULLPTR;
+        return new PendingCall(PendingCall::InternalError, QStringLiteral("ObexManager not operational!"));
     }
 
     QDBusConnection::sessionBus().unregisterObject(agent->objectPath().path());
@@ -68,7 +68,7 @@ PendingCall *ObexManager::unregisterAgent(ObexAgent *agent)
 PendingCall *ObexManager::createSession(const QString &destination, const QVariantMap &args)
 {
     if (!d->m_obexClient) {
-        return Q_NULLPTR;
+        return new PendingCall(PendingCall::InternalError, QStringLiteral("ObexManager not operational!"));
     }
 
     return new PendingCall(d->m_obexClient->CreateSession(destination, args),
@@ -78,7 +78,7 @@ PendingCall *ObexManager::createSession(const QString &destination, const QVaria
 PendingCall *ObexManager::removeSession(const QDBusObjectPath &session)
 {
     if (!d->m_obexClient) {
-        return Q_NULLPTR;
+        return new PendingCall(PendingCall::InternalError, QStringLiteral("ObexManager not operational!"));
     }
 
     return new PendingCall(d->m_obexClient->RemoveSession(session),
@@ -86,5 +86,3 @@ PendingCall *ObexManager::removeSession(const QDBusObjectPath &session)
 }
 
 } // namespace QBluez
-
-#include "obexmanager.moc"

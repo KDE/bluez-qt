@@ -90,7 +90,7 @@ Device *Manager::deviceForUbi(const QString &ubi) const
 PendingCall *Manager::registerAgent(Agent *agent, RegisterCapability registerCapability)
 {
     if (!d->m_bluezAgentManager) {
-        return Q_NULLPTR;
+        return new PendingCall(PendingCall::InternalError, QStringLiteral("Manager not operational!"));
     }
 
     QString capability;
@@ -126,7 +126,7 @@ PendingCall *Manager::registerAgent(Agent *agent, RegisterCapability registerCap
 PendingCall *Manager::unregisterAgent(Agent *agent)
 {
     if (!d->m_bluezAgentManager) {
-        return Q_NULLPTR;
+        return new PendingCall(PendingCall::InternalError, QStringLiteral("Manager not operational!"));
     }
 
     QDBusConnection::systemBus().unregisterObject(agent->objectPath().path());
@@ -138,7 +138,7 @@ PendingCall *Manager::unregisterAgent(Agent *agent)
 PendingCall *Manager::requestDefaultAgent(Agent *agent)
 {
     if (!d->m_bluezAgentManager) {
-        return Q_NULLPTR;
+        return new PendingCall(PendingCall::InternalError, QStringLiteral("Manager not operational!"));
     }
 
     return new PendingCall(d->m_bluezAgentManager->RequestDefaultAgent(agent->objectPath()),

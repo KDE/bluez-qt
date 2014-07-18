@@ -66,6 +66,7 @@ private:
     };
 
     explicit PendingCall(const QDBusPendingCall &call, ReturnType type, QObject *parent = 0);
+    explicit PendingCall(Error error, const QString &errorText, QObject *parent = 0);
 
     void processReply(QDBusPendingCallWatcher *call);
     void processError(const QDBusError &error);

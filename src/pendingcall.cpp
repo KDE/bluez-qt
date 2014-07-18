@@ -3,6 +3,7 @@
 #include "obexsession_p.h"
 #include "debug_p.h"
 
+#include <QTimer>
 #include <QDBusPendingCallWatcher>
 
 namespace QBluez
@@ -70,6 +71,23 @@ PendingCall::PendingCall(const QDBusPendingCall &call, ReturnType type, QObject 
             Q_EMIT finished(this);
             deleteLater();
         }
+    });
+}
+
+PendingCall::PendingCall(PendingCall::Error error, const QString &errorText, QObject *parent)
+    : QObject(parent)
+    , d(new PendingCallPrivate)
+{
+    d->error = error;
+    d->errorText = errorText;
+    d->watcher = Q_NULLPTR;
+
+    QTimer *timer = new QTimer(this);
+    timer->setSingleShot(true);
+    timer->start(0);
+    connect(timer, &QTimer::timeout, [ this, timer ]() {
+        Q_EMIT finished(this);
+        timer->deleteLater();
     });
 }
 
