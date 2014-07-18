@@ -21,6 +21,8 @@ set(qbluez_SRCS
     obexmanager_p.cpp
     obexagent.cpp
     obexagentadaptor.cpp
+    obextransfer.cpp
+    obexsession.cpp
 )
 
 set(dbusobjectmanager_xml ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.freedesktop.DBus.ObjectManager.xml)
@@ -32,6 +34,8 @@ qt5_add_dbus_interface(qbluez_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bl
 qt5_add_dbus_interface(qbluez_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.Device1.xml bluezdevice1)
 qt5_add_dbus_interface(qbluez_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.obex.AgentManager1.xml obexagentmanager1)
 qt5_add_dbus_interface(qbluez_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.obex.Client1.xml obexclient1)
+qt5_add_dbus_interface(qbluez_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.obex.Transfer1.xml obextransfer1)
+qt5_add_dbus_interface(qbluez_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.obex.Session1.xml obexsession1)
 
 add_library(KF5QBluez ${qbluez_SRCS})
 generate_export_header(KF5QBluez BASE_NAME QBluez)
@@ -67,6 +71,8 @@ ecm_generate_headers(QBluez_HEADERS
         Request
         ObexManager
         ObexAgent
+        ObexTransfer
+        ObexSession
 
     REQUIRED_HEADERS QBluez_HEADERS
 )

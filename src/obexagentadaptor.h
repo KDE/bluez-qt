@@ -24,7 +24,7 @@ public:
     explicit ObexAgentAdaptor(ObexAgent *parent, ObexManager *manager);
 
 public Q_SLOTS:
-    void AuthorizePush(const QDBusObjectPath &transfer, const QDBusMessage &msg);
+    QString AuthorizePush(const QDBusObjectPath &transfer, const QDBusMessage &msg);
 
     Q_NOREPLY void Cancel();
     Q_NOREPLY void Release();

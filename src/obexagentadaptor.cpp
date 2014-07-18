@@ -1,6 +1,8 @@
 #include "obexagentadaptor.h"
 #include "obexagent.h"
 #include "obexmanager.h"
+#include "obextransfer.h"
+#include "obextransfer_p.h"
 #include "request.h"
 
 #include <QDBusObjectPath>
@@ -15,10 +17,22 @@ ObexAgentAdaptor::ObexAgentAdaptor(ObexAgent *parent, ObexManager *manager)
 {
 }
 
-void ObexAgentAdaptor::AuthorizePush(const QDBusObjectPath &transfer, const QDBusMessage &msg)
+QString ObexAgentAdaptor::AuthorizePush(const QDBusObjectPath &transfer, const QDBusMessage &msg)
 {
     msg.setDelayedReply(true);
-    m_agent->authorizePush(transfer, Request<QString>(OrgBluezObexAgent, msg));
+    Request<QString> req(OrgBluezObexAgent, msg);
+
+    ObexTransfer *t = new ObexTransfer(transfer.path(), this);
+    t->d->init();
+    connect(t->d, &ObexTransferPrivate::initFinished, [ this, t, req ]() {
+        m_agent->authorizePush(t, req);
+    });
+    connect(t->d, &ObexTransferPrivate::initError, [ this, t, req ]() {
+        t->deleteLater();
+        req.cancel();
+    });
+
+    return QString();
 }
 
 void ObexAgentAdaptor::Cancel()
