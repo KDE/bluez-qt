@@ -37,7 +37,7 @@ public:
     PendingCall *unregisterAgent(ObexAgent *agent);
 
     // Possible errors: InvalidArguments, Failed
-    // Return: ObexSession*
+    // Return: QDBusObjectPath
     PendingCall *createSession(const QString &destination, const QVariantMap &args);
 
     // Possible errors: InvalidArguments, NotAuthorized

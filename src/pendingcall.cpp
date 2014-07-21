@@ -1,6 +1,4 @@
 #include "pendingcall.h"
-#include "obexsession.h"
-#include "obexsession_p.h"
 #include "debug_p.h"
 
 #include <QTimer>
@@ -65,12 +63,8 @@ PendingCall::PendingCall(const QDBusPendingCall &call, ReturnType type, QObject 
         processReply(d->watcher);
         d->watcher->deleteLater();
         d->watcher = Q_NULLPTR;
-        if (d->type == ReturnObexSession) {
-            loadObexSession();
-        } else {
-            Q_EMIT finished(this);
-            deleteLater();
-        }
+        Q_EMIT finished(this);
+        deleteLater();
     });
 }
 
@@ -144,8 +138,7 @@ void PendingCall::processReply(QDBusPendingCallWatcher *call)
         break;
     }
 
-    case ReturnObjectPath:
-    case ReturnObexSession: {
+    case ReturnObjectPath: {
         const QDBusPendingReply<QDBusObjectPath> &reply = *call;
         processError(reply.error());
         if (!reply.isError()) {
@@ -166,25 +159,6 @@ void PendingCall::processError(const QDBusError &error)
         d->error = nameToError(error.name());
         d->errorText = error.message();
     }
-}
-
-void PendingCall::loadObexSession()
-{
-    ObexSession *session = new ObexSession(d->value.at(0).value<QDBusObjectPath>().path(), parent());
-    d->value.clear();
-
-    session->d->init();
-    connect(session->d, &ObexSessionPrivate::initFinished, [ this, session ]() {
-        d->value.append(QVariant::fromValue(session));
-        Q_EMIT finished(this);
-        deleteLater();
-    });
-    connect(session->d, &ObexSessionPrivate::initError, [ this ](const QString &errorText) {
-        d->error = InternalError;
-        d->errorText = errorText;
-        Q_EMIT finished(this);
-        deleteLater();
-    });
 }
 
 } // namespace QBluez

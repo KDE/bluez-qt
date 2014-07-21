@@ -72,7 +72,7 @@ PendingCall *ObexManager::createSession(const QString &destination, const QVaria
     }
 
     return new PendingCall(d->m_obexClient->CreateSession(destination, args),
-                           PendingCall::ReturnObexSession, this);
+                           PendingCall::ReturnObjectPath, this);
 }
 
 PendingCall *ObexManager::removeSession(const QDBusObjectPath &session)

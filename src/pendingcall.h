@@ -40,8 +40,8 @@ public:
         AuthenticationRejected = 16,
         AuthenticationTimeout = 17,
         ConnectionAttemptFailed = 18,
-        InternalError = 100,
-        UnknownError = 101
+        InternalError = 99,
+        UnknownError = 100
     };
 
     ~PendingCall();
@@ -61,8 +61,7 @@ private:
     enum ReturnType {
         ReturnVoid,
         ReturnString,
-        ReturnObjectPath,
-        ReturnObexSession
+        ReturnObjectPath
     };
 
     explicit PendingCall(const QDBusPendingCall &call, ReturnType type, QObject *parent = 0);
@@ -70,7 +69,6 @@ private:
 
     void processReply(QDBusPendingCallWatcher *call);
     void processError(const QDBusError &error);
-    void loadObexSession();
 
     class PendingCallPrivate *d;
 
