@@ -90,7 +90,15 @@ PendingCall::~PendingCall()
     delete d;
 }
 
-QVariantList PendingCall::value() const
+QVariant PendingCall::value() const
+{
+    if (d->value.isEmpty()) {
+        return QVariant();
+    }
+    return d->value.first();
+}
+
+QVariantList PendingCall::values() const
 {
     return d->value;
 }

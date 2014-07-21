@@ -14,7 +14,8 @@ class QBLUEZ_EXPORT PendingCall : public QObject
     Q_OBJECT
 
     Q_ENUMS(Error)
-    Q_PROPERTY(QVariantList value READ value)
+    Q_PROPERTY(QVariant value READ value)
+    Q_PROPERTY(QVariantList values READ values)
     Q_PROPERTY(int error READ error)
     Q_PROPERTY(QString errorText READ errorText)
     Q_PROPERTY(bool finished READ isFinished)
@@ -46,7 +47,8 @@ public:
 
     ~PendingCall();
 
-    QVariantList value() const;
+    QVariant value() const;
+    QVariantList values() const;
 
     int error() const;
     QString errorText() const;
