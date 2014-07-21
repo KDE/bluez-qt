@@ -2,6 +2,7 @@
 #define QBLUEZ_OBEXMANAGER_P_H
 
 #include <QObject>
+#include <QTimer>
 
 #include "obexclient1.h"
 #include "obexagentmanager1.h"
@@ -29,6 +30,7 @@ public:
     ObexManager *q;
     ObexClient *m_obexClient;
     ObexAgentManager *m_obexAgentManager;
+    QTimer *m_timer;
 
     bool m_initialized;
     bool m_obexRunning;

@@ -44,14 +44,13 @@ void ManagerPrivate::init()
         qCDebug(QBLUEZ) << "Bluez service registered";
         m_bluezRunning = true;
         load();
-        Q_EMIT q->operationalChanged(m_bluezRunning);
     });
 
     connect(serviceWatcher, &QDBusServiceWatcher::serviceUnregistered, [ this ]() {
         qCDebug(QBLUEZ) << "Bluez service unregistered";
         m_bluezRunning = false;
         clear();
-        Q_EMIT q->operationalChanged(m_bluezRunning);
+        Q_EMIT q->operationalChanged(false);
     });
 
     // Update the current state of bluez service
@@ -142,6 +141,7 @@ void ManagerPrivate::load()
 
             m_loaded = true;
             Q_EMIT initFinished();
+            Q_EMIT q->operationalChanged(true);
         }
     });
 }
@@ -168,11 +168,15 @@ void ManagerPrivate::clear()
 
     m_usableAdapter = Q_NULLPTR;
 
-    m_dbusObjectManager->deleteLater();
-    m_dbusObjectManager = Q_NULLPTR;
+    if (m_dbusObjectManager) {
+        m_dbusObjectManager->deleteLater();
+        m_dbusObjectManager = Q_NULLPTR;
+    }
 
-    m_bluezAgentManager->deleteLater();
-    m_bluezAgentManager = Q_NULLPTR;
+    if (m_bluezAgentManager) {
+        m_bluezAgentManager->deleteLater();
+        m_bluezAgentManager = Q_NULLPTR;
+    }
 }
 
 Adapter *ManagerPrivate::findUsableAdapter() const

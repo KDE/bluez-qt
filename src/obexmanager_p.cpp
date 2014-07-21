@@ -22,6 +22,11 @@ ObexManagerPrivate::ObexManagerPrivate(ObexManager *q)
 {
     qDBusRegisterMetaType<DBusManagerStruct>();
     qDBusRegisterMetaType<QVariantMapMap>();
+
+    m_timer = new QTimer(this);
+    m_timer->setSingleShot(true);
+    m_timer->setInterval(500);
+    connect(m_timer, &QTimer::timeout, this, &ObexManagerPrivate::load);
 }
 
 ObexManagerPrivate::~ObexManagerPrivate()
@@ -38,15 +43,16 @@ void ObexManagerPrivate::init()
     connect(serviceWatcher, &QDBusServiceWatcher::serviceRegistered, [ this ]() {
         qCDebug(QBLUEZ) << "Obex service registered";
         m_obexRunning = true;
-        load();
-        Q_EMIT q->operationalChanged(m_obexRunning);
+        // Client1 and AgentManager1 objects are not ready by the time org.bluez.obex is registered
+        // nor will the ObjectManager emits interfacesAdded for adding them...
+        m_timer->start();
     });
 
     connect(serviceWatcher, &QDBusServiceWatcher::serviceUnregistered, [ this ]() {
         qCDebug(QBLUEZ) << "Obex service unregistered";
         m_obexRunning = false;
         clear();
-        Q_EMIT q->operationalChanged(m_obexRunning);
+        Q_EMIT q->operationalChanged(false);
     });
 
     // Update the current state of bluez.obex service
@@ -130,6 +136,10 @@ void ObexManagerPrivate::load()
 
             m_loaded = true;
             Q_EMIT initFinished();
+
+            if (m_obexClient && m_obexAgentManager) {
+                Q_EMIT q->operationalChanged(true);
+            }
         }
     });
 }
@@ -138,11 +148,15 @@ void ObexManagerPrivate::clear()
 {
     m_loaded = false;
 
-    m_obexClient->deleteLater();
-    m_obexClient = Q_NULLPTR;
+    if (m_obexClient) {
+        m_obexClient->deleteLater();
+        m_obexClient = Q_NULLPTR;
+    }
 
-    m_obexAgentManager->deleteLater();
-    m_obexAgentManager = Q_NULLPTR;
+    if (m_obexAgentManager) {
+        m_obexAgentManager->deleteLater();
+        m_obexAgentManager = Q_NULLPTR;
+    }
 }
 
 } // namespace QBluez
