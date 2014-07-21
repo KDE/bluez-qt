@@ -63,14 +63,17 @@ private:
     enum ReturnType {
         ReturnVoid,
         ReturnString,
-        ReturnObjectPath
+        ReturnObjectPath,
+        ReturnTransferWithProperties
     };
 
     explicit PendingCall(const QDBusPendingCall &call, ReturnType type, QObject *parent = 0);
     explicit PendingCall(Error error, const QString &errorText, QObject *parent = 0);
 
-    void processReply(QDBusPendingCallWatcher *call);
+    bool processReply(QDBusPendingCallWatcher *call);
     void processError(const QDBusError &error);
+
+    void emitFinished();
 
     class PendingCallPrivate *d;
 
@@ -81,6 +84,7 @@ private:
     friend class ObexManager;
     friend class ObexTransfer;
     friend class ObexSession;
+    friend class ObexObjectPush;
 };
 
 } // namespace QBluez

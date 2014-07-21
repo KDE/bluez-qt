@@ -1,4 +1,6 @@
 #include "pendingcall.h"
+#include "obextransfer.h"
+#include "obextransfer_p.h"
 #include "debug_p.h"
 
 #include <QTimer>
@@ -60,11 +62,9 @@ PendingCall::PendingCall(const QDBusPendingCall &call, ReturnType type, QObject 
     d->watcher = new QDBusPendingCallWatcher(call, this);
 
     connect(d->watcher, &QDBusPendingCallWatcher::finished, [ this ]() {
-        processReply(d->watcher);
-        d->watcher->deleteLater();
-        d->watcher = Q_NULLPTR;
-        Q_EMIT finished(this);
-        deleteLater();
+        if (processReply(d->watcher)) {
+            emitFinished();
+        }
     });
 }
 
@@ -128,13 +128,13 @@ void PendingCall::waitForFinished()
     }
 }
 
-void PendingCall::processReply(QDBusPendingCallWatcher *call)
+bool PendingCall::processReply(QDBusPendingCallWatcher *call)
 {
     switch (d->type) {
     case ReturnVoid: {
         const QDBusPendingReply<> &reply = *call;
         processError(reply.error());
-        break;
+        return true;
     }
 
     case ReturnString: {
@@ -143,7 +143,7 @@ void PendingCall::processReply(QDBusPendingCallWatcher *call)
         if (!reply.isError()) {
             d->value.append(reply.argumentAt(0));
         }
-        break;
+        return true;
     }
 
     case ReturnObjectPath: {
@@ -152,12 +152,37 @@ void PendingCall::processReply(QDBusPendingCallWatcher *call)
         if (!reply.isError()) {
             d->value.append(reply.argumentAt(0));
         }
-        break;
+        return true;
+    }
+
+    case ReturnTransferWithProperties: {
+        const QDBusPendingReply<QDBusObjectPath, QVariantMap> &reply = *call;
+        processError(reply.error());
+        if (reply.isError()) {
+            return true;
+        }
+        ObexTransfer *transfer = new ObexTransfer(reply.argumentAt(0).toString(), 0);
+        transfer->d->createDBusProperties();
+        transfer->d->setProperties(reply.argumentAt(1).toMap());
+        transfer->d->initSession();
+        d->value.append(QVariant::fromValue(transfer));
+        connect(transfer->d, &ObexTransferPrivate::initFinished, [ this ]() {
+            emitFinished();
+        });
+        connect(transfer->d, &ObexTransferPrivate::initError, [ this ](const QString &errorText) {
+            qCWarning(QBLUEZ) << "PendingCall Error:" << errorText;
+            d->error = InternalError;
+            d->errorText = errorText;
+            emitFinished();
+        });
+        return false;
     }
 
     default:
         break;
     }
+
+    return true;
 }
 
 void PendingCall::processError(const QDBusError &error)
@@ -167,6 +192,14 @@ void PendingCall::processError(const QDBusError &error)
         d->error = nameToError(error.name());
         d->errorText = error.message();
     }
+}
+
+void PendingCall::emitFinished()
+{
+    d->watcher->deleteLater();
+    d->watcher = Q_NULLPTR;
+    Q_EMIT finished(this);
+    deleteLater();
 }
 
 } // namespace QBluez

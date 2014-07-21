@@ -55,4 +55,4 @@ DeviceType QBLUEZ_EXPORT classToType(quint32 classNum);
 
 } // namespace QBluez
 
-#endif // BLUEDEVILUTILS_H
+#endif // QBLUEZ_UTILS_H

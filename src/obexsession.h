@@ -48,4 +48,4 @@ private:
 
 } // namespace QBluez
 
-#endif // QBLUEZ_OBEXTRANSFER_H
+#endif // QBLUEZ_OBEXSESSION_H

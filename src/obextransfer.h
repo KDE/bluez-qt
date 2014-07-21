@@ -76,6 +76,7 @@ private:
 
     friend class ObexTransferPrivate;
     friend class ObexAgentAdaptor;
+    friend class PendingCall;
 };
 
 } // namespace QBluez
