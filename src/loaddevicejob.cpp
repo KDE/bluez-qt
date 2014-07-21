@@ -11,7 +11,7 @@ class LoadDeviceJobPrivate : public QObject
     Q_OBJECT
 
 public:
-    LoadDeviceJobPrivate(LoadDeviceJob *q, DevicePrivate *device);
+    explicit LoadDeviceJobPrivate(LoadDeviceJob *q, DevicePrivate *device);
 
     void doStart();
 

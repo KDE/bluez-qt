@@ -29,7 +29,7 @@ private:
     void doStart() Q_DECL_OVERRIDE;
     void doEmitResult() Q_DECL_OVERRIDE;
 
-    class InitObexManagerJobPrivate *d;
+    class InitObexManagerJobPrivate *const d;
 
     friend class InitObexManagerJobPrivate;
     friend class ObexManager;

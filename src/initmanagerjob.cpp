@@ -12,7 +12,7 @@ class InitManagerJobPrivate : public QObject
     Q_OBJECT
 
 public:
-    InitManagerJobPrivate(InitManagerJob *q, Manager *manager, Manager::InitType initType);
+    explicit InitManagerJobPrivate(InitManagerJob *q, Manager *manager, Manager::InitType initType);
 
     void doStart();
     void initError(const QString &errorText);

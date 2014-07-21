@@ -75,7 +75,7 @@ private:
 
     void emitFinished();
 
-    class PendingCallPrivate *d;
+    class PendingCallPrivate *const d;
 
     friend class PendingCallPrivate;
     friend class Manager;

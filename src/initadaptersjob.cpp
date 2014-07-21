@@ -12,7 +12,7 @@ class InitAdaptersJobPrivate : public QObject
     Q_OBJECT
 
 public:
-    InitAdaptersJobPrivate(InitAdaptersJob *q, ManagerPrivate *manager);
+    explicit InitAdaptersJobPrivate(InitAdaptersJob *q, ManagerPrivate *manager);
 
     void doStart();
     void loaded();

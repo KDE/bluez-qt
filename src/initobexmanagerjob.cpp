@@ -11,7 +11,7 @@ class InitObexManagerJobPrivate : public QObject
     Q_OBJECT
 
 public:
-    InitObexManagerJobPrivate(InitObexManagerJob *q, ObexManager *manager);
+    explicit InitObexManagerJobPrivate(InitObexManagerJob *q, ObexManager *manager);
 
     void doStart();
     void initError(const QString &errorText);

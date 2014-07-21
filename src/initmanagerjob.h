@@ -28,7 +28,7 @@ private:
     void doStart() Q_DECL_OVERRIDE;
     void doEmitResult() Q_DECL_OVERRIDE;
 
-    class InitManagerJobPrivate *d;
+    class InitManagerJobPrivate *const d;
 
     friend class InitManagerJobPrivate;
     friend class Manager;

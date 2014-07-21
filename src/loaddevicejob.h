@@ -30,7 +30,7 @@ private:
     void doStart() Q_DECL_OVERRIDE;
     void doEmitResult() Q_DECL_OVERRIDE;
 
-    class LoadDeviceJobPrivate *d;
+    class LoadDeviceJobPrivate *const d;
 
     friend class LoadDeviceJobPrivate;
     friend class Device;
