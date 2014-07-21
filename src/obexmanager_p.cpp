@@ -36,14 +36,14 @@ void ObexManagerPrivate::init()
             QDBusServiceWatcher::WatchForRegistration | QDBusServiceWatcher::WatchForUnregistration, this);
 
     connect(serviceWatcher, &QDBusServiceWatcher::serviceRegistered, [ this ]() {
-        qCDebug(QBLUEZ) << "Manager: Obex service registered";
+        qCDebug(QBLUEZ) << "Obex service registered";
         m_obexRunning = true;
         load();
         Q_EMIT q->operationalChanged(m_obexRunning);
     });
 
     connect(serviceWatcher, &QDBusServiceWatcher::serviceUnregistered, [ this ]() {
-        qCDebug(QBLUEZ) << "Manager: Obex service unregistered";
+        qCDebug(QBLUEZ) << "Obex service unregistered";
         m_obexRunning = false;
         clear();
         Q_EMIT q->operationalChanged(m_obexRunning);

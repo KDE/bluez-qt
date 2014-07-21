@@ -41,14 +41,14 @@ void ManagerPrivate::init()
             QDBusServiceWatcher::WatchForRegistration | QDBusServiceWatcher::WatchForUnregistration, this);
 
     connect(serviceWatcher, &QDBusServiceWatcher::serviceRegistered, [ this ]() {
-        qCDebug(QBLUEZ) << "Manager: Bluez service registered";
+        qCDebug(QBLUEZ) << "Bluez service registered";
         m_bluezRunning = true;
         load();
         Q_EMIT q->operationalChanged(m_bluezRunning);
     });
 
     connect(serviceWatcher, &QDBusServiceWatcher::serviceUnregistered, [ this ]() {
-        qCDebug(QBLUEZ) << "Manager: Bluez service unregistered";
+        qCDebug(QBLUEZ) << "Bluez service unregistered";
         m_bluezRunning = false;
         clear();
         Q_EMIT q->operationalChanged(m_bluezRunning);
