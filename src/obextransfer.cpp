@@ -37,7 +37,11 @@ ObexTransferPrivate::ObexTransferPrivate(ObexTransfer *q, const QString &path)
 
 void ObexTransferPrivate::init()
 {
-    createDBusProperties();
+    m_dbusProperties = new DBusProperties(QStringLiteral("org.bluez.obex"), m_bluezTransfer->path(),
+                                          QDBusConnection::sessionBus(), this);
+
+    connect(m_dbusProperties, &DBusProperties::PropertiesChanged,
+            this, &ObexTransferPrivate::propertiesChanged, Qt::QueuedConnection);
 
     const QDBusPendingReply<QVariantMap> &call = m_dbusProperties->GetAll(QStringLiteral("org.bluez.obex.Transfer1"));
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, this);
@@ -51,43 +55,26 @@ void ObexTransferPrivate::init()
             return;
         }
 
-        setProperties(reply.value());
-        initSession();
+        const QVariantMap &properties = reply.value();
+
+        m_status = stringToStatus(properties.value(QStringLiteral("Status")).toString());
+        m_session = new ObexSession(properties.value(QStringLiteral("Session")).value<QDBusObjectPath>().path());
+        m_name = properties.value(QStringLiteral("Name")).toString();
+        m_type = properties.value(QStringLiteral("Type")).toString();
+        m_time = properties.value(QStringLiteral("Time")).toUInt();
+        m_size = properties.value(QStringLiteral("Size")).toUInt();
+        m_transferred = properties.value(QStringLiteral("Transferred")).toUInt();
+        m_fileName = properties.value(QStringLiteral("Filename")).toString();
+
+        m_session->d->init();
+        connect(m_session->d, &ObexSessionPrivate::initFinished, [ this ]() {
+            Q_EMIT initFinished();
+        });
+        connect(m_session->d, &ObexSessionPrivate::initError, [ this ](const QString &errorText) {
+            Q_EMIT initError(errorText);
+        });
     });
 }
-
-void ObexTransferPrivate::initSession()
-{
-    m_session->d->init();
-
-    connect(m_session->d, &ObexSessionPrivate::initFinished, [ this ]() {
-        Q_EMIT initFinished();
-    });
-    connect(m_session->d, &ObexSessionPrivate::initError, [ this ](const QString &errorText) {
-        Q_EMIT initError(errorText);
-    });
-}
-
-void ObexTransferPrivate::createDBusProperties()
-{
-    m_dbusProperties = new DBusProperties(QStringLiteral("org.bluez.obex"), m_bluezTransfer->path(),
-                                          QDBusConnection::sessionBus(), this);
-    connect(m_dbusProperties, &DBusProperties::PropertiesChanged,
-            this, &ObexTransferPrivate::propertiesChanged, Qt::QueuedConnection);
-}
-
-void ObexTransferPrivate::setProperties(const QVariantMap &properties)
-{
-    m_status = stringToStatus(properties.value(QStringLiteral("Status")).toString());
-    m_session = new ObexSession(properties.value(QStringLiteral("Session")).value<QDBusObjectPath>().path());
-    m_name = properties.value(QStringLiteral("Name")).toString();
-    m_type = properties.value(QStringLiteral("Type")).toString();
-    m_time = properties.value(QStringLiteral("Time")).toUInt();
-    m_size = properties.value(QStringLiteral("Size")).toUInt();
-    m_transferred = properties.value(QStringLiteral("Transferred")).toUInt();
-    m_fileName = properties.value(QStringLiteral("Filename")).toString();
-}
-
 
 void ObexTransferPrivate::propertiesChanged(const QString &interface, const QVariantMap &changed, const QStringList &invalidated)
 {
@@ -186,5 +173,3 @@ PendingCall *ObexTransfer::resume()
 }
 
 } // namespace QBluez
-
-#include "obextransfer.moc"

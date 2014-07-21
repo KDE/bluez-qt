@@ -17,10 +17,6 @@ public:
     explicit ObexTransferPrivate(ObexTransfer *q, const QString &path);
 
     void init();
-    void initSession();
-
-    void createDBusProperties();
-    void setProperties(const QVariantMap &properties);
 
     void propertiesChanged(const QString &interface, const QVariantMap &changed, const QStringList &invalidated);
 

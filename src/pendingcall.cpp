@@ -161,11 +161,10 @@ bool PendingCall::processReply(QDBusPendingCallWatcher *call)
         if (reply.isError()) {
             return true;
         }
-        ObexTransfer *transfer = new ObexTransfer(reply.argumentAt(0).toString(), 0);
-        transfer->d->createDBusProperties();
-        transfer->d->setProperties(reply.argumentAt(1).toMap());
-        transfer->d->initSession();
+        ObexTransfer *transfer = new ObexTransfer(reply.argumentAt(0).value<QDBusObjectPath>().path(), 0);
         d->value.append(QVariant::fromValue(transfer));
+
+        transfer->d->init();
         connect(transfer->d, &ObexTransferPrivate::initFinished, [ this ]() {
             emitFinished();
         });
