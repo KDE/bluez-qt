@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QDBusPendingReply>
 
+#include "obexfiletransfer.h"
 #include "qbluez_export.h"
 
 namespace QBluez
@@ -64,6 +65,7 @@ private:
         ReturnVoid,
         ReturnString,
         ReturnObjectPath,
+        ReturnFileTransferList,
         ReturnTransferWithProperties
     };
 
@@ -85,8 +87,11 @@ private:
     friend class ObexTransfer;
     friend class ObexSession;
     friend class ObexObjectPush;
+    friend class ObexFileTransfer;
 };
 
 } // namespace QBluez
+
+Q_DECLARE_METATYPE(QList<QBluez::ObexFileTransfer::Item>)
 
 #endif // QBLUEZ_PENDINGCALL_H

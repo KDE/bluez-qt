@@ -2,6 +2,7 @@
 #include "obextransfer.h"
 #include "obextransfer_p.h"
 #include "debug_p.h"
+#include "qbluez_dbustypes.h"
 
 #include <QTimer>
 #include <QDBusPendingCallWatcher>
@@ -41,6 +42,30 @@ static PendingCall::Error nameToError(const QString &name)
 #undef FROM_BLUEZ_ERROR
 
     return PendingCall::UnknownError;
+}
+
+static QList<ObexFileTransfer::Item> toFileTransferList(const QVariantMapList &list)
+{
+    QList<ObexFileTransfer::Item> items;
+
+    Q_FOREACH (const QVariantMap &map, list) {
+        ObexFileTransfer::Item item;
+        if (map.value(QStringLiteral("Type")).toString() == QLatin1String("folder")) {
+            item.type = ObexFileTransfer::Item::Folder;
+        } else {
+            item.type = ObexFileTransfer::Item::File;
+        }
+        item.name = map.value(QStringLiteral("Name")).toString();
+        item.size = map.value(QStringLiteral("Size")).toUInt();
+        item.permissions = map.value(QStringLiteral("Permission")).toString();
+        item.modified = QDateTime::fromMSecsSinceEpoch(map.value(QStringLiteral("Modified")).toUInt());
+        item.accessed = QDateTime::fromMSecsSinceEpoch(map.value(QStringLiteral("Accessed")).toUInt());
+        item.created = QDateTime::fromMSecsSinceEpoch(map.value(QStringLiteral("Created")).toUInt());
+
+        items.append(item);
+    }
+
+    return items;
 }
 
 class PendingCallPrivate
@@ -152,6 +177,16 @@ bool PendingCall::processReply(QDBusPendingCallWatcher *call)
         if (!reply.isError()) {
             d->value.append(reply.argumentAt(0));
         }
+        return true;
+    }
+
+    case ReturnFileTransferList: {
+        const QDBusPendingReply<QVariantMapList> &reply = *call;
+        processError(reply.error());
+        if (!reply.isError()) {
+            d->value.append(QVariant::fromValue(toFileTransferList(reply.value())));
+        }
+
         return true;
     }
 
