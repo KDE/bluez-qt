@@ -20,6 +20,8 @@ public:
     explicit ObexObjectPush(const QDBusObjectPath &path, QObject *parent = 0);
     ~ObexObjectPush();
 
+    QDBusObjectPath objectPath() const;
+
     // Possible errors: InvalidArguments, Failed
     // Return: ObexTransfer*
     PendingCall *sendFile(const QString &filename);

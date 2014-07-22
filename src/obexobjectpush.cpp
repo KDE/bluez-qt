@@ -28,6 +28,11 @@ ObexObjectPush::~ObexObjectPush()
     delete d;
 }
 
+QDBusObjectPath ObexObjectPush::objectPath() const
+{
+    return QDBusObjectPath(d->m_bluezObjectPush->path());
+}
+
 PendingCall *ObexObjectPush::sendFile(const QString &filename)
 {
     return new PendingCall(d->m_bluezObjectPush->SendFile(filename),
