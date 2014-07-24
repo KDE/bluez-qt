@@ -56,6 +56,7 @@ public:
 
     Adapter *adapterForAddress(const QString &address) const;
     Adapter *adapterForUbi(const QString &ubi) const;
+    Device *deviceForAddress(const QString &address) const;
     Device *deviceForUbi(const QString &ubi) const;
 
     // Possible errors: InvalidArguments, AlreadyExists

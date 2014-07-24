@@ -82,6 +82,17 @@ Adapter *Manager::adapterForUbi(const QString &ubi) const
     return d->m_adapters.value(ubi);
 }
 
+Device *Manager::deviceForAddress(const QString &address) const
+{
+    Q_FOREACH (Adapter *adapter, d->m_adapters) {
+        Device *device = adapter->deviceForAddress(address);
+        if (device) {
+            return device;
+        }
+    }
+    return Q_NULLPTR;
+}
+
 Device *Manager::deviceForUbi(const QString &ubi) const
 {
     return d->m_devices.value(ubi);
