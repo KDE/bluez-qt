@@ -23,7 +23,7 @@ class QBLUEZ_EXPORT ObexTransfer : public QObject
     Q_PROPERTY(quint64 time READ time)
     Q_PROPERTY(quint64 size READ size)
     Q_PROPERTY(quint64 transferred READ transferred NOTIFY transferredChanged)
-    Q_PROPERTY(QString fileName READ fileName)
+    Q_PROPERTY(QString fileName READ fileName NOTIFY fileNameChanged)
     Q_PROPERTY(bool suspendable READ isSuspendable)
 
 public:
@@ -68,6 +68,7 @@ public:
 Q_SIGNALS:
     void statusChanged(Status status);
     void transferredChanged(quint64 transferred);
+    void fileNameChanged(const QString &fileName);
 
 private:
     explicit ObexTransfer(const QString &path, QObject *parent = 0);

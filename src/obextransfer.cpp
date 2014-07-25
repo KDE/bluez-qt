@@ -97,6 +97,11 @@ void ObexTransferPrivate::propertiesChanged(const QString &interface, const QVar
                 m_transferred = value.toUInt();
                 Q_EMIT q->transferredChanged(m_transferred);
             }
+        } else if (property == QLatin1String("Filename")) {
+            if (m_fileName != value.toString()) {
+                m_fileName = value.toString();
+                Q_EMIT q->fileNameChanged(m_fileName);
+            }
         }
     }
 }
