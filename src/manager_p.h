@@ -4,7 +4,6 @@
 #include <QObject>
 #include <QHash>
 
-#include "manager.h"
 #include "dbusobjectmanager.h"
 #include "bluezagentmanager1.h"
 
@@ -14,7 +13,9 @@ namespace QBluez
 typedef org::freedesktop::DBus::ObjectManager DBusObjectManager;
 typedef org::bluez::AgentManager1 BluezAgentManager;
 
+class Manager;
 class Adapter;
+class Device;
 
 class ManagerPrivate : public QObject
 {

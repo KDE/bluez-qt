@@ -1,4 +1,5 @@
 #include "manager_p.h"
+#include "manager.h"
 #include "device.h"
 #include "adapter.h"
 #include "adapter_p.h"

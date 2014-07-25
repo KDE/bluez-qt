@@ -16,6 +16,7 @@ ObexManagerPrivate::ObexManagerPrivate(ObexManager *q)
     , q(q)
     , m_obexClient(0)
     , m_obexAgentManager(0)
+    , m_dbusObjectManager(0)
     , m_initialized(false)
     , m_obexRunning(false)
     , m_loaded(false)
@@ -94,6 +95,12 @@ void ObexManagerPrivate::load()
         return;
     }
 
+    m_dbusObjectManager = new DBusObjectManager(QStringLiteral("org.bluez.obex"), QStringLiteral("/"),
+            QDBusConnection::sessionBus(), this);
+
+    connect(m_dbusObjectManager, &DBusObjectManager::InterfacesRemoved,
+            this, &ObexManagerPrivate::interfacesRemoved);
+
     DBusObjectManager objectManager(QStringLiteral("org.bluez.obex"), QStringLiteral("/"),
             QDBusConnection::sessionBus());
 
@@ -156,6 +163,18 @@ void ObexManagerPrivate::clear()
     if (m_obexAgentManager) {
         m_obexAgentManager->deleteLater();
         m_obexAgentManager = Q_NULLPTR;
+    }
+
+    if (m_dbusObjectManager) {
+        m_dbusObjectManager->deleteLater();
+        m_dbusObjectManager = Q_NULLPTR;
+    }
+}
+
+void ObexManagerPrivate::interfacesRemoved(const QDBusObjectPath &objectPath, const QStringList &interfaces)
+{
+    if (interfaces.contains(QStringLiteral("org.bluez.obex.Session1"))) {
+        Q_EMIT q->sessionRemoved(objectPath);
     }
 }
 

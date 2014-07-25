@@ -45,6 +45,7 @@ public:
 
 Q_SIGNALS:
     void operationalChanged(bool operational);
+    void sessionRemoved(const QDBusObjectPath &session);
 
 private:
     class ObexManagerPrivate *const d;

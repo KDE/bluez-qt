@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QTimer>
 
+#include "dbusobjectmanager.h"
 #include "obexclient1.h"
 #include "obexagentmanager1.h"
 
@@ -12,6 +13,7 @@ namespace QBluez
 
 typedef org::bluez::obex::Client1 ObexClient;
 typedef org::bluez::obex::AgentManager1 ObexAgentManager;
+typedef org::freedesktop::DBus::ObjectManager DBusObjectManager;
 
 class ObexManager;
 
@@ -27,9 +29,12 @@ public:
     void load();
     void clear();
 
+    void interfacesRemoved(const QDBusObjectPath &objectPath, const QStringList &interfaces);
+
     ObexManager *q;
     ObexClient *m_obexClient;
     ObexAgentManager *m_obexAgentManager;
+    DBusObjectManager *m_dbusObjectManager;
     QTimer *m_timer;
 
     bool m_initialized;
