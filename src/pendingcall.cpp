@@ -82,6 +82,8 @@ PendingCall::PendingCall(const QDBusPendingCall &call, ReturnType type, QObject 
     : QObject(parent)
     , d(new PendingCallPrivate)
 {
+    qDBusRegisterMetaType<QVariantMapList>();
+
     d->error = NoError;
     d->type = type;
     d->watcher = new QDBusPendingCallWatcher(call, this);
@@ -186,7 +188,6 @@ bool PendingCall::processReply(QDBusPendingCallWatcher *call)
         if (!reply.isError()) {
             d->value.append(QVariant::fromValue(toFileTransferList(reply.value())));
         }
-
         return true;
     }
 
