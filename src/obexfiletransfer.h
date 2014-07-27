@@ -23,12 +23,12 @@ public:
         enum Type { File, Folder };
 
         QString name;
+        QString label;
         Type type;
         quint64 size;
         QString permissions;
+        QString memoryType;
         QDateTime modified;
-        QDateTime accessed;
-        QDateTime created;
     };
 
     explicit ObexFileTransfer(const QDBusObjectPath &path, QObject *parent = 0);

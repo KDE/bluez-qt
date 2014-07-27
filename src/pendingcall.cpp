@@ -44,6 +44,11 @@ static PendingCall::Error nameToError(const QString &name)
     return PendingCall::UnknownError;
 }
 
+static QDateTime dateTimeFromTransfer(const QString &value)
+{
+    return QDateTime::fromString(value, QStringLiteral("yyyyMMddThhmmssZ"));
+}
+
 static QList<ObexFileTransfer::Item> toFileTransferList(const QVariantMapList &list)
 {
     QList<ObexFileTransfer::Item> items;
@@ -56,12 +61,11 @@ static QList<ObexFileTransfer::Item> toFileTransferList(const QVariantMapList &l
             item.type = ObexFileTransfer::Item::File;
         }
         item.name = map.value(QStringLiteral("Name")).toString();
+        item.label = map.value(QStringLiteral("Label")).toString();
         item.size = map.value(QStringLiteral("Size")).toUInt();
-        item.permissions = map.value(QStringLiteral("Permission")).toString();
-        item.modified = QDateTime::fromMSecsSinceEpoch(map.value(QStringLiteral("Modified")).toUInt());
-        item.accessed = QDateTime::fromMSecsSinceEpoch(map.value(QStringLiteral("Accessed")).toUInt());
-        item.created = QDateTime::fromMSecsSinceEpoch(map.value(QStringLiteral("Created")).toUInt());
-
+        item.permissions = map.value(QStringLiteral("User-perm")).toString();
+        item.memoryType = map.value(QStringLiteral("Mem-type")).toString();
+        item.modified = dateTimeFromTransfer(map.value(QStringLiteral("Modified")).toString());
         items.append(item);
     }
 
