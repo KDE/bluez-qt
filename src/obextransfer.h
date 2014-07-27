@@ -5,6 +5,8 @@
 
 #include "qbluez_export.h"
 
+class QDBusObjectPath;
+
 namespace QBluez
 {
 
@@ -37,6 +39,8 @@ public:
     };
 
     ~ObexTransfer();
+
+    QDBusObjectPath objectPath() const;
 
     Status status() const;
 

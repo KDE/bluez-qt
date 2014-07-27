@@ -117,6 +117,11 @@ ObexTransfer::~ObexTransfer()
     delete d;
 }
 
+QDBusObjectPath ObexTransfer::objectPath() const
+{
+    return QDBusObjectPath(d->m_bluezTransfer->path());
+}
+
 ObexTransfer::Status ObexTransfer::status() const
 {
     return d->m_status;
