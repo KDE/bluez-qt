@@ -23,7 +23,8 @@ class DevicePrivate : public QObject
 public:
     explicit DevicePrivate(const QString &path, Adapter *adapter, Device *parent);
 
-    void initProperties();
+    void load();
+    void getPropertiesFinished(QDBusPendingCallWatcher *watcher);
     QDBusPendingReply<> setDBusProperty(const QString &name, const QVariant &value);
     void propertiesChanged(const QString &interface, const QVariantMap &changed, const QStringList &invalidated);
 
@@ -47,6 +48,10 @@ public:
     QStringList m_uuids;
     QString m_modalias;
     Adapter *m_adapter;
+
+Q_SIGNALS:
+    void loaded(DevicePrivate *device);
+    void loadError(const QString &errorString);
 };
 
 } // namespace QBluez

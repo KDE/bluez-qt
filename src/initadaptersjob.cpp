@@ -44,7 +44,6 @@ void InitAdaptersJobPrivate::doStart()
 
     Q_FOREACH (Adapter *adapter, m_manager->m_adapters) {
         adapter->d->load();
-
         connect(adapter->d, &AdapterPrivate::loaded, this, &InitAdaptersJobPrivate::loaded);
         connect(adapter->d, &AdapterPrivate::loadError, this, &InitAdaptersJobPrivate::loadError);
     }

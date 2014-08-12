@@ -14,6 +14,8 @@ public:
     explicit LoadDeviceJobPrivate(LoadDeviceJob *q, DevicePrivate *device);
 
     void doStart();
+    void loaded();
+    void loadError(const QString &errorText);
 
     LoadDeviceJob *q;
     DevicePrivate *m_device;
@@ -33,45 +35,23 @@ void LoadDeviceJobPrivate::doStart()
         return;
     }
 
-    m_device->initProperties();
+    m_device->load();
+    connect(m_device, &DevicePrivate::loaded, this, &LoadDeviceJobPrivate::loaded);
+    connect(m_device, &DevicePrivate::loadError, this, &LoadDeviceJobPrivate::loadError);
+}
 
-    const QDBusPendingReply<QVariantMap> &call = m_device->m_dbusProperties->GetAll(QStringLiteral("org.bluez.Device1"));
-    QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, this);
+void LoadDeviceJobPrivate::loaded()
+{
+    q->emitResult();
+}
 
-    connect(watcher, &QDBusPendingCallWatcher::finished, [ this, watcher ]() {
-        const QDBusPendingReply<QVariantMap> &reply = *watcher;
-        watcher->deleteLater();
+void LoadDeviceJobPrivate::loadError(const QString &errorText)
+{
+    qCWarning(QBLUEZ) << "LoadDeviceJob Error:" << errorText;
 
-        if (reply.isError()) {
-            qCWarning(QBLUEZ) << "LoadDeviceJob Error:" << reply.error().message();
-
-            q->setError(LoadDeviceJob::UserDefinedError);
-            q->setErrorText(reply.error().message());
-            q->emitResult();
-            return;
-        }
-
-        const QVariantMap &properties = reply.value();
-
-        m_device->m_address = properties.value(QStringLiteral("Address")).toString();
-        m_device->m_name = properties.value(QStringLiteral("Name")).toString();
-        m_device->m_alias = properties.value(QStringLiteral("Alias")).toString();
-        m_device->m_deviceClass = properties.value(QStringLiteral("Class")).toUInt();
-        m_device->m_appearance = properties.value(QStringLiteral("Appearance")).toUInt();
-        m_device->m_icon = properties.value(QStringLiteral("Icon")).toString();
-        m_device->m_paired = properties.value(QStringLiteral("Paired")).toBool();
-        m_device->m_trusted = properties.value(QStringLiteral("Trusted")).toBool();
-        m_device->m_blocked = properties.value(QStringLiteral("Blocked")).toBool();
-        m_device->m_legacyPairing = properties.value(QStringLiteral("LegacyPairing")).toBool();
-        m_device->m_rssi = properties.value(QStringLiteral("RSSI")).toInt();
-        m_device->m_connected = properties.value(QStringLiteral("Connected")).toBool();
-        m_device->m_uuids = stringListToUpper(properties.value(QStringLiteral("UUIDs")).toStringList());
-        m_device->m_modalias = properties.value(QStringLiteral("Modalias")).toString();
-
-        m_device->m_loaded = true;
-
-        q->emitResult();
-    });
+    q->setError(LoadDeviceJob::UserDefinedError);
+    q->setErrorText(errorText);
+    q->emitResult();
 }
 
 LoadDeviceJob::LoadDeviceJob(DevicePrivate *device, QObject *parent)
