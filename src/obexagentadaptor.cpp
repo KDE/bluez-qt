@@ -3,7 +3,6 @@
 #include "obexmanager.h"
 #include "obextransfer.h"
 #include "obextransfer_p.h"
-#include "request.h"
 
 #include <QDBusObjectPath>
 
@@ -14,23 +13,19 @@ ObexAgentAdaptor::ObexAgentAdaptor(ObexAgent *parent, ObexManager *manager)
     : QDBusAbstractAdaptor(parent)
     , m_agent(parent)
     , m_manager(manager)
+    , m_transfer(0)
 {
 }
 
 QString ObexAgentAdaptor::AuthorizePush(const QDBusObjectPath &transfer, const QDBusMessage &msg)
 {
     msg.setDelayedReply(true);
-    Request<QString> req(OrgBluezObexAgent, msg);
+    m_transferRequest = Request<QString>(OrgBluezObexAgent, msg);
 
-    ObexTransfer *t = new ObexTransfer(transfer.path(), this);
-    t->d->init();
-    connect(t->d, &ObexTransferPrivate::initFinished, [ this, t, req ]() {
-        m_agent->authorizePush(t, req);
-    });
-    connect(t->d, &ObexTransferPrivate::initError, [ this, t, req ]() {
-        t->deleteLater();
-        req.cancel();
-    });
+    m_transfer = new ObexTransfer(transfer.path(), this);
+    m_transfer->d->init();
+    connect(m_transfer->d, &ObexTransferPrivate::initFinished, this, &ObexAgentAdaptor::transferInitFinished);
+    connect(m_transfer->d, &ObexTransferPrivate::initError, this, &ObexAgentAdaptor::transferInitError);
 
     return QString();
 }
@@ -43,6 +38,17 @@ void ObexAgentAdaptor::Cancel()
 void ObexAgentAdaptor::Release()
 {
     m_agent->release();
+}
+
+void ObexAgentAdaptor::transferInitFinished()
+{
+    m_agent->authorizePush(m_transfer, m_transferRequest);
+}
+
+void ObexAgentAdaptor::transferInitError()
+{
+    m_transfer->deleteLater();
+    m_transferRequest.cancel();
 }
 
 } // namespace QBluez

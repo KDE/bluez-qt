@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QDBusAbstractAdaptor>
 
+#include "request.h"
 #include "qbluez_export.h"
 
 class QDBusMessage;
@@ -12,6 +13,7 @@ class QDBusObjectPath;
 namespace QBluez
 {
 
+class ObexTransfer;
 class ObexManager;
 class ObexAgent;
 
@@ -29,9 +31,15 @@ public Q_SLOTS:
     Q_NOREPLY void Cancel();
     Q_NOREPLY void Release();
 
+private Q_SLOTS:
+    void transferInitFinished();
+    void transferInitError();
+
 private:
     ObexAgent *m_agent;
     ObexManager *m_manager;
+    ObexTransfer *m_transfer;
+    Request<QString> m_transferRequest;
 };
 
 } // namespace QBluez
