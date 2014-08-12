@@ -17,6 +17,7 @@ public:
     void doStart();
     void initError(const QString &errorText);
     void initFinished();
+    void initAdaptersJobFinished(InitAdaptersJob *job);
 
     InitManagerJob *q;
     Manager *m_manager;
@@ -60,14 +61,17 @@ void InitManagerJobPrivate::initFinished()
     } else if (m_initType == Manager::InitManagerAndAdapters) {
         InitAdaptersJob *job = m_manager->initAdapters();
         job->start();
-        connect(job, &InitAdaptersJob::result, [ this ](InitAdaptersJob *job) {
-            if (job->error()) {
-                q->setError(InitManagerJob::UserDefinedError);
-                q->setErrorText(job->errorText());
-            }
-            q->emitResult();
-        });
+        connect(job, &InitAdaptersJob::result, this, &InitManagerJobPrivate::initAdaptersJobFinished);
     }
+}
+
+void InitManagerJobPrivate::initAdaptersJobFinished(InitAdaptersJob *job)
+{
+    if (job->error()) {
+        q->setError(InitManagerJob::UserDefinedError);
+        q->setErrorText(job->errorText());
+    }
+    q->emitResult();
 }
 
 InitManagerJob::InitManagerJob(Manager *manager, Manager::InitType initType)
