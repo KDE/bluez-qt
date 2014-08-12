@@ -94,6 +94,8 @@ install(TARGETS KF5QBluez
 
 install(FILES
             ${CMAKE_CURRENT_BINARY_DIR}/qbluez_export.h
+            ${CMAKE_CURRENT_BINARY_DIR}/qbluez_version.h
+            ${CMAKE_CURRENT_SOURCE_DIR}/qbluez_dbustypes.h
             ${QBluez_HEADERS}
         DESTINATION ${INCLUDE_INSTALL_DIR}/QBluez
         COMPONENT Devel)
