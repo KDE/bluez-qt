@@ -45,35 +45,33 @@ void ObexTransferPrivate::init()
 
     const QDBusPendingReply<QVariantMap> &call = m_dbusProperties->GetAll(QStringLiteral("org.bluez.obex.Transfer1"));
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, this);
+    connect(watcher, &QDBusPendingCallWatcher::finished, this, &ObexTransferPrivate::getPropertiesFinished);
+}
 
-    connect(watcher, &QDBusPendingCallWatcher::finished, [ this, watcher ]() {
-        const QDBusPendingReply<QVariantMap> &reply = *watcher;
-        watcher->deleteLater();
+void ObexTransferPrivate::getPropertiesFinished(QDBusPendingCallWatcher *watcher)
+{
+    const QDBusPendingReply<QVariantMap> &reply = *watcher;
+    watcher->deleteLater();
 
-        if (reply.isError()) {
-            Q_EMIT initError(reply.error().message());
-            return;
-        }
+    if (reply.isError()) {
+        Q_EMIT initError(reply.error().message());
+        return;
+    }
 
-        const QVariantMap &properties = reply.value();
+    const QVariantMap &properties = reply.value();
 
-        m_status = stringToStatus(properties.value(QStringLiteral("Status")).toString());
-        m_session = new ObexSession(properties.value(QStringLiteral("Session")).value<QDBusObjectPath>().path());
-        m_name = properties.value(QStringLiteral("Name")).toString();
-        m_type = properties.value(QStringLiteral("Type")).toString();
-        m_time = properties.value(QStringLiteral("Time")).toUInt();
-        m_size = properties.value(QStringLiteral("Size")).toUInt();
-        m_transferred = properties.value(QStringLiteral("Transferred")).toUInt();
-        m_fileName = properties.value(QStringLiteral("Filename")).toString();
+    m_status = stringToStatus(properties.value(QStringLiteral("Status")).toString());
+    m_session = new ObexSession(properties.value(QStringLiteral("Session")).value<QDBusObjectPath>().path());
+    m_name = properties.value(QStringLiteral("Name")).toString();
+    m_type = properties.value(QStringLiteral("Type")).toString();
+    m_time = properties.value(QStringLiteral("Time")).toUInt();
+    m_size = properties.value(QStringLiteral("Size")).toUInt();
+    m_transferred = properties.value(QStringLiteral("Transferred")).toUInt();
+    m_fileName = properties.value(QStringLiteral("Filename")).toString();
 
-        m_session->d->init();
-        connect(m_session->d, &ObexSessionPrivate::initFinished, [ this ]() {
-            Q_EMIT initFinished();
-        });
-        connect(m_session->d, &ObexSessionPrivate::initError, [ this ](const QString &errorText) {
-            Q_EMIT initError(errorText);
-        });
-    });
+    m_session->d->init();
+    connect(m_session->d, &ObexSessionPrivate::initFinished, this, &ObexTransferPrivate::initFinished);
+    connect(m_session->d, &ObexSessionPrivate::initError, this, &ObexTransferPrivate::initError);
 }
 
 void ObexTransferPrivate::propertiesChanged(const QString &interface, const QVariantMap &changed, const QStringList &invalidated)
