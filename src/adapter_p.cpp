@@ -124,12 +124,16 @@ void AdapterPrivate::propertiesChanged(const QString &interface, const QVariantM
         } else if (property == QLatin1String("Modalias")) {
             PROPERTY_CHANGED(m_modalias, toString, modaliasChanged);
         } else if (property == QLatin1String("UUIDs")) {
-            const QStringList &changedUuids = stringListToUpper(value.toStringList());
-            if (m_uuids != changedUuids) {
-                m_uuids = changedUuids;
-                Q_EMIT q->uuidsChanged(m_uuids);
-            }
+            uuidsPropertyChanged(stringListToUpper(value.toStringList()));
         }
+    }
+}
+
+void AdapterPrivate::uuidsPropertyChanged(const QStringList &value)
+{
+    if (m_uuids != value) {
+        m_uuids = value;
+        Q_EMIT q->uuidsChanged(m_uuids);
     }
 }
 

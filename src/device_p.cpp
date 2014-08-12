@@ -94,23 +94,11 @@ void DevicePrivate::propertiesChanged(const QString &interface, const QVariantMa
         const QString &property = i.key();
 
         if (property == QLatin1String("Name")) {
-            if (m_name != value.toString()) {
-                m_name = value.toString();
-                Q_EMIT q->nameChanged(m_name);
-                Q_EMIT q->friendlyNameChanged(q->friendlyName());
-            }
+            namePropertyChanged(value.toString());
         } else if (property == QLatin1String("Alias")) {
-            if (m_alias != value.toString()) {
-                m_alias = value.toString();
-                Q_EMIT q->aliasChanged(m_alias);
-                Q_EMIT q->friendlyNameChanged(q->friendlyName());
-            }
+            aliasPropertyChanged(value.toString());
         } else if (property == QLatin1String("Class")) {
-            if (m_deviceClass != value.toUInt()) {
-                m_deviceClass = value.toUInt();
-                Q_EMIT q->deviceClassChanged(m_deviceClass);
-                Q_EMIT q->deviceTypeChanged(q->deviceType());
-            }
+            classPropertyChanged(value.toUInt());
         } else if (property == QLatin1String("Appearance")) {
             PROPERTY_CHANGED(m_appearance, toUInt, appearanceChanged);
         } else if (property == QLatin1String("Icon")) {
@@ -130,16 +118,47 @@ void DevicePrivate::propertiesChanged(const QString &interface, const QVariantMa
         } else if (property == QLatin1String("Modalias")) {
             PROPERTY_CHANGED(m_modalias, toString, modaliasChanged);
         } else if (property == QLatin1String("UUIDs")) {
-            const QStringList &changedUuids = stringListToUpper(value.toStringList());
-            if (m_uuids != changedUuids) {
-                m_uuids = changedUuids;
-                Q_EMIT q->uuidsChanged(m_uuids);
-            }
+            uuidsPropertyChanged(stringListToUpper(value.toStringList()));
         }
     }
 
     Q_EMIT q->deviceChanged(q);
     Q_EMIT m_adapter->deviceChanged(q);
+}
+
+void DevicePrivate::namePropertyChanged(const QString &value)
+{
+    if (m_name != value) {
+        m_name = value;
+        Q_EMIT q->nameChanged(m_name);
+        Q_EMIT q->friendlyNameChanged(q->friendlyName());
+    }
+}
+
+void DevicePrivate::aliasPropertyChanged(const QString &value)
+{
+    if (m_alias != value) {
+        m_alias = value;
+        Q_EMIT q->aliasChanged(m_alias);
+        Q_EMIT q->friendlyNameChanged(q->friendlyName());
+    }
+}
+
+void DevicePrivate::classPropertyChanged(quint32 value)
+{
+    if (m_deviceClass != value) {
+        m_deviceClass = value;
+        Q_EMIT q->deviceClassChanged(m_deviceClass);
+        Q_EMIT q->deviceTypeChanged(q->deviceType());
+    }
+}
+
+void DevicePrivate::uuidsPropertyChanged(const QStringList &value)
+{
+    if (m_uuids != value) {
+        m_uuids = value;
+        Q_EMIT q->uuidsChanged(m_uuids);
+    }
 }
 
 #undef PROPERTY_CHANGED

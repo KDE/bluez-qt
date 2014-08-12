@@ -30,6 +30,7 @@ public:
     void getPropertiesFinished(QDBusPendingCallWatcher *watcher);
     QDBusPendingReply<> setDBusProperty(const QString &name, const QVariant &value);
     void propertiesChanged(const QString &interface, const QVariantMap &changed, const QStringList &invalidated);
+    void uuidsPropertyChanged(const QStringList &value);
 
     Adapter *q;
     BluezAdapter *m_bluezAdapter;
