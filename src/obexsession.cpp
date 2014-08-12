@@ -20,26 +20,28 @@ void ObexSessionPrivate::init()
 
     const QDBusPendingReply<QVariantMap> &call = dbusProperties.GetAll(QStringLiteral("org.bluez.obex.Session1"));
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, this);
+    connect(watcher, &QDBusPendingCallWatcher::finished, this, &ObexSessionPrivate::getPropertiesFinished);
+}
 
-    connect(watcher, &QDBusPendingCallWatcher::finished, [ this, watcher ]() {
-        const QDBusPendingReply<QVariantMap> &reply = *watcher;
-        watcher->deleteLater();
+void ObexSessionPrivate::getPropertiesFinished(QDBusPendingCallWatcher *watcher)
+{
+    const QDBusPendingReply<QVariantMap> &reply = *watcher;
+    watcher->deleteLater();
 
-        if (reply.isError()) {
-            Q_EMIT initError(reply.error().message());
-            return;
-        }
+    if (reply.isError()) {
+        Q_EMIT initError(reply.error().message());
+        return;
+    }
 
-        const QVariantMap &properties = reply.value();
+    const QVariantMap &properties = reply.value();
 
-        m_source = properties.value(QStringLiteral("Source")).toString();
-        m_destination = properties.value(QStringLiteral("Destination")).toString();
-        m_channel = properties.value(QStringLiteral("Channel")).toUInt();
-        m_target = properties.value(QStringLiteral("Target")).toString();
-        m_root = properties.value(QStringLiteral("Root")).toString();
+    m_source = properties.value(QStringLiteral("Source")).toString();
+    m_destination = properties.value(QStringLiteral("Destination")).toString();
+    m_channel = properties.value(QStringLiteral("Channel")).toUInt();
+    m_target = properties.value(QStringLiteral("Target")).toString();
+    m_root = properties.value(QStringLiteral("Root")).toString();
 
-        Q_EMIT initFinished();
-    });
+    Q_EMIT initFinished();
 }
 
 ObexSession::ObexSession(const QString &path, QObject *parent)

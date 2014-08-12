@@ -15,6 +15,7 @@ public:
     explicit ObexSessionPrivate(ObexSession *q, const QString &path);
 
     void init();
+    void getPropertiesFinished(QDBusPendingCallWatcher *watcher);
 
     ObexSession *q;
     BluezSession *m_bluezSession;
