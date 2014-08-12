@@ -48,35 +48,37 @@ void AdapterPrivate::load()
 
     const QDBusPendingReply<QVariantMap> &call = m_dbusProperties->GetAll(QStringLiteral("org.bluez.Adapter1"));
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, this);
+    connect(watcher, &QDBusPendingCallWatcher::finished, this, &AdapterPrivate::getPropertiesFinished);
+}
 
-    connect(watcher, &QDBusPendingCallWatcher::finished, [ this, watcher ]() {
-        const QDBusPendingReply<QVariantMap> &reply = *watcher;
-        watcher->deleteLater();
+void AdapterPrivate::getPropertiesFinished(QDBusPendingCallWatcher *watcher)
+{
+    const QDBusPendingReply<QVariantMap> &reply = *watcher;
+    watcher->deleteLater();
 
-        if (reply.isError()) {
-            Q_EMIT loadError(reply.error().message());
-            return;
-        }
+    if (reply.isError()) {
+        Q_EMIT loadError(reply.error().message());
+        return;
+    }
 
-        const QVariantMap &properties = reply.value();
+    const QVariantMap &properties = reply.value();
 
-        m_address = properties.value(QStringLiteral("Address")).toString();
-        m_name = properties.value(QStringLiteral("Name")).toString();
-        m_alias = properties.value(QStringLiteral("Alias")).toString();
-        m_adapterClass = properties.value(QStringLiteral("Class")).toUInt();
-        m_powered = properties.value(QStringLiteral("Powered")).toBool();
-        m_discoverable = properties.value(QStringLiteral("Discoverable")).toBool();
-        m_discoverableTimeout = properties.value(QStringLiteral("DiscoverableTimeout")).toUInt();
-        m_pairable = properties.value(QStringLiteral("Pairable")).toBool();
-        m_pairableTimeout = properties.value(QStringLiteral("PairableTimeout")).toUInt();
-        m_discovering = properties.value(QStringLiteral("Discovering")).toBool();
-        m_uuids = stringListToUpper(properties.value(QStringLiteral("UUIDs")).toStringList());
-        m_modalias = properties.value(QStringLiteral("Modalias")).toString();
+    m_address = properties.value(QStringLiteral("Address")).toString();
+    m_name = properties.value(QStringLiteral("Name")).toString();
+    m_alias = properties.value(QStringLiteral("Alias")).toString();
+    m_adapterClass = properties.value(QStringLiteral("Class")).toUInt();
+    m_powered = properties.value(QStringLiteral("Powered")).toBool();
+    m_discoverable = properties.value(QStringLiteral("Discoverable")).toBool();
+    m_discoverableTimeout = properties.value(QStringLiteral("DiscoverableTimeout")).toUInt();
+    m_pairable = properties.value(QStringLiteral("Pairable")).toBool();
+    m_pairableTimeout = properties.value(QStringLiteral("PairableTimeout")).toUInt();
+    m_discovering = properties.value(QStringLiteral("Discovering")).toBool();
+    m_uuids = stringListToUpper(properties.value(QStringLiteral("UUIDs")).toStringList());
+    m_modalias = properties.value(QStringLiteral("Modalias")).toString();
 
-        m_loaded = true;
+    m_loaded = true;
 
-        Q_EMIT loaded(this);
-    });
+    Q_EMIT loaded(this);
 }
 
 QDBusPendingReply<> AdapterPrivate::setDBusProperty(const QString &name, const QVariant &value)

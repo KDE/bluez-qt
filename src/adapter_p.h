@@ -27,6 +27,7 @@ public:
     void removeDevice(Device *device);
 
     void load();
+    void getPropertiesFinished(QDBusPendingCallWatcher *watcher);
     QDBusPendingReply<> setDBusProperty(const QString &name, const QVariant &value);
     void propertiesChanged(const QString &interface, const QVariantMap &changed, const QStringList &invalidated);
 
