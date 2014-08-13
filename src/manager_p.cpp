@@ -118,16 +118,9 @@ void ManagerPrivate::getManagedObjectsFinished(QDBusPendingCallWatcher *watcher)
         const QVariantMapMap &interfaces = it.value();
 
         if (interfaces.contains(QStringLiteral("org.bluez.Adapter1"))) {
-            Adapter *adapter = new Adapter(path, this);
-            m_adapters.insert(path, adapter);
-            connect(adapter, &Adapter::poweredChanged, this, &ManagerPrivate::adapterPoweredChanged);
+            addAdapter(path);
         } else if (interfaces.contains(QStringLiteral("org.bluez.Device1"))) {
-            const QString &adapterPath = it.value().value(QStringLiteral("org.bluez.Device1")).value(QStringLiteral("Adapter")).value<QDBusObjectPath>().path();
-            Adapter *adapter = m_adapters.value(adapterPath);
-            Q_ASSERT(adapter);
-            Device *device = new Device(path, adapter, this);
-            adapter->d->addDevice(device);
-            m_devices.insert(path, device);
+            addDevice(path, interfaces.value(QStringLiteral("org.bluez.Device1")).value(QStringLiteral("Adapter")).value<QDBusObjectPath>().path());
         } else if (interfaces.contains(QStringLiteral("org.bluez.AgentManager1"))) {
             m_bluezAgentManager = new BluezAgentManager(QStringLiteral("org.bluez"), path, QDBusConnection::systemBus(), this);
         }
@@ -149,12 +142,14 @@ void ManagerPrivate::clear()
 {
     m_loaded = false;
 
+    // Delete all devices first
     Q_FOREACH (Device *device, m_devices.values()) {
         device->adapter()->d->removeDevice(device);
         device->deleteLater();
     }
     m_devices.clear();
 
+    // Delete all adapters
     for (int i = 0; i < m_adapters.count(); ++i) {
         Adapter *adapter = m_adapters.begin().value();
         m_adapters.remove(m_adapters.begin().key());
@@ -165,6 +160,7 @@ void ManagerPrivate::clear()
         }
     }
 
+    // Delete all other objects
     m_usableAdapter = Q_NULLPTR;
 
     if (m_dbusObjectManager) {
@@ -212,21 +208,9 @@ void ManagerPrivate::interfacesAdded(const QDBusObjectPath &objectPath, const QV
 
     for (it = interfaces.constBegin(); it != interfaces.constEnd(); ++it) {
         if (it.key() == QLatin1String("org.bluez.Adapter1")) {
-            Adapter *adapter = new Adapter(path, this);
-            m_adapters.insert(path, adapter);
-            connect(adapter, &Adapter::poweredChanged, this, &ManagerPrivate::adapterPoweredChanged);
-
-            if (m_adaptersLoaded) {
-                adapter->d->load();
-                connect(adapter->d, &AdapterPrivate::loaded, this, &ManagerPrivate::adapterLoaded);
-            }
+            addAdapter(path);
         } else if (it.key() == QLatin1String("org.bluez.Device1")) {
-            const QString &adapterPath = it.value().value(QStringLiteral("Adapter")).value<QDBusObjectPath>().path();
-            Adapter *adapter = m_adapters.value(adapterPath);
-            Q_ASSERT(adapter);
-            Device *device = new Device(path, adapter, this);
-            adapter->d->addDevice(device);
-            m_devices.insert(path, device);
+            addDevice(path, it.value().value(QStringLiteral("Adapter")).value<QDBusObjectPath>().path());
         }
     }
 }
@@ -237,21 +221,9 @@ void ManagerPrivate::interfacesRemoved(const QDBusObjectPath &objectPath, const 
 
     Q_FOREACH (const QString &interface, interfaces) {
         if (interface == QLatin1String("org.bluez.Adapter1")) {
-            Adapter *adapter = m_adapters.take(path);
-            if (adapter) {
-                Q_EMIT q->adapterRemoved(adapter);
-                adapter->deleteLater();
-                if (m_adapters.isEmpty()) {
-                    Q_EMIT q->allAdaptersRemoved();
-                }
-            }
+            removeAdapter(path);
         } else if (interface == QLatin1String("org.bluez.Device1")) {
-            Device *device = m_devices.take(path);
-            if (device) {
-                device->adapter()->d->removeDevice(device);
-                device->deleteLater();
-                break;
-            }
+            removeDevice(path);
         }
     }
 }
@@ -292,6 +264,53 @@ void ManagerPrivate::adapterPoweredChanged(bool powered)
         m_usableAdapter = adapter;
         Q_EMIT q->usableAdapterChanged(m_usableAdapter);
     }
+}
+
+void ManagerPrivate::addAdapter(const QString &adapterPath)
+{
+    Adapter *adapter = new Adapter(adapterPath, this);
+    m_adapters.insert(adapterPath, adapter);
+    connect(adapter, &Adapter::poweredChanged, this, &ManagerPrivate::adapterPoweredChanged);
+
+    if (m_adaptersLoaded) {
+        adapter->d->load();
+        connect(adapter->d, &AdapterPrivate::loaded, this, &ManagerPrivate::adapterLoaded);
+    }
+}
+
+void ManagerPrivate::addDevice(const QString &devicePath, const QString &adapterPath)
+{
+    Adapter *adapter = m_adapters.value(adapterPath);
+    Q_ASSERT(adapter);
+    Device *device = new Device(devicePath, adapter, this);
+    adapter->d->addDevice(device);
+    m_devices.insert(devicePath, device);
+}
+
+void ManagerPrivate::removeAdapter(const QString &adapterPath)
+{
+    Adapter *adapter = m_adapters.take(adapterPath);
+    if (!adapter) {
+        return;
+    }
+
+    Q_EMIT q->adapterRemoved(adapter);
+    adapter->deleteLater();
+
+    if (m_adapters.isEmpty()) {
+        Q_EMIT q->allAdaptersRemoved();
+    }
+}
+
+void ManagerPrivate::removeDevice(const QString &devicePath)
+{
+    Device *device = m_devices.take(devicePath);
+    if (!device) {
+        return;
+    }
+
+    device->adapter()->d->removeDevice(device);
+    device->deleteLater();
 }
 
 } // namespace QBluez
