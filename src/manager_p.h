@@ -16,6 +16,7 @@ typedef org::bluez::AgentManager1 BluezAgentManager;
 class Manager;
 class Adapter;
 class Device;
+class AdapterPrivate;
 
 class ManagerPrivate : public QObject
 {
@@ -26,14 +27,18 @@ public:
     ~ManagerPrivate();
 
     void init();
+    void nameHasOwnerFinished(QDBusPendingCallWatcher *watcher);
     void load();
+    void getManagedObjectsFinished(QDBusPendingCallWatcher *watcher);
     void clear();
 
     Adapter *findUsableAdapter() const;
 
-    // slots
+    void serviceRegistered();
+    void serviceUnregistered();
     void interfacesAdded(const QDBusObjectPath &objectPath, const QVariantMapMap &interfaces);
     void interfacesRemoved(const QDBusObjectPath &objectPath, const QStringList &interfaces);
+    void adapterLoaded(AdapterPrivate *adapter);
 
     void adapterRemoved(Adapter *adapter);
     void adapterPoweredChanged(bool powered);

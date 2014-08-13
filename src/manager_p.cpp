@@ -41,49 +41,44 @@ void ManagerPrivate::init()
     QDBusServiceWatcher *serviceWatcher = new QDBusServiceWatcher(QStringLiteral("org.bluez"), QDBusConnection::systemBus(),
             QDBusServiceWatcher::WatchForRegistration | QDBusServiceWatcher::WatchForUnregistration, this);
 
-    connect(serviceWatcher, &QDBusServiceWatcher::serviceRegistered, [ this ]() {
-        qCDebug(QBLUEZ) << "Bluez service registered";
-        m_bluezRunning = true;
-        load();
-    });
-
-    connect(serviceWatcher, &QDBusServiceWatcher::serviceUnregistered, [ this ]() {
-        qCDebug(QBLUEZ) << "Bluez service unregistered";
-        m_bluezRunning = false;
-        clear();
-        Q_EMIT q->operationalChanged(false);
-    });
+    connect(serviceWatcher, &QDBusServiceWatcher::serviceRegistered, this, &ManagerPrivate::serviceRegistered);
+    connect(serviceWatcher, &QDBusServiceWatcher::serviceUnregistered, this, &ManagerPrivate::serviceUnregistered);
 
     // Update the current state of bluez service
-    if (QDBusConnection::systemBus().isConnected()) {
-        QDBusMessage call = QDBusMessage::createMethodCall(QStringLiteral("org.freedesktop.DBus"),
-                            QStringLiteral("/"),
-                            QStringLiteral("org.freedesktop.DBus"),
-                            QStringLiteral("NameHasOwner"));
-        QList<QVariant> args;
-        args.append(QStringLiteral("org.bluez"));
-        call.setArguments(args);
-
-        QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(QDBusConnection::systemBus().asyncCall(call));
-
-        connect(watcher, &QDBusPendingCallWatcher::finished, [ this, watcher ]() {
-            const QDBusPendingReply<bool> &reply = *watcher;
-            watcher->deleteLater();
-
-            if (reply.isError()) {
-                Q_EMIT initError(reply.error().message());
-            } else {
-                m_initialized = true;
-                m_bluezRunning = reply.isValid() && reply.value();
-                if (m_bluezRunning) {
-                    load();
-                } else {
-                    Q_EMIT initFinished();
-                }
-            }
-        });
-    } else {
+    if (!QDBusConnection::systemBus().isConnected()) {
         Q_EMIT initError(QStringLiteral("DBus system bus is not connected!"));
+        return;
+    }
+
+    QDBusMessage call = QDBusMessage::createMethodCall(QStringLiteral("org.freedesktop.DBus"),
+                        QStringLiteral("/"),
+                        QStringLiteral("org.freedesktop.DBus"),
+                        QStringLiteral("NameHasOwner"));
+    QList<QVariant> args;
+    args.append(QStringLiteral("org.bluez"));
+    call.setArguments(args);
+
+    QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(QDBusConnection::systemBus().asyncCall(call));
+    connect(watcher, &QDBusPendingCallWatcher::finished, this, &ManagerPrivate::nameHasOwnerFinished);
+}
+
+void ManagerPrivate::nameHasOwnerFinished(QDBusPendingCallWatcher *watcher)
+{
+    const QDBusPendingReply<bool> &reply = *watcher;
+    watcher->deleteLater();
+
+    if (reply.isError()) {
+        Q_EMIT initError(reply.error().message());
+        return;
+    }
+
+    m_initialized = true;
+    m_bluezRunning = reply.value();
+
+    if (m_bluezRunning) {
+        load();
+    } else {
+        Q_EMIT initFinished();
     }
 }
 
@@ -102,49 +97,52 @@ void ManagerPrivate::load()
             this, &ManagerPrivate::interfacesRemoved);
 
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(m_dbusObjectManager->GetManagedObjects(), this);
+    connect(watcher, &QDBusPendingCallWatcher::finished, this, &ManagerPrivate::getManagedObjectsFinished);
+}
 
-    connect(watcher, &QDBusPendingCallWatcher::finished, [ this, watcher ]() {
-        const QDBusPendingReply<DBusManagerStruct> &reply = *watcher;
-        watcher->deleteLater();
+void ManagerPrivate::getManagedObjectsFinished(QDBusPendingCallWatcher *watcher)
+{
+    const QDBusPendingReply<DBusManagerStruct> &reply = *watcher;
+    watcher->deleteLater();
 
-        if (reply.isError()) {
-            Q_EMIT initError(reply.error().message());
-        } else {
-            DBusManagerStruct::const_iterator it;
-            const DBusManagerStruct &managedObjects = reply.value();
+    if (reply.isError()) {
+        Q_EMIT initError(reply.error().message());
+        return;
+    }
 
-            for (it = managedObjects.constBegin(); it != managedObjects.constEnd(); ++it) {
-                const QString &path = it.key().path();
-                const QVariantMapMap &interfaces = it.value();
+    DBusManagerStruct::const_iterator it;
+    const DBusManagerStruct &managedObjects = reply.value();
 
-                if (interfaces.contains(QStringLiteral("org.bluez.Adapter1"))) {
-                    Adapter *adapter = new Adapter(path, this);
-                    m_adapters.insert(path, adapter);
-                    connect(adapter, &Adapter::poweredChanged, this, &ManagerPrivate::adapterPoweredChanged);
-                } else if (interfaces.contains(QStringLiteral("org.bluez.Device1"))) {
-                    const QString &adapterPath = it.value().value(QStringLiteral("org.bluez.Device1")).value(QStringLiteral("Adapter")).value<QDBusObjectPath>().path();
-                    Adapter *adapter = m_adapters.value(adapterPath);
-                    Q_ASSERT(adapter);
-                    Device *device = new Device(path, adapter, this);
-                    adapter->d->addDevice(device);
-                    m_devices.insert(path, device);
-                } else if (interfaces.contains(QStringLiteral("org.bluez.AgentManager1"))) {
-                    m_bluezAgentManager = new BluezAgentManager(QStringLiteral("org.bluez"), path, QDBusConnection::systemBus(), this);
-                }
-            }
+    for (it = managedObjects.constBegin(); it != managedObjects.constEnd(); ++it) {
+        const QString &path = it.key().path();
+        const QVariantMapMap &interfaces = it.value();
 
-            Q_ASSERT(m_bluezAgentManager);
-
-            if (!m_bluezAgentManager) {
-                Q_EMIT initError(QStringLiteral("Cannot find org.bluez.AgentManager1 object!"));
-                return;
-            }
-
-            m_loaded = true;
-            Q_EMIT initFinished();
-            Q_EMIT q->operationalChanged(true);
+        if (interfaces.contains(QStringLiteral("org.bluez.Adapter1"))) {
+            Adapter *adapter = new Adapter(path, this);
+            m_adapters.insert(path, adapter);
+            connect(adapter, &Adapter::poweredChanged, this, &ManagerPrivate::adapterPoweredChanged);
+        } else if (interfaces.contains(QStringLiteral("org.bluez.Device1"))) {
+            const QString &adapterPath = it.value().value(QStringLiteral("org.bluez.Device1")).value(QStringLiteral("Adapter")).value<QDBusObjectPath>().path();
+            Adapter *adapter = m_adapters.value(adapterPath);
+            Q_ASSERT(adapter);
+            Device *device = new Device(path, adapter, this);
+            adapter->d->addDevice(device);
+            m_devices.insert(path, device);
+        } else if (interfaces.contains(QStringLiteral("org.bluez.AgentManager1"))) {
+            m_bluezAgentManager = new BluezAgentManager(QStringLiteral("org.bluez"), path, QDBusConnection::systemBus(), this);
         }
-    });
+    }
+
+    Q_ASSERT(m_bluezAgentManager);
+
+    if (!m_bluezAgentManager) {
+        Q_EMIT initError(QStringLiteral("Cannot find org.bluez.AgentManager1 object!"));
+        return;
+    }
+
+    m_loaded = true;
+    Q_EMIT initFinished();
+    Q_EMIT q->operationalChanged(true);
 }
 
 void ManagerPrivate::clear()
@@ -190,6 +188,23 @@ Adapter *ManagerPrivate::findUsableAdapter() const
     return Q_NULLPTR;
 }
 
+void ManagerPrivate::serviceRegistered()
+{
+    qCDebug(QBLUEZ) << "Bluez service registered";
+    m_bluezRunning = true;
+
+    load();
+}
+
+void ManagerPrivate::serviceUnregistered()
+{
+    qCDebug(QBLUEZ) << "Bluez service unregistered";
+    m_bluezRunning = false;
+
+    clear();
+    Q_EMIT q->operationalChanged(false);
+}
+
 void ManagerPrivate::interfacesAdded(const QDBusObjectPath &objectPath, const QVariantMapMap &interfaces)
 {
     const QString &path = objectPath.path();
@@ -203,13 +218,7 @@ void ManagerPrivate::interfacesAdded(const QDBusObjectPath &objectPath, const QV
 
             if (m_adaptersLoaded) {
                 adapter->d->load();
-                connect(adapter->d, &AdapterPrivate::loaded, [ this, adapter ]() {
-                    Q_EMIT q->adapterAdded(adapter);
-                    if (!m_usableAdapter && adapter->isPowered()) {
-                        m_usableAdapter = adapter;
-                        Q_EMIT q->usableAdapterChanged(m_usableAdapter);
-                    }
-                });
+                connect(adapter->d, &AdapterPrivate::loaded, this, &ManagerPrivate::adapterLoaded);
             }
         } else if (it.key() == QLatin1String("org.bluez.Device1")) {
             const QString &adapterPath = it.value().value(QStringLiteral("Adapter")).value<QDBusObjectPath>().path();
@@ -244,6 +253,16 @@ void ManagerPrivate::interfacesRemoved(const QDBusObjectPath &objectPath, const 
                 break;
             }
         }
+    }
+}
+
+void ManagerPrivate::adapterLoaded(AdapterPrivate *adapter)
+{
+    Q_EMIT q->adapterAdded(adapter->q);
+
+    if (!m_usableAdapter && adapter->q->isPowered()) {
+        m_usableAdapter = adapter->q;
+        Q_EMIT q->usableAdapterChanged(m_usableAdapter);
     }
 }
 
