@@ -41,51 +41,44 @@ void ObexManagerPrivate::init()
     QDBusServiceWatcher *serviceWatcher = new QDBusServiceWatcher(QStringLiteral("org.bluez.obex"), QDBusConnection::sessionBus(),
             QDBusServiceWatcher::WatchForRegistration | QDBusServiceWatcher::WatchForUnregistration, this);
 
-    connect(serviceWatcher, &QDBusServiceWatcher::serviceRegistered, [ this ]() {
-        qCDebug(QBLUEZ) << "Obex service registered";
-        m_obexRunning = true;
-        // Client1 and AgentManager1 objects are not ready by the time org.bluez.obex is registered
-        // nor will the ObjectManager emits interfacesAdded for adding them...
-        m_timer->start();
-    });
-
-    connect(serviceWatcher, &QDBusServiceWatcher::serviceUnregistered, [ this ]() {
-        qCDebug(QBLUEZ) << "Obex service unregistered";
-        m_obexRunning = false;
-        clear();
-        Q_EMIT q->operationalChanged(false);
-    });
+    connect(serviceWatcher, &QDBusServiceWatcher::serviceRegistered, this, &ObexManagerPrivate::serviceRegistered);
+    connect(serviceWatcher, &QDBusServiceWatcher::serviceUnregistered, this, &ObexManagerPrivate::serviceUnregistered);
 
     // Update the current state of bluez.obex service
-    if (QDBusConnection::sessionBus().isConnected()) {
-        QDBusMessage call = QDBusMessage::createMethodCall(QStringLiteral("org.freedesktop.DBus"),
-                            QStringLiteral("/"),
-                            QStringLiteral("org.freedesktop.DBus"),
-                            QStringLiteral("NameHasOwner"));
-        QList<QVariant> args;
-        args.append(QStringLiteral("org.bluez.obex"));
-        call.setArguments(args);
-
-        QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(QDBusConnection::sessionBus().asyncCall(call));
-
-        connect(watcher, &QDBusPendingCallWatcher::finished, [ this, watcher ]() {
-            const QDBusPendingReply<bool> &reply = *watcher;
-            watcher->deleteLater();
-
-            if (reply.isError()) {
-                Q_EMIT initError(reply.error().message());
-            } else {
-                m_initialized = true;
-                m_obexRunning = reply.isValid() && reply.value();
-                if (m_obexRunning) {
-                    load();
-                } else {
-                    Q_EMIT initFinished();
-                }
-            }
-        });
-    } else {
+    if (!QDBusConnection::sessionBus().isConnected()) {
         Q_EMIT initError(QStringLiteral("DBus session bus is not connected!"));
+        return;
+    }
+
+    QDBusMessage call = QDBusMessage::createMethodCall(QStringLiteral("org.freedesktop.DBus"),
+                        QStringLiteral("/"),
+                        QStringLiteral("org.freedesktop.DBus"),
+                        QStringLiteral("NameHasOwner"));
+    QList<QVariant> args;
+    args.append(QStringLiteral("org.bluez.obex"));
+    call.setArguments(args);
+
+    QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(QDBusConnection::sessionBus().asyncCall(call));
+    connect(watcher, &QDBusPendingCallWatcher::finished, this, &ObexManagerPrivate::nameHasOwnerFinished);
+}
+
+void ObexManagerPrivate::nameHasOwnerFinished(QDBusPendingCallWatcher *watcher)
+{
+    const QDBusPendingReply<bool> &reply = *watcher;
+    watcher->deleteLater();
+
+    if (reply.isError()) {
+        Q_EMIT initError(reply.error().message());
+        return;
+    }
+
+    m_initialized = true;
+    m_obexRunning = reply.value();
+
+    if (m_obexRunning) {
+        load();
+    } else {
+        Q_EMIT initFinished();
     }
 }
 
@@ -101,54 +94,51 @@ void ObexManagerPrivate::load()
     connect(m_dbusObjectManager, &DBusObjectManager::InterfacesRemoved,
             this, &ObexManagerPrivate::interfacesRemoved);
 
-    DBusObjectManager objectManager(QStringLiteral("org.bluez.obex"), QStringLiteral("/"),
-            QDBusConnection::sessionBus());
+    QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(m_dbusObjectManager->GetManagedObjects(), this);
+    connect(watcher, &QDBusPendingCallWatcher::finished, this, &ObexManagerPrivate::getManagedObjectsFinished);
+}
 
-    QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(objectManager.GetManagedObjects(), this);
+void ObexManagerPrivate::getManagedObjectsFinished(QDBusPendingCallWatcher *watcher)
+{
+    const QDBusPendingReply<DBusManagerStruct> &reply = *watcher;
+    watcher->deleteLater();
 
-    connect(watcher, &QDBusPendingCallWatcher::finished, [ this, watcher ]() {
-        const QDBusPendingReply<DBusManagerStruct> &reply = *watcher;
-        watcher->deleteLater();
+    if (reply.isError()) {
+        Q_EMIT initError(reply.error().message());
+        return;
+    }
 
-        if (reply.isError()) {
-            Q_EMIT initError(reply.error().message());
-        } else {
-            DBusManagerStruct::const_iterator it;
-            const DBusManagerStruct &managedObjects = reply.value();
+    DBusManagerStruct::const_iterator it;
+    const DBusManagerStruct &managedObjects = reply.value();
 
-            for (it = managedObjects.constBegin(); it != managedObjects.constEnd(); ++it) {
-                const QString &path = it.key().path();
-                const QVariantMapMap &interfaces = it.value();
+    for (it = managedObjects.constBegin(); it != managedObjects.constEnd(); ++it) {
+        const QString &path = it.key().path();
+        const QVariantMapMap &interfaces = it.value();
 
-                if (interfaces.contains(QStringLiteral("org.bluez.obex.Client1"))) {
-                    m_obexClient = new ObexClient(QStringLiteral("org.bluez.obex"), path, QDBusConnection::sessionBus(), this);
-                }
-                if (interfaces.contains(QStringLiteral("org.bluez.obex.AgentManager1"))) {
-                    m_obexAgentManager = new ObexAgentManager(QStringLiteral("org.bluez.obex"), path, QDBusConnection::sessionBus(), this);
-                }
-            }
-
-            Q_ASSERT(m_obexClient);
-            Q_ASSERT(m_obexAgentManager);
-
-            if (!m_obexClient) {
-                Q_EMIT initError(QStringLiteral("Cannot find org.bluez.obex.Client1 object!"));
-                return;
-            }
-
-            if (!m_obexAgentManager) {
-                Q_EMIT initError(QStringLiteral("Cannot find org.bluez.obex.AgentManager1 object!"));
-                return;
-            }
-
-            m_loaded = true;
-            Q_EMIT initFinished();
-
-            if (m_obexClient && m_obexAgentManager) {
-                Q_EMIT q->operationalChanged(true);
-            }
+        if (interfaces.contains(QStringLiteral("org.bluez.obex.Client1"))) {
+            m_obexClient = new ObexClient(QStringLiteral("org.bluez.obex"), path, QDBusConnection::sessionBus(), this);
         }
-    });
+        if (interfaces.contains(QStringLiteral("org.bluez.obex.AgentManager1"))) {
+            m_obexAgentManager = new ObexAgentManager(QStringLiteral("org.bluez.obex"), path, QDBusConnection::sessionBus(), this);
+        }
+    }
+
+    Q_ASSERT(m_obexClient);
+    Q_ASSERT(m_obexAgentManager);
+
+    if (!m_obexClient) {
+        Q_EMIT initError(QStringLiteral("Cannot find org.bluez.obex.Client1 object!"));
+        return;
+    }
+
+    if (!m_obexAgentManager) {
+        Q_EMIT initError(QStringLiteral("Cannot find org.bluez.obex.AgentManager1 object!"));
+        return;
+    }
+
+    m_loaded = true;
+    Q_EMIT initFinished();
+    Q_EMIT q->operationalChanged(true);
 }
 
 void ObexManagerPrivate::clear()
@@ -169,6 +159,26 @@ void ObexManagerPrivate::clear()
         m_dbusObjectManager->deleteLater();
         m_dbusObjectManager = Q_NULLPTR;
     }
+}
+
+void ObexManagerPrivate::serviceRegistered()
+{
+    qCDebug(QBLUEZ) << "Obex service registered";
+    m_obexRunning = true;
+
+    // Client1 and AgentManager1 objects are not ready by the time org.bluez.obex is registered
+    // nor will the ObjectManager emits interfacesAdded for adding them...
+    // So we delay the call to load() by 0.5s
+    m_timer->start();
+}
+
+void ObexManagerPrivate::serviceUnregistered()
+{
+    qCDebug(QBLUEZ) << "Obex service unregistered";
+    m_obexRunning = false;
+
+    clear();
+    Q_EMIT q->operationalChanged(false);
 }
 
 void ObexManagerPrivate::interfacesRemoved(const QDBusObjectPath &objectPath, const QStringList &interfaces)

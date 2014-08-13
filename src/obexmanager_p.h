@@ -26,9 +26,13 @@ public:
     ~ObexManagerPrivate();
 
     void init();
+    void nameHasOwnerFinished(QDBusPendingCallWatcher *watcher);
     void load();
+    void getManagedObjectsFinished(QDBusPendingCallWatcher *watcher);
     void clear();
 
+    void serviceRegistered();
+    void serviceUnregistered();
     void interfacesRemoved(const QDBusObjectPath &objectPath, const QStringList &interfaces);
 
     ObexManager *q;
