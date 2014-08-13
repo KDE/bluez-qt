@@ -236,7 +236,9 @@ void AdapterTest::discoveryTest()
         // Make sure the Adapter is powered on and not discovering
         bool wasPowered = unit.adapter->isPowered();
         unit.adapter->setPowered(true)->waitForFinished();
-        unit.adapter->stopDiscovery()->waitForFinished();
+        if (unit.adapter->isDiscovering()) {
+            unit.adapter->stopDiscovery()->waitForFinished();
+        }
 
         QSignalSpy adapterSpy(unit.adapter, SIGNAL(discoveringChanged(bool)));
         QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString,QVariantMap,QStringList)));
