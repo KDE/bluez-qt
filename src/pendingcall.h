@@ -73,19 +73,6 @@ private:
     explicit PendingCall(const QDBusPendingCall &call, ReturnType type, QObject *parent = 0);
     explicit PendingCall(Error error, const QString &errorText, QObject *parent = 0);
 
-    bool processReply(QDBusPendingCallWatcher *call);
-    bool processVoidReply(const QDBusPendingReply<> &reply);
-    bool processStringReply(const QDBusPendingReply<QString> &reply);
-    bool processObjectPathReply(const QDBusPendingReply<QDBusObjectPath> &reply);
-    bool processFileTransferListReply(const QDBusPendingReply<QVariantMapList> &reply);
-    bool processTransferWithPropertiesReply(const QDBusPendingReply<QDBusObjectPath, QVariantMap> &reply);
-    void processError(const QDBusError &error);
-
-    void emitFinished();
-    void emitDelayedFinished();
-    void emitInternalError(const QString &errorText);
-    void pendingCallFinished(QDBusPendingCallWatcher *watcher);
-
     class PendingCallPrivate *const d;
 
     friend class PendingCallPrivate;
