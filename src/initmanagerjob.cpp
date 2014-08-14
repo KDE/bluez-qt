@@ -82,6 +82,13 @@ InitManagerJob::InitManagerJob(Manager *manager, Manager::InitType initType)
 
 InitManagerJob::~InitManagerJob()
 {
+    if (isRunning()) {
+        qCWarning(QBLUEZ) << "InitManagerJob Error: Job was deleted before finished!";
+
+        setError(UserDefinedError);
+        setErrorText(QStringLiteral("Job was deleted before finished."));
+        emitResult();
+    }
     delete d;
 }
 

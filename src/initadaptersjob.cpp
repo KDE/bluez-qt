@@ -78,6 +78,13 @@ InitAdaptersJob::InitAdaptersJob(ManagerPrivate *manager, QObject *parent)
 
 InitAdaptersJob::~InitAdaptersJob()
 {
+    if (isRunning()) {
+        qCWarning(QBLUEZ) << "InitAdaptersJob Error: Job was deleted before finished!";
+
+        setError(UserDefinedError);
+        setErrorText(QStringLiteral("Job was deleted before finished."));
+        emitResult();
+    }
     delete d;
 }
 

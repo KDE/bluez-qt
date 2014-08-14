@@ -18,4 +18,5 @@ endmacro()
 qbluez_tests(
     adapter
     device
+    jobs
 )

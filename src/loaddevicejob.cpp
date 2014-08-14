@@ -62,6 +62,13 @@ LoadDeviceJob::LoadDeviceJob(DevicePrivate *device, QObject *parent)
 
 LoadDeviceJob::~LoadDeviceJob()
 {
+    if (isRunning()) {
+        qCWarning(QBLUEZ) << "LoadDeviceJob Error: Job was deleted before finished!";
+
+        setError(LoadDeviceJob::UserDefinedError);
+        setErrorText(QStringLiteral("Job was deleted before finished."));
+        emitResult();
+    }
     delete d;
 }
 

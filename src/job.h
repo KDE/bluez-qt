@@ -53,6 +53,8 @@ class QBLUEZ_EXPORT Job : public QObject
     Q_ENUMS(Error)
     Q_PROPERTY(int error READ error)
     Q_PROPERTY(QString errorText READ errorText)
+    Q_PROPERTY(bool running READ isRunning)
+    Q_PROPERTY(bool finished READ isFinished)
 
 public:
     explicit Job(QObject *parent = 0);
@@ -107,6 +109,20 @@ public:
      */
     QString errorText() const;
 
+    /**
+     * Returns whether the job is currently running
+     *
+     * @return true if the job is running
+     */
+    bool isRunning() const;
+
+    /**
+     * Returns whether the job have already finished
+     *
+     * @return true if the job already finished
+     */
+    bool isFinished() const;
+
 public Q_SLOTS:
     /**
      * Starts the job asynchronously.
@@ -117,6 +133,16 @@ public Q_SLOTS:
      * When the job is finished, result() is emitted.
      */
     void start();
+
+    /**
+     * Kills the job.
+     *
+     * This method will kill the job and then call deleteLater().
+     * Only jobs started with start() can be killed.
+     *
+     * It will not emit result signal.
+     */
+    void kill();
 
 private Q_SLOTS:
     /**

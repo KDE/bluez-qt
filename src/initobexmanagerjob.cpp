@@ -64,6 +64,13 @@ InitObexManagerJob::InitObexManagerJob(ObexManager *manager)
 
 InitObexManagerJob::~InitObexManagerJob()
 {
+    if (isRunning()) {
+        qCWarning(QBLUEZ) << "InitObexManagerJob Error: Job was deleted before finished!";
+
+        setError(UserDefinedError);
+        setErrorText(QStringLiteral("Job was deleted before finished."));
+        emitResult();
+    }
     delete d;
 }
 

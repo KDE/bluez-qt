@@ -30,6 +30,9 @@ JobPrivate::JobPrivate()
 {
     eventLoop = Q_NULLPTR;
     error = Job::NoError;
+    running = false;
+    finished = false;
+    killed = false;
 }
 
 Job::Job(QObject *parent) : QObject(parent), d_ptr(new JobPrivate)
@@ -44,16 +47,35 @@ Job::~Job()
 
 void Job::start()
 {
+    d_func()->running = true;
     QMetaObject::invokeMethod(this, "doStart", Qt::QueuedConnection);
+}
+
+void Job::kill()
+{
+    Q_D(Job);
+    Q_ASSERT(!d->eventLoop);
+
+    d->running = false;
+    d->finished = true;
+    d->killed = true;
+    deleteLater();
 }
 
 void Job::emitResult()
 {
     Q_D(Job);
+
+    if (d->killed) {
+        return;
+    }
+
     if (d->eventLoop) {
         d->eventLoop->quit();
     }
 
+    d->running = false;
+    d->finished = true;
     doEmitResult();
     deleteLater();
 }
@@ -66,6 +88,16 @@ int Job::error() const
 QString Job::errorText() const
 {
     return d_func()->errorText;
+}
+
+bool Job::isRunning() const
+{
+    return d_func()->running;
+}
+
+bool Job::isFinished() const
+{
+    return d_func()->finished;
 }
 
 void Job::setError(int errorCode)
@@ -89,6 +121,8 @@ bool Job::exec()
 
     start();
     d->eventLoop->exec(QEventLoop::ExcludeUserInputEvents);
+    d->running = false;
+    d->finished = true;
 
     return (d->error == NoError);
 }

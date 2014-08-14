@@ -35,6 +35,9 @@ public:
     Job *q_ptr;
     int error;
     QString errorText;
+    bool running;
+    bool finished;
+    bool killed;
     QEventLoop *eventLoop;
     Q_DECLARE_PUBLIC(Job)
 };
