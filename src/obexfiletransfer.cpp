@@ -1,5 +1,6 @@
 #include "obexfiletransfer.h"
 #include "pendingcall.h"
+#include "utils_p.h"
 
 #include "obexfiletransfer1.h"
 
@@ -19,7 +20,7 @@ ObexFileTransfer::ObexFileTransfer(const QDBusObjectPath &path, QObject *parent)
     : QObject(parent)
     , d(new ObexFileTransferPrivate)
 {
-    d->m_bluezFileTransfer = new BluezFileTransfer(QStringLiteral("org.bluez.obex"), path.path(),
+    d->m_bluezFileTransfer = new BluezFileTransfer(Strings::orgBluezObex(), path.path(),
                                                    QDBusConnection::sessionBus(), this);
 }
 

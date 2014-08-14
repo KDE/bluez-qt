@@ -21,20 +21,19 @@ DevicePrivate::DevicePrivate(const QString &path, Adapter *adapter, Device *pare
     , m_connected(false)
     , m_adapter(adapter)
 {
-    m_bluezDevice = new BluezDevice(QStringLiteral("org.bluez"), path,
-                                    QDBusConnection::systemBus(), this);
+    m_bluezDevice = new BluezDevice(Strings::orgBluez(), path, QDBusConnection::systemBus(), this);
 }
 
 void DevicePrivate::load()
 {
-    m_dbusProperties = new DBusProperties(QStringLiteral("org.bluez"), m_bluezDevice->path(),
+    m_dbusProperties = new DBusProperties(Strings::orgBluez(), m_bluezDevice->path(),
                                           QDBusConnection::systemBus(), this);
 
     // QueuedConnection is important here - see AdapterPrivate::initProperties
     connect(m_dbusProperties, &DBusProperties::PropertiesChanged,
             this, &DevicePrivate::propertiesChanged, Qt::QueuedConnection);
 
-    const QDBusPendingReply<QVariantMap> &call = m_dbusProperties->GetAll(QStringLiteral("org.bluez.Device1"));
+    const QDBusPendingReply<QVariantMap> &call = m_dbusProperties->GetAll(Strings::orgBluezDevice1());
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, this);
     connect(watcher, &QDBusPendingCallWatcher::finished, this, &DevicePrivate::getPropertiesFinished);
 }
@@ -73,7 +72,7 @@ void DevicePrivate::getPropertiesFinished(QDBusPendingCallWatcher *watcher)
 
 QDBusPendingReply<> DevicePrivate::setDBusProperty(const QString &name, const QVariant &value)
 {
-    return m_dbusProperties->Set(QStringLiteral("org.bluez.Device1"), name, QDBusVariant(value));
+    return m_dbusProperties->Set(Strings::orgBluezDevice1(), name, QDBusVariant(value));
 }
 
 // Make sure not to emit propertyChanged signal when the property already contains changed value

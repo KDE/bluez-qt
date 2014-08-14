@@ -1,5 +1,6 @@
 #include "obexobjectpush.h"
 #include "pendingcall.h"
+#include "utils_p.h"
 
 #include "obexobjectpush1.h"
 
@@ -19,7 +20,7 @@ ObexObjectPush::ObexObjectPush(const QDBusObjectPath &path, QObject *parent)
     : QObject(parent)
     , d(new ObexObjectPushPrivate)
 {
-    d->m_bluezObjectPush = new BluezObjectPush(QStringLiteral("org.bluez.obex"),
+    d->m_bluezObjectPush = new BluezObjectPush(Strings::orgBluezObex(),
                                                path.path(), QDBusConnection::sessionBus(), this);
 }
 

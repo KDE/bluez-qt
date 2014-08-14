@@ -4,6 +4,7 @@
 #include "adapter.h"
 #include "adapter_p.h"
 #include "debug_p.h"
+#include "utils_p.h"
 
 #include <QDBusReply>
 #include <QDBusConnection>
@@ -38,7 +39,7 @@ ManagerPrivate::~ManagerPrivate()
 void ManagerPrivate::init()
 {
     // Keep an eye on bluez service
-    QDBusServiceWatcher *serviceWatcher = new QDBusServiceWatcher(QStringLiteral("org.bluez"), QDBusConnection::systemBus(),
+    QDBusServiceWatcher *serviceWatcher = new QDBusServiceWatcher(Strings::orgBluez(), QDBusConnection::systemBus(),
             QDBusServiceWatcher::WatchForRegistration | QDBusServiceWatcher::WatchForUnregistration, this);
 
     connect(serviceWatcher, &QDBusServiceWatcher::serviceRegistered, this, &ManagerPrivate::serviceRegistered);
@@ -50,12 +51,12 @@ void ManagerPrivate::init()
         return;
     }
 
-    QDBusMessage call = QDBusMessage::createMethodCall(QStringLiteral("org.freedesktop.DBus"),
+    QDBusMessage call = QDBusMessage::createMethodCall(Strings::orgFreedesktopDBus(),
                         QStringLiteral("/"),
-                        QStringLiteral("org.freedesktop.DBus"),
+                        Strings::orgFreedesktopDBus(),
                         QStringLiteral("NameHasOwner"));
     QList<QVariant> args;
-    args.append(QStringLiteral("org.bluez"));
+    args.append(Strings::orgBluez());
     call.setArguments(args);
 
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(QDBusConnection::systemBus().asyncCall(call));
@@ -88,7 +89,7 @@ void ManagerPrivate::load()
         return;
     }
 
-    m_dbusObjectManager = new DBusObjectManager(QStringLiteral("org.bluez"), QStringLiteral("/"),
+    m_dbusObjectManager = new DBusObjectManager(Strings::orgBluez(), QStringLiteral("/"),
             QDBusConnection::systemBus(), this);
 
     connect(m_dbusObjectManager, &DBusObjectManager::InterfacesAdded,
@@ -117,12 +118,12 @@ void ManagerPrivate::getManagedObjectsFinished(QDBusPendingCallWatcher *watcher)
         const QString &path = it.key().path();
         const QVariantMapMap &interfaces = it.value();
 
-        if (interfaces.contains(QStringLiteral("org.bluez.Adapter1"))) {
+        if (interfaces.contains(Strings::orgBluezAdapter1())) {
             addAdapter(path);
-        } else if (interfaces.contains(QStringLiteral("org.bluez.Device1"))) {
-            addDevice(path, interfaces.value(QStringLiteral("org.bluez.Device1")).value(QStringLiteral("Adapter")).value<QDBusObjectPath>().path());
-        } else if (interfaces.contains(QStringLiteral("org.bluez.AgentManager1"))) {
-            m_bluezAgentManager = new BluezAgentManager(QStringLiteral("org.bluez"), path, QDBusConnection::systemBus(), this);
+        } else if (interfaces.contains(Strings::orgBluezDevice1())) {
+            addDevice(path, interfaces.value(Strings::orgBluezDevice1()).value(QStringLiteral("Adapter")).value<QDBusObjectPath>().path());
+        } else if (interfaces.contains(Strings::orgBluezAgentManager1())) {
+            m_bluezAgentManager = new BluezAgentManager(Strings::orgBluez(), path, QDBusConnection::systemBus(), this);
         }
     }
 
@@ -207,9 +208,9 @@ void ManagerPrivate::interfacesAdded(const QDBusObjectPath &objectPath, const QV
     QVariantMapMap::const_iterator it;
 
     for (it = interfaces.constBegin(); it != interfaces.constEnd(); ++it) {
-        if (it.key() == QLatin1String("org.bluez.Adapter1")) {
+        if (it.key() == Strings::orgBluezAdapter1()) {
             addAdapter(path);
-        } else if (it.key() == QLatin1String("org.bluez.Device1")) {
+        } else if (it.key() == Strings::orgBluezDevice1()) {
             addDevice(path, it.value().value(QStringLiteral("Adapter")).value<QDBusObjectPath>().path());
         }
     }
@@ -220,9 +221,9 @@ void ManagerPrivate::interfacesRemoved(const QDBusObjectPath &objectPath, const 
     const QString &path = objectPath.path();
 
     Q_FOREACH (const QString &interface, interfaces) {
-        if (interface == QLatin1String("org.bluez.Adapter1")) {
+        if (interface == Strings::orgBluezAdapter1()) {
             removeAdapter(path);
-        } else if (interface == QLatin1String("org.bluez.Device1")) {
+        } else if (interface == Strings::orgBluezDevice1()) {
             removeDevice(path);
         }
     }

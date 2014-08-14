@@ -17,8 +17,7 @@ AdapterPrivate::AdapterPrivate(const QString &path, Adapter *parent)
     , m_pairable(false)
     , m_pairableTimeout(0)
 {
-    m_bluezAdapter = new BluezAdapter(QStringLiteral("org.bluez"), path,
-                                      QDBusConnection::systemBus(), this);
+    m_bluezAdapter = new BluezAdapter(Strings::orgBluez(), path, QDBusConnection::systemBus(), this);
 }
 
 void AdapterPrivate::addDevice(Device *device)
@@ -35,7 +34,7 @@ void AdapterPrivate::removeDevice(Device *device)
 
 void AdapterPrivate::load()
 {
-    m_dbusProperties = new DBusProperties(QStringLiteral("org.bluez"), m_bluezAdapter->path(),
+    m_dbusProperties = new DBusProperties(Strings::orgBluez(), m_bluezAdapter->path(),
                                           QDBusConnection::systemBus(), this);
 
     // QueuedConnection is important here to be able to perform actions, that depend on
@@ -46,7 +45,7 @@ void AdapterPrivate::load()
     connect(m_dbusProperties, &DBusProperties::PropertiesChanged,
             this, &AdapterPrivate::propertiesChanged, Qt::QueuedConnection);
 
-    const QDBusPendingReply<QVariantMap> &call = m_dbusProperties->GetAll(QStringLiteral("org.bluez.Adapter1"));
+    const QDBusPendingReply<QVariantMap> &call = m_dbusProperties->GetAll(Strings::orgBluezAdapter1());
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, this);
     connect(watcher, &QDBusPendingCallWatcher::finished, this, &AdapterPrivate::getPropertiesFinished);
 }
@@ -83,7 +82,7 @@ void AdapterPrivate::getPropertiesFinished(QDBusPendingCallWatcher *watcher)
 
 QDBusPendingReply<> AdapterPrivate::setDBusProperty(const QString &name, const QVariant &value)
 {
-    return m_dbusProperties->Set(QStringLiteral("org.bluez.Adapter1"), name, QDBusVariant(value));
+    return m_dbusProperties->Set(Strings::orgBluezAdapter1(), name, QDBusVariant(value));
 }
 
 // Make sure not to emit propertyChanged signal when the property already contains changed value

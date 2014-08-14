@@ -3,6 +3,7 @@
 #include "obexsession.h"
 #include "obexsession_p.h"
 #include "pendingcall.h"
+#include "utils_p.h"
 
 #include "obextransfer1.h"
 #include "dbusproperties.h"
@@ -31,19 +32,18 @@ ObexTransferPrivate::ObexTransferPrivate(ObexTransfer *q, const QString &path)
     , q(q)
     , m_dbusProperties(0)
 {
-    m_bluezTransfer = new BluezTransfer(QStringLiteral("org.bluez.obex"),
-                                        path, QDBusConnection::sessionBus(), this);
+    m_bluezTransfer = new BluezTransfer(Strings::orgBluezObex(), path, QDBusConnection::sessionBus(), this);
 }
 
 void ObexTransferPrivate::init()
 {
-    m_dbusProperties = new DBusProperties(QStringLiteral("org.bluez.obex"), m_bluezTransfer->path(),
+    m_dbusProperties = new DBusProperties(Strings::orgBluezObex(), m_bluezTransfer->path(),
                                           QDBusConnection::sessionBus(), this);
 
     connect(m_dbusProperties, &DBusProperties::PropertiesChanged,
             this, &ObexTransferPrivate::propertiesChanged, Qt::QueuedConnection);
 
-    const QDBusPendingReply<QVariantMap> &call = m_dbusProperties->GetAll(QStringLiteral("org.bluez.obex.Transfer1"));
+    const QDBusPendingReply<QVariantMap> &call = m_dbusProperties->GetAll(Strings::orgBluezObexTransfer1());
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, this);
     connect(watcher, &QDBusPendingCallWatcher::finished, this, &ObexTransferPrivate::getPropertiesFinished);
 }

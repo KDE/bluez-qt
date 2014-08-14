@@ -1,6 +1,7 @@
 #include "obexsession.h"
 #include "obexsession_p.h"
 #include "pendingcall.h"
+#include "utils_p.h"
 
 namespace QBluez
 {
@@ -9,16 +10,16 @@ ObexSessionPrivate::ObexSessionPrivate(ObexSession *q, const QString &path)
     : QObject(q)
     , q(q)
 {
-    m_bluezSession = new BluezSession(QStringLiteral("org.bluez.obex"),
+    m_bluezSession = new BluezSession(Strings::orgBluezObex(),
                                       path, QDBusConnection::sessionBus(), this);
 }
 
 void ObexSessionPrivate::init()
 {
-    DBusProperties dbusProperties(QStringLiteral("org.bluez.obex"), m_bluezSession->path(),
+    DBusProperties dbusProperties(Strings::orgBluezObex(), m_bluezSession->path(),
                                   QDBusConnection::sessionBus(), this);
 
-    const QDBusPendingReply<QVariantMap> &call = dbusProperties.GetAll(QStringLiteral("org.bluez.obex.Session1"));
+    const QDBusPendingReply<QVariantMap> &call = dbusProperties.GetAll(Strings::orgBluezObexSession1());
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, this);
     connect(watcher, &QDBusPendingCallWatcher::finished, this, &ObexSessionPrivate::getPropertiesFinished);
 }
