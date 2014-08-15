@@ -75,8 +75,6 @@ static QList<ObexFileTransfer::Item> toFileTransferList(const QVariantMapList &l
 
 class PendingCallPrivate : public QObject
 {
-    Q_OBJECT
-
 public:
     explicit PendingCallPrivate(PendingCall *parent);
 
@@ -292,5 +290,3 @@ void PendingCall::waitForFinished()
 }
 
 } // namespace QBluez
-
-#include "pendingcall.moc"

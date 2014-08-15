@@ -18,8 +18,6 @@ class Adapter;
 
 class DevicePrivate : public QObject
 {
-    Q_OBJECT
-
 public:
     explicit DevicePrivate(const QString &path, const QVariantMap &properties, Adapter *adapter, Device *parent);
 

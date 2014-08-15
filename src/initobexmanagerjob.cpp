@@ -8,8 +8,6 @@ namespace QBluez
 
 class InitObexManagerJobPrivate : public QObject
 {
-    Q_OBJECT
-
 public:
     explicit InitObexManagerJobPrivate(InitObexManagerJob *q, ObexManager *manager);
 
@@ -90,5 +88,3 @@ void InitObexManagerJob::doEmitResult()
 }
 
 } // namespace QBluez
-
-#include "initobexmanagerjob.moc"

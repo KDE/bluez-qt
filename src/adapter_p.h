@@ -18,8 +18,6 @@ class Adapter;
 
 class AdapterPrivate : public QObject
 {
-    Q_OBJECT
-
 public:
     explicit AdapterPrivate(const QString &path, const QVariantMap &properties, Adapter *parent);
 

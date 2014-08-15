@@ -8,8 +8,6 @@ namespace QBluez
 
 class InitManagerJobPrivate : public QObject
 {
-    Q_OBJECT
-
 public:
     explicit InitManagerJobPrivate(InitManagerJob *q, Manager *manager);
 
@@ -89,5 +87,3 @@ void InitManagerJob::doEmitResult()
 }
 
 } // namespace QBluez
-
-#include "initmanagerjob.moc"
