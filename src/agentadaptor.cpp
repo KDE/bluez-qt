@@ -3,7 +3,7 @@
 #include "manager.h"
 #include "adapter.h"
 #include "device.h"
-#include "loaddevicejob.h"
+#include "request.h"
 
 #include <QDBusConnection>
 #include <QDBusObjectPath>
@@ -15,26 +15,21 @@ AgentAdaptor::AgentAdaptor(Agent *parent, Manager *manager)
     : QDBusAbstractAdaptor(parent)
     , m_agent(parent)
     , m_manager(manager)
-    , m_passKey(0)
-    , m_enteredPassKey(0)
 {
 }
 
 QString AgentAdaptor::RequestPinCode(const QDBusObjectPath &device, const QDBusMessage &msg)
 {
     msg.setDelayedReply(true);
-    m_stringRequest = Request<QString>(OrgBluezAgent, msg);
+    Request<QString> req(OrgBluezAgent, msg);
 
     Device *dev = m_manager->deviceForUbi(device.path());
     if (!dev) {
-        m_stringRequest.cancel();
+        req.cancel();
         return QString();
     }
 
-    LoadDeviceJob *job = dev->load();
-    job->start();
-    connect(job, &LoadDeviceJob::result, this, &AgentAdaptor::finishRequestPinCode);
-
+    m_agent->requestPinCode(dev, req);
     return QString();
 }
 
@@ -45,28 +40,21 @@ void AgentAdaptor::DisplayPinCode(const QDBusObjectPath &device, const QString &
         return;
     }
 
-    m_pinCode = pincode;
-
-    LoadDeviceJob *job = dev->load();
-    job->start();
-    connect(job, &LoadDeviceJob::result, this, &AgentAdaptor::finishDisplayPinCode);
+    m_agent->displayPinCode(dev, pincode);
 }
 
 quint32 AgentAdaptor::RequestPasskey(const QDBusObjectPath &device, const QDBusMessage &msg)
 {
     msg.setDelayedReply(true);
-    m_uintRequest = Request<quint32>(OrgBluezAgent, msg);
+    Request<quint32> req(OrgBluezAgent, msg);
 
     Device *dev = m_manager->deviceForUbi(device.path());
     if (!dev) {
-        m_uintRequest.cancel();
+        req.cancel();
         return 0;
     }
 
-    LoadDeviceJob *job = dev->load();
-    job->start();
-    connect(job, &LoadDeviceJob::result, this, &AgentAdaptor::finishRequestPasskey);
-
+    m_agent->requestPasskey(dev, req);
     return 0;
 }
 
@@ -77,64 +65,49 @@ void AgentAdaptor::DisplayPasskey(const QDBusObjectPath &device, quint32 passkey
         return;
     }
 
-    m_passKey = passkey;
-    m_enteredPassKey = entered;
-
-    LoadDeviceJob *job = dev->load();
-    job->start();
-    connect(job, &LoadDeviceJob::result, this, &AgentAdaptor::finishDisplayPasskey);
+    m_agent->displayPasskey(dev, passkeyToString(passkey), QString::number(entered));
 }
 
 void AgentAdaptor::RequestConfirmation(const QDBusObjectPath &device, quint32 passkey, const QDBusMessage &msg)
 {
     msg.setDelayedReply(true);
-    m_voidRequest = Request<>(OrgBluezAgent, msg);
+    Request<> req(OrgBluezAgent, msg);
 
     Device *dev = m_manager->deviceForUbi(device.path());
     if (!dev) {
-        m_voidRequest.cancel();
+        req.cancel();
         return;
     }
 
-    m_passKey = passkey;
-
-    LoadDeviceJob *job = dev->load();
-    job->start();
-    connect(job, &LoadDeviceJob::result, this, &AgentAdaptor::finishRequestConfirmation);
+    m_agent->requestConfirmation(dev, passkeyToString(passkey), req);
 }
 
 void AgentAdaptor::RequestAuthorization(const QDBusObjectPath &device, const QDBusMessage &msg)
 {
     msg.setDelayedReply(true);
-    m_voidRequest = Request<>(OrgBluezAgent, msg);
+    Request<> req(OrgBluezAgent, msg);
 
     Device *dev = m_manager->deviceForUbi(device.path());
     if (!dev) {
-        m_voidRequest.cancel();
+        req.cancel();
         return;
     }
 
-    LoadDeviceJob *job = dev->load();
-    job->start();
-    connect(job, &LoadDeviceJob::result, this, &AgentAdaptor::finishRequestAuthorization);
+    m_agent->requestAuthorization(dev, req);
 }
 
 void AgentAdaptor::AuthorizeService(const QDBusObjectPath &device, const QString &uuid, const QDBusMessage &msg)
 {
     msg.setDelayedReply(true);
-    m_voidRequest = Request<>(OrgBluezAgent, msg);
+    Request<> req(OrgBluezAgent, msg);
 
     Device *dev = m_manager->deviceForUbi(device.path());
     if (!dev) {
-        m_voidRequest.cancel();
+        req.cancel();
         return;
     }
 
-    m_uuid = uuid;
-
-    LoadDeviceJob *job = dev->load();
-    job->start();
-    connect(job, &LoadDeviceJob::result, this, &AgentAdaptor::finishAuthorizeService);
+    m_agent->authorizeService(dev, uuid, req);
 }
 
 void AgentAdaptor::Cancel()
@@ -145,74 +118,6 @@ void AgentAdaptor::Cancel()
 void AgentAdaptor::Release()
 {
     m_agent->release();
-}
-
-void AgentAdaptor::finishRequestPinCode(LoadDeviceJob *job)
-{
-    Q_ASSERT(!job->error());
-    if (job->error()) {
-        m_stringRequest.cancel();
-        return;
-    }
-    m_agent->requestPinCode(job->device(), m_stringRequest);
-}
-
-void AgentAdaptor::finishDisplayPinCode(LoadDeviceJob *job)
-{
-    Q_ASSERT(!job->error());
-    if (job->error()) {
-        return;
-    }
-    m_agent->displayPinCode(job->device(), m_pinCode);
-}
-
-void AgentAdaptor::finishRequestPasskey(LoadDeviceJob *job)
-{
-    Q_ASSERT(!job->error());
-    if (job->error()) {
-        m_uintRequest.cancel();
-        return;
-    }
-    m_agent->requestPasskey(job->device(), m_uintRequest);
-}
-
-void AgentAdaptor::finishDisplayPasskey(LoadDeviceJob *job)
-{
-    Q_ASSERT(!job->error());
-    if (job->error()) {
-        return;
-    }
-    m_agent->displayPasskey(job->device(), passkeyToString(m_passKey), QString::number(m_enteredPassKey));
-}
-
-void AgentAdaptor::finishRequestConfirmation(LoadDeviceJob *job)
-{
-    Q_ASSERT(!job->error());
-    if (job->error()) {
-        m_voidRequest.cancel();
-        return;
-    }
-    m_agent->requestConfirmation(job->device(), passkeyToString(m_passKey), m_voidRequest);
-}
-
-void AgentAdaptor::finishRequestAuthorization(LoadDeviceJob *job)
-{
-    Q_ASSERT(!job->error());
-    if (job->error()) {
-        m_voidRequest.cancel();
-        return;
-    }
-    m_agent->requestAuthorization(job->device(), m_voidRequest);
-}
-
-void AgentAdaptor::finishAuthorizeService(LoadDeviceJob *job)
-{
-    Q_ASSERT(!job->error());
-    if (job->error()) {
-        m_voidRequest.cancel();
-        return;
-    }
-    m_agent->authorizeService(job->device(), m_uuid, m_voidRequest);
 }
 
 QString AgentAdaptor::passkeyToString(quint32 passkey) const

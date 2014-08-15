@@ -2,7 +2,6 @@
 #include "autotests.h"
 #include "pendingcall.h"
 #include "initmanagerjob.h"
-#include "loaddevicejob.h"
 
 #include <QtTest/QTest>
 #include <QtTest/QSignalSpy>
@@ -13,7 +12,7 @@ using namespace QBluez;
 void DeviceTest::initTestCase()
 {
     Manager *manager = new Manager();
-    InitManagerJob *initJob = manager->init(Manager::InitManagerAndAdapters);
+    InitManagerJob *initJob = manager->init();
     initJob->exec();
     QVERIFY(!initJob->error());
 
@@ -22,11 +21,6 @@ void DeviceTest::initTestCase()
 
         Q_FOREACH (Device *device, adapter->devices()) {
             QVERIFY(!device->ubi().isEmpty());
-
-            LoadDeviceJob *deviceJob = device->load();
-            deviceJob->exec();
-            QVERIFY(deviceJob->error() == LoadDeviceJob::NoError);
-            QVERIFY(device->isLoaded());
 
             DeviceUnit u;
             u.device = device;

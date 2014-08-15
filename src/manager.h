@@ -13,7 +13,6 @@ class Adapter;
 class Agent;
 class PendingCall;
 class InitManagerJob;
-class InitAdaptersJob;
 
 class QBLUEZ_EXPORT Manager : public QObject
 {
@@ -35,16 +34,10 @@ public:
         NoInputNoOutput = 3
     };
 
-    enum InitType {
-        InitManagerOnly,
-        InitManagerAndAdapters
-    };
-
     explicit Manager(QObject *parent = 0);
     ~Manager();
 
-    InitManagerJob *init(InitType type = InitManagerOnly);
-    InitAdaptersJob *initAdapters();
+    InitManagerJob *init();
 
     bool isInitialized() const;
     bool isOperational() const;

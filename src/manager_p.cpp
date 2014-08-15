@@ -119,9 +119,9 @@ void ManagerPrivate::getManagedObjectsFinished(QDBusPendingCallWatcher *watcher)
         const QVariantMapMap &interfaces = it.value();
 
         if (interfaces.contains(Strings::orgBluezAdapter1())) {
-            addAdapter(path);
+            addAdapter(path, interfaces.value(Strings::orgBluezAdapter1()));
         } else if (interfaces.contains(Strings::orgBluezDevice1())) {
-            addDevice(path, interfaces.value(Strings::orgBluezDevice1()).value(QStringLiteral("Adapter")).value<QDBusObjectPath>().path());
+            addDevice(path, interfaces.value(Strings::orgBluezDevice1()));
         } else if (interfaces.contains(Strings::orgBluezAgentManager1())) {
             m_bluezAgentManager = new BluezAgentManager(Strings::orgBluez(), path, QDBusConnection::systemBus(), this);
         }
@@ -209,9 +209,9 @@ void ManagerPrivate::interfacesAdded(const QDBusObjectPath &objectPath, const QV
 
     for (it = interfaces.constBegin(); it != interfaces.constEnd(); ++it) {
         if (it.key() == Strings::orgBluezAdapter1()) {
-            addAdapter(path);
+            addAdapter(path, it.value());
         } else if (it.key() == Strings::orgBluezDevice1()) {
-            addDevice(path, it.value().value(QStringLiteral("Adapter")).value<QDBusObjectPath>().path());
+            addDevice(path, it.value());
         }
     }
 }
@@ -226,16 +226,6 @@ void ManagerPrivate::interfacesRemoved(const QDBusObjectPath &objectPath, const 
         } else if (interface == Strings::orgBluezDevice1()) {
             removeDevice(path);
         }
-    }
-}
-
-void ManagerPrivate::adapterLoaded(AdapterPrivate *adapter)
-{
-    Q_EMIT q->adapterAdded(adapter->q);
-
-    if (!m_usableAdapter && adapter->q->isPowered()) {
-        m_usableAdapter = adapter->q;
-        Q_EMIT q->usableAdapterChanged(m_usableAdapter);
     }
 }
 
@@ -267,23 +257,30 @@ void ManagerPrivate::adapterPoweredChanged(bool powered)
     }
 }
 
-void ManagerPrivate::addAdapter(const QString &adapterPath)
+void ManagerPrivate::addAdapter(const QString &adapterPath, const QVariantMap &properties)
 {
-    Adapter *adapter = new Adapter(adapterPath, this);
+    Adapter *adapter = new Adapter(adapterPath, properties, this);
     m_adapters.insert(adapterPath, adapter);
     connect(adapter, &Adapter::poweredChanged, this, &ManagerPrivate::adapterPoweredChanged);
 
-    if (m_adaptersLoaded) {
-        adapter->d->load();
-        connect(adapter->d, &AdapterPrivate::loaded, this, &ManagerPrivate::adapterLoaded);
+    // We will only emit adapterAdded/usableAdapterChanged after loaded (for newly added adapters)
+    if (!m_loaded) {
+        return;
+    }
+
+    Q_EMIT q->adapterAdded(adapter);
+
+    if (!m_usableAdapter && adapter->isPowered()) {
+        m_usableAdapter = adapter;
+        Q_EMIT q->usableAdapterChanged(m_usableAdapter);
     }
 }
 
-void ManagerPrivate::addDevice(const QString &devicePath, const QString &adapterPath)
+void ManagerPrivate::addDevice(const QString &devicePath, const QVariantMap &properties)
 {
-    Adapter *adapter = m_adapters.value(adapterPath);
+    Adapter *adapter = m_adapters.value(properties.value(QStringLiteral("Adapter")).value<QDBusObjectPath>().path());
     Q_ASSERT(adapter);
-    Device *device = new Device(devicePath, adapter, this);
+    Device *device = new Device(devicePath, properties, adapter, this);
     adapter->d->addDevice(device);
     m_devices.insert(devicePath, device);
 }

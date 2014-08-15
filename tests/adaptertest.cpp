@@ -92,7 +92,7 @@ int main(int argc, char **argv)
     qDebug() << "Looping until stopped";
 
     Manager *manager = new Manager();
-    InitManagerJob *initJob = manager->init(Manager::InitManagerAndAdapters);
+    InitManagerJob *initJob = manager->init();
     initJob->exec();
     if (initJob->error()) {
         qWarning() << "Error initializing manager:" << initJob->errorText();

@@ -4,11 +4,12 @@
 #include <QObject>
 
 #include "job.h"
-#include "manager.h"
 #include "qbluez_export.h"
 
 namespace QBluez
 {
+
+class Manager;
 
 class QBLUEZ_EXPORT InitManagerJob : public Job
 {
@@ -23,7 +24,7 @@ Q_SIGNALS:
     void result(InitManagerJob *job);
 
 private:
-    explicit InitManagerJob(Manager *manager, Manager::InitType initType);
+    explicit InitManagerJob(Manager *manager);
 
     void doStart() Q_DECL_OVERRIDE;
     void doEmitResult() Q_DECL_OVERRIDE;

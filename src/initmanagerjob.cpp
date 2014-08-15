@@ -1,5 +1,4 @@
 #include "initmanagerjob.h"
-#include "initadaptersjob.h"
 #include "manager.h"
 #include "manager_p.h"
 #include "debug_p.h"
@@ -12,23 +11,20 @@ class InitManagerJobPrivate : public QObject
     Q_OBJECT
 
 public:
-    explicit InitManagerJobPrivate(InitManagerJob *q, Manager *manager, Manager::InitType initType);
+    explicit InitManagerJobPrivate(InitManagerJob *q, Manager *manager);
 
     void doStart();
     void initError(const QString &errorText);
     void initFinished();
-    void initAdaptersJobFinished(InitAdaptersJob *job);
 
     InitManagerJob *q;
     Manager *m_manager;
-    Manager::InitType m_initType;
 };
 
-InitManagerJobPrivate::InitManagerJobPrivate(InitManagerJob *q, Manager *manager, Manager::InitType initType)
+InitManagerJobPrivate::InitManagerJobPrivate(InitManagerJob *q, Manager *manager)
     : QObject(q)
     , q(q)
     , m_manager(manager)
-    , m_initType(initType)
 {
 }
 
@@ -56,27 +52,12 @@ void InitManagerJobPrivate::initError(const QString &errorText)
 
 void InitManagerJobPrivate::initFinished()
 {
-    if (m_initType == Manager::InitManagerOnly) {
-        q->emitResult();
-    } else if (m_initType == Manager::InitManagerAndAdapters) {
-        InitAdaptersJob *job = m_manager->initAdapters();
-        job->start();
-        connect(job, &InitAdaptersJob::result, this, &InitManagerJobPrivate::initAdaptersJobFinished);
-    }
-}
-
-void InitManagerJobPrivate::initAdaptersJobFinished(InitAdaptersJob *job)
-{
-    if (job->error()) {
-        q->setError(InitManagerJob::UserDefinedError);
-        q->setErrorText(job->errorText());
-    }
     q->emitResult();
 }
 
-InitManagerJob::InitManagerJob(Manager *manager, Manager::InitType initType)
+InitManagerJob::InitManagerJob(Manager *manager)
     : Job(manager)
-    , d(new InitManagerJobPrivate(this, manager, initType))
+    , d(new InitManagerJobPrivate(this, manager))
 {
 }
 

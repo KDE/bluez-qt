@@ -4,8 +4,6 @@
 #include <QObject>
 #include <QDBusAbstractAdaptor>
 
-#include "request.h"
-
 class QDBusMessage;
 class QDBusObjectPath;
 
@@ -15,7 +13,6 @@ namespace QBluez
 class Device;
 class Manager;
 class Agent;
-class LoadDeviceJob;
 
 class AgentAdaptor : public QDBusAbstractAdaptor
 {
@@ -38,26 +35,11 @@ public Q_SLOTS:
     Q_NOREPLY void Release();
 
 private:
-    void finishRequestPinCode(LoadDeviceJob *job);
-    void finishDisplayPinCode(LoadDeviceJob *job);
-    void finishRequestPasskey(LoadDeviceJob *job);
-    void finishDisplayPasskey(LoadDeviceJob *job);
-    void finishRequestConfirmation(LoadDeviceJob *job);
-    void finishRequestAuthorization(LoadDeviceJob *job);
-    void finishAuthorizeService(LoadDeviceJob *job);
-
     Device *deviceForPath(const QDBusObjectPath &path) const;
     QString passkeyToString(quint32 passkey) const;
 
     Agent *m_agent;
     Manager *m_manager;
-    Request<QString> m_stringRequest;
-    Request<quint32> m_uintRequest;
-    Request<> m_voidRequest;
-    QString m_pinCode;
-    quint32 m_passKey;
-    quint32 m_enteredPassKey;
-    QString m_uuid;
 };
 
 } // namespace QBluez

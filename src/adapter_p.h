@@ -21,13 +21,13 @@ class AdapterPrivate : public QObject
     Q_OBJECT
 
 public:
-    explicit AdapterPrivate(const QString &path, Adapter *parent);
+    explicit AdapterPrivate(const QString &path, const QVariantMap &properties, Adapter *parent);
+
+    void init(const QVariantMap &properties);
 
     void addDevice(Device *device);
     void removeDevice(Device *device);
 
-    void load();
-    void getPropertiesFinished(QDBusPendingCallWatcher *watcher);
     QDBusPendingReply<> setDBusProperty(const QString &name, const QVariant &value);
     void propertiesChanged(const QString &interface, const QVariantMap &changed, const QStringList &invalidated);
     void uuidsPropertyChanged(const QStringList &value);
@@ -35,7 +35,6 @@ public:
     Adapter *q;
     BluezAdapter *m_bluezAdapter;
     DBusProperties *m_dbusProperties;
-    bool m_loaded;
 
     QString m_address;
     QString m_name;
@@ -50,10 +49,6 @@ public:
     QStringList m_uuids;
     QList<Device*> m_devices;
     QString m_modalias;
-
-Q_SIGNALS:
-    void loaded(AdapterPrivate *adapter);
-    void loadError(const QString &errorString);
 };
 
 } // namespace QBluez

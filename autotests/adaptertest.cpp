@@ -12,7 +12,7 @@ using namespace QBluez;
 void AdapterTest::initTestCase()
 {
     Manager *manager = new Manager();
-    InitManagerJob *initJob = manager->init(Manager::InitManagerAndAdapters);
+    InitManagerJob *initJob = manager->init();
     initJob->exec();
     QVERIFY(!initJob->error());
 

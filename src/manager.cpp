@@ -5,7 +5,6 @@
 #include "agentadaptor.h"
 #include "pendingcall.h"
 #include "initmanagerjob.h"
-#include "initadaptersjob.h"
 
 namespace QBluez
 {
@@ -21,14 +20,9 @@ Manager::~Manager()
     delete d;
 }
 
-InitManagerJob *Manager::init(Manager::InitType type)
+InitManagerJob *Manager::init()
 {
-    return new InitManagerJob(this, type);
-}
-
-InitAdaptersJob *Manager::initAdapters()
-{
-    return new InitAdaptersJob(d);
+    return new InitManagerJob(this);
 }
 
 bool Manager::isInitialized() const

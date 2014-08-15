@@ -7,9 +7,9 @@
 namespace QBluez
 {
 
-Adapter::Adapter(const QString &path, QObject *parent)
+Adapter::Adapter(const QString &path, const QVariantMap &properties, QObject *parent)
     : QObject(parent)
-    , d(new AdapterPrivate(path, this))
+    , d(new AdapterPrivate(path, properties, this))
 {
 }
 
@@ -126,16 +126,8 @@ QList<Device*> Adapter::devices() const
 
 Device *Adapter::deviceForAddress(const QString &address) const
 {
-    // UBI will be /org/bluez/ADAPTER/dev_ADDRESS
-    //  * adapter ubi = /org/bluez/xxx
-    //  * address = ':' replaced with '_'
-
-    QString bluezAddress = address;
-    bluezAddress.replace(QLatin1Char(':'), QLatin1Char('_'));
-    const QString &deviceUbi = QString(QStringLiteral("%1/dev_%2")).arg(ubi(), bluezAddress);
-
     Q_FOREACH (Device *device, d->m_devices) {
-        if (device->ubi() == deviceUbi) {
+        if (device->address() == address) {
             return device;
         }
     }

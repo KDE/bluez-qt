@@ -38,12 +38,11 @@ public:
     void serviceUnregistered();
     void interfacesAdded(const QDBusObjectPath &objectPath, const QVariantMapMap &interfaces);
     void interfacesRemoved(const QDBusObjectPath &objectPath, const QStringList &interfaces);
-    void adapterLoaded(AdapterPrivate *adapter);
     void adapterRemoved(Adapter *adapter);
     void adapterPoweredChanged(bool powered);
 
-    void addAdapter(const QString &adapterPath);
-    void addDevice(const QString &devicePath, const QString &adapterPath);
+    void addAdapter(const QString &adapterPath, const QVariantMap &properties);
+    void addDevice(const QString &devicePath, const QVariantMap &properties);
     void removeAdapter(const QString &adapterPath);
     void removeDevice(const QString &devicePath);
 

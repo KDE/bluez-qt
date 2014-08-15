@@ -5,11 +5,10 @@
 namespace QBluez
 {
 
-AdapterPrivate::AdapterPrivate(const QString &path, Adapter *parent)
+AdapterPrivate::AdapterPrivate(const QString &path, const QVariantMap &properties, Adapter *parent)
     : QObject(parent)
     , q(parent)
     , m_dbusProperties(0)
-    , m_loaded(false)
     , m_adapterClass(0)
     , m_powered(0)
     , m_discoverable(false)
@@ -18,21 +17,11 @@ AdapterPrivate::AdapterPrivate(const QString &path, Adapter *parent)
     , m_pairableTimeout(0)
 {
     m_bluezAdapter = new BluezAdapter(Strings::orgBluez(), path, QDBusConnection::systemBus(), this);
+
+    init(properties);
 }
 
-void AdapterPrivate::addDevice(Device *device)
-{
-    m_devices.append(device);
-    Q_EMIT q->deviceFound(device);
-}
-
-void AdapterPrivate::removeDevice(Device *device)
-{
-    m_devices.removeOne(device);
-    Q_EMIT q->deviceRemoved(device);
-}
-
-void AdapterPrivate::load()
+void AdapterPrivate::init(const QVariantMap &properties)
 {
     m_dbusProperties = new DBusProperties(Strings::orgBluez(), m_bluezAdapter->path(),
                                           QDBusConnection::systemBus(), this);
@@ -45,23 +34,7 @@ void AdapterPrivate::load()
     connect(m_dbusProperties, &DBusProperties::PropertiesChanged,
             this, &AdapterPrivate::propertiesChanged, Qt::QueuedConnection);
 
-    const QDBusPendingReply<QVariantMap> &call = m_dbusProperties->GetAll(Strings::orgBluezAdapter1());
-    QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, this);
-    connect(watcher, &QDBusPendingCallWatcher::finished, this, &AdapterPrivate::getPropertiesFinished);
-}
-
-void AdapterPrivate::getPropertiesFinished(QDBusPendingCallWatcher *watcher)
-{
-    const QDBusPendingReply<QVariantMap> &reply = *watcher;
-    watcher->deleteLater();
-
-    if (reply.isError()) {
-        Q_EMIT loadError(reply.error().message());
-        return;
-    }
-
-    const QVariantMap &properties = reply.value();
-
+    // Init properties
     m_address = properties.value(QStringLiteral("Address")).toString();
     m_name = properties.value(QStringLiteral("Name")).toString();
     m_alias = properties.value(QStringLiteral("Alias")).toString();
@@ -74,10 +47,18 @@ void AdapterPrivate::getPropertiesFinished(QDBusPendingCallWatcher *watcher)
     m_discovering = properties.value(QStringLiteral("Discovering")).toBool();
     m_uuids = stringListToUpper(properties.value(QStringLiteral("UUIDs")).toStringList());
     m_modalias = properties.value(QStringLiteral("Modalias")).toString();
+}
 
-    m_loaded = true;
+void AdapterPrivate::addDevice(Device *device)
+{
+    m_devices.append(device);
+    Q_EMIT q->deviceFound(device);
+}
 
-    Q_EMIT loaded(this);
+void AdapterPrivate::removeDevice(Device *device)
+{
+    m_devices.removeOne(device);
+    Q_EMIT q->deviceRemoved(device);
 }
 
 QDBusPendingReply<> AdapterPrivate::setDBusProperty(const QString &name, const QVariant &value)

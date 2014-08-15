@@ -1,30 +1,19 @@
 #include "device.h"
 #include "device_p.h"
-#include "loaddevicejob.h"
 #include "pendingcall.h"
 
 namespace QBluez
 {
 
-Device::Device(const QString &path, Adapter *adapter, QObject *parent)
+Device::Device(const QString &path, const QVariantMap &properties, Adapter *adapter, QObject *parent)
     : QObject(parent)
-    , d(new DevicePrivate(path, adapter, this))
+    , d(new DevicePrivate(path, properties, adapter, this))
 {
 }
 
 Device::~Device()
 {
     delete d;
-}
-
-bool Device::isLoaded() const
-{
-    return d->m_loaded;
-}
-
-LoadDeviceJob *Device::load()
-{
-    return new LoadDeviceJob(d, this);
 }
 
 QString Device::ubi() const

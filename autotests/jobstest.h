@@ -12,10 +12,8 @@ private Q_SLOTS:
 
     void deleteManagerTest();
     void deleteInitManagerJobTest();
-    void deleteInitAdaptersJobTest();
     void deleteObexManagerTest();
     void deleteInitObexManagerJobTest();
-    void deleteLoadDeviceJobTest();
 };
 
 #endif // JOBSTEST_H

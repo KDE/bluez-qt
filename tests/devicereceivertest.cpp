@@ -114,7 +114,7 @@ int main(int argc, char **argv)
     qAddPostRoutine(stopDiscovering);
 
     g_manager = new Manager();
-    InitManagerJob *initJob = g_manager->init(Manager::InitManagerAndAdapters);
+    InitManagerJob *initJob = g_manager->init();
     initJob->exec();
 
     if (initJob->error()) {

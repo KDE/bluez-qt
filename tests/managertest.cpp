@@ -7,7 +7,6 @@
 #include "device.h"
 #include "pendingcall.h"
 #include "initmanagerjob.h"
-#include "loaddevicejob.h"
 
 QList<QBluez::Device *> foundDevices;
 
@@ -16,7 +15,7 @@ int main(int argc, char *argv[])
     QCoreApplication app(argc, argv);
 
     QBluez::Manager *manager = new QBluez::Manager();
-    QBluez::InitManagerJob *initJob = manager->init(QBluez::Manager::InitManagerAndAdapters);
+    QBluez::InitManagerJob *initJob = manager->init();
     initJob->start();
 
     QObject::connect(initJob, &QBluez::InitManagerJob::result, [ = ]() {
@@ -56,30 +55,23 @@ int main(int argc, char *argv[])
 
         QObject::connect(adapter, &QBluez::Adapter::deviceFound, [ = ](QBluez::Device *device) {
             qDebug() << "Found device...";
+            qDebug() << "\t Address:" << device->address();
+            qDebug() << "\t Name:" << device->name();
+            qDebug() << "\t FriendlyName:" << device->friendlyName();
+            qDebug() << "\t Alias:" << device->alias();
+            qDebug() << "\t Class:" << device->deviceClass();
+            qDebug() << "\t Appearance:" << device->appearance();
+            qDebug() << "\t Icon:" << device->icon();
+            qDebug() << "\t Paired:" << device->isPaired();
+            qDebug() << "\t Trusted:" << device->isTrusted();
+            qDebug() << "\t Blocked:" << device->isBlocked();
+            qDebug() << "\t LegacyPairing:" << device->hasLegacyPairing();
+            qDebug() << "\t RSSI:" << device->rssi();
+            qDebug() << "\t Connected:" << device->isConnected();
+            qDebug() << "\t UUIDs:" << device->uuids();
+            qDebug() << "\t Modalias:" << device->modalias();
 
-            QBluez::LoadDeviceJob *deviceJob = device->load();
-            deviceJob->start();
-
-            QObject::connect(deviceJob, &QBluez::LoadDeviceJob::result, [ = ]() {
-                qDebug() << "Loaded device:";
-                qDebug() << "\t Address:" << device->address();
-                qDebug() << "\t Name:" << device->name();
-                qDebug() << "\t FriendlyName:" << device->friendlyName();
-                qDebug() << "\t Alias:" << device->alias();
-                qDebug() << "\t Class:" << device->deviceClass();
-                qDebug() << "\t Appearance:" << device->appearance();
-                qDebug() << "\t Icon:" << device->icon();
-                qDebug() << "\t Paired:" << device->isPaired();
-                qDebug() << "\t Trusted:" << device->isTrusted();
-                qDebug() << "\t Blocked:" << device->isBlocked();
-                qDebug() << "\t LegacyPairing:" << device->hasLegacyPairing();
-                qDebug() << "\t RSSI:" << device->rssi();
-                qDebug() << "\t Connected:" << device->isConnected();
-                qDebug() << "\t UUIDs:" << device->uuids();
-                qDebug() << "\t Modalias:" << device->modalias();
-
-                foundDevices.append(device);
-            });
+            foundDevices.append(device);
         });
 
         QBluez::PendingCall *powerOnCall = adapter->setPowered(true);

@@ -11,7 +11,6 @@ namespace QBluez
 
 class Adapter;
 class PendingCall;
-class LoadDeviceJob;
 
 class QBLUEZ_EXPORT Device : public QObject
 {
@@ -38,9 +37,6 @@ class QBLUEZ_EXPORT Device : public QObject
 
 public:
     virtual ~Device();
-
-    bool isLoaded() const;
-    LoadDeviceJob *load();
 
     QString ubi() const;
 
@@ -115,7 +111,7 @@ Q_SIGNALS:
     void modaliasChanged(const QString &modalias);
 
 private:
-    explicit Device(const QString &address, Adapter *adapter, QObject *parent);
+    explicit Device(const QString &address, const QVariantMap &properties, Adapter *adapter, QObject *parent);
 
     class DevicePrivate *const d;
 

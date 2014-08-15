@@ -9,8 +9,6 @@ set(qbluez_SRCS
     job.cpp
     initmanagerjob.cpp
     initobexmanagerjob.cpp
-    initadaptersjob.cpp
-    loaddevicejob.cpp
     utils.cpp
     utils_p.cpp
     agent.cpp
@@ -71,8 +69,6 @@ ecm_generate_headers(QBluez_HEADERS
         Job
         InitManagerJob
         InitObexManagerJob
-        InitAdaptersJob
-        LoadDeviceJob
         Utils
         Agent
         PendingCall
