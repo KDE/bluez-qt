@@ -119,7 +119,7 @@ void ObexManagerPrivate::getManagedObjectsFinished(QDBusPendingCallWatcher *watc
         if (interfaces.contains(Strings::orgBluezObexClient1())) {
             m_obexClient = new ObexClient(Strings::orgBluezObex(), path, QDBusConnection::sessionBus(), this);
         }
-        if (interfaces.contains(Strings::orgBluezAgentManager1())) {
+        if (interfaces.contains(Strings::orgBluezObexAgentManager1())) {
             m_obexAgentManager = new ObexAgentManager(Strings::orgBluezObex(), path, QDBusConnection::sessionBus(), this);
         }
     }
