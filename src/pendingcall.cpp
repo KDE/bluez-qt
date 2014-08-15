@@ -94,6 +94,7 @@ public:
     PendingCall *q;
     int m_error;
     QString m_errorText;
+    QVariant m_userData;
     QVariantList m_value;
     PendingCall::ReturnType m_type;
     QDBusPendingCallWatcher *m_watcher;
@@ -287,6 +288,16 @@ void PendingCall::waitForFinished()
     if (d->m_watcher) {
         d->m_watcher->waitForFinished();
     }
+}
+
+QVariant PendingCall::userData() const
+{
+    return d->m_userData;
+}
+
+void PendingCall::setUserData(const QVariant &userData)
+{
+    d->m_userData = userData;
 }
 
 } // namespace QBluez

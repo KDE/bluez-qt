@@ -19,6 +19,7 @@ class QBLUEZ_EXPORT PendingCall : public QObject
     Q_PROPERTY(int error READ error)
     Q_PROPERTY(QString errorText READ errorText)
     Q_PROPERTY(bool finished READ isFinished)
+    Q_PROPERTY(QVariant userData READ userData WRITE setUserData)
 
 public:
     enum Error {
@@ -55,6 +56,9 @@ public:
 
     bool isFinished() const;
     void waitForFinished();
+
+    QVariant userData() const;
+    void setUserData(const QVariant &userData);
 
 Q_SIGNALS:
     void finished(PendingCall *call);
