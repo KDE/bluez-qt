@@ -1,6 +1,8 @@
 #include "pendingcall.h"
 #include "obextransfer.h"
 #include "obextransfer_p.h"
+#include "obexfiletransfer.h"
+#include "qbluez_dbustypes.h"
 #include "debug_p.h"
 
 #include <QTimer>

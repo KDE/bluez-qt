@@ -71,4 +71,6 @@ private:
 
 } // namespace QBluez
 
+Q_DECLARE_METATYPE(QList<QBluez::ObexFileTransfer::Item>)
+
 #endif // QBLUEZ_OBEXFILETRANSFER_H

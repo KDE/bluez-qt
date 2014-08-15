@@ -4,8 +4,6 @@
 #include <QObject>
 #include <QDBusPendingReply>
 
-#include "obexfiletransfer.h"
-#include "qbluez_dbustypes.h"
 #include "qbluez_export.h"
 
 namespace QBluez
@@ -87,7 +85,5 @@ private:
 };
 
 } // namespace QBluez
-
-Q_DECLARE_METATYPE(QList<QBluez::ObexFileTransfer::Item>)
 
 #endif // QBLUEZ_PENDINGCALL_H
