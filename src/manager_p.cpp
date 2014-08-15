@@ -135,6 +135,8 @@ void ManagerPrivate::getManagedObjectsFinished(QDBusPendingCallWatcher *watcher)
     }
 
     m_loaded = true;
+    m_usableAdapter = findUsableAdapter();
+
     Q_EMIT initFinished();
     Q_EMIT q->operationalChanged(true);
 }
