@@ -58,13 +58,7 @@ QList<Adapter*> Manager::adapters() const
 
 QList<Device*> Manager::devices() const
 {
-    QList<Device *> list;
-
-    Q_FOREACH (Adapter *adapter, d->m_adapters.values()) {
-        list.append(adapter->devices());
-    }
-
-    return list;
+    return d->m_devices.values();
 }
 
 Adapter *Manager::adapterForAddress(const QString &address) const
