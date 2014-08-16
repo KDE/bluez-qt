@@ -196,7 +196,7 @@ void PendingCallPrivate::emitFinished()
     m_watcher->deleteLater();
     m_watcher = Q_NULLPTR;
     Q_EMIT q->finished(q);
-    deleteLater();
+    q->deleteLater();
 }
 
 void PendingCallPrivate::emitDelayedFinished()

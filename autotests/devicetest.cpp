@@ -11,12 +11,12 @@ using namespace QBluez;
 
 void DeviceTest::initTestCase()
 {
-    Manager *manager = new Manager();
-    InitManagerJob *initJob = manager->init();
+    m_manager = new Manager();
+    InitManagerJob *initJob = m_manager->init();
     initJob->exec();
     QVERIFY(!initJob->error());
 
-    Q_FOREACH (Adapter *adapter, manager->adapters()) {
+    Q_FOREACH (Adapter *adapter, m_manager->adapters()) {
         QVERIFY(!adapter->ubi().isEmpty());
 
         Q_FOREACH (Device *device, adapter->devices()) {
@@ -45,6 +45,8 @@ void DeviceTest::cleanupTestCase()
         delete unit.dbusDevice;
         delete unit.dbusProperties;
     }
+
+    delete m_manager;
 }
 
 static void compareUuids(const QStringList &actual, const QStringList &expected)

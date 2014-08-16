@@ -36,6 +36,7 @@ private:
         org::freedesktop::DBus::Properties *dbusProperties;
     };
 
+    QBluez::Manager *m_manager;
     QList<AdapterUnit> m_units;
 };
 
