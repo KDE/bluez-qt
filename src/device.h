@@ -77,10 +77,16 @@ public:
     Adapter *adapter() const;
 
     // Possible errors: NotReady, Failed, InProgress, AlreadyConnected
-    PendingCall *connect();
+    PendingCall *connectDevice();
 
     // Possible errors: NotConnected
-    PendingCall *disconnect();
+    PendingCall *disconnectDevice();
+
+    // Possible errors: DoesNotExist, AlreadyConnected, ConnectFailed
+    PendingCall *connectProfile(const QString &uuid);
+
+    // Possible errors: DoesNotExist, Failed, NotConnected, NotSupported
+    PendingCall *disconnectProfile(const QString &uuid);
 
     // Possible errors: InvalidArguments, Failed, AlreadyExists,
     //                  AuthenticationCanceled, AuthenticationFailed

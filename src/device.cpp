@@ -130,14 +130,24 @@ Adapter *Device::adapter() const
     return d->m_adapter;
 }
 
-PendingCall *Device::connect()
+PendingCall *Device::connectDevice()
 {
     return new PendingCall(d->m_bluezDevice->Connect(), PendingCall::ReturnVoid, this);
 }
 
-PendingCall *Device::disconnect()
+PendingCall *Device::disconnectDevice()
 {
     return new PendingCall(d->m_bluezDevice->Disconnect(), PendingCall::ReturnVoid, this);
+}
+
+PendingCall *Device::connectProfile(const QString &uuid)
+{
+    return new PendingCall(d->m_bluezDevice->ConnectProfile(uuid), PendingCall::ReturnVoid, this);
+}
+
+PendingCall *Device::disconnectProfile(const QString &uuid)
+{
+    return new PendingCall(d->m_bluezDevice->DisconnectProfile(uuid), PendingCall::ReturnVoid, this);
 }
 
 PendingCall *Device::pair()
