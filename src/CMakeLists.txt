@@ -6,6 +6,7 @@ set(qbluez_SRCS
     adapter_p.cpp
     device.cpp
     device_p.cpp
+    devicesmodel.cpp
     job.cpp
     initmanagerjob.cpp
     initobexmanagerjob.cpp
@@ -66,6 +67,7 @@ ecm_generate_headers(QBluez_HEADERS
         Manager
         Adapter
         Device
+        DevicesModel
         Job
         InitManagerJob
         InitObexManagerJob
