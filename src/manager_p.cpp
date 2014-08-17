@@ -31,11 +31,6 @@ ManagerPrivate::ManagerPrivate(Manager *parent)
     connect(q, &Manager::adapterRemoved, this, &ManagerPrivate::adapterRemoved);
 }
 
-ManagerPrivate::~ManagerPrivate()
-{
-    clear();
-}
-
 void ManagerPrivate::init()
 {
     // Keep an eye on bluez service
