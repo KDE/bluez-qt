@@ -82,7 +82,9 @@ DevicesModel::DevicesModel(Manager *manager, QObject *parent)
 
 int DevicesModel::rowCount(const QModelIndex &parent) const
 {
-    Q_UNUSED(parent)
+    if (parent.isValid()) {
+        return 0;
+    }
     return d->m_devices.size();
 }
 
@@ -141,11 +143,10 @@ QVariant DevicesModel::data(const QModelIndex &index, int role) const
 
 QModelIndex DevicesModel::index(int row, int column, const QModelIndex &parent) const
 {
-    Q_UNUSED(parent)
-    if (row < 0 || column != 0 || row >= d->m_devices.count()) {
+    if (!hasIndex(row, column, parent)) {
         return QModelIndex();
     }
-    return createIndex(row, column, d->m_devices.at(row));
+    return createIndex(row, 0, d->m_devices.at(row));
 }
 
 Device *DevicesModel::device(const QModelIndex &index) const
