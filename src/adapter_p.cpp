@@ -107,6 +107,8 @@ void AdapterPrivate::propertiesChanged(const QString &interface, const QVariantM
             uuidsPropertyChanged(stringListToUpper(value.toStringList()));
         }
     }
+
+    Q_EMIT q->adapterChanged(q);
 }
 
 void AdapterPrivate::uuidsPropertyChanged(const QStringList &value)

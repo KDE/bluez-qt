@@ -81,6 +81,8 @@ public:
     PendingCall *removeDevice(Device *device);
 
 Q_SIGNALS:
+    void adapterChanged(Adapter *adapter);
+
     void nameChanged(const QString &name);
     void aliasChanged(const QString &name);
     void adapterClassChanged(quint32 adapterClass);
