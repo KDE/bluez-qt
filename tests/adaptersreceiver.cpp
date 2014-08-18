@@ -21,7 +21,7 @@
  * Boston, MA 02110-1301, USA.                                               *
  *****************************************************************************/
 
-#include "adaptertest.h"
+#include "adaptersreceiver.h"
 
 #include <QDebug>
 #include <QCoreApplication>
@@ -32,17 +32,17 @@
 
 using namespace QBluez;
 
-AdapterTest::AdapterTest(Manager *manager, QObject *parent)
+AdaptersReceiver::AdaptersReceiver(Manager *manager, QObject *parent)
     : QThread(parent)
     , m_manager(manager)
 {
 }
 
-AdapterTest::~AdapterTest()
+AdaptersReceiver::~AdaptersReceiver()
 {
 }
 
-void AdapterTest::adapterAdded(QBluez::Adapter *adapter)
+void AdaptersReceiver::adapterAdded(QBluez::Adapter *adapter)
 {
     qDebug() << "Adapter added: " << adapter;
     qDebug() << "\tBluetooth Operational: " << m_manager->isBluetoothOperational();
@@ -50,7 +50,7 @@ void AdapterTest::adapterAdded(QBluez::Adapter *adapter)
     qDebug();
 }
 
-void AdapterTest::adapterRemoved(QBluez::Adapter *adapter)
+void AdaptersReceiver::adapterRemoved(QBluez::Adapter *adapter)
 {
     qDebug() << "Adapter removed: " << adapter;
     qDebug() << "\tBluetooth Operational: " << m_manager->isBluetoothOperational();
@@ -58,7 +58,7 @@ void AdapterTest::adapterRemoved(QBluez::Adapter *adapter)
     qDebug();
 }
 
-void AdapterTest::usableAdapterChanged(QBluez::Adapter *adapter)
+void AdaptersReceiver::usableAdapterChanged(QBluez::Adapter *adapter)
 {
     qDebug() << "Usable adapter changed: " << adapter;
     qDebug() << "\tBluetooth Operational: " << m_manager->isBluetoothOperational();
@@ -66,7 +66,7 @@ void AdapterTest::usableAdapterChanged(QBluez::Adapter *adapter)
     qDebug();
 }
 
-void AdapterTest::allAdaptersRemoved()
+void AdaptersReceiver::allAdaptersRemoved()
 {
     qDebug() << "All adapters have been removed";
     qDebug() << "\tBluetooth Operational: " << m_manager->isBluetoothOperational();
@@ -74,7 +74,7 @@ void AdapterTest::allAdaptersRemoved()
     qDebug();
 }
 
-void AdapterTest::run()
+void AdaptersReceiver::run()
 {
     while (true) {
         qDebug();
@@ -99,12 +99,12 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    AdapterTest *adapterTest = new AdapterTest(manager);
+    AdaptersReceiver *adapterTest = new AdaptersReceiver(manager);
 
-    QObject::connect(manager, &Manager::adapterAdded, adapterTest, &AdapterTest::adapterAdded);
-    QObject::connect(manager, &Manager::adapterRemoved, adapterTest, &AdapterTest::adapterRemoved);
-    QObject::connect(manager, &Manager::usableAdapterChanged, adapterTest, &AdapterTest::usableAdapterChanged);
-    QObject::connect(manager, &Manager::allAdaptersRemoved, adapterTest, &AdapterTest::allAdaptersRemoved);
+    QObject::connect(manager, &Manager::adapterAdded, adapterTest, &AdaptersReceiver::adapterAdded);
+    QObject::connect(manager, &Manager::adapterRemoved, adapterTest, &AdaptersReceiver::adapterRemoved);
+    QObject::connect(manager, &Manager::usableAdapterChanged, adapterTest, &AdaptersReceiver::usableAdapterChanged);
+    QObject::connect(manager, &Manager::allAdaptersRemoved, adapterTest, &AdaptersReceiver::allAdaptersRemoved);
 
     adapterTest->start();
 

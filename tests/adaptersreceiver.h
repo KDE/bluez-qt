@@ -21,8 +21,8 @@
  * Boston, MA 02110-1301, USA.                                               *
  *****************************************************************************/
 
-#ifndef ADAPTERTEST_H
-#define ADAPTERTEST_H
+#ifndef ADAPTERSRECEIVER_H
+#define ADAPTERSRECEIVER_H
 
 #include <QObject>
 #include <QThread>
@@ -33,13 +33,13 @@ namespace QBluez {
     class Device;
 }
 
-class AdapterTest : public QThread
+class AdaptersReceiver : public QThread
 {
     Q_OBJECT
 
 public:
-    AdapterTest(QBluez::Manager *manager, QObject *parent = 0);
-    virtual ~AdapterTest();
+    AdaptersReceiver(QBluez::Manager *manager, QObject *parent = 0);
+    virtual ~AdaptersReceiver();
 
 public Q_SLOTS:
     void adapterAdded(QBluez::Adapter *adapter);
@@ -54,4 +54,4 @@ private:
     QBluez::Manager *m_manager;
 };
 
-#endif // ADAPTERTEST_H
+#endif // ADAPTERSRECEIVER_H

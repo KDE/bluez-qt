@@ -21,7 +21,7 @@
  * Boston, MA 02110-1301, USA.                                               *
  *****************************************************************************/
 
-#include "devicereceivertest.h"
+#include "devicereceiver.h"
 
 #include <QDebug>
 #include <QTimer>

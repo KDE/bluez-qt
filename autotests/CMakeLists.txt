@@ -8,15 +8,15 @@ qt5_add_dbus_interface(qbluez_autotests_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfa
 
 macro(qbluez_tests)
     foreach(_testname ${ARGN})
-        add_executable(${_testname}autotest ${_testname}test.cpp ${qbluez_autotests_SRCS})
-        target_link_libraries(${_testname}autotest Qt5::Test KF5QBluez)
-        add_test(qbluez-${_testname} ${_testname}autotest)
-        ecm_mark_as_test(${_testname}autotest)
+        add_executable(${_testname} ${_testname}.cpp ${qbluez_autotests_SRCS})
+        target_link_libraries(${_testname} Qt5::Test KF5QBluez)
+        add_test(qbluez-${_testname} ${_testname})
+        ecm_mark_as_test(${_testname})
     endforeach(_testname)
 endmacro()
 
 qbluez_tests(
-    adapter
-    device
-    jobs
+    adaptertest
+    devicetest
+    jobstest
 )

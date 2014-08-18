@@ -11,7 +11,6 @@ macro(qbluez_executable_tests)
 endmacro()
 
 qbluez_executable_tests(
-    managertest
-    adaptertest
-    devicereceivertest
+    adaptersreceiver
+    devicereceiver
 )
