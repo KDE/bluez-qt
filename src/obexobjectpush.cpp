@@ -21,7 +21,7 @@ ObexObjectPush::ObexObjectPush(const QDBusObjectPath &path, QObject *parent)
     , d(new ObexObjectPushPrivate)
 {
     d->m_bluezObjectPush = new BluezObjectPush(Strings::orgBluezObex(),
-                                               path.path(), QDBusConnection::sessionBus(), this);
+                                               path.path(), DBusConnection::orgBluezObex(), this);
 }
 
 ObexObjectPush::~ObexObjectPush()

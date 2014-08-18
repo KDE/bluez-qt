@@ -1,5 +1,6 @@
 #include "request.h"
 #include "debug_p.h"
+#include "utils_p.h"
 
 #include <QStringBuilder>
 #include <QDBusConnection>
@@ -10,10 +11,10 @@ namespace QBluez
 static bool sendMessage(AgentType type, const QDBusMessage &msg)
 {
     if (type == OrgBluezAgent) {
-        return QDBusConnection::systemBus().send(msg);
+        return DBusConnection::orgBluez().send(msg);
     }
     if (type == OrgBluezObexAgent) {
-        return QDBusConnection::sessionBus().send(msg);
+        return DBusConnection::orgBluezObex().send(msg);
     }
     return false;
 }

@@ -16,7 +16,7 @@ AdapterPrivate::AdapterPrivate(const QString &path, const QVariantMap &propertie
     , m_pairable(false)
     , m_pairableTimeout(0)
 {
-    m_bluezAdapter = new BluezAdapter(Strings::orgBluez(), path, QDBusConnection::systemBus(), this);
+    m_bluezAdapter = new BluezAdapter(Strings::orgBluez(), path, DBusConnection::orgBluez(), this);
 
     init(properties);
 }
@@ -24,7 +24,7 @@ AdapterPrivate::AdapterPrivate(const QString &path, const QVariantMap &propertie
 void AdapterPrivate::init(const QVariantMap &properties)
 {
     m_dbusProperties = new DBusProperties(Strings::orgBluez(), m_bluezAdapter->path(),
-                                          QDBusConnection::systemBus(), this);
+                                          DBusConnection::orgBluez(), this);
 
     // QueuedConnection is important here to be able to perform actions, that depend on
     // a previously set property, directly from slot connected to propertyChanged signal.

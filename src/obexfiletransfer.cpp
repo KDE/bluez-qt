@@ -21,7 +21,7 @@ ObexFileTransfer::ObexFileTransfer(const QDBusObjectPath &path, QObject *parent)
     , d(new ObexFileTransferPrivate)
 {
     d->m_bluezFileTransfer = new BluezFileTransfer(Strings::orgBluezObex(), path.path(),
-                                                   QDBusConnection::sessionBus(), this);
+                                                   DBusConnection::orgBluezObex(), this);
 }
 
 ObexFileTransfer::~ObexFileTransfer()

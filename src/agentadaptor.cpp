@@ -5,7 +5,6 @@
 #include "device.h"
 #include "request.h"
 
-#include <QDBusConnection>
 #include <QDBusObjectPath>
 
 namespace QBluez

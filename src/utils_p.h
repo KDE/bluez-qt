@@ -3,6 +3,7 @@
 
 class QString;
 class QStringList;
+class QDBusConnection;
 
 namespace QBluez
 {
@@ -20,6 +21,14 @@ QString orgBluezObexClient1();
 QString orgBluezObexAgentManager1();
 QString orgBluezObexSession1();
 QString orgBluezObexTransfer1();
+
+}
+
+namespace DBusConnection
+{
+
+QDBusConnection orgBluez();
+QDBusConnection orgBluezObex();
 
 }
 

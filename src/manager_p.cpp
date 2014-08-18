@@ -8,7 +8,6 @@
 
 #include <QDBusReply>
 #include <QDBusConnection>
-#include <QDBusConnectionInterface>
 #include <QDBusServiceWatcher>
 
 namespace QBluez
@@ -34,14 +33,14 @@ ManagerPrivate::ManagerPrivate(Manager *parent)
 void ManagerPrivate::init()
 {
     // Keep an eye on bluez service
-    QDBusServiceWatcher *serviceWatcher = new QDBusServiceWatcher(Strings::orgBluez(), QDBusConnection::systemBus(),
+    QDBusServiceWatcher *serviceWatcher = new QDBusServiceWatcher(Strings::orgBluez(), DBusConnection::orgBluez(),
             QDBusServiceWatcher::WatchForRegistration | QDBusServiceWatcher::WatchForUnregistration, this);
 
     connect(serviceWatcher, &QDBusServiceWatcher::serviceRegistered, this, &ManagerPrivate::serviceRegistered);
     connect(serviceWatcher, &QDBusServiceWatcher::serviceUnregistered, this, &ManagerPrivate::serviceUnregistered);
 
     // Update the current state of bluez service
-    if (!QDBusConnection::systemBus().isConnected()) {
+    if (!DBusConnection::orgBluez().isConnected()) {
         Q_EMIT initError(QStringLiteral("DBus system bus is not connected!"));
         return;
     }
@@ -54,7 +53,7 @@ void ManagerPrivate::init()
     args.append(Strings::orgBluez());
     call.setArguments(args);
 
-    QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(QDBusConnection::systemBus().asyncCall(call));
+    QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(DBusConnection::orgBluez().asyncCall(call));
     connect(watcher, &QDBusPendingCallWatcher::finished, this, &ManagerPrivate::nameHasOwnerFinished);
 }
 
@@ -85,7 +84,7 @@ void ManagerPrivate::load()
     }
 
     m_dbusObjectManager = new DBusObjectManager(Strings::orgBluez(), QStringLiteral("/"),
-            QDBusConnection::systemBus(), this);
+            DBusConnection::orgBluez(), this);
 
     connect(m_dbusObjectManager, &DBusObjectManager::InterfacesAdded,
             this, &ManagerPrivate::interfacesAdded);
@@ -118,7 +117,7 @@ void ManagerPrivate::getManagedObjectsFinished(QDBusPendingCallWatcher *watcher)
         } else if (interfaces.contains(Strings::orgBluezDevice1())) {
             addDevice(path, interfaces.value(Strings::orgBluezDevice1()));
         } else if (interfaces.contains(Strings::orgBluezAgentManager1())) {
-            m_bluezAgentManager = new BluezAgentManager(Strings::orgBluez(), path, QDBusConnection::systemBus(), this);
+            m_bluezAgentManager = new BluezAgentManager(Strings::orgBluez(), path, DBusConnection::orgBluez(), this);
         }
     }
 

@@ -32,13 +32,13 @@ ObexTransferPrivate::ObexTransferPrivate(ObexTransfer *q, const QString &path)
     , q(q)
     , m_dbusProperties(0)
 {
-    m_bluezTransfer = new BluezTransfer(Strings::orgBluezObex(), path, QDBusConnection::sessionBus(), this);
+    m_bluezTransfer = new BluezTransfer(Strings::orgBluezObex(), path, DBusConnection::orgBluezObex(), this);
 }
 
 void ObexTransferPrivate::init()
 {
     m_dbusProperties = new DBusProperties(Strings::orgBluezObex(), m_bluezTransfer->path(),
-                                          QDBusConnection::sessionBus(), this);
+                                          DBusConnection::orgBluezObex(), this);
 
     connect(m_dbusProperties, &DBusProperties::PropertiesChanged,
             this, &ObexTransferPrivate::propertiesChanged, Qt::QueuedConnection);

@@ -5,6 +5,7 @@
 #include "agentadaptor.h"
 #include "pendingcall.h"
 #include "initmanagerjob.h"
+#include "utils_p.h"
 
 namespace QBluez
 {
@@ -114,7 +115,7 @@ PendingCall *Manager::registerAgent(Agent *agent, RegisterCapability registerCap
 
     new AgentAdaptor(agent, this);
 
-    if (!QDBusConnection::systemBus().registerObject(agent->objectPath().path(), agent)) {
+    if (!DBusConnection::orgBluez().registerObject(agent->objectPath().path(), agent)) {
         qWarning() << "Cannot register object" << agent->objectPath().path();
     }
 
@@ -128,7 +129,7 @@ PendingCall *Manager::unregisterAgent(Agent *agent)
         return new PendingCall(PendingCall::InternalError, QStringLiteral("Manager not operational!"));
     }
 
-    QDBusConnection::systemBus().unregisterObject(agent->objectPath().path());
+    DBusConnection::orgBluez().unregisterObject(agent->objectPath().path());
 
     return new PendingCall(d->m_bluezAgentManager->UnregisterAgent(agent->objectPath()),
                            PendingCall::ReturnVoid, this);

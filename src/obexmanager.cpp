@@ -5,6 +5,7 @@
 #include "pendingcall.h"
 #include "obexagent.h"
 #include "obexagentadaptor.h"
+#include "utils_p.h"
 
 #include <QDBusServiceWatcher>
 
@@ -45,7 +46,7 @@ PendingCall *ObexManager::registerAgent(ObexAgent *agent)
 
     new ObexAgentAdaptor(agent, this);
 
-    if (!QDBusConnection::sessionBus().registerObject(agent->objectPath().path(), agent)) {
+    if (!DBusConnection::orgBluezObex().registerObject(agent->objectPath().path(), agent)) {
         qCWarning(QBLUEZ) << "Cannot register object" << agent->objectPath().path();
     }
 
@@ -59,7 +60,7 @@ PendingCall *ObexManager::unregisterAgent(ObexAgent *agent)
         return new PendingCall(PendingCall::InternalError, QStringLiteral("ObexManager not operational!"));
     }
 
-    QDBusConnection::sessionBus().unregisterObject(agent->objectPath().path());
+    DBusConnection::orgBluezObex().unregisterObject(agent->objectPath().path());
 
     return new PendingCall(d->m_obexAgentManager->UnregisterAgent(agent->objectPath()),
                            PendingCall::ReturnVoid, this);

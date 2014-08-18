@@ -39,14 +39,14 @@ ObexManagerPrivate::~ObexManagerPrivate()
 void ObexManagerPrivate::init()
 {
     // Keep an eye on bluez.obex service
-    QDBusServiceWatcher *serviceWatcher = new QDBusServiceWatcher(Strings::orgBluezObex(), QDBusConnection::sessionBus(),
+    QDBusServiceWatcher *serviceWatcher = new QDBusServiceWatcher(Strings::orgBluezObex(), DBusConnection::orgBluezObex(),
             QDBusServiceWatcher::WatchForRegistration | QDBusServiceWatcher::WatchForUnregistration, this);
 
     connect(serviceWatcher, &QDBusServiceWatcher::serviceRegistered, this, &ObexManagerPrivate::serviceRegistered);
     connect(serviceWatcher, &QDBusServiceWatcher::serviceUnregistered, this, &ObexManagerPrivate::serviceUnregistered);
 
     // Update the current state of bluez.obex service
-    if (!QDBusConnection::sessionBus().isConnected()) {
+    if (!DBusConnection::orgBluezObex().isConnected()) {
         Q_EMIT initError(QStringLiteral("DBus session bus is not connected!"));
         return;
     }
@@ -59,7 +59,7 @@ void ObexManagerPrivate::init()
     args.append(Strings::orgBluezObex());
     call.setArguments(args);
 
-    QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(QDBusConnection::sessionBus().asyncCall(call));
+    QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(DBusConnection::orgBluezObex().asyncCall(call));
     connect(watcher, &QDBusPendingCallWatcher::finished, this, &ObexManagerPrivate::nameHasOwnerFinished);
 }
 
@@ -90,7 +90,7 @@ void ObexManagerPrivate::load()
     }
 
     m_dbusObjectManager = new DBusObjectManager(Strings::orgBluezObex(), QStringLiteral("/"),
-            QDBusConnection::sessionBus(), this);
+            DBusConnection::orgBluezObex(), this);
 
     connect(m_dbusObjectManager, &DBusObjectManager::InterfacesRemoved,
             this, &ObexManagerPrivate::interfacesRemoved);
@@ -117,10 +117,10 @@ void ObexManagerPrivate::getManagedObjectsFinished(QDBusPendingCallWatcher *watc
         const QVariantMapMap &interfaces = it.value();
 
         if (interfaces.contains(Strings::orgBluezObexClient1())) {
-            m_obexClient = new ObexClient(Strings::orgBluezObex(), path, QDBusConnection::sessionBus(), this);
+            m_obexClient = new ObexClient(Strings::orgBluezObex(), path, DBusConnection::orgBluezObex(), this);
         }
         if (interfaces.contains(Strings::orgBluezObexAgentManager1())) {
-            m_obexAgentManager = new ObexAgentManager(Strings::orgBluezObex(), path, QDBusConnection::sessionBus(), this);
+            m_obexAgentManager = new ObexAgentManager(Strings::orgBluezObex(), path, DBusConnection::orgBluezObex(), this);
         }
     }
 

@@ -11,13 +11,13 @@ ObexSessionPrivate::ObexSessionPrivate(ObexSession *q, const QString &path)
     , q(q)
 {
     m_bluezSession = new BluezSession(Strings::orgBluezObex(),
-                                      path, QDBusConnection::sessionBus(), this);
+                                      path, DBusConnection::orgBluezObex(), this);
 }
 
 void ObexSessionPrivate::init()
 {
     DBusProperties dbusProperties(Strings::orgBluezObex(), m_bluezSession->path(),
-                                  QDBusConnection::sessionBus(), this);
+                                  DBusConnection::orgBluezObex(), this);
 
     const QDBusPendingReply<QVariantMap> &call = dbusProperties.GetAll(Strings::orgBluezObexSession1());
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, this);
