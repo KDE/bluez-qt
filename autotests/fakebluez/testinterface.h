@@ -1,11 +1,11 @@
 #ifndef TESTINTERFACE_H
 #define TESTINTERFACE_H
 
-#include <QObject>
+#include <QDBusAbstractAdaptor>
 
 class FakeBluez;
 
-class TestInterface : public QObject
+class TestInterface : public QDBusAbstractAdaptor
 {
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.qbluez.fakebluez.Test")

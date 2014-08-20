@@ -2,7 +2,7 @@
 #include "fakebluez.h"
 
 TestInterface::TestInterface(FakeBluez *parent)
-    : QObject(parent)
+    : QDBusAbstractAdaptor(parent)
     , m_fakeBluez(parent)
 {
 }

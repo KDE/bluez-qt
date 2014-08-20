@@ -13,6 +13,8 @@ private Q_SLOTS:
 
     void bluezNotRunningTest();
     void bluezNotExportingInterfacesTest();
+    void bluezEmptyManagedObjectsTest();
+    void bluezNoAdaptersTest();
 
 };
 

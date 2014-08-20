@@ -2,6 +2,9 @@ set(fakebluez_SRCS
     main.cpp
     fakebluez.cpp
     testinterface.cpp
+    objectmanager.cpp
+    object.cpp
+    agentmanager.cpp
 )
 
 add_executable(fakebluez ${fakebluez_SRCS})

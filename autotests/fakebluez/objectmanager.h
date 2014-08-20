@@ -1,0 +1,37 @@
+#ifndef OBJECTMANAGER_H
+#define OBJECTMANAGER_H
+
+#include <QVariantMap>
+#include <QDBusObjectPath>
+#include <QDBusAbstractAdaptor>
+
+typedef QMap<QString, QVariantMap> QVariantMapMap;
+Q_DECLARE_METATYPE(QVariantMapMap)
+
+typedef QMap<QDBusObjectPath, QVariantMapMap> DBusManagerStruct;
+Q_DECLARE_METATYPE(DBusManagerStruct)
+
+class Object;
+
+class ObjectManager : public QDBusAbstractAdaptor
+{
+    Q_OBJECT
+    Q_CLASSINFO("D-Bus Interface", "org.freedesktop.DBus.ObjectManager")
+
+public:
+    explicit ObjectManager(QObject *parent = 0);
+
+    void addObject(Object *object);
+
+public Q_SLOTS:
+    DBusManagerStruct GetManagedObjects();
+
+Q_SIGNALS:
+    void InterfacesAdded(const QDBusObjectPath &object, const QVariantMapMap &interfaces);
+    void InterfacesRemoved(const QDBusObjectPath &object, const QStringList &interfaces);
+
+private:
+    QList<Object*> m_objects;
+};
+
+#endif // OBJECTMANAGER_H
