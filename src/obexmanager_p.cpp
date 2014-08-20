@@ -73,12 +73,12 @@ void ObexManagerPrivate::nameHasOwnerFinished(QDBusPendingCallWatcher *watcher)
         return;
     }
 
-    m_initialized = true;
     m_obexRunning = reply.value();
 
     if (m_obexRunning) {
         load();
     } else {
+        m_initialized = true;
         Q_EMIT initFinished();
     }
 }
@@ -138,6 +138,7 @@ void ObexManagerPrivate::getManagedObjectsFinished(QDBusPendingCallWatcher *watc
     }
 
     m_loaded = true;
+    m_initialized = true;
     Q_EMIT initFinished();
     Q_EMIT q->operationalChanged(true);
 }

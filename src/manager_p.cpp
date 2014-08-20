@@ -67,12 +67,12 @@ void ManagerPrivate::nameHasOwnerFinished(QDBusPendingCallWatcher *watcher)
         return;
     }
 
-    m_initialized = true;
     m_bluezRunning = reply.value();
 
     if (m_bluezRunning) {
         load();
     } else {
+        m_initialized = true;
         Q_EMIT initFinished();
     }
 }
@@ -129,6 +129,7 @@ void ManagerPrivate::getManagedObjectsFinished(QDBusPendingCallWatcher *watcher)
     }
 
     m_loaded = true;
+    m_initialized = true;
     m_usableAdapter = findUsableAdapter();
 
     Q_EMIT initFinished();
