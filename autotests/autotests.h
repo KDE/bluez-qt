@@ -3,26 +3,22 @@
 
 #include <QtTest/QTest>
 #include <QSignalSpy>
+#include <QProcess>
+#include <QDBusMessage>
+#include <QDBusConnection>
 
-static void verifyPropertiesChangedSignal(const QSignalSpy &spy, const QString &propertyName, const QVariant &propertyValue)
+class FakeBluez
 {
-    int changes = 0;
+public:
+    static void start();
+    static void stop();
 
-    for (int i = 0; i < spy.count(); ++i) {
-        QList<QVariant> arguments = spy.at(i);
-        QVariantMap properties = arguments.at(1).toMap();
+    static bool isRunning();
+    static void runTest(const QString &name);
 
-        QVariantMap::const_iterator it;
-        for (it = properties.constBegin(); it != properties.constEnd(); ++it) {
-            const QVariant &changedValue = it.value();
-            const QString &property = it.key();
-            if (property == propertyName && changedValue == propertyValue) {
-                changes++;
-            }
-        }
-    }
+    static QProcess *s_process;
+};
 
-    QCOMPARE(changes, 1);
-}
+void verifyPropertiesChangedSignal(const QSignalSpy &spy, const QString &propertyName, const QVariant &propertyValue);
 
 #endif // AUTOTESTS_H

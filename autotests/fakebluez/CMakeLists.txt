@@ -1,0 +1,12 @@
+set(fakebluez_SRCS
+    main.cpp
+    fakebluez.cpp
+    testinterface.cpp
+)
+
+add_executable(fakebluez ${fakebluez_SRCS})
+
+target_link_libraries(fakebluez
+    Qt5::Core
+    Qt5::DBus
+)

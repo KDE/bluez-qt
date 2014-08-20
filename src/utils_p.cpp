@@ -1,4 +1,5 @@
 #include "utils_p.h"
+#include "qbluez_export.h"
 
 #include <QStringList>
 #include <QDBusConnection>
@@ -40,6 +41,13 @@ GlobalData::GlobalData()
 }
 
 Q_GLOBAL_STATIC(GlobalData, globalData)
+
+// For fakebluez tests
+QBLUEZ_EXPORT void qbluez_initFakeBluezTestRun()
+{
+    globalData->testRun = true;
+    globalData->orgBluez = QStringLiteral("org.qbluez.fakebluez");
+}
 
 QString Strings::orgFreedesktopDBus()
 {
