@@ -23,7 +23,6 @@ public:
 
     virtual QDBusObjectPath objectPath() const = 0;
 
-public Q_SLOTS:
     virtual void authorizePush(ObexTransfer *transfer, const Request<QString> &request);
 
     virtual void cancel();

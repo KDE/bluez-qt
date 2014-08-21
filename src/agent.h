@@ -22,7 +22,6 @@ public:
 
     virtual QDBusObjectPath objectPath() const = 0;
 
-public Q_SLOTS:
     virtual void requestPinCode(Device *device, const Request<QString> &request);
     virtual void displayPinCode(Device *device, const QString &pinCode);
     virtual void requestPasskey(Device *device, const Request<quint32> &request);
