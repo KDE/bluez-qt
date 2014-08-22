@@ -14,7 +14,8 @@ public:
     static void stop();
 
     static bool isRunning();
-    static void runTest(const QString &name);
+    static void runTest(const QString &testName);
+    static void runAction(const QString &object, const QString &actionName, const QVariantMap &properties = QVariantMap());
 
     static QProcess *s_process;
 };

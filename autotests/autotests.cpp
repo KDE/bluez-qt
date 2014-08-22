@@ -51,6 +51,28 @@ void FakeBluez::runTest(const QString &testName)
     QDBusConnection::sessionBus().call(call);
 }
 
+void FakeBluez::runAction(const QString &object, const QString &actionName, const QVariantMap &properties)
+{
+    QDBusMessage call = QDBusMessage::createMethodCall(QStringLiteral("org.qbluez.fakebluez"),
+                        QStringLiteral("/"),
+                        QStringLiteral("org.qbluez.fakebluez.Test"),
+                        QStringLiteral("runAction"));
+    QList<QVariant> args;
+    args.append(object);
+    args.append(actionName);
+    args.append(properties);
+    call.setArguments(args);
+    QDBusConnection::sessionBus().call(call);
+
+    QEventLoop eventLoop;
+    QDBusConnection::sessionBus().connect(QStringLiteral("org.qbluez.fakebluez"),
+                                          QStringLiteral("/"),
+                                          QStringLiteral("org.qbluez.fakebluez.Test"),
+                                          QStringLiteral("actionFinished"),
+                                          &eventLoop, SLOT(quit()));
+    eventLoop.exec();
+}
+
 void verifyPropertiesChangedSignal(const QSignalSpy &spy, const QString &propertyName, const QVariant &propertyValue)
 {
     int changes = 0;

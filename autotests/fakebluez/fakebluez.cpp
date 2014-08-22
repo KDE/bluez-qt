@@ -3,6 +3,7 @@
 #include "objectmanager.h"
 #include "agentmanager.h"
 
+#include <QTimer>
 #include <QDBusConnection>
 
 FakeBluez::FakeBluez(QObject *parent)
@@ -17,12 +18,32 @@ FakeBluez::FakeBluez(QObject *parent)
 void FakeBluez::runTest(const QString &testName)
 {
     if (testName == QLatin1String("bluez-not-exporting-interfaces")) {
-        // We do nothing here
+        runBluezNotExportingInterfacesTest();
     } else if (testName == QLatin1String("bluez-empty-managed-objects")) {
         runBluezEmptyManagedObjectsTest();
     } else if (testName == QLatin1String("bluez-no-adapters")) {
         runBluezNoAdaptersTest();
+    } else if (testName == QLatin1String("bluez-agentmanager")) {
+        runBluezAgentManagerTest();
     }
+}
+
+void FakeBluez::runAction(const QString &object, const QString &actionName, const QVariantMap &properties)
+{
+    m_actionObject = object;
+    m_actionName = actionName;
+    m_actionProperties = properties;
+
+    QTimer::singleShot(0, this, SLOT(doRunAction()));
+}
+
+void FakeBluez::doRunAction()
+{
+    if (m_actionObject == QLatin1String("agentmanager")) {
+        m_agentManager->runAction(m_actionName, m_actionProperties);
+    }
+
+    m_testInterface->emitActionFinished();
 }
 
 void FakeBluez::clear()
@@ -42,6 +63,11 @@ void FakeBluez::createAgentManager()
     m_objectManager->addObject(m_agentManager);
 }
 
+void FakeBluez::runBluezNotExportingInterfacesTest()
+{
+    clear();
+}
+
 void FakeBluez::runBluezEmptyManagedObjectsTest()
 {
     clear();
@@ -49,6 +75,13 @@ void FakeBluez::runBluezEmptyManagedObjectsTest()
 }
 
 void FakeBluez::runBluezNoAdaptersTest()
+{
+    clear();
+    createObjectManager();
+    createAgentManager();
+}
+
+void FakeBluez::runBluezAgentManagerTest()
 {
     clear();
     createObjectManager();

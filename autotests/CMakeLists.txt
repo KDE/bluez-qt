@@ -23,6 +23,7 @@ endmacro()
 
 qbluez_tests(
     managertest
+    agentmanagertest
     adaptertest
     devicetest
     jobstest
