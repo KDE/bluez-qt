@@ -14,9 +14,30 @@ ObjectManager::ObjectManager(QObject *parent)
     QDBusConnection::sessionBus().registerObject(QStringLiteral("/org/bluez"), this);
 }
 
+ObjectManager::~ObjectManager()
+{
+    qDeleteAll(m_autoDeleteObjects);
+}
+
 void ObjectManager::addObject(Object *object)
 {
     m_objects.append(object);
+
+    QVariantMapMap interfaces;
+    interfaces.insert(object->name(), object->properties());
+    Q_EMIT InterfacesAdded(object->path(), interfaces);
+}
+
+void ObjectManager::removeObject(Object *object)
+{
+    m_objects.removeOne(object);
+
+    Q_EMIT InterfacesRemoved(object->path(), QStringList(object->name()));
+}
+
+void ObjectManager::addAutoDeleteObject(QObject *object)
+{
+    m_autoDeleteObjects.append(object);
 }
 
 DBusManagerStruct ObjectManager::GetManagedObjects()

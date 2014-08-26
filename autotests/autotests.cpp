@@ -2,6 +2,7 @@
 
 #include <QDir>
 #include <QEventLoop>
+#include <QDBusPendingCall>
 #include <QDBusServiceWatcher>
 
 QProcess *FakeBluez::s_process = 0;
@@ -62,7 +63,6 @@ void FakeBluez::runAction(const QString &object, const QString &actionName, cons
     args.append(actionName);
     args.append(properties);
     call.setArguments(args);
-    QDBusConnection::sessionBus().call(call);
 
     QEventLoop eventLoop;
     QDBusConnection::sessionBus().connect(QStringLiteral("org.qbluez.fakebluez"),
@@ -70,6 +70,8 @@ void FakeBluez::runAction(const QString &object, const QString &actionName, cons
                                           QStringLiteral("org.qbluez.fakebluez.Test"),
                                           QStringLiteral("actionFinished"),
                                           &eventLoop, SLOT(quit()));
+
+    QDBusConnection::sessionBus().asyncCall(call);
     eventLoop.exec();
 }
 

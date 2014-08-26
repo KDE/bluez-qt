@@ -5,6 +5,9 @@ set(fakebluez_SRCS
     objectmanager.cpp
     object.cpp
     agentmanager.cpp
+    devicemanager.cpp
+    adapterinterface.cpp
+    deviceinterface.cpp
 )
 
 add_executable(fakebluez ${fakebluez_SRCS})

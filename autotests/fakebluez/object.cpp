@@ -1,5 +1,7 @@
 #include "object.h"
 
+#include <QDBusAbstractAdaptor>
+
 Object::Object()
 {
 }

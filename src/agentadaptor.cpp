@@ -57,7 +57,7 @@ quint32 AgentAdaptor::RequestPasskey(const QDBusObjectPath &device, const QDBusM
     return 0;
 }
 
-void AgentAdaptor::DisplayPasskey(const QDBusObjectPath &device, quint32 passkey, quint8 entered)
+void AgentAdaptor::DisplayPasskey(const QDBusObjectPath &device, quint32 passkey, quint16 entered)
 {
     Device *dev = m_manager->deviceForUbi(device.path());
     if (!dev) {

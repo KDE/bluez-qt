@@ -1,8 +1,6 @@
 #include "testinterface.h"
 #include "fakebluez.h"
 
-#include <QTimer>
-
 TestInterface::TestInterface(FakeBluez *parent)
     : QDBusAbstractAdaptor(parent)
     , m_fakeBluez(parent)

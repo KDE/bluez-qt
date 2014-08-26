@@ -7,6 +7,7 @@
 class TestInterface;
 class ObjectManager;
 class AgentManager;
+class DeviceManager;
 
 class FakeBluez : public QObject
 {
@@ -25,15 +26,18 @@ private:
     void clear();
     void createObjectManager();
     void createAgentManager();
+    void createDeviceManager();
 
     void runBluezNotExportingInterfacesTest();
     void runBluezEmptyManagedObjectsTest();
     void runBluezNoAdaptersTest();
     void runBluezAgentManagerTest();
+    void runBluezDeviceManagerTest();
 
     TestInterface *m_testInterface;
     ObjectManager *m_objectManager;
     AgentManager *m_agentManager;
+    DeviceManager *m_deviceManager;
 
     QString m_actionObject;
     QString m_actionName;

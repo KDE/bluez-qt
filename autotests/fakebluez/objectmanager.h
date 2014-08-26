@@ -20,8 +20,12 @@ class ObjectManager : public QDBusAbstractAdaptor
 
 public:
     explicit ObjectManager(QObject *parent = 0);
+    ~ObjectManager();
 
     void addObject(Object *object);
+    void removeObject(Object *object);
+
+    void addAutoDeleteObject(QObject *object);
 
 public Q_SLOTS:
     DBusManagerStruct GetManagedObjects();
@@ -32,6 +36,7 @@ Q_SIGNALS:
 
 private:
     QList<Object*> m_objects;
+    QList<QObject*> m_autoDeleteObjects;
 };
 
 #endif // OBJECTMANAGER_H

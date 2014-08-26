@@ -107,16 +107,32 @@ void AgentManagerTest::initTestCase()
     FakeBluez::start();
     FakeBluez::runTest(QStringLiteral("bluez-agentmanager"));
 
+    // Create adapter
+    QVariantMap adapterProps;
+    adapterProps[QStringLiteral("Path")] = QVariant::fromValue(QDBusObjectPath(QStringLiteral("/org/bluez/hci0")));
+    adapterProps[QStringLiteral("Address")] = QStringLiteral("1C:E5:C3:BC:94:7E");
+    adapterProps[QStringLiteral("Name")] = QStringLiteral("TestAdapter");
+    FakeBluez::runAction(QStringLiteral("devicemanager"), QStringLiteral("create-adapter"), adapterProps);
+
+    // Create device
+    m_device = QDBusObjectPath(QStringLiteral("/org/bluez/hci0/dev_40_79_6A_0C_39_75"));
+    QVariantMap deviceProps;
+    deviceProps[QStringLiteral("Path")] = QVariant::fromValue(m_device);
+    deviceProps[QStringLiteral("Adapter")] = adapterProps.value(QStringLiteral("Path"));
+    deviceProps[QStringLiteral("Address")] = QStringLiteral("40:79:6A:0C:39:75");
+    deviceProps[QStringLiteral("Name")] = QStringLiteral("TestDevice");
+    FakeBluez::runAction(QStringLiteral("devicemanager"), QStringLiteral("create-device"), deviceProps);
+
     Manager *manager = new Manager(this);
     InitManagerJob *job = manager->init();
     job->exec();
 
     QVERIFY(!job->error());
+    QCOMPARE(manager->adapters().count(), 1);
+    QCOMPARE(manager->devices().count(), 1);
 
     m_agent = new TestAgent(this);
-    manager->registerAgent(m_agent);
-
-    m_device = QDBusObjectPath(QStringLiteral("/"));
+    manager->registerAgent(m_agent)->waitForFinished();
 }
 
 void AgentManagerTest::cleanupTestCase()
@@ -133,6 +149,7 @@ void AgentManagerTest::requestPinCodeTest()
     FakeBluez::runAction(QStringLiteral("agentmanager"), QStringLiteral("request-pincode"), props);
 
     QCOMPARE(m_agent->m_pinRequested, true);
+    QCOMPARE(m_agent->m_device->name(), QStringLiteral("TestDevice"));
 }
 
 void AgentManagerTest::displayPinCodeTest()
@@ -145,6 +162,7 @@ void AgentManagerTest::displayPinCodeTest()
     FakeBluez::runAction(QStringLiteral("agentmanager"), QStringLiteral("display-pincode"), props);
 
     QCOMPARE(m_agent->m_displayedPinCode, QStringLiteral("123456"));
+    QCOMPARE(m_agent->m_device->name(), QStringLiteral("TestDevice"));
 }
 
 void AgentManagerTest::requestPasskeyTest()
@@ -156,6 +174,7 @@ void AgentManagerTest::requestPasskeyTest()
     FakeBluez::runAction(QStringLiteral("agentmanager"), QStringLiteral("request-passkey"), props);
 
     QCOMPARE(m_agent->m_passkeyRequested, true);
+    QCOMPARE(m_agent->m_device->name(), QStringLiteral("TestDevice"));
 }
 
 void AgentManagerTest::displayPasskeyTest()
@@ -165,12 +184,13 @@ void AgentManagerTest::displayPasskeyTest()
 
     QVariantMap props;
     props.insert(QStringLiteral("Device"), QVariant::fromValue(m_device));
-    props.insert(QStringLiteral("Passkey"), 654321);
-    props.insert(QStringLiteral("EnteredPasskey"), 43);
+    props.insert(QStringLiteral("Passkey"), QVariant::fromValue((quint32) 654321));
+    props.insert(QStringLiteral("EnteredPasskey"), QVariant::fromValue((quint16) 43));
     FakeBluez::runAction(QStringLiteral("agentmanager"), QStringLiteral("display-passkey"), props);
 
     QCOMPARE(m_agent->m_displayedPasskey, QStringLiteral("654321"));
     QCOMPARE(m_agent->m_enteredPasskey, QStringLiteral("43"));
+    QCOMPARE(m_agent->m_device->name(), QStringLiteral("TestDevice"));
 }
 
 void AgentManagerTest::requestConfirmationTest()
@@ -179,10 +199,11 @@ void AgentManagerTest::requestConfirmationTest()
 
     QVariantMap props;
     props.insert(QStringLiteral("Device"), QVariant::fromValue(m_device));
-    props.insert(QStringLiteral("Passkey"), 12);
+    props.insert(QStringLiteral("Passkey"), QVariant::fromValue((quint32) 12));
     FakeBluez::runAction(QStringLiteral("agentmanager"), QStringLiteral("request-confirmation"), props);
 
     QCOMPARE(m_agent->m_requestedPasskey, QStringLiteral("000012"));
+    QCOMPARE(m_agent->m_device->name(), QStringLiteral("TestDevice"));
 }
 
 void AgentManagerTest::requestAuthorizationTest()
@@ -194,6 +215,7 @@ void AgentManagerTest::requestAuthorizationTest()
     FakeBluez::runAction(QStringLiteral("agentmanager"), QStringLiteral("request-authorization"), props);
 
     QCOMPARE(m_agent->m_authorizationRequested, true);
+    QCOMPARE(m_agent->m_device->name(), QStringLiteral("TestDevice"));
 }
 
 void AgentManagerTest::authorizeServiceTest()
@@ -206,6 +228,7 @@ void AgentManagerTest::authorizeServiceTest()
     FakeBluez::runAction(QStringLiteral("agentmanager"), QStringLiteral("authorize-service"), props);
 
     QCOMPARE(m_agent->m_authorizedUuid, Services::ObexFileTransfer);
+    QCOMPARE(m_agent->m_device->name(), QStringLiteral("TestDevice"));
 }
 
 void AgentManagerTest::cancelTest()
@@ -215,6 +238,7 @@ void AgentManagerTest::cancelTest()
     FakeBluez::runAction(QStringLiteral("agentmanager"), QStringLiteral("cancel"));
 
     QCOMPARE(m_agent->m_cancelCalled, true);
+    QCOMPARE(m_agent->m_device->name(), QStringLiteral("TestDevice"));
 }
 
 void AgentManagerTest::releaseTest()
@@ -224,6 +248,7 @@ void AgentManagerTest::releaseTest()
     FakeBluez::runAction(QStringLiteral("agentmanager"), QStringLiteral("release"));
 
     QCOMPARE(m_agent->m_releaseCalled, true);
+    QCOMPARE(m_agent->m_device->name(), QStringLiteral("TestDevice"));
 }
 
 QTEST_MAIN(AgentManagerTest)
