@@ -64,6 +64,6 @@ void Object::changeProperty(const QString &name, const QVariant &value)
                                                      QStringLiteral("PropertiesChanged"));
     signal << m_name;
     signal << updatedProperties;
-    signal << QStringList(name);
+    signal << QStringList();
     QDBusConnection::sessionBus().send(signal);
 }
