@@ -15,6 +15,8 @@ public:
 private:
     void runCreateAdapterAction(const QVariantMap &properties);
     void runCreateDeviceAction(const QVariantMap &properties);
+    void runChangeAdapterProperty(const QVariantMap &properties);
+    void runChangeDeviceProperty(const QVariantMap &properties);
 
     ObjectManager *m_objectManager;
 

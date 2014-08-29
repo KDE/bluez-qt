@@ -27,6 +27,8 @@ public:
 
     void addAutoDeleteObject(QObject *object);
 
+    Object *objectByPath(const QDBusObjectPath &path) const;
+
 public Q_SLOTS:
     DBusManagerStruct GetManagedObjects();
 
@@ -35,7 +37,7 @@ Q_SIGNALS:
     void InterfacesRemoved(const QDBusObjectPath &object, const QStringList &interfaces);
 
 private:
-    QList<Object*> m_objects;
+    QHash<QString, Object*> m_objects;
     QList<QObject*> m_autoDeleteObjects;
 };
 

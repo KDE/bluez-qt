@@ -21,7 +21,7 @@ public:
     void setProperties(const QVariantMap &properties);
 
     QVariant property(const QString &name) const;
-    void setProperty(const QString &name, const QVariant &value);
+    void changeProperty(const QString &name, const QVariant &value);
 
 private:
     QDBusObjectPath m_path;

@@ -36,7 +36,7 @@ QString DeviceInterface::alias() const
 
 void DeviceInterface::setAlias(const QString &alias)
 {
-    Object::setProperty(QStringLiteral("Alias"), alias);
+    Object::changeProperty(QStringLiteral("Alias"), alias);
 }
 
 QString DeviceInterface::icon() const
@@ -71,7 +71,7 @@ bool DeviceInterface::trusted() const
 
 void DeviceInterface::setTrusted(bool trusted)
 {
-    Object::setProperty(QStringLiteral("Trusted"), trusted);
+    Object::changeProperty(QStringLiteral("Trusted"), trusted);
 }
 
 bool DeviceInterface::blocked() const
@@ -81,7 +81,7 @@ bool DeviceInterface::blocked() const
 
 void DeviceInterface::setBlocked(bool blocked)
 {
-    Object::setProperty(QStringLiteral("Blocked"), blocked);
+    Object::changeProperty(QStringLiteral("Blocked"), blocked);
 }
 
 QDBusObjectPath DeviceInterface::adapter() const
@@ -111,12 +111,12 @@ QString DeviceInterface::modalias() const
 
 void DeviceInterface::Connect()
 {
-    Object::setProperty(QStringLiteral("Connected"), true);
+    Object::changeProperty(QStringLiteral("Connected"), true);
 }
 
 void DeviceInterface::Disconnect()
 {
-    Object::setProperty(QStringLiteral("Connected"), false);
+    Object::changeProperty(QStringLiteral("Connected"), false);
 }
 
 void DeviceInterface::ConnectProfile(const QString &uuid)

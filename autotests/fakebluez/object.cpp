@@ -1,5 +1,7 @@
 #include "object.h"
 
+#include <QDBusMessage>
+#include <QDBusConnection>
 #include <QDBusAbstractAdaptor>
 
 Object::Object()
@@ -46,7 +48,22 @@ QVariant Object::property(const QString &name) const
     return m_properties.value(name);
 }
 
-void Object::setProperty(const QString &name, const QVariant &value)
+void Object::changeProperty(const QString &name, const QVariant &value)
 {
+    if (m_properties.value(name) == value) {
+        return;
+    }
+
+    QVariantMap updatedProperties;
+    updatedProperties[name] = value;
+
     m_properties[name] = value;
+
+    QDBusMessage signal = QDBusMessage::createSignal(m_path.path(),
+                                                     QStringLiteral("org.freedesktop.DBus.Properties"),
+                                                     QStringLiteral("PropertiesChanged"));
+    signal << m_name;
+    signal << updatedProperties;
+    signal << QStringList(name);
+    QDBusConnection::sessionBus().send(signal);
 }

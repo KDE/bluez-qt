@@ -36,7 +36,7 @@ QString AdapterInterface::alias() const
 
 void AdapterInterface::setAlias(const QString &alias)
 {
-    Object::setProperty(QStringLiteral("Alias"), alias);
+    Object::changeProperty(QStringLiteral("Alias"), alias);
 }
 
 quint32 AdapterInterface::adapterClass() const
@@ -51,7 +51,7 @@ bool AdapterInterface::powered() const
 
 void AdapterInterface::setPowered(bool powered)
 {
-    Object::setProperty(QStringLiteral("Powered"), powered);
+    Object::changeProperty(QStringLiteral("Powered"), powered);
 }
 
 bool AdapterInterface::discoverable() const
@@ -61,7 +61,7 @@ bool AdapterInterface::discoverable() const
 
 void AdapterInterface::setDiscoverable(bool discoverable)
 {
-    Object::setProperty(QStringLiteral("Discoverable"), discoverable);
+    Object::changeProperty(QStringLiteral("Discoverable"), discoverable);
 
     if (discoverable && discoverableTimeout() != 0) {
         QTimer::singleShot(discoverableTimeout() * 1000, this, SLOT(resetDiscoverable()));
@@ -75,7 +75,7 @@ bool AdapterInterface::pairable() const
 
 void AdapterInterface::setPairable(bool pairable)
 {
-    Object::setProperty(QStringLiteral("Pairable"), pairable);
+    Object::changeProperty(QStringLiteral("Pairable"), pairable);
 
     if (pairable && pairableTimeout() != 0) {
         QTimer::singleShot(pairableTimeout() * 1000, this, SLOT(resetPairable()));
@@ -89,7 +89,7 @@ quint32 AdapterInterface::pairableTimeout() const
 
 void AdapterInterface::setPairableTimeout(quint32 timeout)
 {
-    Object::setProperty(QStringLiteral("PairableTimeout"), timeout);
+    Object::changeProperty(QStringLiteral("PairableTimeout"), timeout);
 }
 
 quint32 AdapterInterface::discoverableTimeout() const
@@ -99,7 +99,7 @@ quint32 AdapterInterface::discoverableTimeout() const
 
 void AdapterInterface::setDiscoverableTimeout(quint32 timeout)
 {
-    Object::setProperty(QStringLiteral("DiscoverableTimeout"), timeout);
+    Object::changeProperty(QStringLiteral("DiscoverableTimeout"), timeout);
 }
 
 bool AdapterInterface::discovering() const
@@ -119,12 +119,12 @@ QString AdapterInterface::modalias() const
 
 void AdapterInterface::StartDiscovery()
 {
-    Object::setProperty(QStringLiteral("Discovering"), true);
+    Object::changeProperty(QStringLiteral("Discovering"), true);
 }
 
 void AdapterInterface::StopDiscovery()
 {
-    Object::setProperty(QStringLiteral("Discovering"), false);
+    Object::changeProperty(QStringLiteral("Discovering"), false);
 }
 
 void AdapterInterface::RemoveDevice(const QDBusObjectPath &device)
