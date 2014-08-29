@@ -49,9 +49,8 @@ void ManagerPrivate::init()
                         QStringLiteral("/"),
                         Strings::orgFreedesktopDBus(),
                         QStringLiteral("NameHasOwner"));
-    QList<QVariant> args;
-    args.append(Strings::orgBluez());
-    call.setArguments(args);
+
+    call << Strings::orgBluez();
 
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(DBusConnection::orgBluez().asyncCall(call));
     connect(watcher, &QDBusPendingCallWatcher::finished, this, &ManagerPrivate::nameHasOwnerFinished);

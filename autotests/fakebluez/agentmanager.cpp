@@ -61,9 +61,8 @@ void AgentManager::runRequestPinCodeAction(const QVariantMap &properties)
                         m_agent.path(),
                         QStringLiteral("org.bluez.Agent1"),
                         QStringLiteral("RequestPinCode"));
-    QList<QVariant> args;
-    args.append(QVariant::fromValue(properties.value(QStringLiteral("Device")).value<QDBusObjectPath>()));
-    call.setArguments(args);
+
+    call << QVariant::fromValue(properties.value(QStringLiteral("Device")).value<QDBusObjectPath>());
     QDBusConnection::sessionBus().call(call);
 }
 
@@ -73,10 +72,9 @@ void AgentManager::runDisplayPinCodeAction(const QVariantMap &properties)
                         m_agent.path(),
                         QStringLiteral("org.bluez.Agent1"),
                         QStringLiteral("DisplayPinCode"));
-    QList<QVariant> args;
-    args.append(QVariant::fromValue(properties.value(QStringLiteral("Device")).value<QDBusObjectPath>()));
-    args.append(properties.value(QStringLiteral("PinCode")));
-    call.setArguments(args);
+
+    call << QVariant::fromValue(properties.value(QStringLiteral("Device")).value<QDBusObjectPath>());
+    call << properties.value(QStringLiteral("PinCode"));
     QDBusConnection::sessionBus().call(call);
 }
 
@@ -86,9 +84,8 @@ void AgentManager::runRequestPasskeyAction(const QVariantMap &properties)
                         m_agent.path(),
                         QStringLiteral("org.bluez.Agent1"),
                         QStringLiteral("RequestPasskey"));
-    QList<QVariant> args;
-    args.append(QVariant::fromValue(properties.value(QStringLiteral("Device")).value<QDBusObjectPath>()));
-    call.setArguments(args);
+
+    call << QVariant::fromValue(properties.value(QStringLiteral("Device")).value<QDBusObjectPath>());
     QDBusConnection::sessionBus().call(call);
 }
 
@@ -98,11 +95,10 @@ void AgentManager::runDisplayPasskeyAction(const QVariantMap &properties)
                         m_agent.path(),
                         QStringLiteral("org.bluez.Agent1"),
                         QStringLiteral("DisplayPasskey"));
-    QList<QVariant> args;
-    args.append(QVariant::fromValue(properties.value(QStringLiteral("Device")).value<QDBusObjectPath>()));
-    args.append(properties.value(QStringLiteral("Passkey")));
-    args.append(properties.value(QStringLiteral("EnteredPasskey")));
-    call.setArguments(args);
+
+    call << QVariant::fromValue(properties.value(QStringLiteral("Device")).value<QDBusObjectPath>());
+    call << properties.value(QStringLiteral("Passkey"));
+    call << properties.value(QStringLiteral("EnteredPasskey"));
     QDBusConnection::sessionBus().call(call);
 }
 
@@ -112,10 +108,9 @@ void AgentManager::runRequestConfirmationAction(const QVariantMap &properties)
                         m_agent.path(),
                         QStringLiteral("org.bluez.Agent1"),
                         QStringLiteral("RequestConfirmation"));
-    QList<QVariant> args;
-    args.append(QVariant::fromValue(properties.value(QStringLiteral("Device")).value<QDBusObjectPath>()));
-    args.append(properties.value(QStringLiteral("Passkey")));
-    call.setArguments(args);
+
+    call << QVariant::fromValue(properties.value(QStringLiteral("Device")).value<QDBusObjectPath>());
+    call << properties.value(QStringLiteral("Passkey"));
     QDBusConnection::sessionBus().call(call);
 }
 
@@ -125,9 +120,8 @@ void AgentManager::runRequestAuthorizationAction(const QVariantMap &properties)
                         m_agent.path(),
                         QStringLiteral("org.bluez.Agent1"),
                         QStringLiteral("RequestAuthorization"));
-    QList<QVariant> args;
-    args.append(QVariant::fromValue(properties.value(QStringLiteral("Device")).value<QDBusObjectPath>()));
-    call.setArguments(args);
+
+    call << QVariant::fromValue(properties.value(QStringLiteral("Device")).value<QDBusObjectPath>());
     QDBusConnection::sessionBus().call(call);
 }
 
@@ -137,10 +131,9 @@ void AgentManager::runAuthorizeServiceAction(const QVariantMap &properties)
                         m_agent.path(),
                         QStringLiteral("org.bluez.Agent1"),
                         QStringLiteral("AuthorizeService"));
-    QList<QVariant> args;
-    args.append(QVariant::fromValue(properties.value(QStringLiteral("Device")).value<QDBusObjectPath>()));
-    args.append(properties.value(QStringLiteral("UUID")));
-    call.setArguments(args);
+
+    call << QVariant::fromValue(properties.value(QStringLiteral("Device")).value<QDBusObjectPath>());
+    call << properties.value(QStringLiteral("UUID"));
     QDBusConnection::sessionBus().call(call);
 }
 

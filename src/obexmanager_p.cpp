@@ -55,9 +55,8 @@ void ObexManagerPrivate::init()
                         QStringLiteral("/"),
                         Strings::orgFreedesktopDBus(),
                         QStringLiteral("NameHasOwner"));
-    QList<QVariant> args;
-    args.append(Strings::orgBluezObex());
-    call.setArguments(args);
+
+    call << Strings::orgBluezObex();
 
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(DBusConnection::orgBluezObex().asyncCall(call));
     connect(watcher, &QDBusPendingCallWatcher::finished, this, &ObexManagerPrivate::nameHasOwnerFinished);

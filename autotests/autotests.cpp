@@ -46,9 +46,8 @@ void FakeBluez::runTest(const QString &testName)
                         QStringLiteral("/"),
                         QStringLiteral("org.qbluez.fakebluez.Test"),
                         QStringLiteral("runTest"));
-    QList<QVariant> args;
-    args.append(testName);
-    call.setArguments(args);
+
+    call << testName;
     QDBusConnection::sessionBus().call(call);
 }
 
@@ -58,11 +57,10 @@ void FakeBluez::runAction(const QString &object, const QString &actionName, cons
                         QStringLiteral("/"),
                         QStringLiteral("org.qbluez.fakebluez.Test"),
                         QStringLiteral("runAction"));
-    QList<QVariant> args;
-    args.append(object);
-    args.append(actionName);
-    args.append(properties);
-    call.setArguments(args);
+
+    call << object;
+    call << actionName;
+    call << properties;
 
     QEventLoop eventLoop;
     QDBusConnection::sessionBus().connect(QStringLiteral("org.qbluez.fakebluez"),
