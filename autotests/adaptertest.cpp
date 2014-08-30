@@ -7,10 +7,64 @@
 #include <QtTest/QSignalSpy>
 #include <QDebug>
 
+namespace QBluez
+{
+extern void qbluez_initFakeBluezTestRun();
+}
+
 using namespace QBluez;
+
+AdapterTest::AdapterTest(bool fakeBluezRun)
+    : m_fakeBluezRun(fakeBluezRun)
+{
+}
 
 void AdapterTest::initTestCase()
 {
+    QString service = QStringLiteral("org.bluez");
+    QDBusConnection connection = QDBusConnection::systemBus();
+
+    if (m_fakeBluezRun) {
+        service = QStringLiteral("org.qbluez.fakebluez");
+        connection = QDBusConnection::sessionBus();
+
+        qbluez_initFakeBluezTestRun();
+        FakeBluez::start();
+        FakeBluez::runTest(QStringLiteral("bluez-standard"));
+
+        // Create adapters
+        QVariantMap adapterProps;
+        adapterProps[QStringLiteral("Path")] = QVariant::fromValue(QDBusObjectPath(QStringLiteral("/org/bluez/hci0")));
+        adapterProps[QStringLiteral("Address")] = QStringLiteral("1C:E5:C3:BC:94:7E");
+        adapterProps[QStringLiteral("Name")] = QStringLiteral("TestAdapter");
+        adapterProps[QStringLiteral("Alias")] = QStringLiteral("TestAlias");
+        adapterProps[QStringLiteral("Class")] = QVariant::fromValue((quint32) 101);
+        adapterProps[QStringLiteral("Powered")] = QVariant::fromValue((bool) false);
+        adapterProps[QStringLiteral("Discoverable")] = QVariant::fromValue((bool) false);
+        adapterProps[QStringLiteral("Pairable")] = QVariant::fromValue((bool) false);
+        adapterProps[QStringLiteral("PairableTimeout")] = QVariant::fromValue((quint32) 0);
+        adapterProps[QStringLiteral("DiscoverableTimeout")] = QVariant::fromValue((quint32) 0);
+        adapterProps[QStringLiteral("Discovering")] = QVariant::fromValue((bool) false);
+        adapterProps[QStringLiteral("UUIDs")] = QStringList(QStringLiteral("00001200-0000-1000-8000-00805f9b34fb"));
+        adapterProps[QStringLiteral("Modalias")] = QStringLiteral("usb:v2D6Bp1236d0215");
+        FakeBluez::runAction(QStringLiteral("devicemanager"), QStringLiteral("create-adapter"), adapterProps);
+
+        adapterProps[QStringLiteral("Path")] = QVariant::fromValue(QDBusObjectPath(QStringLiteral("/org/bluez/hci1")));
+        adapterProps[QStringLiteral("Address")] = QStringLiteral("2E:3A:C3:BC:85:7C");
+        adapterProps[QStringLiteral("Name")] = QStringLiteral("TestAdapter2");
+        adapterProps[QStringLiteral("Alias")] = QStringLiteral("TestAlias2");
+        adapterProps[QStringLiteral("Class")] = QVariant::fromValue((quint32) 201);
+        adapterProps[QStringLiteral("Powered")] = QVariant::fromValue((bool) true);
+        adapterProps[QStringLiteral("Discoverable")] = QVariant::fromValue((bool) true);
+        adapterProps[QStringLiteral("Pairable")] = QVariant::fromValue((bool) true);
+        adapterProps[QStringLiteral("PairableTimeout")] = QVariant::fromValue((quint32) 150);
+        adapterProps[QStringLiteral("DiscoverableTimeout")] = QVariant::fromValue((quint32) 120);
+        adapterProps[QStringLiteral("Discovering")] = QVariant::fromValue((bool) false);
+        adapterProps[QStringLiteral("UUIDs")] = QStringList(QStringLiteral("0000110c-0000-1000-8000-00805f9b34fb"));
+        adapterProps[QStringLiteral("Modalias")] = QStringLiteral("usb:v1D3Bp1134d0214");
+        FakeBluez::runAction(QStringLiteral("devicemanager"), QStringLiteral("create-adapter"), adapterProps);
+    }
+
     m_manager = new Manager();
     InitManagerJob *initJob = m_manager->init();
     initJob->exec();
@@ -21,18 +75,22 @@ void AdapterTest::initTestCase()
 
         AdapterUnit u;
         u.adapter = adapter;
-        u.dbusAdapter = new org::bluez::Adapter1(QStringLiteral("org.bluez"),
+        u.dbusAdapter = new org::bluez::Adapter1(service,
                                                  adapter->ubi(),
-                                                 QDBusConnection::systemBus(),
+                                                 connection,
                                                  this);
-        u.dbusProperties = new org::freedesktop::DBus::Properties(QStringLiteral("org.bluez"),
+        u.dbusProperties = new org::freedesktop::DBus::Properties(service,
                                                                   adapter->ubi(),
-                                                                  QDBusConnection::systemBus(),
+                                                                  connection,
                                                                   this);
         m_units.append(u);
     }
 
-    qDebug() << "Got" << m_units.count() << "adapters.";
+    if (m_fakeBluezRun) {
+        QCOMPARE(m_manager->adapters().count(), 2);
+    } else {
+        qDebug() << "Got" << m_units.count() << "adapters.";
+    }
 }
 
 void AdapterTest::cleanupTestCase()
@@ -43,6 +101,10 @@ void AdapterTest::cleanupTestCase()
     }
 
     delete m_manager;
+
+    if (m_fakeBluezRun) {
+        FakeBluez::stop();
+    }
 }
 
 static void compareUuids(const QStringList &actual, const QStringList &expected)
@@ -280,5 +342,17 @@ void AdapterTest::discoveryTest()
     }
 }
 
-QTEST_MAIN(AdapterTest)
+int main(int argc, char *argv[])
+{
+    QCoreApplication app(argc, argv);
+    app.setAttribute(Qt::AA_Use96Dpi, true);
 
+    AdapterTest test1(false /*fakeBluezRun*/);
+    int res = QTest::qExec(&test1, argc, argv);
+    if (res != 0) {
+        return res;
+    }
+
+    AdapterTest test2(true /*fakeBluezRun*/);
+    return QTest::qExec(&test2, argc, argv);
+}

@@ -25,10 +25,8 @@ void FakeBluez::runTest(const QString &testName)
         runBluezEmptyManagedObjectsTest();
     } else if (testName == QLatin1String("bluez-no-adapters")) {
         runBluezNoAdaptersTest();
-    } else if (testName == QLatin1String("bluez-agentmanager")) {
-        runBluezAgentManagerTest();
-    } else if (testName == QLatin1String("bluez-devicemanager")) {
-        runBluezDeviceManagerTest();
+    } else if (testName == QLatin1String("bluez-standard")) {
+        runBluezStandardTest();
     }
 }
 
@@ -92,17 +90,10 @@ void FakeBluez::runBluezNoAdaptersTest()
     createAgentManager();
 }
 
-void FakeBluez::runBluezAgentManagerTest()
+void FakeBluez::runBluezStandardTest()
 {
     clear();
     createObjectManager();
     createDeviceManager();
     createAgentManager();
-}
-
-void FakeBluez::runBluezDeviceManagerTest()
-{
-    clear();
-    createObjectManager();
-    createDeviceManager();
 }

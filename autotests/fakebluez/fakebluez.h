@@ -31,8 +31,7 @@ private:
     void runBluezNotExportingInterfacesTest();
     void runBluezEmptyManagedObjectsTest();
     void runBluezNoAdaptersTest();
-    void runBluezAgentManagerTest();
-    void runBluezDeviceManagerTest();
+    void runBluezStandardTest();
 
     TestInterface *m_testInterface;
     ObjectManager *m_objectManager;

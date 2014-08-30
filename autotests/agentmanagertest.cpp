@@ -105,7 +105,7 @@ void AgentManagerTest::initTestCase()
     QLoggingCategory::setFilterRules(QStringLiteral("QBluez=false"));
 
     FakeBluez::start();
-    FakeBluez::runTest(QStringLiteral("bluez-agentmanager"));
+    FakeBluez::runTest(QStringLiteral("bluez-standard"));
 
     // Create adapter
     QVariantMap adapterProps;
