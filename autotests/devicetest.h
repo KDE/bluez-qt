@@ -15,6 +15,9 @@ class DeviceTest : public QObject
 {
     Q_OBJECT
 
+public:
+    explicit DeviceTest(bool fakeBluezRun = false);
+
 private Q_SLOTS:
     void initTestCase();
     void cleanupTestCase();
@@ -34,6 +37,7 @@ private:
 
     QBluez::Manager *m_manager;
     QList<DeviceUnit> m_units;
+    bool m_fakeBluezRun;
 };
 
 #endif // DEVICETEST_H
