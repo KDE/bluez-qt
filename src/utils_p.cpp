@@ -47,6 +47,7 @@ QBLUEZ_EXPORT void qbluez_initFakeBluezTestRun()
 {
     globalData->testRun = true;
     globalData->orgBluez = QStringLiteral("org.qbluez.fakebluez");
+    globalData->orgBluezObex = QStringLiteral("org.qbluez.fakebluez");
 }
 
 QString Strings::orgFreedesktopDBus()

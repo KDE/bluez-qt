@@ -37,7 +37,7 @@ Q_SIGNALS:
     void InterfacesRemoved(const QDBusObjectPath &object, const QStringList &interfaces);
 
 private:
-    QHash<QString, Object*> m_objects;
+    QMultiMap<QString, Object*> m_objects;
     QList<QObject*> m_autoDeleteObjects;
 };
 

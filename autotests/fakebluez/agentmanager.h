@@ -38,4 +38,4 @@ private:
     QString m_capability;
 };
 
-#endif // OBJECT_H
+#endif // AGENTMANAGER_H

@@ -8,6 +8,8 @@ set(fakebluez_SRCS
     devicemanager.cpp
     adapterinterface.cpp
     deviceinterface.cpp
+    obexagentmanager.cpp
+    obexclient.cpp
 )
 
 add_executable(fakebluez ${fakebluez_SRCS})

@@ -24,6 +24,7 @@ endmacro()
 qbluez_tests(
     managertest
     agentmanagertest
+    obexmanagertest
     adaptertest
     devicetest
     jobstest

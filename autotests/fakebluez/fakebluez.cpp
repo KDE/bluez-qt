@@ -3,16 +3,33 @@
 #include "objectmanager.h"
 #include "agentmanager.h"
 #include "devicemanager.h"
+#include "obexagentmanager.h"
+#include "obexclient.h"
 
 #include <QTimer>
 #include <QDBusConnection>
 
+// ObexObject
+class ObexObject : public QObject
+{
+public:
+    explicit ObexObject(QObject *parent = 0)
+        : QObject(parent)
+    {
+        QDBusConnection::sessionBus().registerObject(QStringLiteral("/org/bluez/obex"), this);
+    }
+};
+
+// FakeBluez
 FakeBluez::FakeBluez(QObject *parent)
     : QObject(parent)
     , m_testInterface(new TestInterface(this))
     , m_objectManager(0)
     , m_agentManager(0)
     , m_deviceManager(0)
+    , m_obexObject(0)
+    , m_obexAgentManager(0)
+    , m_obexClient(0)
 {
     QDBusConnection::sessionBus().registerObject(QStringLiteral("/"), this);
 }
@@ -27,6 +44,18 @@ void FakeBluez::runTest(const QString &testName)
         runBluezNoAdaptersTest();
     } else if (testName == QLatin1String("bluez-standard")) {
         runBluezStandardTest();
+    }
+
+    if (testName == QLatin1String("obex-not-exporting-interfaces")) {
+        runObexNotExportingInterfacesTest();
+    } else if (testName == QLatin1String("obex-empty-managed-objects")) {
+        runObexEmptyManagedObjectsTest();
+    } else if (testName == QLatin1String("obex-no-client")) {
+        runObexNoClientTest();
+    } else if (testName == QLatin1String("obex-no-agentmanager")) {
+        runObexNoAgentManagerTest();
+    } else if (testName == QLatin1String("obex-standard")) {
+        runObexStandardTest();
     }
 }
 
@@ -59,6 +88,8 @@ void FakeBluez::clear()
 void FakeBluez::createObjectManager()
 {
     m_objectManager = new ObjectManager(this);
+    m_obexObject = new ObexObject(this);
+    m_objectManager->addAutoDeleteObject(m_obexObject);
 }
 
 void FakeBluez::createAgentManager()
@@ -70,6 +101,18 @@ void FakeBluez::createAgentManager()
 void FakeBluez::createDeviceManager()
 {
     m_deviceManager = new DeviceManager(m_objectManager);
+}
+
+void FakeBluez::createObexAgentManager()
+{
+    m_obexAgentManager = new ObexAgentManager(m_obexObject);
+    m_objectManager->addObject(m_obexAgentManager);
+}
+
+void FakeBluez::createObexClient()
+{
+    m_obexClient = new ObexClient(m_obexObject);
+    m_objectManager->addObject(m_obexClient);
 }
 
 void FakeBluez::runBluezNotExportingInterfacesTest()
@@ -96,4 +139,37 @@ void FakeBluez::runBluezStandardTest()
     createObjectManager();
     createDeviceManager();
     createAgentManager();
+}
+
+void FakeBluez::runObexNotExportingInterfacesTest()
+{
+    clear();
+}
+
+void FakeBluez::runObexEmptyManagedObjectsTest()
+{
+    clear();
+    createObjectManager();
+}
+
+void FakeBluez::runObexNoClientTest()
+{
+    clear();
+    createObjectManager();
+    createObexAgentManager();
+}
+
+void FakeBluez::runObexNoAgentManagerTest()
+{
+    clear();
+    createObjectManager();
+    createObexClient();
+}
+
+void FakeBluez::runObexStandardTest()
+{
+    clear();
+    createObjectManager();
+    createObexClient();
+    createObexAgentManager();
 }

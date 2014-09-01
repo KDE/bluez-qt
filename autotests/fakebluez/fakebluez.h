@@ -8,6 +8,9 @@ class TestInterface;
 class ObjectManager;
 class AgentManager;
 class DeviceManager;
+class ObexObject;
+class ObexAgentManager;
+class ObexClient;
 
 class FakeBluez : public QObject
 {
@@ -27,16 +30,28 @@ private:
     void createObjectManager();
     void createAgentManager();
     void createDeviceManager();
+    void createObexAgentManager();
+    void createObexClient();
 
     void runBluezNotExportingInterfacesTest();
     void runBluezEmptyManagedObjectsTest();
     void runBluezNoAdaptersTest();
     void runBluezStandardTest();
 
+    void runObexNotExportingInterfacesTest();
+    void runObexEmptyManagedObjectsTest();
+    void runObexNoClientTest();
+    void runObexNoAgentManagerTest();
+    void runObexStandardTest();
+
     TestInterface *m_testInterface;
     ObjectManager *m_objectManager;
     AgentManager *m_agentManager;
     DeviceManager *m_deviceManager;
+
+    ObexObject *m_obexObject;
+    ObexAgentManager *m_obexAgentManager;
+    ObexClient *m_obexClient;
 
     QString m_actionObject;
     QString m_actionName;
