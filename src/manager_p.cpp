@@ -120,8 +120,6 @@ void ManagerPrivate::getManagedObjectsFinished(QDBusPendingCallWatcher *watcher)
         }
     }
 
-    Q_ASSERT(m_bluezAgentManager);
-
     if (!m_bluezAgentManager) {
         Q_EMIT initError(QStringLiteral("Cannot find org.bluez.AgentManager1 object!"));
         return;
