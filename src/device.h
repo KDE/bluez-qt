@@ -33,7 +33,7 @@ class QBLUEZ_EXPORT Device : public QObject
     Q_PROPERTY(bool connected READ isConnected NOTIFY connectedChanged)
     Q_PROPERTY(QStringList uuids READ uuids NOTIFY uuidsChanged)
     Q_PROPERTY(QString modalias READ modalias NOTIFY modaliasChanged)
-    Q_PROPERTY(Adapter* adapter READ adapter)
+    Q_PROPERTY(QBluez::Adapter* adapter READ adapter)
 
 public:
     virtual ~Device();
@@ -76,29 +76,30 @@ public:
 
     Adapter *adapter() const;
 
+public Q_SLOTS:
     // Possible errors: NotReady, Failed, InProgress, AlreadyConnected
-    PendingCall *connectDevice();
+    QBluez::PendingCall *connectDevice();
 
     // Possible errors: NotConnected
-    PendingCall *disconnectDevice();
+    QBluez::PendingCall *disconnectDevice();
 
     // Possible errors: DoesNotExist, AlreadyConnected, ConnectFailed
-    PendingCall *connectProfile(const QString &uuid);
+    QBluez::PendingCall *connectProfile(const QString &uuid);
 
     // Possible errors: DoesNotExist, Failed, NotConnected, NotSupported
-    PendingCall *disconnectProfile(const QString &uuid);
+    QBluez::PendingCall *disconnectProfile(const QString &uuid);
 
     // Possible errors: InvalidArguments, Failed, AlreadyExists,
     //                  AuthenticationCanceled, AuthenticationFailed
     //                  AuthenticationRejected, AuthenticationTimeout,
     //                  ConnectionAttemptFailed
-    PendingCall *pair();
+    QBluez::PendingCall *pair();
 
     // Possible errors: DoesNotExist, Failed
-    PendingCall *cancelPairing();
+    QBluez::PendingCall *cancelPairing();
 
 Q_SIGNALS:
-    void deviceChanged(Device *device);
+    void deviceChanged(QBluez::Device *device);
 
     void nameChanged(const QString &name);
     void friendlyNameChanged(const QString &friendlyName);

@@ -14,6 +14,7 @@ class Manager;
 class QBLUEZ_EXPORT InitManagerJob : public Job
 {
     Q_OBJECT
+    Q_PROPERTY(QBluez::Manager* manager READ manager)
 
 public:
     ~InitManagerJob();

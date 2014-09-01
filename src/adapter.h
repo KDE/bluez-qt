@@ -30,7 +30,7 @@ class QBLUEZ_EXPORT Adapter : public QObject
     Q_PROPERTY(bool discovering READ isDiscovering NOTIFY discoveringChanged)
     Q_PROPERTY(QStringList uuids READ uuids NOTIFY uuidsChanged)
     Q_PROPERTY(QString modalias READ modalias NOTIFY modaliasChanged)
-    Q_PROPERTY(QList<Device*> devices READ devices)
+    Q_PROPERTY(QList<QBluez::Device*> devices READ devices)
 
 public:
     virtual ~Adapter();
@@ -69,19 +69,20 @@ public:
 
     QList<Device*> devices() const;
 
-    Device *deviceForAddress(const QString &address) const;
+public Q_SLOTS:
+    QBluez::Device *deviceForAddress(const QString &address) const;
 
     // Possible errors: NotReady, Failed
-    PendingCall *startDiscovery();
+    QBluez::PendingCall *startDiscovery();
 
     // Possible errors: NotReady, Failed, NotAuthorized
-    PendingCall *stopDiscovery();
+    QBluez::PendingCall *stopDiscovery();
 
     // Possible errors: InvalidArguments, Failed
-    PendingCall *removeDevice(Device *device);
+    QBluez::PendingCall *removeDevice(QBluez::Device *device);
 
 Q_SIGNALS:
-    void adapterChanged(Adapter *adapter);
+    void adapterChanged(QBluez::Adapter *adapter);
 
     void nameChanged(const QString &name);
     void aliasChanged(const QString &name);
@@ -95,9 +96,9 @@ Q_SIGNALS:
     void uuidsChanged(const QStringList &uuids);
     void modaliasChanged(const QString &modalias);
 
-    void deviceFound(Device *device);
-    void deviceRemoved(Device *device);
-    void deviceChanged(Device *device);
+    void deviceFound(QBluez::Device *device);
+    void deviceRemoved(QBluez::Device *device);
+    void deviceChanged(QBluez::Device *device);
 
 private:
     explicit Adapter(const QString &address, const QVariantMap &properties, QObject *parent);

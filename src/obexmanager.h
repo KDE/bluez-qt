@@ -30,6 +30,7 @@ public:
     bool isInitialized() const;
     bool isOperational() const;
 
+public Q_SLOTS:
     // Possible errors: AlreadyExists
     PendingCall *registerAgent(ObexAgent *agent);
 

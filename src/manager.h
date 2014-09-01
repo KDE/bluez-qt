@@ -19,9 +19,9 @@ class QBLUEZ_EXPORT Manager : public QObject
     Q_OBJECT
 
     Q_ENUMS(RegisterCapability)
-    Q_PROPERTY(Adapter* usableAdapter READ usableAdapter)
-    Q_PROPERTY(QList<Adapter*> adapters READ adapters)
-    Q_PROPERTY(QList<Device*> devices READ devices)
+    Q_PROPERTY(QBluez::Adapter* usableAdapter READ usableAdapter)
+    Q_PROPERTY(QList<QBluez::Adapter*> adapters READ adapters)
+    Q_PROPERTY(QList<QBluez::Device*> devices READ devices)
     Q_PROPERTY(bool initialized READ isInitialized)
     Q_PROPERTY(bool operational READ isOperational NOTIFY operationalChanged)
     Q_PROPERTY(bool bluetoothOperational READ isBluetoothOperational)
@@ -47,10 +47,11 @@ public:
     QList<Adapter*> adapters() const;
     QList<Device*> devices() const;
 
-    Adapter *adapterForAddress(const QString &address) const;
-    Adapter *adapterForUbi(const QString &ubi) const;
-    Device *deviceForAddress(const QString &address) const;
-    Device *deviceForUbi(const QString &ubi) const;
+public Q_SLOTS:
+    QBluez::Adapter *adapterForAddress(const QString &address) const;
+    QBluez::Adapter *adapterForUbi(const QString &ubi) const;
+    QBluez::Device *deviceForAddress(const QString &address) const;
+    QBluez::Device *deviceForUbi(const QString &ubi) const;
 
     // Possible errors: InvalidArguments, AlreadyExists
     PendingCall *registerAgent(Agent *agent, RegisterCapability registerCapability = DisplayYesNo);

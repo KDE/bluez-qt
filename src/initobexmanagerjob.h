@@ -14,6 +14,7 @@ class ObexManager;
 class QBLUEZ_EXPORT InitObexManagerJob : public Job
 {
     Q_OBJECT
+    Q_PROPERTY(QBluez::ObexManager* manager READ manager)
 
 public:
     ~InitObexManagerJob();
