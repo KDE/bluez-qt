@@ -135,8 +135,9 @@ void ObexManagerPrivate::getManagedObjectsFinished(QDBusPendingCallWatcher *watc
 
     m_loaded = true;
     m_initialized = true;
-    Q_EMIT initFinished();
+
     Q_EMIT q->operationalChanged(true);
+    Q_EMIT initFinished();
 }
 
 void ObexManagerPrivate::clear()

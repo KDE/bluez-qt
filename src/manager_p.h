@@ -44,6 +44,7 @@ public:
     void addDevice(const QString &devicePath, const QVariantMap &properties);
     void removeAdapter(const QString &adapterPath);
     void removeDevice(const QString &devicePath);
+    void setUsableAdapter(Adapter *adapter);
 
     Manager *q;
     DBusObjectManager *m_dbusObjectManager;

@@ -127,10 +127,11 @@ void ManagerPrivate::getManagedObjectsFinished(QDBusPendingCallWatcher *watcher)
 
     m_loaded = true;
     m_initialized = true;
-    m_usableAdapter = findUsableAdapter();
+
+    Q_EMIT q->operationalChanged(true);
+    setUsableAdapter(findUsableAdapter());
 
     Q_EMIT initFinished();
-    Q_EMIT q->operationalChanged(true);
 }
 
 void ManagerPrivate::clear()
@@ -227,9 +228,9 @@ void ManagerPrivate::adapterRemoved(Adapter *adapter)
 {
     disconnect(adapter, &Adapter::poweredChanged, this, &ManagerPrivate::adapterPoweredChanged);
 
+    // Current usable adapter was removed
     if (adapter == m_usableAdapter) {
-        m_usableAdapter = findUsableAdapter();
-        Q_EMIT q->usableAdapterChanged(m_usableAdapter);
+        setUsableAdapter(findUsableAdapter());
     }
 }
 
@@ -240,14 +241,12 @@ void ManagerPrivate::adapterPoweredChanged(bool powered)
 
     // Current usable adapter was powered off
     if (m_usableAdapter == adapter && !powered) {
-        m_usableAdapter = findUsableAdapter();
-        Q_EMIT q->usableAdapterChanged(m_usableAdapter);
+        setUsableAdapter(findUsableAdapter());
     }
 
     // Adapter was powered on, set it as usable
     if (!m_usableAdapter && powered) {
-        m_usableAdapter = adapter;
-        Q_EMIT q->usableAdapterChanged(m_usableAdapter);
+        setUsableAdapter(adapter);
     }
 }
 
@@ -264,9 +263,9 @@ void ManagerPrivate::addAdapter(const QString &adapterPath, const QVariantMap &p
 
     Q_EMIT q->adapterAdded(adapter);
 
+    // Powered adapter was added, set it as usable
     if (!m_usableAdapter && adapter->isPowered()) {
-        m_usableAdapter = adapter;
-        Q_EMIT q->usableAdapterChanged(m_usableAdapter);
+        setUsableAdapter(adapter);
     }
 }
 
@@ -303,6 +302,22 @@ void ManagerPrivate::removeDevice(const QString &devicePath)
 
     device->adapter()->d->removeDevice(device);
     device->deleteLater();
+}
+
+void ManagerPrivate::setUsableAdapter(Adapter *adapter)
+{
+    if (m_usableAdapter == adapter) {
+        return;
+    }
+
+    bool wasOperational = q->isBluetoothOperational();
+
+    m_usableAdapter = adapter;
+    Q_EMIT q->usableAdapterChanged(m_usableAdapter);
+
+    if (wasOperational != q->isBluetoothOperational()) {
+        Q_EMIT q->bluetoothOperationalChanged(q->isBluetoothOperational());
+    }
 }
 
 } // namespace QBluez

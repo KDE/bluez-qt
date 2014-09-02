@@ -19,12 +19,12 @@ class QBLUEZ_EXPORT Manager : public QObject
     Q_OBJECT
 
     Q_ENUMS(RegisterCapability)
-    Q_PROPERTY(QBluez::Adapter* usableAdapter READ usableAdapter)
+    Q_PROPERTY(QBluez::Adapter* usableAdapter READ usableAdapter NOTIFY usableAdapterChanged)
     Q_PROPERTY(QList<QBluez::Adapter*> adapters READ adapters)
     Q_PROPERTY(QList<QBluez::Device*> devices READ devices)
     Q_PROPERTY(bool initialized READ isInitialized)
     Q_PROPERTY(bool operational READ isOperational NOTIFY operationalChanged)
-    Q_PROPERTY(bool bluetoothOperational READ isBluetoothOperational)
+    Q_PROPERTY(bool bluetoothOperational READ isBluetoothOperational NOTIFY bluetoothOperationalChanged)
 
 public:
     enum RegisterCapability {
@@ -64,6 +64,7 @@ public Q_SLOTS:
 
 Q_SIGNALS:
     void operationalChanged(bool operational);
+    void bluetoothOperationalChanged(bool operational);
     void adapterAdded(Adapter *adapter);
     void adapterRemoved(Adapter *adapter);
     void usableAdapterChanged(Adapter *adapter);
