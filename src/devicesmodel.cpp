@@ -9,7 +9,9 @@ namespace QBluez
 class DevicesModelPrivate : public QObject
 {
 public:
-    explicit DevicesModelPrivate(DevicesModel *q, Manager *manager);
+    explicit DevicesModelPrivate(DevicesModel *q);
+
+    void init();
 
     void adapterAdded(Adapter *adapter);
     void deviceFound(Device *device);
@@ -21,10 +23,14 @@ public:
     QList<Device*> m_devices;
 };
 
-DevicesModelPrivate::DevicesModelPrivate(DevicesModel *q, Manager *manager)
+DevicesModelPrivate::DevicesModelPrivate(DevicesModel *q)
     : QObject(q)
     , q(q)
-    , m_manager(manager)
+    , m_manager(0)
+{
+}
+
+void DevicesModelPrivate::init()
 {
     m_devices = m_manager->devices();
 
@@ -76,8 +82,35 @@ void DevicesModelPrivate::deviceChanged(Device *device)
 
 DevicesModel::DevicesModel(Manager *manager, QObject *parent)
     : QAbstractListModel(parent)
-    , d(new DevicesModelPrivate(this, manager))
+    , d(new DevicesModelPrivate(this))
 {
+    setManager(manager);
+}
+
+QHash<int, QByteArray> DevicesModel::roleNames() const
+{
+    QHash<int, QByteArray> roles = QAbstractListModel::roleNames();
+
+    roles[UbiRole] = QByteArrayLiteral("Ubi");
+    roles[AddressRole] = QByteArrayLiteral("Address");
+    roles[NameRole] = QByteArrayLiteral("Name");
+    roles[FriendlyNameRole] = QByteArrayLiteral("FriendlyName");
+    roles[AliasRole] = QByteArrayLiteral("Alias");
+    roles[DeviceClassRole] = QByteArrayLiteral("DeviceClass");
+    roles[DeviceTypeRole] = QByteArrayLiteral("DeviceType");
+    roles[AppearanceRole] = QByteArrayLiteral("Appearance");
+    roles[IconRole] = QByteArrayLiteral("Icon");
+    roles[PairedRole] = QByteArrayLiteral("Paired");
+    roles[TrustedRole] = QByteArrayLiteral("Trusted");
+    roles[BlockedRole] = QByteArrayLiteral("Blocked");
+    roles[LegacyPairingRole] = QByteArrayLiteral("LegacyPairing");
+    roles[RssiRole] = QByteArrayLiteral("Rssi");
+    roles[ConnectedRole] = QByteArrayLiteral("Connected");
+    roles[UuidsRole] = QByteArrayLiteral("Uuids");
+    roles[ModaliasRole] = QByteArrayLiteral("Modalias");
+    roles[AdapterRole] = QByteArrayLiteral("Adapter");
+
+    return roles;
 }
 
 int DevicesModel::rowCount(const QModelIndex &parent) const
@@ -152,6 +185,14 @@ QModelIndex DevicesModel::index(int row, int column, const QModelIndex &parent) 
 Device *DevicesModel::device(const QModelIndex &index) const
 {
     return static_cast<Device*>(index.internalPointer());
+}
+
+void DevicesModel::setManager(Manager *manager)
+{
+    if (manager) {
+        d->m_manager = manager;
+        d->init();
+    }
 }
 
 } // namespace QBluez

@@ -40,6 +40,7 @@ public:
 
     explicit DevicesModel(Manager *manager, QObject *parent = 0);
 
+    QHash<int, QByteArray> roleNames() const Q_DECL_OVERRIDE;
     int rowCount(const QModelIndex &parent = QModelIndex()) const Q_DECL_OVERRIDE;
     QVariant data(const QModelIndex &index, int role) const Q_DECL_OVERRIDE;
     QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const Q_DECL_OVERRIDE;
@@ -47,9 +48,12 @@ public:
     Device *device(const QModelIndex &index) const;
 
 Q_SIGNALS:
-    void deviceFound(Device *device);
-    void deviceRemoved(Device *device);
-    void deviceChanged(Device *device);
+    void deviceFound(QBluez::Device *device);
+    void deviceRemoved(QBluez::Device *device);
+    void deviceChanged(QBluez::Device *device);
+
+protected:
+    void setManager(Manager *manager);
 
 private:
     class DevicesModelPrivate *const d;

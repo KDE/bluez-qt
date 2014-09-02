@@ -1,5 +1,6 @@
 set(qbluezextensionplugin_SRCS
     declarativemanager.cpp
+    declarativedevicesmodel.cpp
     qbluezextensionplugin.cpp
     )
 
