@@ -1,6 +1,7 @@
 #include "declarativemanager.h"
 #include "initmanagerjob.h"
 #include "adapter.h"
+#include "device.h"
 
 static int adaptersCountFunction(QQmlListProperty<QBluez::Adapter> *property)
 {
@@ -40,6 +41,9 @@ DeclarativeManager::DeclarativeManager(QObject *parent)
     QBluez::InitManagerJob *job = init();
     job->start();
     connect(job, &QBluez::InitManagerJob::result, this, &DeclarativeManager::initJobResult);
+
+    connect(this, &QBluez::Manager::adapterAdded, this, &DeclarativeManager::slotAdapterAdded);
+    connect(this, &QBluez::Manager::adapterRemoved, this, &DeclarativeManager::slotAdapterRemoved);
 }
 
 QQmlListProperty<QBluez::Adapter> DeclarativeManager::declarativeAdapters()
@@ -67,4 +71,32 @@ void DeclarativeManager::initJobResult(QBluez::InitManagerJob *job)
     }
 
     Q_EMIT initialized();
+}
+
+void DeclarativeManager::slotAdapterAdded(QBluez::Adapter *adapter)
+{
+    Q_EMIT adaptersChanged(declarativeAdapters());
+
+    connect(adapter, &QBluez::Adapter::deviceFound, this, &DeclarativeManager::slotDeviceAdded);
+    connect(adapter, &QBluez::Adapter::deviceRemoved, this, &DeclarativeManager::slotDeviceRemoved);
+}
+
+void DeclarativeManager::slotAdapterRemoved(QBluez::Adapter *adapter)
+{
+    Q_EMIT adaptersChanged(declarativeAdapters());
+
+    disconnect(adapter, &QBluez::Adapter::deviceFound, this, &DeclarativeManager::slotDeviceAdded);
+    disconnect(adapter, &QBluez::Adapter::deviceRemoved, this, &DeclarativeManager::slotDeviceRemoved);
+}
+
+void DeclarativeManager::slotDeviceAdded(QBluez::Device *device)
+{
+    Q_UNUSED(device)
+    Q_EMIT devicesChanged(declarativeDevices());
+}
+
+void DeclarativeManager::slotDeviceRemoved(QBluez::Device *device)
+{
+    Q_UNUSED(device)
+    Q_EMIT devicesChanged(declarativeDevices());
 }

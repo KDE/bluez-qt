@@ -65,9 +65,9 @@ public Q_SLOTS:
 Q_SIGNALS:
     void operationalChanged(bool operational);
     void bluetoothOperationalChanged(bool operational);
-    void adapterAdded(Adapter *adapter);
-    void adapterRemoved(Adapter *adapter);
-    void usableAdapterChanged(Adapter *adapter);
+    void adapterAdded(QBluez::Adapter *adapter);
+    void adapterRemoved(QBluez::Adapter *adapter);
+    void usableAdapterChanged(QBluez::Adapter *adapter);
     void allAdaptersRemoved();
 
 private:
