@@ -85,11 +85,6 @@ void ManagerPrivate::load()
     m_dbusObjectManager = new DBusObjectManager(Strings::orgBluez(), QStringLiteral("/"),
             DBusConnection::orgBluez(), this);
 
-    connect(m_dbusObjectManager, &DBusObjectManager::InterfacesAdded,
-            this, &ManagerPrivate::interfacesAdded);
-    connect(m_dbusObjectManager, &DBusObjectManager::InterfacesRemoved,
-            this, &ManagerPrivate::interfacesRemoved);
-
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(m_dbusObjectManager->GetManagedObjects(), this);
     connect(watcher, &QDBusPendingCallWatcher::finished, this, &ManagerPrivate::getManagedObjectsFinished);
 }
@@ -125,12 +120,15 @@ void ManagerPrivate::getManagedObjectsFinished(QDBusPendingCallWatcher *watcher)
         return;
     }
 
+    connect(m_dbusObjectManager, &DBusObjectManager::InterfacesAdded,
+            this, &ManagerPrivate::interfacesAdded);
+    connect(m_dbusObjectManager, &DBusObjectManager::InterfacesRemoved,
+            this, &ManagerPrivate::interfacesRemoved);
+
     m_loaded = true;
     m_initialized = true;
 
     Q_EMIT q->operationalChanged(true);
-    setUsableAdapter(findUsableAdapter());
-
     Q_EMIT initFinished();
 }
 
@@ -255,11 +253,6 @@ void ManagerPrivate::addAdapter(const QString &adapterPath, const QVariantMap &p
     Adapter *adapter = new Adapter(adapterPath, properties, this);
     m_adapters.insert(adapterPath, adapter);
     connect(adapter, &Adapter::poweredChanged, this, &ManagerPrivate::adapterPoweredChanged);
-
-    // We will only emit adapterAdded/usableAdapterChanged after loaded (for newly added adapters)
-    if (!m_loaded) {
-        return;
-    }
 
     Q_EMIT q->adapterAdded(adapter);
 

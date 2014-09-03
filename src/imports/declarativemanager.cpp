@@ -63,13 +63,6 @@ void DeclarativeManager::initJobResult(QBluez::InitManagerJob *job)
         return;
     }
 
-    Q_FOREACH (QBluez::Adapter *adapter, adapters()) {
-        Q_EMIT adapterAdded(adapter);
-        Q_FOREACH (QBluez::Device *device, adapter->devices()) {
-            Q_EMIT adapter->deviceFound(device);
-        }
-    }
-
     Q_EMIT initialized();
 }
 
