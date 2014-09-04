@@ -1,7 +1,5 @@
 add_subdirectory(fakebluez)
 
-find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Test)
-
 include(ECMMarkAsTest)
 
 set(qbluez_autotests_SRCS

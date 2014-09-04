@@ -27,13 +27,20 @@ ecm_setup_version(${KF5_VERSION}
 set(REQUIRED_QT_VERSION "5.2.0")
 
 # Required Qt5 components to build this framework
-find_package(Qt5 ${REQUIRED_QT_VERSION} NO_MODULE REQUIRED Core DBus Qml)
+find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core DBus Test)
+
+# Optional Qt5 components to build this framework
+find_package(Qt5Qml ${REQUIRED_QT_VERSION} CONFIG)
+set_package_properties(Qt5Qml PROPERTIES DESCRIPTION "QML support for QBluez" TYPE OPTIONAL)
 
 # Subdirectories
 add_subdirectory(src)
-add_subdirectory(src/imports)
 add_subdirectory(autotests)
 add_subdirectory(tests)
+
+if(Qt5Qml_FOUND)
+    add_subdirectory(src/imports)
+endif()
 
 # Create a Config.cmake and a ConfigVersion.cmake file and install them
 set(CMAKECONFIG_INSTALL_DIR "${CMAKECONFIG_INSTALL_PREFIX}/KF5QBluez")
