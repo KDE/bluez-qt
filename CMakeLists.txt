@@ -15,7 +15,7 @@ include(KDEInstallDirs)
 include(KDEFrameworkCompilerSettings)
 include(KDECMakeSettings)
 
-set(KF5_VERSION "4.96.0") # Update this
+set(KF5_VERSION "5.1.0") # handled by release scripts
 
 ecm_setup_version(${KF5_VERSION}
     VARIABLE_PREFIX QBLUEZ
