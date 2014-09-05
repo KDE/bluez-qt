@@ -31,7 +31,7 @@ class JobPrivate;
 /**
  * This class represents an asynchronous job performed by QBluez,
  * it is usually not used directly but instead it is inherit by some
- * other class, for example \See LoadAdapterJob or \See LoadDeviceJob
+ * other class.
  *
  * There are two ways of using this class, one is via exec() which will block
  * the thread until a result is fetched, the other is via connecting to the
@@ -40,12 +40,15 @@ class JobPrivate;
  * Please, think twice before using exec(), it should be used only in either
  * unittest or cli apps.
  *
- * @note: Job and its subclasses are meant to be used
+ * @note Job and its subclasses are meant to be used
  * in a fire-and-forget way. Jobs will delete themselves
  * when they finish using deleteLater()
  *
- * @note: Even given their asynchronous nature, Jobs are still executed in the
+ * @note Even given their asynchronous nature, Jobs are still executed in the
  * main thread, so any blocking code executed in it will block the app calling it.
+ *
+ * @see InitManagerJob
+ * @see InitObexManagerJob
  */
 class QBLUEZ_EXPORT Job : public QObject
 {
@@ -57,13 +60,27 @@ class QBLUEZ_EXPORT Job : public QObject
     Q_PROPERTY(bool finished READ isFinished)
 
 public:
+    /**
+     * Creates a new Job object.
+     *
+     * @param parent
+     */
     explicit Job(QObject *parent = 0);
-    virtual ~Job();
 
+    /**
+     * Destroys a Job object.
+     */
+    ~Job();
+
+    /**
+     * Error type
+     *
+     * @see error()
+     */
     enum Error {
-        /*** Indicates there is no error */
+        /** Indicates there is no error */
         NoError = 0,
-        /*** Subclasses should define error codes starting at this value */
+        /** Subclasses should define error codes starting at this value */
         UserDefinedError = 100
     };
 
@@ -144,7 +161,7 @@ public Q_SLOTS:
      */
     void kill();
 
-private Q_SLOTS:
+protected Q_SLOTS:
     /**
      * Implementation for start() that will be executed in next loop
      *
@@ -164,8 +181,8 @@ protected:
      * is encountered in the job, just before calling emitResult().
      *
      * You should define an enum of error codes,
-     * with values starting at KJob::UserDefinedError, and use
-     * those. For example,
+     * with values starting at Job::UserDefinedError, and use
+     * those. For example:
      * @code
      * enum ExampleErrors{
      *   InvalidFoo = UserDefinedError,
@@ -195,7 +212,7 @@ protected:
 
     /**
      * Utility function to emit the result signal, and suicide this job.
-     * @note: Deletes this job using deleteLater().
+     * @note Deletes this job using deleteLater().
      * @see result()
      */
     void emitResult();
@@ -214,6 +231,7 @@ protected:
 private:
     Q_DECLARE_PRIVATE(Job)
 };
+
 }
 Q_DECLARE_METATYPE(QBluez::Job::Error)
 

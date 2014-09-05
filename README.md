@@ -1,5 +1,7 @@
 # QBluez
 
+Asynchronous Bluez 5 wrapper library
+
 ## Introduction
 
 TODO: write an introduction about this framework

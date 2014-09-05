@@ -1,1 +1,9 @@
-tier: "unknown"
+maintainer: drosca
+description: Async Bluez 5 wrapper library
+tier: 1
+platforms:
+    - name: Linux
+libraries:
+    - qmake: QBluez
+      cmake: KF5::QBluez
+cmakename: KF5QBluez
