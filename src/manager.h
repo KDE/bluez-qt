@@ -15,6 +15,8 @@ class PendingCall;
 class InitManagerJob;
 
 /**
+ * Bluetooth manager.
+ *
  * The entry point to communicate with system Bluez daemon.
  *
  * The typical usecase is to work with usableAdapter() (any powered adapter),
@@ -52,6 +54,9 @@ class InitManagerJob;
  * @endcode
  *
  * @note All adapters and devices are owned by manager. You should NOT delete them!
+ *
+ * @note All communication with Bluez daemon happens asynchronously. Almost all methods
+ *       returns PendingCall to help track the call progress and to check for any errors.
  *
  * @see InitManagerJob
  */
@@ -150,7 +155,7 @@ public Q_SLOTS:
     /**
      * Returns an adapter for specified address.
      *
-     * @param address address of adapter (eg. 1C:E5:C3:BC:94:7E)
+     * @param address address of adapter (eg. "1C:E5:C3:BC:94:7E")
      * @return null if there is no adapter with specified address
      */
     QBluez::Adapter *adapterForAddress(const QString &address) const;
@@ -158,7 +163,7 @@ public Q_SLOTS:
     /**
      * Returns an adapter for specified UBI.
      *
-     * @param ubi UBI of adapter (eg. /org/bluez/hci0)
+     * @param ubi UBI of adapter (eg. "/org/bluez/hci0")
      * @return null if there is no adapter with specified UBI
      */
     QBluez::Adapter *adapterForUbi(const QString &ubi) const;
@@ -166,7 +171,7 @@ public Q_SLOTS:
     /**
      * Returns a device for specified address.
      *
-     * @param address address of device (eg. 40:79:6A:0C:39:75)
+     * @param address address of device (eg. "40:79:6A:0C:39:75")
      * @return null if there is no device with specified address
      *
      * @note There may be more devices with the same address (same device
@@ -178,7 +183,7 @@ public Q_SLOTS:
     /**
      * Returns a device for specified UBI.
      *
-     * @param ubi UBI of device (eg. /org/bluez/hci0/dev_40_79_6A_0C_39_75)
+     * @param ubi UBI of device (eg. "/org/bluez/hci0/dev_40_79_6A_0C_39_75")
      * @return null if there is no device with specified UBI
      */
     QBluez::Device *deviceForUbi(const QString &ubi) const;
@@ -222,31 +227,31 @@ public Q_SLOTS:
 Q_SIGNALS:
     /**
      * Indicates that operational state have changed.
-     * @param operational changed state
      */
     void operationalChanged(bool operational);
+
     /**
      * Indicates that Bluetooth operational state have changed.
-     * @param operational changed state
      */
     void bluetoothOperationalChanged(bool operational);
+
     /**
      * Indicates that adapter have been added.
-     * @param adapter added adapter
      */
     void adapterAdded(QBluez::Adapter *adapter);
+
     /**
      * Indicates that adapter have been removed.
-     * @param adapter removed adapter
      */
     void adapterRemoved(QBluez::Adapter *adapter);
+
     /**
-     * Indicates that usable adapter have been changed.
-     * @param adapter changed usable adpater
+     * Indicates that usable adapter have changed.
      */
     void usableAdapterChanged(QBluez::Adapter *adapter);
+
     /**
-     * Indicates that all adapter have been removed.
+     * Indicates that all adapters have been removed.
      */
     void allAdaptersRemoved();
 
