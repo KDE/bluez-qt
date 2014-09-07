@@ -183,9 +183,11 @@ public:
     bool isDiscovering();
 
     /**
-     * Returns UUIDs of available services.
+     * Returns UUIDs of supported services by the adapter.
      *
-     * @return UUIDs of available services
+     * UUIDs will always be returned in uppercase.
+     *
+     * @return UUIDs of supported services
      */
     QStringList uuids() const;
 
@@ -231,7 +233,6 @@ public Q_SLOTS:
      */
     QBluez::PendingCall *stopDiscovery();
 
-    // Possible errors:
     /**
      * Removes the specified device.
      *
