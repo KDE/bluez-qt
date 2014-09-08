@@ -9,6 +9,12 @@
 namespace QBluez
 {
 
+/**
+ * Pending method call.
+ *
+ * This class represents a pending method call. It is a convenient wrapper
+ * around QDBusPendingReply and QDBusPendingCallWatcher.
+ */
 class QBLUEZ_EXPORT PendingCall : public QObject
 {
     Q_OBJECT
@@ -22,45 +28,120 @@ class QBLUEZ_EXPORT PendingCall : public QObject
     Q_PROPERTY(QVariant userData READ userData WRITE setUserData)
 
 public:
+    /**
+     * Possible error types
+     */
     enum Error {
+        /** Indicates there is no error. */
         NoError = 0,
+        /** Indicates that the device is not ready. */
         NotReady = 1,
+        /** Indicates that the action have failed. */
         Failed = 2,
+        /** Indicates that the action was rejected. */
         Rejected = 3,
+        /** Indicates that the action was canceled. */
         Canceled = 4,
+        /** Indicates that invalid arguments were passed. */
         InvalidArguments = 5,
+        /** Indicates that an agent or pairing record already exists. */
         AlreadyExists = 6,
+        /** Indicates that an agent, service or pairing operation does not exists. */
         DoesNotExist = 7,
+        /** Indicates that the action is already in progress. */
         InProgress = 8,
+        /** Indicates that the device is already connected. */
         AlreadyConnected = 9,
+        /** Indicates that the connection to the device have failed. */
         ConnectFailed = 10,
+        /** Indicates that the device is not connected. */
         NotConnected = 11,
+        /** Indicates that the action is not supported. */
         NotSupported = 12,
+        /** Indicates that the caller is not authorized to do the action. */
         NotAuthorized = 13,
+        /** Indicates that the authentication was canceled. */
         AuthenticationCanceled = 14,
+        /** Indicates that the authentication have failed. */
         AuthenticationFailed = 15,
+        /** Indicates that the authentication was rejected. */
         AuthenticationRejected = 16,
+        /** Indicates that the authentication timed out. */
         AuthenticationTimeout = 17,
+        /** Indicates that the connection attempt have failed. */
         ConnectionAttemptFailed = 18,
+        /** Indicates an internal error. */
         InternalError = 99,
+        /** Indicates an unknown error. */
         UnknownError = 100
     };
 
+    /**
+     * Destroys a PendingCall object.
+     */
     ~PendingCall();
 
+    /**
+     * Returns a first return value of the call.
+     *
+     * @return first return value
+     */
     QVariant value() const;
+
+    /**
+     * Returns all values of the call.
+     *
+     * @return all return values
+     */
     QVariantList values() const;
 
+    /**
+     * Returns an error code.
+     *
+     * @return error code
+     * @see Error
+     */
     int error() const;
+
+    /**
+     * Returns an error text.
+     *
+     * @return error text
+     */
     QString errorText() const;
 
+    /**
+     * Returns whether the call is finished.
+     *
+     * @return true if call is finished
+     */
     bool isFinished() const;
+
+    /**
+     * Waits for the call to finish.
+     *
+     * @note This method blocks until the call finishes!
+     */
     void waitForFinished();
 
+    /**
+     * Returns the user data of the call.
+     *
+     * @return user data of call
+     */
     QVariant userData() const;
+
+    /**
+     * Sets the user data of the call.
+     *
+     * @param userData user data
+     */
     void setUserData(const QVariant &userData);
 
 Q_SIGNALS:
+    /**
+     * Indicates that the call have finished.
+     */
     void finished(PendingCall *call);
 
 private:

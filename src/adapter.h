@@ -41,7 +41,7 @@ public:
     /**
      * Destroys an Adapter object.
      */
-    virtual ~Adapter();
+    ~Adapter();
 
     /**
      * Returns an UBI of the adapter.

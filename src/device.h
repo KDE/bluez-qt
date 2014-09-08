@@ -44,7 +44,7 @@ public:
     /**
      * Destroys a Device object.
      */
-    virtual ~Device();
+    ~Device();
 
     /**
      * Returns an UBI of the device.
