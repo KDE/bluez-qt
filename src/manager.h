@@ -85,6 +85,7 @@ public:
 
     /**
      * Creates a new Manager object.
+     *
      * @param parent
      */
     explicit Manager(QObject *parent = 0);
