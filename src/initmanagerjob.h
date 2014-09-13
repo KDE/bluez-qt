@@ -11,17 +11,33 @@ namespace QBluez
 
 class Manager;
 
+/**
+ * Init manager job.
+ *
+ * This class represents a job that initializes Manager.
+ */
 class QBLUEZ_EXPORT InitManagerJob : public Job
 {
     Q_OBJECT
     Q_PROPERTY(QBluez::Manager* manager READ manager)
 
 public:
+    /**
+      * Destroys an InitManagerJob object.
+      */
     ~InitManagerJob();
 
+    /**
+     * Returns a manager that is being initialized.
+     *
+     * @return manager
+     */
     Manager *manager() const;
 
 Q_SIGNALS:
+    /**
+     * Indicates that the job have finished.
+     */
     void result(InitManagerJob *job);
 
 private:

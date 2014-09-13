@@ -11,17 +11,33 @@ namespace QBluez
 
 class ObexManager;
 
+/**
+ * Init obex manager job.
+ *
+ * This class represents a job that initializes ObexManager.
+ */
 class QBLUEZ_EXPORT InitObexManagerJob : public Job
 {
     Q_OBJECT
     Q_PROPERTY(QBluez::ObexManager* manager READ manager)
 
 public:
+    /**
+      * Destroys an InitObexManagerJob object.
+      */
     ~InitObexManagerJob();
 
+    /**
+     * Returns a manager that is being initialized.
+     *
+     * @return manager
+     */
     ObexManager *manager() const;
 
 Q_SIGNALS:
+    /**
+     * Indicates that the job have finished.
+     */
     void result(InitObexManagerJob *job);
 
 private:
