@@ -52,9 +52,6 @@ Q_SIGNALS:
     void deviceRemoved(QBluez::Device *device);
     void deviceChanged(QBluez::Device *device);
 
-protected:
-    void setManager(Manager *manager);
-
 private:
     class DevicesModelPrivate *const d;
 

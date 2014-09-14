@@ -17,6 +17,8 @@ public:
     QQmlListProperty<QBluez::Adapter> declarativeAdapters();
     QQmlListProperty<QBluez::Device> declarativeDevices();
 
+    static DeclarativeManager *self();
+
 Q_SIGNALS:
     void initialized();
     void initializeError(const QString &errorText);

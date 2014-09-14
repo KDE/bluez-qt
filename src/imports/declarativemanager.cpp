@@ -3,6 +3,8 @@
 #include "adapter.h"
 #include "device.h"
 
+DeclarativeManager *s_instance = 0;
+
 static int adaptersCountFunction(QQmlListProperty<QBluez::Adapter> *property)
 {
     Q_ASSERT(qobject_cast<DeclarativeManager*>(property->object));
@@ -38,6 +40,11 @@ static QBluez::Device *devicesAtFunction(QQmlListProperty<QBluez::Device> *prope
 DeclarativeManager::DeclarativeManager(QObject *parent)
     : QBluez::Manager(parent)
 {
+    if (s_instance) {
+        qFatal("DeclarativeManager: Only one instance is allowed!");
+    }
+    s_instance = this;
+
     QBluez::InitManagerJob *job = init();
     job->start();
     connect(job, &QBluez::InitManagerJob::result, this, &DeclarativeManager::initJobResult);
@@ -54,6 +61,11 @@ QQmlListProperty<QBluez::Adapter> DeclarativeManager::declarativeAdapters()
 QQmlListProperty<QBluez::Device> DeclarativeManager::declarativeDevices()
 {
     return QQmlListProperty<QBluez::Device>(this, 0, devicesCountFunction, devicesAtFunction);
+}
+
+DeclarativeManager *DeclarativeManager::self()
+{
+    return s_instance;
 }
 
 void DeclarativeManager::initJobResult(QBluez::InitManagerJob *job)

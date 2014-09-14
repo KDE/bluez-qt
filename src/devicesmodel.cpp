@@ -84,7 +84,8 @@ DevicesModel::DevicesModel(Manager *manager, QObject *parent)
     : QAbstractListModel(parent)
     , d(new DevicesModelPrivate(this))
 {
-    setManager(manager);
+    d->m_manager = manager;
+    d->init();
 }
 
 QHash<int, QByteArray> DevicesModel::roleNames() const
@@ -185,14 +186,6 @@ QModelIndex DevicesModel::index(int row, int column, const QModelIndex &parent) 
 Device *DevicesModel::device(const QModelIndex &index) const
 {
     return static_cast<Device*>(index.internalPointer());
-}
-
-void DevicesModel::setManager(Manager *manager)
-{
-    if (manager) {
-        d->m_manager = manager;
-        d->init();
-    }
 }
 
 } // namespace QBluez
