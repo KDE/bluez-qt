@@ -39,6 +39,7 @@ public:
      * D-Bus object path of the agent.
      *
      * The path where the agent will be registered.
+     *
      * You must provide valid object path!
      *
      * @return object path of agent
@@ -142,6 +143,8 @@ public:
      *
      * This method gets called to indicate that the agent
      * request failed before a reply was returned.
+     *
+     * It cancels the previous request.
      */
     virtual void cancel();
 
