@@ -14,6 +14,16 @@ class ObexAgent;
 class PendingCall;
 class InitObexManagerJob;
 
+/**
+ * OBEX manager.
+ *
+ * The entry point to communicate with session Bluez obex daemon.
+ *
+ * You must call init() before other functions can be used.
+ *
+ * @note If manager is not operational, all methods that returns a PendingCall
+ *       will fail with PendingCall::InternalError.
+ */
 class QBLUEZ_EXPORT ObexManager : public QObject
 {
     Q_OBJECT
@@ -22,30 +32,113 @@ class QBLUEZ_EXPORT ObexManager : public QObject
     Q_PROPERTY(bool operational READ isOperational NOTIFY operationalChanged)
 
 public:
+    /**
+     * Creates a new ObexManager object.
+     *
+     * @param parent
+     */
     explicit ObexManager(QObject *parent = 0);
+
+    /**
+     * Destroys an ObexManager object.
+     */
     ~ObexManager();
 
+    /**
+     * Creates a new init job.
+     *
+     * @return init manager job
+     */
     InitObexManagerJob *init();
 
+    /**
+     * Returns whether the manager is initialized.
+     *
+     * @return true if manager is initialized
+     */
     bool isInitialized() const;
+
+    /**
+     * Returns whether the manager is operational.
+     *
+     * The manager is operational when initialization was successful
+     * and Bluez session daemon is running.
+     *
+     * @return true if manager is operational
+     */
     bool isOperational() const;
 
 public Q_SLOTS:
-    // Possible errors: AlreadyExists
+    /**
+     * Registers agent.
+     *
+     * This agent will be used to authorize an incoming object push requests.
+     *
+     * Possible errors: PendingCall::AlreadyExists
+     *
+     * @param agent agent to be registered
+     * @return  void pending call
+     */
     PendingCall *registerAgent(ObexAgent *agent);
 
-    // Possible errors: DoesNotExist
+    /**
+     * Unregisters agent.
+     *
+     * Possible errors: PendingCall::DoesNotExist
+     *
+     * @param agent agent to be unregistered
+     * @return  void pending call
+     */
     PendingCall *unregisterAgent(ObexAgent *agent);
 
-    // Possible errors: InvalidArguments, Failed
-    // Return: QDBusObjectPath
+    /**
+     * Creates a new OBEX session.
+     *
+     * The @p args parameter is a dictionary to hold optional or
+     * type-specific parameters.
+     *
+     * Typical parameters:
+     * <ul>
+     *  <li>QString target - type of session to be created</li>
+     *  <li>QString source - device address to be used</li>
+     * </ul>
+     *
+     * Supported targets:
+     * <ul>
+     *   <li>ftp - ObexFileTransfer</li>
+     *   <li>map</li>
+     *   <li>opp - ObexObjectPush</li>
+     *   <li>pbap</li>
+     *   <li>sync</li>
+     * </ul>
+     *
+     * Possible errors: PendingCall::InvalidArguments, PendingCall::Failed
+     *
+     * @param destination address of target device
+     * @param args session parameters
+     * @return QDBusObjectPath pending call
+     */
     PendingCall *createSession(const QString &destination, const QVariantMap &args);
 
-    // Possible errors: InvalidArguments, NotAuthorized
+    /**
+     * Removes an existing OBEX session.
+     *
+     * Possible errors: PendingCall::InvalidArguments, PendingCall::NotAuthorized
+     *
+     * @param session session to be removed
+     * @return void pending call
+     */
     PendingCall *removeSession(const QDBusObjectPath &session);
 
 Q_SIGNALS:
+    /**
+     * Indicates that operational state have changed.
+     */
     void operationalChanged(bool operational);
+
+    /**
+     * Indicates that the session was removed.
+     */
     void sessionRemoved(const QDBusObjectPath &session);
 
 private:

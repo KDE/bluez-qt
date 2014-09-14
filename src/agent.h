@@ -16,7 +16,7 @@ class Device;
 /**
  * Bluetooth agent.
  *
- * This class represents an Bluetooth agent.
+ * This class represents a Bluetooth agent.
  *
  * The agent is used in pairing process to do various actions.
  *

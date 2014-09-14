@@ -58,6 +58,9 @@ class InitManagerJob;
  * @note All communication with Bluez daemon happens asynchronously. Almost all methods
  *       returns PendingCall to help track the call progress and to check for any errors.
  *
+ * @note If manager is not operational, all methods that returns a PendingCall
+ *       will fail with PendingCall::InternalError.
+ *
  * @see InitManagerJob
  */
 class QBLUEZ_EXPORT Manager : public QObject
