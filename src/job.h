@@ -225,10 +225,10 @@ protected:
      */
     virtual void doEmitResult() = 0;
 
+private:
     JobPrivate *const d_ptr;
     Job(JobPrivate &dd, QObject *parent);
 
-private:
     Q_DECLARE_PRIVATE(Job)
 };
 
