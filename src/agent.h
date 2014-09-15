@@ -29,7 +29,7 @@ class QBLUEZ_EXPORT Agent : public QObject
 
 public:
     /**
-     * Constructs a new Agent object.
+     * Creates a new Agent object.
      *
      * @param parent
      */

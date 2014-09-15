@@ -28,14 +28,14 @@ class Request
 {
 public:
     /**
-     * Constructs a new Request object.
+     * Creates a new Request object.
      */
     Request()
     {
     }
 
     /**
-     * Constructs a new Request object.
+     * Creates a new Request object.
      *
      * @param type type of agent
      * @param message message used for reply

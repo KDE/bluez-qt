@@ -25,8 +25,8 @@ public:
     /**
      * Creates a new ObexObjectPush object.
      *
-     * This class will be typically constructed with a
-     * @p path from result of ObexManager::createSession().
+     * This class will be typically used with a @p path
+     * from result of ObexManager::createSession().
      *
      * @param path path of session
      * @param parent
@@ -53,7 +53,7 @@ public:
      * Possible errors: PendingCall::InvalidArguments, PendingCall::Failed
      *
      * @param fileName full path of file to send
-     * @return ObexTransfer* pending call
+     * @return ObexTransfer * pending call
      */
     PendingCall *sendFile(const QString &fileName);
 
@@ -68,7 +68,7 @@ public:
      * Possible errors: PendingCall::InvalidArguments, PendingCall::Failed
      *
      * @param targetFileName full path where the bussiness card will be saved
-     * @return ObexTransfer* pending call
+     * @return ObexTransfer * pending call
      */
     PendingCall *pullBusinessCard(const QString &targetFileName);
 
@@ -88,7 +88,7 @@ public:
      *
      * @param clientFileName full path to local business card
      * @param targetFileName full path where the bussiness card will be saved
-     * @return ObexTransfer* pending call
+     * @return ObexTransfer * pending call
      */
     PendingCall *exchangeBusinessCards(const QString &clientFileName, const QString &targetFileName);
 
