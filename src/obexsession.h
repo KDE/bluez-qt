@@ -10,6 +10,11 @@ namespace QBluez
 
 class PendingCall;
 
+/**
+ * OBEX session.
+ *
+ * This class represents an OBEX session.
+ */
 class QBLUEZ_EXPORT ObexSession : public QObject
 {
     Q_OBJECT
@@ -21,20 +26,57 @@ class QBLUEZ_EXPORT ObexSession : public QObject
     Q_PROPERTY(QString root READ root)
 
 public:
+    /**
+     * Destroys an ObexSession object.
+     */
     ~ObexSession();
 
+    /**
+     * Returns address of the Bluetooth adapter.
+     *
+     * @see Manager::adapterForAddress()
+     *
+     * @return address of adapter
+     */
     QString source() const;
 
+    /**
+     * Returns address of the Bluetooth device.
+     *
+     * @see Manager::deviceForAddress(), Adapter::deviceForAddress()
+     *
+     * @return address of device
+     */
     QString destination() const;
 
+    /**
+     * Returns the Bluetooth channel.
+     *
+     * @return channel
+     */
     quint8 channel() const;
 
+    /**
+     * Returns the target UUID.
+     *
+     * @return target UUID
+     */
     QString target() const;
 
+    /**
+     * Returns the root path.
+     *
+     * @return root path
+     */
     QString root() const;
 
-    // Possible errors: NotSupported, Failed
-    // Return: QString
+    /**
+     * Returns the remote device capabilities.
+     *
+     * Possible errors: PendingCall::NotSupported, PendingCall::Failed
+     *
+     * @return QString pending call
+     */
     PendingCall *getCapabilities();
 
 private:
