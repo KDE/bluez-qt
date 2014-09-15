@@ -56,8 +56,8 @@ public:
      * The return value should be full path where the incoming object
      * will be saved.
      *
-     * The @p transfer object will contain a fileName property that
-     * contains the default location and name that can be returned.
+     * The ObexTransfer::fileName() contains the default location
+     * and name that can be returned.
      *
      * @param transfer transfer object
      * @param request request to be used for sending reply

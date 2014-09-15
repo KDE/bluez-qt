@@ -34,21 +34,21 @@ QDBusObjectPath ObexObjectPush::objectPath() const
     return QDBusObjectPath(d->m_bluezObjectPush->path());
 }
 
-PendingCall *ObexObjectPush::sendFile(const QString &filename)
+PendingCall *ObexObjectPush::sendFile(const QString &fileName)
 {
-    return new PendingCall(d->m_bluezObjectPush->SendFile(filename),
+    return new PendingCall(d->m_bluezObjectPush->SendFile(fileName),
                            PendingCall::ReturnTransferWithProperties, this);
 }
 
-PendingCall *ObexObjectPush::pullBusinessCard(const QString &targetFilename)
+PendingCall *ObexObjectPush::pullBusinessCard(const QString &targetFileName)
 {
-    return new PendingCall(d->m_bluezObjectPush->PullBusinessCard(targetFilename),
+    return new PendingCall(d->m_bluezObjectPush->PullBusinessCard(targetFileName),
                            PendingCall::ReturnTransferWithProperties, this);
 }
 
-PendingCall *ObexObjectPush::exchangeBusinessCards(const QString &clientFilename, const QString &targetFilename)
+PendingCall *ObexObjectPush::exchangeBusinessCards(const QString &clientFileName, const QString &targetFileName)
 {
-    return new PendingCall(d->m_bluezObjectPush->ExchangeBusinessCards(clientFilename, targetFilename),
+    return new PendingCall(d->m_bluezObjectPush->ExchangeBusinessCards(clientFileName, targetFileName),
                            PendingCall::ReturnTransferWithProperties, this);
 }
 
