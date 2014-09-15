@@ -35,7 +35,7 @@ class QBLUEZ_EXPORT ObexTransfer : public QObject
 
 public:
     /**
-     * Status of transfer
+     * Status of transfer.
      */
     enum Status {
         /** Indicates that the transfer is queued. */

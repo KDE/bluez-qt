@@ -29,7 +29,7 @@ class QBLUEZ_EXPORT PendingCall : public QObject
 
 public:
     /**
-     * Possible error types
+     * Known error types.
      */
     enum Error {
         /** Indicates there is no error. */
@@ -50,26 +50,28 @@ public:
         DoesNotExist = 7,
         /** Indicates that the action is already in progress. */
         InProgress = 8,
+        /** Indicates that the action is not in progress. */
+        NotInProgress = 9,
         /** Indicates that the device is already connected. */
-        AlreadyConnected = 9,
+        AlreadyConnected = 10,
         /** Indicates that the connection to the device have failed. */
-        ConnectFailed = 10,
+        ConnectFailed = 11,
         /** Indicates that the device is not connected. */
-        NotConnected = 11,
+        NotConnected = 12,
         /** Indicates that the action is not supported. */
-        NotSupported = 12,
+        NotSupported = 13,
         /** Indicates that the caller is not authorized to do the action. */
-        NotAuthorized = 13,
+        NotAuthorized = 14,
         /** Indicates that the authentication was canceled. */
-        AuthenticationCanceled = 14,
+        AuthenticationCanceled = 15,
         /** Indicates that the authentication have failed. */
-        AuthenticationFailed = 15,
+        AuthenticationFailed = 16,
         /** Indicates that the authentication was rejected. */
-        AuthenticationRejected = 16,
+        AuthenticationRejected = 17,
         /** Indicates that the authentication timed out. */
-        AuthenticationTimeout = 17,
+        AuthenticationTimeout = 18,
         /** Indicates that the connection attempt have failed. */
-        ConnectionAttemptFailed = 18,
+        ConnectionAttemptFailed = 19,
         /** Indicates an internal error. */
         InternalError = 99,
         /** Indicates an unknown error. */
