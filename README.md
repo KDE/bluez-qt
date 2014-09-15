@@ -8,7 +8,7 @@ QBluez is a library for communication with Bluez system and session daemons.
 
 <ul>
   <li>Manager class is used to communicate with system daemon.</li>
-  <li>ObexManager class is used to communicate with session dameon.</li>
+  <li>ObexManager class is used to communicate with session daemon.</li>
 </ul>
 
 All method calls are asynchronous using PendingCall that helps

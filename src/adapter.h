@@ -247,7 +247,7 @@ public Q_SLOTS:
 
 Q_SIGNALS:
     /**
-     * Indicates that at least one of the adapter's property have changed.
+     * Indicates that at least one of the adapter's properties have changed.
      */
     void adapterChanged(QBluez::Adapter *adapter);
 
@@ -307,17 +307,17 @@ Q_SIGNALS:
     void modaliasChanged(const QString &modalias);
 
     /**
-     * Indicates that a new device have been found.
+     * Indicates that a new device was found.
      */
     void deviceFound(QBluez::Device *device);
 
     /**
-     * Indicates that a device have been removed.
+     * Indicates that a device was removed.
      */
     void deviceRemoved(QBluez::Device *device);
 
     /**
-     * Indicates that at least one of the device's property have changed.
+     * Indicates that at least one of the device's properties have changed.
      */
     void deviceChanged(QBluez::Device *device);
 

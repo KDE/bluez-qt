@@ -240,12 +240,12 @@ Q_SIGNALS:
     void bluetoothOperationalChanged(bool operational);
 
     /**
-     * Indicates that adapter have been added.
+     * Indicates that adapter was added.
      */
     void adapterAdded(QBluez::Adapter *adapter);
 
     /**
-     * Indicates that adapter have been removed.
+     * Indicates that adapter was removed.
      */
     void adapterRemoved(QBluez::Adapter *adapter);
 
@@ -255,7 +255,7 @@ Q_SIGNALS:
     void usableAdapterChanged(QBluez::Adapter *adapter);
 
     /**
-     * Indicates that all adapters have been removed.
+     * Indicates that all adapters were removed.
      */
     void allAdaptersRemoved();
 

@@ -115,7 +115,7 @@ Q_SIGNALS:
     void deviceRemoved(QBluez::Device *device);
 
     /**
-     * Indicates that at least one of the device's property have changed.
+     * Indicates that at least one of the device's properties have changed.
      */
     void deviceChanged(QBluez::Device *device);
 
