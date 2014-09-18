@@ -160,7 +160,7 @@ void ManagerTest::bluezRestartTest()
     // allAdaptersRemoved will be last signal
     allAdaptersRemovedSpy.wait();
 
-    //QCOMPARE(allAdaptersRemovedSpy.count(), 1);
+    QCOMPARE(allAdaptersRemovedSpy.count(), 1);
     QCOMPARE(adapterRemovedSpy.count(), 2);
     QCOMPARE(device1RemovedSpy.count(), 1);
     QCOMPARE(device2RemovedSpy.count(), 1);

@@ -2,6 +2,7 @@
 
 #include <QDir>
 #include <QEventLoop>
+#include <QCoreApplication>
 #include <QDBusPendingCall>
 #include <QDBusServiceWatcher>
 
@@ -22,7 +23,7 @@ void FakeBluez::start()
     QEventLoop eventLoop;
     QObject::connect(&watcher, &QDBusServiceWatcher::serviceRegistered, &eventLoop, &QEventLoop::quit);
 
-    s_process->start(QStringLiteral("fakebluez/fakebluez"));
+    s_process->start(qApp->applicationDirPath() + QStringLiteral("/fakebluez/fakebluez"));
 
     eventLoop.exec();
 }
