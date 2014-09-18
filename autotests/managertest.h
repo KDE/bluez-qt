@@ -15,6 +15,7 @@ private Q_SLOTS:
     void bluezNotExportingInterfacesTest();
     void bluezEmptyManagedObjectsTest();
     void bluezNoAdaptersTest();
+    void bluezRestartTest();
 
 };
 

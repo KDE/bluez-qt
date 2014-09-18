@@ -144,10 +144,11 @@ void ManagerPrivate::clear()
     m_devices.clear();
 
     // Delete all adapters
-    for (int i = 0; i < m_adapters.count(); ++i) {
+    while (!m_adapters.isEmpty()) {
         Adapter *adapter = m_adapters.begin().value();
         m_adapters.remove(m_adapters.begin().key());
         Q_EMIT q->adapterRemoved(adapter);
+
         adapter->deleteLater();
         if (m_adapters.isEmpty()) {
             Q_EMIT q->allAdaptersRemoved();
