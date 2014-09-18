@@ -11,6 +11,7 @@ Adapter::Adapter(const QString &path, const QVariantMap &properties, QObject *pa
     : QObject(parent)
     , d(new AdapterPrivate(path, properties, this))
 {
+    qRegisterMetaType<QBluez::Adapter*>("QBluez::Adapter*");
 }
 
 Adapter::~Adapter()

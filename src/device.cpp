@@ -9,6 +9,7 @@ Device::Device(const QString &path, const QVariantMap &properties, Adapter *adap
     : QObject(parent)
     , d(new DevicePrivate(path, properties, adapter, this))
 {
+    qRegisterMetaType<QBluez::Device*>("QBluez::Device*");
 }
 
 Device::~Device()
