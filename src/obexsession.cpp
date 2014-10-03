@@ -87,5 +87,3 @@ PendingCall *ObexSession::getCapabilities()
 }
 
 } // namespace QBluez
-
-#include "obexsession.moc"
