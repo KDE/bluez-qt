@@ -41,7 +41,7 @@ DeclarativeManager::DeclarativeManager(QObject *parent)
     : QBluez::Manager(parent)
 {
     if (s_instance) {
-        qFatal("DeclarativeManager: Only one instance is allowed!");
+        qWarning("DeclarativeManager: Only one instance is allowed!");
     }
     s_instance = this;
 
