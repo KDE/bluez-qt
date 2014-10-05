@@ -33,13 +33,14 @@
 using namespace QBluez;
 
 AdaptersReceiver::AdaptersReceiver(Manager *manager, QObject *parent)
-    : QThread(parent)
+    : QObject(parent)
     , m_manager(manager)
 {
-}
-
-AdaptersReceiver::~AdaptersReceiver()
-{
+    connect(manager, &Manager::adapterAdded, this, &AdaptersReceiver::adapterAdded);
+    connect(manager, &Manager::adapterRemoved, this, &AdaptersReceiver::adapterRemoved);
+    connect(manager, &Manager::usableAdapterChanged, this, &AdaptersReceiver::usableAdapterChanged);
+    connect(manager, &Manager::allAdaptersRemoved, this, &AdaptersReceiver::allAdaptersRemoved);
+    connect(manager, &Manager::bluetoothOperationalChanged, this, &AdaptersReceiver::bluetoothOperationalChanged);
 }
 
 void AdaptersReceiver::adapterAdded(QBluez::Adapter *adapter)
@@ -74,15 +75,9 @@ void AdaptersReceiver::allAdaptersRemoved()
     qDebug();
 }
 
-void AdaptersReceiver::run()
+void AdaptersReceiver::bluetoothOperationalChanged(bool operational)
 {
-    while (true) {
-        qDebug();
-        qDebug() << "Bluetooth Operational: " << m_manager->isBluetoothOperational();
-        qDebug() << "Usable Adapter: " << m_manager->usableAdapter();
-        qDebug();
-        sleep(5);
-    }
+    qDebug() << "Bluetooth operational changed: " << operational;
 }
 
 int main(int argc, char **argv)
@@ -99,14 +94,6 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    AdaptersReceiver *adapterTest = new AdaptersReceiver(manager);
-
-    QObject::connect(manager, &Manager::adapterAdded, adapterTest, &AdaptersReceiver::adapterAdded);
-    QObject::connect(manager, &Manager::adapterRemoved, adapterTest, &AdaptersReceiver::adapterRemoved);
-    QObject::connect(manager, &Manager::usableAdapterChanged, adapterTest, &AdaptersReceiver::usableAdapterChanged);
-    QObject::connect(manager, &Manager::allAdaptersRemoved, adapterTest, &AdaptersReceiver::allAdaptersRemoved);
-
-    adapterTest->start();
-
+    new AdaptersReceiver(manager);
     return app.exec();
 }

@@ -25,7 +25,6 @@
 #define ADAPTERSRECEIVER_H
 
 #include <QObject>
-#include <QThread>
 
 namespace QBluez {
     class Manager;
@@ -33,22 +32,19 @@ namespace QBluez {
     class Device;
 }
 
-class AdaptersReceiver : public QThread
+class AdaptersReceiver : public QObject
 {
     Q_OBJECT
 
 public:
     AdaptersReceiver(QBluez::Manager *manager, QObject *parent = 0);
-    virtual ~AdaptersReceiver();
 
 public Q_SLOTS:
     void adapterAdded(QBluez::Adapter *adapter);
     void adapterRemoved(QBluez::Adapter *adapter);
     void usableAdapterChanged(QBluez::Adapter *adapter);
     void allAdaptersRemoved();
-
-protected:
-    virtual void run();
+    void bluetoothOperationalChanged(bool operational);
 
 private:
     QBluez::Manager *m_manager;
