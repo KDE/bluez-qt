@@ -130,6 +130,9 @@ void ManagerTest::bluezRestartTest()
     FakeBluez::runAction(QStringLiteral("devicemanager"), QStringLiteral("create-device"), deviceProps);
 
     Manager *manager = new Manager;
+
+    QSignalSpy btOperationalChangedSpy(manager, SIGNAL(bluetoothOperationalChanged(bool)));
+
     InitManagerJob *job = manager->init();
     job->exec();
 
@@ -139,6 +142,9 @@ void ManagerTest::bluezRestartTest()
     QVERIFY(manager->isBluetoothOperational());
     QCOMPARE(manager->adapters().count(), 2);
     QCOMPARE(manager->devices().count(), 2);
+
+    QCOMPARE(btOperationalChangedSpy.count(), 1);
+    QCOMPARE(btOperationalChangedSpy.first().first().toBool(), true);
 
     Adapter *adapter1 = manager->adapterForAddress(QStringLiteral("1C:E5:C3:BC:94:7E"));
     Adapter *adapter2 = manager->adapterForAddress(QStringLiteral("2E:3A:C3:BC:85:7C"));
@@ -155,6 +161,7 @@ void ManagerTest::bluezRestartTest()
     QSignalSpy device1RemovedSpy(adapter1, SIGNAL(deviceRemoved(QBluez::Device*)));
     QSignalSpy device2RemovedSpy(adapter2, SIGNAL(deviceRemoved(QBluez::Device*)));
 
+    btOperationalChangedSpy.clear();
     FakeBluez::stop();
 
     // allAdaptersRemoved will be last signal
@@ -164,6 +171,9 @@ void ManagerTest::bluezRestartTest()
     QCOMPARE(adapterRemovedSpy.count(), 2);
     QCOMPARE(device1RemovedSpy.count(), 1);
     QCOMPARE(device2RemovedSpy.count(), 1);
+
+    QCOMPARE(btOperationalChangedSpy.count(), 1);
+    QCOMPARE(btOperationalChangedSpy.first().first().toBool(), false);
 }
 
 QTEST_MAIN(ManagerTest)

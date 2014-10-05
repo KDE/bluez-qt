@@ -129,6 +129,11 @@ void ManagerPrivate::getManagedObjectsFinished(QDBusPendingCallWatcher *watcher)
     m_initialized = true;
 
     Q_EMIT q->operationalChanged(true);
+
+    if (q->isBluetoothOperational()) {
+        Q_EMIT q->bluetoothOperationalChanged(true);
+    }
+
     Q_EMIT initFinished();
 }
 
@@ -190,7 +195,13 @@ void ManagerPrivate::serviceRegistered()
 void ManagerPrivate::serviceUnregistered()
 {
     qCDebug(QBLUEZ) << "Bluez service unregistered";
+
+    bool wasBtOperational = q->isBluetoothOperational();
     m_bluezRunning = false;
+
+    if (wasBtOperational) {
+        Q_EMIT q->bluetoothOperationalChanged(false);
+    }
 
     clear();
     Q_EMIT q->operationalChanged(false);
@@ -304,12 +315,12 @@ void ManagerPrivate::setUsableAdapter(Adapter *adapter)
         return;
     }
 
-    bool wasOperational = q->isBluetoothOperational();
+    bool wasBtOperational = q->isBluetoothOperational();
 
     m_usableAdapter = adapter;
     Q_EMIT q->usableAdapterChanged(m_usableAdapter);
 
-    if (wasOperational != q->isBluetoothOperational()) {
+    if (wasBtOperational != q->isBluetoothOperational()) {
         Q_EMIT q->bluetoothOperationalChanged(q->isBluetoothOperational());
     }
 }
