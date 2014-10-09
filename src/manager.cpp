@@ -87,7 +87,7 @@ Device *Manager::deviceForUbi(const QString &ubi) const
     return d->m_devices.value(ubi);
 }
 
-PendingCall *Manager::registerAgent(Agent *agent, RegisterCapability registerCapability)
+PendingCall *Manager::registerAgent(Agent *agent)
 {
     if (!d->m_bluezAgentManager) {
         return new PendingCall(PendingCall::InternalError, QStringLiteral("Manager not operational!"));
@@ -95,17 +95,17 @@ PendingCall *Manager::registerAgent(Agent *agent, RegisterCapability registerCap
 
     QString capability;
 
-    switch (registerCapability) {
-    case DisplayOnly:
+    switch (agent->capability()) {
+    case Agent::DisplayOnly:
         capability = QStringLiteral("DisplayOnly");
         break;
-    case DisplayYesNo:
+    case Agent::DisplayYesNo:
         capability = QStringLiteral("DisplayYesNo");
         break;
-    case KeyboardOnly:
+    case Agent::KeyboardOnly:
         capability = QStringLiteral("KeyboardOnly");
         break;
-    case NoInputNoOutput:
+    case Agent::NoInputNoOutput:
         capability = QStringLiteral("NoInputNoOutput");
         break;
     default:

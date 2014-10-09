@@ -9,6 +9,11 @@ Agent::Agent(QObject *parent)
 {
 }
 
+Agent::Capability Agent::capability() const
+{
+    return DisplayYesNo;
+}
+
 void Agent::requestPinCode(Device *device, const Request<QString> &request)
 {
     Q_UNUSED(device)

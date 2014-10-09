@@ -67,7 +67,6 @@ class QBLUEZ_EXPORT Manager : public QObject
 {
     Q_OBJECT
 
-    Q_ENUMS(RegisterCapability)
     Q_PROPERTY(QBluez::Adapter* usableAdapter READ usableAdapter NOTIFY usableAdapterChanged)
     Q_PROPERTY(QList<QBluez::Adapter*> adapters READ adapters)
     Q_PROPERTY(QList<QBluez::Device*> devices READ devices)
@@ -76,16 +75,6 @@ class QBLUEZ_EXPORT Manager : public QObject
     Q_PROPERTY(bool bluetoothOperational READ isBluetoothOperational NOTIFY bluetoothOperationalChanged)
 
 public:
-    /**
-     * The input/output capabilities of Agent.
-     */
-    enum RegisterCapability {
-        DisplayOnly = 0,
-        DisplayYesNo = 1,
-        KeyboardOnly = 2,
-        NoInputNoOutput = 3
-    };
-
     /**
      * Creates a new Manager object.
      *
@@ -201,10 +190,9 @@ public Q_SLOTS:
      * Possible errors: PendingCall::InvalidArguments, PendingCall::AlreadyExists
      *
      * @param agent agent to be registered
-     * @param registerCapability agent capability
      * @return void pending call
      */
-    PendingCall *registerAgent(Agent *agent, RegisterCapability registerCapability = DisplayYesNo);
+    PendingCall *registerAgent(Agent *agent);
 
     /**
      * Unregisters agent.

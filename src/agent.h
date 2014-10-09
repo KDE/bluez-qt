@@ -27,7 +27,20 @@ class QBLUEZ_EXPORT Agent : public QObject
 {
     Q_OBJECT
 
+    Q_ENUMS(Capability)
+    Q_PROPERTY(Capability capability READ capability)
+
 public:
+    /**
+     * The input/output capabilities of Agent.
+     */
+    enum Capability {
+        DisplayOnly = 0,
+        DisplayYesNo = 1,
+        KeyboardOnly = 2,
+        NoInputNoOutput = 3
+    };
+
     /**
      * Creates a new Agent object.
      *
@@ -45,6 +58,15 @@ public:
      * @return object path of agent
      */
     virtual QDBusObjectPath objectPath() const = 0;
+
+    /**
+     * Input/output capability of the agent.
+     *
+     * By default, this method returns DisplayYesNo.
+     *
+     * @return capability of agent
+     */
+    virtual Capability capability() const;
 
     /**
      * Requests a PIN code from the agent.
