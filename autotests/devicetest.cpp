@@ -174,8 +174,7 @@ void DeviceTest::setAliasTest()
         QString value = originalValue + QLatin1String("_tst_alias");
 
         unit.device->setAlias(value);
-        deviceSpy.wait();
-        QCOMPARE(deviceSpy.count(), 1);
+        QTRY_COMPARE(deviceSpy.count(), 1);
 
         QList<QVariant> arguments = deviceSpy.takeFirst();
         QCOMPARE(arguments.at(0).toString(), value);
@@ -198,8 +197,7 @@ void DeviceTest::setTrustedTest()
         bool value = !originalValue;
 
         unit.device->setTrusted(value);
-        deviceSpy.wait();
-        QCOMPARE(deviceSpy.count(), 1);
+        QTRY_COMPARE(deviceSpy.count(), 1);
 
         QList<QVariant> arguments = deviceSpy.takeFirst();
         QCOMPARE(arguments.at(0).toBool(), value);
@@ -222,8 +220,7 @@ void DeviceTest::setBlockedTest()
         bool value = !originalValue;
 
         unit.device->setBlocked(value);
-        deviceSpy.wait();
-        QCOMPARE(deviceSpy.count(), 1);
+        QTRY_COMPARE(deviceSpy.count(), 1);
 
         QList<QVariant> arguments = deviceSpy.takeFirst();
         QCOMPARE(arguments.at(0).toBool(), value);

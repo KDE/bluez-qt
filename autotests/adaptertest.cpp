@@ -146,8 +146,7 @@ void AdapterTest::setAliasTest()
         QString value = originalValue + QLatin1String("_tst_alias");
 
         unit.adapter->setAlias(value);
-        adapterSpy.wait();
-        QCOMPARE(adapterSpy.count(), 1);
+        QTRY_COMPARE(adapterSpy.count(), 1);
 
         QList<QVariant> adapterArguments = adapterSpy.takeFirst();
         QCOMPARE(adapterArguments.at(0).toString(), value);
@@ -170,8 +169,7 @@ void AdapterTest::setPoweredTest()
         bool value = !originalValue;
 
         unit.adapter->setPowered(value);
-        adapterSpy.wait();
-        QCOMPARE(adapterSpy.count(), 1);
+        QTRY_COMPARE(adapterSpy.count(), 1);
 
         QVERIFY(dbusSpy.count() >= 1);
         verifyPropertiesChangedSignal(dbusSpy, QStringLiteral("Powered"), value);
@@ -201,8 +199,7 @@ void AdapterTest::setDiscoverableTest()
         bool value = !originalValue;
 
         unit.adapter->setDiscoverable(value);
-        adapterSpy.wait();
-        QCOMPARE(adapterSpy.count(), 1);
+        QTRY_COMPARE(adapterSpy.count(), 1);
 
         QList<QVariant> adapterArguments = adapterSpy.takeFirst();
         QCOMPARE(adapterArguments.at(0).toBool(), value);
@@ -226,8 +223,7 @@ void AdapterTest::setDiscoverableTimeoutTest()
         quint32 value = originalValue + 1;
 
         unit.adapter->setDiscoverableTimeout(value);
-        adapterSpy.wait();
-        QCOMPARE(adapterSpy.count(), 1);
+        QTRY_COMPARE(adapterSpy.count(), 1);
 
         QVERIFY(dbusSpy.count() >= 1);
         verifyPropertiesChangedSignal(dbusSpy, QStringLiteral("DiscoverableTimeout"), value);
@@ -252,8 +248,7 @@ void AdapterTest::setPairableTest()
         bool value = !originalValue;
 
         unit.adapter->setPairable(value);
-        adapterSpy.wait();
-        QCOMPARE(adapterSpy.count(), 1);
+        QTRY_COMPARE(adapterSpy.count(), 1);
 
         QList<QVariant> adapterArguments = adapterSpy.takeFirst();
         QCOMPARE(adapterArguments.at(0).toBool(), value);
@@ -276,8 +271,7 @@ void AdapterTest::setPairableTimeoutTest()
         quint32 value = originalValue + 1;
 
         unit.adapter->setPairableTimeout(value);
-        adapterSpy.wait();
-        QCOMPARE(adapterSpy.count(), 1);
+        QTRY_COMPARE(adapterSpy.count(), 1);
 
         QVERIFY(dbusSpy.count() >= 1);
         verifyPropertiesChangedSignal(dbusSpy, QStringLiteral("PairableTimeout"), value);
@@ -309,8 +303,7 @@ void AdapterTest::discoveryTest()
 
         // Start Discovery
         unit.adapter->startDiscovery();
-        adapterSpy.wait();
-        QCOMPARE(adapterSpy.count(), 1);
+        QTRY_COMPARE(adapterSpy.count(), 1);
 
         QVERIFY(dbusSpy.count() >= 1);
         verifyPropertiesChangedSignal(dbusSpy, QStringLiteral("Discovering"), true);
@@ -326,8 +319,7 @@ void AdapterTest::discoveryTest()
 
         // Stop Discovery
         unit.adapter->stopDiscovery();
-        adapterSpy.wait();
-        QCOMPARE(adapterSpy.count(), 1);
+        QTRY_COMPARE(adapterSpy.count(), 1);
 
         QVERIFY(dbusSpy.count() >= 1);
         verifyPropertiesChangedSignal(dbusSpy, QStringLiteral("Discovering"), false);

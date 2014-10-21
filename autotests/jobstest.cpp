@@ -25,11 +25,8 @@ void JobsTest::deleteManagerTest()
     job->start();
     delete manager;
 
-    if (jobSpy.count() == 0) {
-        jobSpy.wait(2000);
-    }
     // Deleting manager while init job is in progress should emit error
-    QCOMPARE(jobSpy.count(), 1);
+    QTRY_COMPARE(jobSpy.count(), 1);
 }
 
 void JobsTest::deleteInitManagerJobTest()
@@ -41,11 +38,8 @@ void JobsTest::deleteInitManagerJobTest()
     job->start();
     delete job;
 
-    if (jobSpy.count() == 0) {
-        jobSpy.wait(500);
-    }
     // Deleting the job should emit error
-    QCOMPARE(jobSpy.count(), 1);
+    QTRY_COMPARE(jobSpy.count(), 1);
 
     delete manager;
 
@@ -56,9 +50,8 @@ void JobsTest::deleteInitManagerJobTest()
     job->start();
     job->kill();
 
-    jobSpy2.wait(500);
     // Killing the job should NOT emit error
-    QCOMPARE(jobSpy2.count(), 0);
+    QTRY_COMPARE(jobSpy2.count(), 0);
 }
 
 void JobsTest::deleteObexManagerTest()
@@ -70,11 +63,8 @@ void JobsTest::deleteObexManagerTest()
     job->start();
     delete manager;
 
-    if (jobSpy.count() == 0) {
-        jobSpy.wait(2000);
-    }
     // Deleting manager while init job is in progress should emit error
-    QCOMPARE(jobSpy.count(), 1);
+    QTRY_COMPARE(jobSpy.count(), 1);
 }
 
 void JobsTest::deleteInitObexManagerJobTest()
@@ -86,11 +76,8 @@ void JobsTest::deleteInitObexManagerJobTest()
     job->start();
     delete job;
 
-    if (jobSpy.count() == 0) {
-        jobSpy.wait(500);
-    }
     // Deleting the job should emit error
-    QCOMPARE(jobSpy.count(), 1);
+    QTRY_COMPARE(jobSpy.count(), 1);
 
     delete manager;
 
@@ -101,9 +88,8 @@ void JobsTest::deleteInitObexManagerJobTest()
     job->start();
     job->kill();
 
-    jobSpy2.wait(500);
     // Killing the job should NOT emit error
-    QCOMPARE(jobSpy2.count(), 0);
+    QTRY_COMPARE(jobSpy2.count(), 0);
 }
 
 QTEST_MAIN(JobsTest)

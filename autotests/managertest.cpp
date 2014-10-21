@@ -165,9 +165,8 @@ void ManagerTest::bluezRestartTest()
     FakeBluez::stop();
 
     // allAdaptersRemoved will be last signal
-    allAdaptersRemovedSpy.wait();
+    QTRY_COMPARE(allAdaptersRemovedSpy.count(), 1);
 
-    QCOMPARE(allAdaptersRemovedSpy.count(), 1);
     QCOMPARE(adapterRemovedSpy.count(), 2);
     QCOMPARE(device1RemovedSpy.count(), 1);
     QCOMPARE(device2RemovedSpy.count(), 1);
