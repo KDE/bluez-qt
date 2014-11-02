@@ -24,7 +24,7 @@ class QBLUEZ_EXPORT PendingCall : public QObject
     Q_PROPERTY(QVariantList values READ values)
     Q_PROPERTY(int error READ error)
     Q_PROPERTY(QString errorText READ errorText)
-    Q_PROPERTY(bool finished READ isFinished)
+    Q_PROPERTY(bool isFinished READ isFinished)
     Q_PROPERTY(QVariant userData READ userData WRITE setUserData)
 
 public:
@@ -144,7 +144,7 @@ Q_SIGNALS:
     /**
      * Indicates that the call have finished.
      */
-    void finished(PendingCall *call);
+    void finished(QBluez::PendingCall *call);
 
 private:
     enum ReturnType {
