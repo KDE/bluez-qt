@@ -22,7 +22,7 @@ static PendingCall::Error nameToError(const QString &name)
         return value; \
     }
 
-    const QString &errorName = name.mid(15);
+    const QString &errorName = name.mid(16);
     FROM_BLUEZ_ERROR("NotReady", PendingCall::NotReady);
     FROM_BLUEZ_ERROR("Failed", PendingCall::Failed);
     FROM_BLUEZ_ERROR("Rejected", PendingCall::Rejected);
