@@ -61,10 +61,12 @@ public:
         UuidsRole = Qt::UserRole + 115,
         /** Modalias of the device (QString) */
         ModaliasRole = Qt::UserRole + 116,
+        /** Actual Device object (Device) */
+        DeviceRole = Qt::UserRole + 117,
         /** Adapter that discovered the device (Adapter) */
-        AdapterRole = Qt::UserRole + 117,
+        AdapterRole = Qt::UserRole + 118,
         /** Last role useb by DevicesModel */
-        LastRole = Qt::UserRole + 118
+        LastRole = Qt::UserRole + 119
     };
 
     /**

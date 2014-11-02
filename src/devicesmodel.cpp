@@ -109,6 +109,7 @@ QHash<int, QByteArray> DevicesModel::roleNames() const
     roles[ConnectedRole] = QByteArrayLiteral("Connected");
     roles[UuidsRole] = QByteArrayLiteral("Uuids");
     roles[ModaliasRole] = QByteArrayLiteral("Modalias");
+    roles[DeviceRole] = QByteArrayLiteral("Device");
     roles[AdapterRole] = QByteArrayLiteral("Adapter");
 
     return roles;
@@ -168,6 +169,8 @@ QVariant DevicesModel::data(const QModelIndex &index, int role) const
         return dev->uuids();
     case ModaliasRole:
         return dev->modalias();
+    case DeviceRole:
+        return QVariant::fromValue(dev);
     case AdapterRole:
         return QVariant::fromValue(dev->adapter());
     default:
