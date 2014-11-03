@@ -21,6 +21,7 @@ class QBLUEZ_EXPORT Device : public QObject
 {
     Q_OBJECT
 
+    Q_ENUMS(DeviceType)
     Q_PROPERTY(QString ubi READ ubi)
     Q_PROPERTY(QString address READ address)
     Q_PROPERTY(QString name READ name NOTIFY nameChanged)
@@ -41,6 +42,40 @@ class QBLUEZ_EXPORT Device : public QObject
     Q_PROPERTY(QBluez::Adapter* adapter READ adapter)
 
 public:
+    /**
+     * Device types.
+     */
+    enum DeviceType {
+        /** Indicates that the device is not of any of the following types. */
+        Any,
+        /** Indicates that the device is a phone. */
+        Phone,
+        /** Indicates that the device is a modem. */
+        Modem,
+        /** Indicates that the device is a computer. */
+        Computer,
+        /** Indicates that the device is a network. */
+        Network,
+        /** Indicates that the device is a headset. */
+        Headset,
+        /** Indicates that the device is a headphones. */
+        Headphones,
+        /** Indicates that the device is not specified audio device. */
+        OtherAudio,
+        /** Indicates that the device is a keyboard. */
+        Keyboard,
+        /** Indicates that the device is a mouse. */
+        Mouse,
+        /** Indicates that the device is a camera. */
+        Camera,
+        /** Indicates that the device is a printer. */
+        Printer,
+        /** Indicates that the device is a joypad. */
+        Joypad,
+        /** Indicates that the device is a tablet. */
+        Tablet
+    };
+
     /**
      * Destroys a Device object.
      */
@@ -108,7 +143,7 @@ public:
      *
      * @return type of device
      */
-    DeviceType deviceType() const;
+    QBluez::Device::DeviceType deviceType() const;
 
     /**
      * Returns an appearance of the device.
@@ -366,6 +401,10 @@ private:
     friend class ManagerPrivate;
     friend class Adapter;
 };
+
+// FIXME: Make these functions public static in Device class
+QString QBLUEZ_EXPORT typeToString(QBluez::Device::DeviceType type);
+QBluez::Device::DeviceType QBLUEZ_EXPORT stringToType(const QString &stringType);
 
 } // namespace QBluez
 

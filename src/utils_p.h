@@ -1,6 +1,8 @@
 #ifndef QBLUEZ_UTILS_P_H
 #define QBLUEZ_UTILS_P_H
 
+#include "device.h"
+
 class QString;
 class QStringList;
 class QDBusConnection;
@@ -33,6 +35,7 @@ QDBusConnection orgBluezObex();
 }
 
 QStringList stringListToUpper(const QStringList &list);
+Device::DeviceType classToType(quint32 classNum);
 
 } // namespace QBluez
 

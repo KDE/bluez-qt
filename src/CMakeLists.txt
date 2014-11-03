@@ -10,7 +10,6 @@ set(qbluez_SRCS
     job.cpp
     initmanagerjob.cpp
     initobexmanagerjob.cpp
-    utils.cpp
     utils_p.cpp
     agent.cpp
     agentadaptor.cpp

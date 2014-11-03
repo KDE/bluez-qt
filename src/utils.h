@@ -26,8 +26,6 @@
 
 #include <QString>
 
-#include "qbluez_export.h"
-
 namespace QBluez
 {
 
@@ -50,28 +48,6 @@ const QString MessageAccessServer = QLatin1String("00001132-0000-1000-8000-00805
 const QString PnpInformation = QLatin1String("00001200-0000-1000-8000-00805F9B34FB");
 
 }
-
-enum DeviceType {
-    Any,
-    Phone,
-    Modem,
-    Computer,
-    Network,
-    Headset,
-    Headphones,
-    OtherAudio,
-    Keyboard,
-    Mouse,
-    Camera,
-    Printer,
-    Joypad,
-    Tablet
-};
-
-QString QBLUEZ_EXPORT typeToString(DeviceType type);
-DeviceType QBLUEZ_EXPORT stringToType(const QString &stringType);
-
-DeviceType QBLUEZ_EXPORT classToType(quint32 classNum);
 
 } // namespace QBluez
 

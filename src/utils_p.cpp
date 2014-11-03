@@ -122,4 +122,66 @@ QStringList stringListToUpper(const QStringList &list)
     return converted;
 }
 
+Device::DeviceType classToType(quint32 classNum)
+{
+    switch ((classNum & 0x1f00) >> 8) {
+    case 0x01:
+        return Device::Computer;
+    case 0x02:
+        switch ((classNum & 0xfc) >> 2) {
+        case 0x01:
+        case 0x02:
+        case 0x03:
+        case 0x05:
+            return Device::Phone;
+        case 0x04:
+            return Device::Modem;
+        }
+        break;
+    case 0x03:
+        return Device::Network;
+    case 0x04:
+        switch ((classNum & 0xfc) >> 2) {
+        case 0x01:
+        case 0x02:
+            return Device::Headset;
+        case 0x06:
+            return Device::Headphones;
+        default:
+            return Device::OtherAudio;
+        }
+        break;
+    case 0x05:
+        switch ((classNum & 0xc0) >> 6) {
+        case 0x00:
+            switch ((classNum & 0x1e) >> 2) {
+            case 0x01:
+            case 0x02:
+                return Device::Joypad;
+            }
+            break;
+        case 0x01:
+            return Device::Keyboard;
+        case 0x02:
+            switch ((classNum & 0x1e) >> 2) {
+            case 0x05:
+                return Device::Tablet;
+            default:
+                return Device::Mouse;
+            }
+        }
+        break;
+    case 0x06:
+        if (classNum & 0x80) {
+            return Device::Printer;
+        }
+        if (classNum & 0x20) {
+            return Device::Camera;
+        }
+        break;
+    }
+
+    return Device::Any;
+}
+
 } // namespace QBluez
