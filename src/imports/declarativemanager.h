@@ -36,4 +36,3 @@ private:
 };
 
 #endif // DECLARATIVEMANAGER_H
-

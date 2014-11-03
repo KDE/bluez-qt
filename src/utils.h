@@ -24,6 +24,8 @@
 #ifndef QBLUEZ_UTILS_H
 #define QBLUEZ_UTILS_H
 
+// FIXME: Rename to services.h
+
 #include <QString>
 
 namespace QBluez
