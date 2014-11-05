@@ -242,6 +242,22 @@ public:
      */
     Adapter *adapter() const;
 
+    /**
+     * Returns a string for device type.
+     *
+     * @param type device type
+     * @return device type string
+     */
+    static QString typeToString(Device::DeviceType type);
+
+    /**
+     * Returns a device type for string.
+     *
+     * @param typeString type string
+     * @return device type
+     */
+    static Device::DeviceType stringToType(const QString &typeString);
+
 public Q_SLOTS:
     /**
      * Connects all auto-connectable profiles of the device.
@@ -401,10 +417,6 @@ private:
     friend class ManagerPrivate;
     friend class Adapter;
 };
-
-// FIXME: Make these functions public static in Device class
-QString QBLUEZ_EXPORT typeToString(QBluez::Device::DeviceType type);
-QBluez::Device::DeviceType QBLUEZ_EXPORT stringToType(const QString &stringType);
 
 } // namespace QBluez
 

@@ -132,37 +132,7 @@ Adapter *Device::adapter() const
     return d->m_adapter;
 }
 
-PendingCall *Device::connectDevice()
-{
-    return new PendingCall(d->m_bluezDevice->Connect(), PendingCall::ReturnVoid, this);
-}
-
-PendingCall *Device::disconnectDevice()
-{
-    return new PendingCall(d->m_bluezDevice->Disconnect(), PendingCall::ReturnVoid, this);
-}
-
-PendingCall *Device::connectProfile(const QString &uuid)
-{
-    return new PendingCall(d->m_bluezDevice->ConnectProfile(uuid), PendingCall::ReturnVoid, this);
-}
-
-PendingCall *Device::disconnectProfile(const QString &uuid)
-{
-    return new PendingCall(d->m_bluezDevice->DisconnectProfile(uuid), PendingCall::ReturnVoid, this);
-}
-
-PendingCall *Device::pair()
-{
-    return new PendingCall(d->m_bluezDevice->Pair(), PendingCall::ReturnVoid, this);
-}
-
-PendingCall *Device::cancelPairing()
-{
-    return new PendingCall(d->m_bluezDevice->CancelPairing(), PendingCall::ReturnVoid, this);
-}
-
-QString typeToString(Device::DeviceType type)
+QString Device::typeToString(Device::DeviceType type)
 {
     switch (type) {
     case Device::Any:
@@ -198,38 +168,68 @@ QString typeToString(Device::DeviceType type)
     }
 }
 
-Device::DeviceType stringToType(const QString &stringType)
+Device::DeviceType Device::stringToType(const QString &typeString)
 {
-    if (stringType == QLatin1String("any")) {
+    if (typeString == QLatin1String("any")) {
         return Device::Any;
-    } else if (stringType == QLatin1String("phone")) {
+    } else if (typeString == QLatin1String("phone")) {
         return Device::Phone;
-    } else if (stringType == QLatin1String("modem")) {
+    } else if (typeString == QLatin1String("modem")) {
         return Device::Modem;
-    } else if (stringType == QLatin1String("computer")) {
+    } else if (typeString == QLatin1String("computer")) {
         return Device::Computer;
-    } else if (stringType == QLatin1String("network")) {
+    } else if (typeString == QLatin1String("network")) {
         return Device::Network;
-    } else if (stringType == QLatin1String("headset")) {
+    } else if (typeString == QLatin1String("headset")) {
         return Device::Headset;
-    } else if (stringType == QLatin1String("headphones")) {
+    } else if (typeString == QLatin1String("headphones")) {
         return Device::Headphones;
-    } else if (stringType == QLatin1String("audio")) {
+    } else if (typeString == QLatin1String("audio")) {
         return Device::OtherAudio;
-    } else if (stringType == QLatin1String("keyboard")) {
+    } else if (typeString == QLatin1String("keyboard")) {
         return Device::Keyboard;
-    } else if (stringType == QLatin1String("mouse")) {
+    } else if (typeString == QLatin1String("mouse")) {
         return Device::Mouse;
-    } else if (stringType == QLatin1String("camera")) {
+    } else if (typeString == QLatin1String("camera")) {
         return Device::Camera;
-    } else if (stringType == QLatin1String("printer")) {
+    } else if (typeString == QLatin1String("printer")) {
         return Device::Printer;
-    } else if (stringType == QLatin1String("joypad")) {
+    } else if (typeString == QLatin1String("joypad")) {
         return Device::Joypad;
-    } else if (stringType == QLatin1String("tablet")) {
+    } else if (typeString == QLatin1String("tablet")) {
         return Device::Tablet;
     }
     return Device::Any;
+}
+
+PendingCall *Device::connectDevice()
+{
+    return new PendingCall(d->m_bluezDevice->Connect(), PendingCall::ReturnVoid, this);
+}
+
+PendingCall *Device::disconnectDevice()
+{
+    return new PendingCall(d->m_bluezDevice->Disconnect(), PendingCall::ReturnVoid, this);
+}
+
+PendingCall *Device::connectProfile(const QString &uuid)
+{
+    return new PendingCall(d->m_bluezDevice->ConnectProfile(uuid), PendingCall::ReturnVoid, this);
+}
+
+PendingCall *Device::disconnectProfile(const QString &uuid)
+{
+    return new PendingCall(d->m_bluezDevice->DisconnectProfile(uuid), PendingCall::ReturnVoid, this);
+}
+
+PendingCall *Device::pair()
+{
+    return new PendingCall(d->m_bluezDevice->Pair(), PendingCall::ReturnVoid, this);
+}
+
+PendingCall *Device::cancelPairing()
+{
+    return new PendingCall(d->m_bluezDevice->CancelPairing(), PendingCall::ReturnVoid, this);
 }
 
 } // namespace QBluez
