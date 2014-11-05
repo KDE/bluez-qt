@@ -3,7 +3,6 @@
 
 #include <QObject>
 
-#include "utils.h"
 #include "qbluez_export.h"
 
 namespace QBluez

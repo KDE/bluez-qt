@@ -3,6 +3,7 @@
 #include "manager.h"
 #include "initmanagerjob.h"
 #include "pendingcall.h"
+#include "services.h"
 
 #include <QtTest/QTest>
 #include <QtTest/QSignalSpy>

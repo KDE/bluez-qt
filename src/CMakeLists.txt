@@ -70,7 +70,6 @@ ecm_generate_headers(QBluez_HEADERS
         Job
         InitManagerJob
         InitObexManagerJob
-        Utils
         Agent
         PendingCall
         Request
