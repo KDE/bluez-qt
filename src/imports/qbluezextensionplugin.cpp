@@ -4,6 +4,7 @@
 #include "adapter.h"
 #include "device.h"
 #include "pendingcall.h"
+#include "services.h"
 
 #include <QtQml>
 
@@ -17,21 +18,21 @@ static QJSValue services_singletontype_provider(QQmlEngine *engine, QJSEngine *s
     Q_UNUSED(engine)
 
     QJSValue object = scriptEngine->newObject();
-    object.setProperty(QStringLiteral("SerialPort"), QStringLiteral("00001101-0000-1000-8000-00805F9B34FB"));
-    object.setProperty(QStringLiteral("DialupNetworking"), QStringLiteral("00001103-0000-1000-8000-00805F9B34FB"));
-    object.setProperty(QStringLiteral("ObexObjectPush"), QStringLiteral("00001105-0000-1000-8000-00805F9B34FB"));
-    object.setProperty(QStringLiteral("ObexFileTransfer"), QStringLiteral("00001106-0000-1000-8000-00805F9B34FB"));
-    object.setProperty(QStringLiteral("AudioSource"), QStringLiteral("0000110A-0000-1000-8000-00805F9B34FB"));
-    object.setProperty(QStringLiteral("AudioVideoRemoteControlTarget"), QStringLiteral("0000110C-0000-1000-8000-00805F9B34FB"));
-    object.setProperty(QStringLiteral("AdvancedAudioDistributionProtocol"), QStringLiteral("0000110D-0000-1000-8000-00805F9B34FB"));
-    object.setProperty(QStringLiteral("AudioVideoRemoteControl"), QStringLiteral("0000110E-0000-1000-8000-00805F9B34FB"));
-    object.setProperty(QStringLiteral("HeadsetAudioGateway"), QStringLiteral("00001112-0000-1000-8000-00805F9B34FB"));
-    object.setProperty(QStringLiteral("Nap"), QStringLiteral("00001116-0000-1000-8000-00805F9B34FB"));
-    object.setProperty(QStringLiteral("HandsfreeAudioGateway"), QStringLiteral("0000111F-0000-1000-8000-00805F9B34FB"));
-    object.setProperty(QStringLiteral("SimAccess"), QStringLiteral("0000112D-0000-1000-8000-00805F9B34FB"));
-    object.setProperty(QStringLiteral("PhonebookAccessPse"), QStringLiteral("0000112F-0000-1000-8000-00805F9B34FB"));
-    object.setProperty(QStringLiteral("MessageAccessServer"), QStringLiteral("00001132-0000-1000-8000-00805F9B34FB"));
-    object.setProperty(QStringLiteral("PnpInformation"), QStringLiteral("00001200-0000-1000-8000-00805F9B34FB"));
+    object.setProperty(QStringLiteral("SerialPort"), QBluez::Services::SerialPort);
+    object.setProperty(QStringLiteral("DialupNetworking"), QBluez::Services::DialupNetworking);
+    object.setProperty(QStringLiteral("ObexObjectPush"), QBluez::Services::ObexObjectPush);
+    object.setProperty(QStringLiteral("ObexFileTransfer"), QBluez::Services::ObexFileTransfer);
+    object.setProperty(QStringLiteral("AudioSource"), QBluez::Services::AudioSource);
+    object.setProperty(QStringLiteral("AudioVideoRemoteControlTarget"), QBluez::Services::AudioVideoRemoteControlTarget);
+    object.setProperty(QStringLiteral("AdvancedAudioDistributionProtocol"), QBluez::Services::AdvancedAudioDistributionProtocol);
+    object.setProperty(QStringLiteral("AudioVideoRemoteControl"), QBluez::Services::AudioVideoRemoteControl);
+    object.setProperty(QStringLiteral("HeadsetAudioGateway"), QBluez::Services::HeadsetAudioGateway);
+    object.setProperty(QStringLiteral("Nap"), QBluez::Services::Nap);
+    object.setProperty(QStringLiteral("HandsfreeAudioGateway"), QBluez::Services::HandsfreeAudioGateway);
+    object.setProperty(QStringLiteral("SimAccess"), QBluez::Services::SimAccess);
+    object.setProperty(QStringLiteral("PhonebookAccessPse"), QBluez::Services::PhonebookAccessPse);
+    object.setProperty(QStringLiteral("MessageAccessServer"), QBluez::Services::MessageAccessServer);
+    object.setProperty(QStringLiteral("PnpInformation"), QBluez::Services::PnpInformation);
     return object;
 }
 
