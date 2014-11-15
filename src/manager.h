@@ -144,6 +144,17 @@ public:
      */
     QList<Device*> devices() const;
 
+    /**
+     * Attempts to start org.bluez service by D-Bus activation.
+     *
+     * Possible return values are 1 if the service was started,
+     * 2 if the service is already running or error if the service
+     * could not be started.
+     *
+     * @return quint32 pending call
+     */
+    static QBluez::PendingCall *startService();
+
 public Q_SLOTS:
     /**
      * Returns an adapter for specified address.

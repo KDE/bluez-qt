@@ -38,6 +38,18 @@ bool ObexManager::isOperational() const
     return d->m_initialized && d->m_obexRunning && d->m_loaded;
 }
 
+PendingCall *ObexManager::startService()
+{
+    QDBusMessage msg = QDBusMessage::createMethodCall(Strings::orgFreedesktopDBus(),
+                                                      QStringLiteral("/org/freedesktop/DBus"),
+                                                      Strings::orgFreedesktopDBus(),
+                                                      QStringLiteral("StartServiceByName"));
+    msg << Strings::orgBluezObex();
+    msg << quint32(0);
+
+    return new PendingCall(DBusConnection::orgBluezObex().asyncCall(msg), PendingCall::ReturnUint32);
+}
+
 PendingCall *ObexManager::registerAgent(ObexAgent *agent)
 {
     if (!d->m_obexAgentManager) {

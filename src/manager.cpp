@@ -56,6 +56,18 @@ QList<Device*> Manager::devices() const
     return d->m_devices.values();
 }
 
+PendingCall *Manager::startService()
+{
+    QDBusMessage msg = QDBusMessage::createMethodCall(Strings::orgFreedesktopDBus(),
+                                                      QStringLiteral("/org/freedesktop/DBus"),
+                                                      Strings::orgFreedesktopDBus(),
+                                                      QStringLiteral("StartServiceByName"));
+    msg << Strings::orgBluez();
+    msg << quint32(0);
+
+    return new PendingCall(DBusConnection::orgBluez().asyncCall(msg), PendingCall::ReturnUint32);
+}
+
 Adapter *Manager::adapterForAddress(const QString &address) const
 {
     Q_FOREACH (Adapter *adapter, d->m_adapters) {

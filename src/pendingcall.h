@@ -149,6 +149,7 @@ Q_SIGNALS:
 private:
     enum ReturnType {
         ReturnVoid,
+        ReturnUint32,
         ReturnString,
         ReturnObjectPath,
         ReturnFileTransferList,
