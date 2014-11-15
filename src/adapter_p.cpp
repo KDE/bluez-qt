@@ -80,6 +80,7 @@ void AdapterPrivate::addDevice(Device *device)
 void AdapterPrivate::removeDevice(Device *device)
 {
     m_devices.removeOne(device);
+    Q_EMIT device->deviceRemoved(device);
     Q_EMIT q->deviceRemoved(device);
 }
 
