@@ -25,7 +25,6 @@
 namespace QBluez
 {
 
-// Agent
 Agent::Agent(QObject *parent)
     : QObject(parent)
 {

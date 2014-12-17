@@ -57,7 +57,6 @@ public Q_SLOTS:
     Q_NOREPLY void Release();
 
 private:
-    Device *deviceForPath(const QDBusObjectPath &path) const;
     QString passkeyToString(quint32 passkey) const;
 
     Agent *m_agent;
