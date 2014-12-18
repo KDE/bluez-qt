@@ -54,15 +54,15 @@ void DeviceTest::initTestCase()
         deviceProps[QStringLiteral("Name")] = QStringLiteral("TestDevice");
         deviceProps[QStringLiteral("Alias")] = QStringLiteral("TestAlias");
         deviceProps[QStringLiteral("Icon")] = QStringLiteral("phone");
-        deviceProps[QStringLiteral("Class")] = QVariant::fromValue((quint32) 101);
-        deviceProps[QStringLiteral("Appearance")] = QVariant::fromValue((quint16) 25);
+        deviceProps[QStringLiteral("Class")] = QVariant::fromValue(quint32(101));
+        deviceProps[QStringLiteral("Appearance")] = QVariant::fromValue(quint16(25));
         deviceProps[QStringLiteral("UUIDs")] = QStringList();
-        deviceProps[QStringLiteral("Paired")] = QVariant::fromValue((bool) false);
-        deviceProps[QStringLiteral("Connected")] = QVariant::fromValue((bool) false);
-        deviceProps[QStringLiteral("Trusted")] = QVariant::fromValue((bool) false);
-        deviceProps[QStringLiteral("Blocked")] = QVariant::fromValue((bool) false);
-        deviceProps[QStringLiteral("LegacyPairing")] = QVariant::fromValue((bool) false);
-        deviceProps[QStringLiteral("RSSI")] = QVariant::fromValue((qint16) 20);
+        deviceProps[QStringLiteral("Paired")] = false;
+        deviceProps[QStringLiteral("Connected")] = false;
+        deviceProps[QStringLiteral("Trusted")] = false;
+        deviceProps[QStringLiteral("Blocked")] = false;
+        deviceProps[QStringLiteral("LegacyPairing")] = false;
+        deviceProps[QStringLiteral("RSSI")] = QVariant::fromValue(qint16(20));
         deviceProps[QStringLiteral("Modalias")] = QStringLiteral("bluetooth:v001Dp1200d1236");
         FakeBluez::runAction(QStringLiteral("devicemanager"), QStringLiteral("create-device"), deviceProps);
 
@@ -72,15 +72,15 @@ void DeviceTest::initTestCase()
         deviceProps[QStringLiteral("Name")] = QStringLiteral("TestDevice2");
         deviceProps[QStringLiteral("Alias")] = QStringLiteral("TestAlias2");
         deviceProps[QStringLiteral("Icon")] = QStringLiteral("joypad");
-        deviceProps[QStringLiteral("Class")] = QVariant::fromValue((quint32) 201);
-        deviceProps[QStringLiteral("Appearance")] = QVariant::fromValue((quint16) 32);
+        deviceProps[QStringLiteral("Class")] = QVariant::fromValue(quint32(201));
+        deviceProps[QStringLiteral("Appearance")] = QVariant::fromValue(quint16(32));
         deviceProps[QStringLiteral("UUIDs")] = QStringList();
-        deviceProps[QStringLiteral("Paired")] = QVariant::fromValue((bool) true);
-        deviceProps[QStringLiteral("Connected")] = QVariant::fromValue((bool) false);
-        deviceProps[QStringLiteral("Trusted")] = QVariant::fromValue((bool) true);
-        deviceProps[QStringLiteral("Blocked")] = QVariant::fromValue((bool) false);
-        deviceProps[QStringLiteral("LegacyPairing")] = QVariant::fromValue((bool) false);
-        deviceProps[QStringLiteral("RSSI")] = QVariant::fromValue((qint16) -15);
+        deviceProps[QStringLiteral("Paired")] = true;
+        deviceProps[QStringLiteral("Connected")] = false;
+        deviceProps[QStringLiteral("Trusted")] = true;
+        deviceProps[QStringLiteral("Blocked")] = false;
+        deviceProps[QStringLiteral("LegacyPairing")] = false;
+        deviceProps[QStringLiteral("RSSI")] = QVariant::fromValue(qint16(-15));
         deviceProps[QStringLiteral("Modalias")] = QStringLiteral("bluetooth:v001Dp1100d1236");
         FakeBluez::runAction(QStringLiteral("devicemanager"), QStringLiteral("create-device"), deviceProps);
     }

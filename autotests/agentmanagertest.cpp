@@ -185,8 +185,8 @@ void AgentManagerTest::displayPasskeyTest()
 
     QVariantMap props;
     props.insert(QStringLiteral("Device"), QVariant::fromValue(m_device));
-    props.insert(QStringLiteral("Passkey"), QVariant::fromValue((quint32) 654321));
-    props.insert(QStringLiteral("EnteredPasskey"), QVariant::fromValue((quint16) 43));
+    props.insert(QStringLiteral("Passkey"), QVariant::fromValue(quint32(654321)));
+    props.insert(QStringLiteral("EnteredPasskey"), QVariant::fromValue(quint16(43)));
     FakeBluez::runAction(QStringLiteral("agentmanager"), QStringLiteral("display-passkey"), props);
 
     QCOMPARE(m_agent->m_displayedPasskey, QStringLiteral("654321"));
@@ -200,7 +200,7 @@ void AgentManagerTest::requestConfirmationTest()
 
     QVariantMap props;
     props.insert(QStringLiteral("Device"), QVariant::fromValue(m_device));
-    props.insert(QStringLiteral("Passkey"), QVariant::fromValue((quint32) 12));
+    props.insert(QStringLiteral("Passkey"), QVariant::fromValue(quint32(12)));
     FakeBluez::runAction(QStringLiteral("agentmanager"), QStringLiteral("request-confirmation"), props);
 
     QCOMPARE(m_agent->m_requestedPasskey, QStringLiteral("000012"));
