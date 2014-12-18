@@ -5,6 +5,7 @@ set(fakebluez_SRCS
     objectmanager.cpp
     object.cpp
     agentmanager.cpp
+    profilemanager.cpp
     devicemanager.cpp
     adapterinterface.cpp
     deviceinterface.cpp

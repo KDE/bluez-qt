@@ -2,6 +2,7 @@
 #include "testinterface.h"
 #include "objectmanager.h"
 #include "agentmanager.h"
+#include "profilemanager.h"
 #include "devicemanager.h"
 #include "obexagentmanager.h"
 #include "obexclient.h"
@@ -26,6 +27,7 @@ FakeBluez::FakeBluez(QObject *parent)
     , m_testInterface(new TestInterface(this))
     , m_objectManager(0)
     , m_agentManager(0)
+    , m_profileManager(0)
     , m_deviceManager(0)
     , m_obexObject(0)
     , m_obexAgentManager(0)
@@ -98,6 +100,12 @@ void FakeBluez::createAgentManager()
     m_objectManager->addObject(m_agentManager);
 }
 
+void FakeBluez::createProfileManager()
+{
+    m_profileManager = new ProfileManager(m_objectManager);
+    m_objectManager->addObject(m_profileManager);
+}
+
 void FakeBluez::createDeviceManager()
 {
     m_deviceManager = new DeviceManager(m_objectManager);
@@ -131,6 +139,7 @@ void FakeBluez::runBluezNoAdaptersTest()
     clear();
     createObjectManager();
     createAgentManager();
+    createProfileManager();
 }
 
 void FakeBluez::runBluezStandardTest()
@@ -139,6 +148,7 @@ void FakeBluez::runBluezStandardTest()
     createObjectManager();
     createDeviceManager();
     createAgentManager();
+    createProfileManager();
 }
 
 void FakeBluez::runObexNotExportingInterfacesTest()

@@ -7,6 +7,7 @@
 class TestInterface;
 class ObjectManager;
 class AgentManager;
+class ProfileManager;
 class DeviceManager;
 class ObexObject;
 class ObexAgentManager;
@@ -29,6 +30,7 @@ private:
     void clear();
     void createObjectManager();
     void createAgentManager();
+    void createProfileManager();
     void createDeviceManager();
     void createObexAgentManager();
     void createObexClient();
@@ -47,6 +49,7 @@ private:
     TestInterface *m_testInterface;
     ObjectManager *m_objectManager;
     AgentManager *m_agentManager;
+    ProfileManager *m_profileManager;
     DeviceManager *m_deviceManager;
 
     ObexObject *m_obexObject;
