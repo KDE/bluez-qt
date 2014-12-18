@@ -81,7 +81,7 @@ PendingCall *ObexManager::registerAgent(ObexAgent *agent)
     new ObexAgentAdaptor(agent, this);
 
     if (!DBusConnection::orgBluezObex().registerObject(agent->objectPath().path(), agent)) {
-        qCWarning(QBLUEZ) << "Cannot register object" << agent->objectPath().path();
+        qCDebug(QBLUEZ) << "Cannot register object" << agent->objectPath().path();
     }
 
     return new PendingCall(d->m_obexAgentManager->RegisterAgent(agent->objectPath()),

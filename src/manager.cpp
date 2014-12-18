@@ -31,6 +31,7 @@
 #include "pendingcall.h"
 #include "initmanagerjob.h"
 #include "utils_p.h"
+#include "debug_p.h"
 
 namespace QBluez
 {
@@ -153,7 +154,7 @@ PendingCall *Manager::registerAgent(Agent *agent)
     new AgentAdaptor(agent, this);
 
     if (!DBusConnection::orgBluez().registerObject(agent->objectPath().path(), agent)) {
-        qWarning() << "Cannot register object" << agent->objectPath().path();
+        qCDebug(QBLUEZ) << "Cannot register object" << agent->objectPath().path();
     }
 
     return new PendingCall(d->m_bluezAgentManager->RegisterAgent(agent->objectPath(), capability),
@@ -191,7 +192,7 @@ PendingCall *Manager::registerProfile(Profile *profile)
     new ProfileAdaptor(profile, this);
 
     if (!DBusConnection::orgBluez().registerObject(profile->objectPath().path(), profile)) {
-        qWarning() << "Cannot register object" << profile->objectPath().path();
+        qCDebug(QBLUEZ) << "Cannot register object" << profile->objectPath().path();
     }
 
     return new PendingCall(d->m_bluezProfileManager->RegisterProfile(profile->objectPath(), profile->uuid(), profile->d->options),
