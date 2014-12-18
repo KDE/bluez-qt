@@ -40,6 +40,7 @@ public:
     QString orgBluezAdapter1;
     QString orgBluezDevice1;
     QString orgBluezAgentManager1;
+    QString orgBluezProfileManager1;
     QString orgBluezObex;
     QString orgBluezObexClient1;
     QString orgBluezObexAgentManager1;
@@ -55,6 +56,7 @@ GlobalData::GlobalData()
     orgBluezAdapter1 = QStringLiteral("org.bluez.Adapter1");
     orgBluezDevice1 = QStringLiteral("org.bluez.Device1");
     orgBluezAgentManager1 = QStringLiteral("org.bluez.AgentManager1");
+    orgBluezProfileManager1 = QStringLiteral("org.bluez.ProfileManager1");
     orgBluezObex = QStringLiteral("org.bluez.obex");
     orgBluezObexClient1 = QStringLiteral("org.bluez.obex.Client1");
     orgBluezObexAgentManager1 = QStringLiteral("org.bluez.obex.AgentManager1");
@@ -95,6 +97,11 @@ QString Strings::orgBluezDevice1()
 QString Strings::orgBluezAgentManager1()
 {
     return globalData->orgBluezAgentManager1;
+}
+
+QString Strings::orgBluezProfileManager1()
+{
+    return globalData->orgBluezProfileManager1;
 }
 
 QString Strings::orgBluezObex()

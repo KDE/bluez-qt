@@ -28,12 +28,14 @@
 
 #include "dbusobjectmanager.h"
 #include "bluezagentmanager1.h"
+#include "bluezprofilemanager1.h"
 
 namespace QBluez
 {
 
 typedef org::freedesktop::DBus::ObjectManager DBusObjectManager;
 typedef org::bluez::AgentManager1 BluezAgentManager;
+typedef org::bluez::ProfileManager1 BluezProfileManager;
 
 class Manager;
 class Adapter;
@@ -71,6 +73,7 @@ public:
     Manager *q;
     DBusObjectManager *m_dbusObjectManager;
     BluezAgentManager *m_bluezAgentManager;
+    BluezProfileManager *m_bluezProfileManager;
 
     QHash<QString, Adapter*> m_adapters;
     QHash<QString, Device*> m_devices;

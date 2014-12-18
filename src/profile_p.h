@@ -20,46 +20,20 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef QBLUEZ_UTILS_P_H
-#define QBLUEZ_UTILS_P_H
+#ifndef QBLUEZ_PROFILE_P_H
+#define QBLUEZ_PROFILE_P_H
 
-#include "device.h"
-
-class QString;
-class QStringList;
-class QDBusConnection;
+#include <QVariantMap>
 
 namespace QBluez
 {
 
-namespace Strings
+class ProfilePrivate
 {
+public:
+    QVariantMap options;
+};
 
-QString orgFreedesktopDBus();
-QString orgBluez();
-QString orgBluezAdapter1();
-QString orgBluezDevice1();
-QString orgBluezAgentManager1();
-QString orgBluezProfileManager1();
-QString orgBluezObex();
-QString orgBluezObexClient1();
-QString orgBluezObexAgentManager1();
-QString orgBluezObexSession1();
-QString orgBluezObexTransfer1();
+} // namepsace QBluez
 
-}
-
-namespace DBusConnection
-{
-
-QDBusConnection orgBluez();
-QDBusConnection orgBluezObex();
-
-}
-
-QStringList stringListToUpper(const QStringList &list);
-Device::DeviceType classToType(quint32 classNum);
-
-} // namespace QBluez
-
-#endif // QBLUEZ_UTILS_P_H
+#endif // QBLUEZ_PROFILE_P_H

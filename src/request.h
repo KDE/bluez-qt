@@ -32,6 +32,7 @@ namespace QBluez
 
 enum AgentType {
     OrgBluezAgent,
+    OrgBluezProfile,
     OrgBluezObexAgent
 };
 

@@ -33,6 +33,7 @@ namespace QBluez
 class Device;
 class Adapter;
 class Agent;
+class Profile;
 class PendingCall;
 class InitManagerJob;
 
@@ -248,6 +249,27 @@ public Q_SLOTS:
      * @return void pending call
      */
     PendingCall *requestDefaultAgent(Agent *agent);
+
+    /**
+     * Registers profile.
+     *
+     * Possible errors: PendingCall::InvalidArguments, PendingCall::AlreadyExists
+     *
+     * @param profile profile to be registered
+     * @param options additional options
+     * @return void pending call
+     */
+    PendingCall *registerProfile(Profile *profile);
+
+    /**
+     * Unregisters profile.
+     *
+     * Possible errors: PendingCall::DoesNotExists
+     *
+     * @param profile profile to be unregistered
+     * @return void pending call
+     */
+    PendingCall *unregisterProfile(Profile *profile);
 
 Q_SIGNALS:
     /**

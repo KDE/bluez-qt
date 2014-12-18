@@ -32,7 +32,7 @@ namespace QBluez
 
 static bool sendMessage(AgentType type, const QDBusMessage &msg)
 {
-    if (type == OrgBluezAgent) {
+    if (type == OrgBluezAgent || type == OrgBluezProfile) {
         return DBusConnection::orgBluez().send(msg);
     }
     if (type == OrgBluezObexAgent) {
@@ -45,6 +45,9 @@ static QString interfaceName(AgentType type)
 {
     if (type == OrgBluezAgent) {
         return QStringLiteral("org.bluez.Agent1");
+    }
+    if (type == OrgBluezProfile) {
+        return QStringLiteral("org.bluez.Profile1");
     }
     if (type == OrgBluezObexAgent) {
         return QStringLiteral("org.bluez.obex.Agent1");

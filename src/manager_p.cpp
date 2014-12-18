@@ -40,6 +40,7 @@ ManagerPrivate::ManagerPrivate(Manager *parent)
     , q(parent)
     , m_dbusObjectManager(0)
     , m_bluezAgentManager(0)
+    , m_bluezProfileManager(0)
     , m_usableAdapter(0)
     , m_initialized(false)
     , m_bluezRunning(false)
@@ -132,8 +133,9 @@ void ManagerPrivate::getManagedObjectsFinished(QDBusPendingCallWatcher *watcher)
             addAdapter(path, interfaces.value(Strings::orgBluezAdapter1()));
         } else if (interfaces.contains(Strings::orgBluezDevice1())) {
             addDevice(path, interfaces.value(Strings::orgBluezDevice1()));
-        } else if (interfaces.contains(Strings::orgBluezAgentManager1())) {
+        } else if (interfaces.contains(Strings::orgBluezAgentManager1()) && interfaces.contains(Strings::orgBluezProfileManager1())) {
             m_bluezAgentManager = new BluezAgentManager(Strings::orgBluez(), path, DBusConnection::orgBluez(), this);
+            m_bluezProfileManager = new BluezProfileManager(Strings::orgBluez(), path, DBusConnection::orgBluez(), this);
         }
     }
 

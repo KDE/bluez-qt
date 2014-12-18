@@ -13,6 +13,8 @@ set(qbluez_SRCS
     utils_p.cpp
     agent.cpp
     agentadaptor.cpp
+    profile.cpp
+    profileadaptor.cpp
     pendingcall.cpp
     request.cpp
     obexmanager.cpp
@@ -36,6 +38,7 @@ qt5_add_dbus_interface(qbluez_SRCS ${obexfiletransfer1_xml} obexfiletransfer1)
 qt5_add_dbus_interface(qbluez_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.freedesktop.DBus.Properties.xml dbusproperties)
 qt5_add_dbus_interface(qbluez_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.Adapter1.xml bluezadapter1)
 qt5_add_dbus_interface(qbluez_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.AgentManager1.xml bluezagentmanager1)
+qt5_add_dbus_interface(qbluez_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.ProfileManager1.xml bluezprofilemanager1)
 qt5_add_dbus_interface(qbluez_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.Device1.xml bluezdevice1)
 qt5_add_dbus_interface(qbluez_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.obex.AgentManager1.xml obexagentmanager1)
 qt5_add_dbus_interface(qbluez_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.obex.Client1.xml obexclient1)
@@ -53,6 +56,7 @@ target_link_libraries(KF5QBluez
     PUBLIC
         Qt5::Core
         Qt5::DBus
+        Qt5::Network
 )
 
 set_target_properties(KF5QBluez
@@ -72,6 +76,7 @@ ecm_generate_headers(QBluez_HEADERS
         InitObexManagerJob
         Services
         Agent
+        Profile
         PendingCall
         Request
         ObexManager

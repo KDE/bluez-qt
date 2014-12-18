@@ -27,7 +27,7 @@ ecm_setup_version(${KF5_VERSION}
 set(REQUIRED_QT_VERSION "5.2.0")
 
 # Required Qt5 components to build this framework
-find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core DBus Test)
+find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core DBus Network Test)
 
 # Optional Qt5 components to build this framework
 find_package(Qt5Qml ${REQUIRED_QT_VERSION} CONFIG)

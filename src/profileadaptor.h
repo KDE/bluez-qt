@@ -20,46 +20,41 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef QBLUEZ_UTILS_P_H
-#define QBLUEZ_UTILS_P_H
+#ifndef QBLUEZ_PROFILEADAPTOR_H
+#define QBLUEZ_PROFILEADAPTOR_H
 
-#include "device.h"
+#include <QObject>
+#include <QDBusAbstractAdaptor>
 
-class QString;
-class QStringList;
-class QDBusConnection;
+class QDBusMessage;
+class QDBusObjectPath;
+class QDBusUnixFileDescriptor;
 
 namespace QBluez
 {
 
-namespace Strings
+class Device;
+class Manager;
+class Profile;
+
+class ProfileAdaptor : public QDBusAbstractAdaptor
 {
+    Q_OBJECT
+    Q_CLASSINFO("D-Bus Interface", "org.bluez.Profile1")
 
-QString orgFreedesktopDBus();
-QString orgBluez();
-QString orgBluezAdapter1();
-QString orgBluezDevice1();
-QString orgBluezAgentManager1();
-QString orgBluezProfileManager1();
-QString orgBluezObex();
-QString orgBluezObexClient1();
-QString orgBluezObexAgentManager1();
-QString orgBluezObexSession1();
-QString orgBluezObexTransfer1();
+public:
+    explicit ProfileAdaptor(Profile *parent, Manager *manager);
 
-}
+public Q_SLOTS:
+    void NewConnection(const QDBusObjectPath &device, const QDBusUnixFileDescriptor &fd, const QVariantMap &properties, const QDBusMessage &msg);
+    void RequestDisconnection(const QDBusObjectPath &device, const QDBusMessage &msg);
+    Q_NOREPLY void Release();
 
-namespace DBusConnection
-{
-
-QDBusConnection orgBluez();
-QDBusConnection orgBluezObex();
-
-}
-
-QStringList stringListToUpper(const QStringList &list);
-Device::DeviceType classToType(quint32 classNum);
+private:
+    Profile *m_profile;
+    Manager *m_manager;
+};
 
 } // namespace QBluez
 
-#endif // QBLUEZ_UTILS_P_H
+#endif // QBLUEZ_PROFILEADAPTOR_H

@@ -25,6 +25,9 @@
 #include "adapter.h"
 #include "agent.h"
 #include "agentadaptor.h"
+#include "profile.h"
+#include "profile_p.h"
+#include "profileadaptor.h"
 #include "pendingcall.h"
 #include "initmanagerjob.h"
 #include "utils_p.h"
@@ -176,6 +179,34 @@ PendingCall *Manager::requestDefaultAgent(Agent *agent)
     }
 
     return new PendingCall(d->m_bluezAgentManager->RequestDefaultAgent(agent->objectPath()),
+                           PendingCall::ReturnVoid, this);
+}
+
+PendingCall *Manager::registerProfile(Profile *profile)
+{
+    if (!d->m_bluezProfileManager) {
+        return new PendingCall(PendingCall::InternalError, QStringLiteral("Manager not operational!"));
+    }
+
+    new ProfileAdaptor(profile, this);
+
+    if (!DBusConnection::orgBluez().registerObject(profile->objectPath().path(), profile)) {
+        qWarning() << "Cannot register object" << profile->objectPath().path();
+    }
+
+    return new PendingCall(d->m_bluezProfileManager->RegisterProfile(profile->objectPath(), profile->uuid(), profile->d->options),
+                           PendingCall::ReturnVoid, this);
+}
+
+PendingCall *Manager::unregisterProfile(Profile *profile)
+{
+    if (!d->m_bluezProfileManager) {
+        return new PendingCall(PendingCall::InternalError, QStringLiteral("Manager not operational!"));
+    }
+
+    DBusConnection::orgBluez().unregisterObject(profile->objectPath().path());
+
+    return new PendingCall(d->m_bluezProfileManager->UnregisterProfile(profile->objectPath()),
                            PendingCall::ReturnVoid, this);
 }
 
