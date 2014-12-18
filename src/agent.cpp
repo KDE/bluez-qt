@@ -38,7 +38,8 @@ Agent::Capability Agent::capability() const
 void Agent::requestPinCode(Device *device, const Request<QString> &request)
 {
     Q_UNUSED(device)
-    Q_UNUSED(request)
+
+    request.cancel();
 }
 
 void Agent::displayPinCode(Device *device, const QString &pinCode)
@@ -50,7 +51,8 @@ void Agent::displayPinCode(Device *device, const QString &pinCode)
 void Agent::requestPasskey(Device *device, const Request<quint32> &request)
 {
     Q_UNUSED(device)
-    Q_UNUSED(request)
+
+    request.cancel();
 }
 
 void Agent::displayPasskey(Device *device, const QString &passkey, const QString &entered)
@@ -64,20 +66,23 @@ void Agent::requestConfirmation(Device *device, const QString &passkey, const Re
 {
     Q_UNUSED(device)
     Q_UNUSED(passkey)
-    Q_UNUSED(request)
+
+    request.cancel();
 }
 
 void Agent::requestAuthorization(Device *device, const Request<> &request)
 {
     Q_UNUSED(device)
-    Q_UNUSED(request)
+
+    request.cancel();
 }
 
 void Agent::authorizeService(Device *device, const QString &uuid, const Request<> &request)
 {
     Q_UNUSED(device)
     Q_UNUSED(uuid)
-    Q_UNUSED(request)
+
+    request.cancel();
 }
 
 void Agent::cancel()
