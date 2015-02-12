@@ -39,7 +39,7 @@ DevicePrivate::DevicePrivate(const QString &path, const QVariantMap &properties,
     , m_trusted(false)
     , m_blocked(false)
     , m_legacyPairing(false)
-    , m_rssi(-1)
+    , m_rssi(0)
     , m_connected(false)
     , m_adapter(adapter)
 {
@@ -127,7 +127,7 @@ void DevicePrivate::propertiesChanged(const QString &interface, const QVariantMa
         } else if (property == QLatin1String("Icon")) {
             PROPERTY_INVALIDATED(m_icon, QString(), iconChanged);
         } else if (property == QLatin1String("RSSI")) {
-            PROPERTY_INVALIDATED(m_rssi, -1, rssiChanged);
+            PROPERTY_INVALIDATED(m_rssi, 0, rssiChanged);
         } else if (property == QLatin1String("Modalias")) {
             PROPERTY_INVALIDATED(m_modalias, QString(), modaliasChanged);
         } else if (property == QLatin1String("UUIDs")) {
