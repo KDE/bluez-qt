@@ -23,6 +23,7 @@
 #include "adapter_p.h"
 #include "adapter.h"
 #include "utils_p.h"
+#include "macros_p.h"
 
 namespace QBluez
 {
@@ -88,13 +89,6 @@ QDBusPendingReply<> AdapterPrivate::setDBusProperty(const QString &name, const Q
 {
     return m_dbusProperties->Set(Strings::orgBluezAdapter1(), name, QDBusVariant(value));
 }
-
-// Make sure not to emit propertyChanged signal when the property already contains changed value
-#define PROPERTY_CHANGED(var, type_cast, signal) \
-    if (var != value.type_cast()) { \
-        var = value.type_cast(); \
-        Q_EMIT q->signal(var); \
-    }
 
 void AdapterPrivate::propertiesChanged(const QString &interface, const QVariantMap &changed, const QStringList &invalidated)
 {
