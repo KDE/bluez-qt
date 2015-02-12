@@ -82,7 +82,6 @@ QDBusPendingReply<> DevicePrivate::setDBusProperty(const QString &name, const QV
 void DevicePrivate::propertiesChanged(const QString &interface, const QVariantMap &changed, const QStringList &invalidated)
 {
     Q_UNUSED(interface)
-    Q_UNUSED(invalidated)
 
     QVariantMap::const_iterator i;
     for (i = changed.constBegin(); i != changed.constEnd(); ++i) {
@@ -115,6 +114,24 @@ void DevicePrivate::propertiesChanged(const QString &interface, const QVariantMa
             PROPERTY_CHANGED(m_modalias, toString, modaliasChanged);
         } else if (property == QLatin1String("UUIDs")) {
             uuidsPropertyChanged(stringListToUpper(value.toStringList()));
+        }
+    }
+
+    Q_FOREACH (const QString &property, invalidated) {
+        if (property == QLatin1String("Name")) {
+            namePropertyChanged(QString());
+        } else if (property == QLatin1String("Class")) {
+            classPropertyChanged(0);
+        } else if (property == QLatin1String("Appearance")) {
+            PROPERTY_INVALIDATED(m_appearance, 0, appearanceChanged);
+        } else if (property == QLatin1String("Icon")) {
+            PROPERTY_INVALIDATED(m_icon, QString(), iconChanged);
+        } else if (property == QLatin1String("RSSI")) {
+            PROPERTY_INVALIDATED(m_rssi, -1, rssiChanged);
+        } else if (property == QLatin1String("Modalias")) {
+            PROPERTY_INVALIDATED(m_modalias, QString(), modaliasChanged);
+        } else if (property == QLatin1String("UUIDs")) {
+            uuidsPropertyChanged(QStringList());
         }
     }
 

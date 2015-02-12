@@ -26,6 +26,7 @@
 #include "obexsession_p.h"
 #include "pendingcall.h"
 #include "utils_p.h"
+#include "macros_p.h"
 
 #include "obextransfer1.h"
 #include "dbusproperties.h"
@@ -113,15 +114,9 @@ void ObexTransferPrivate::propertiesChanged(const QString &interface, const QVar
                 Q_EMIT q->statusChanged(m_status);
             }
         } else if (property == QLatin1String("Transferred")) {
-            if (m_transferred != value.toUInt()) {
-                m_transferred = value.toUInt();
-                Q_EMIT q->transferredChanged(m_transferred);
-            }
+            PROPERTY_CHANGED(m_transferred, toUInt, transferredChanged);
         } else if (property == QLatin1String("Filename")) {
-            if (m_fileName != value.toString()) {
-                m_fileName = value.toString();
-                Q_EMIT q->fileNameChanged(m_fileName);
-            }
+            PROPERTY_CHANGED(m_fileName, toString, fileNameChanged);
         }
     }
 }

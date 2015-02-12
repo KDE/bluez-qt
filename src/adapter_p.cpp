@@ -93,7 +93,6 @@ QDBusPendingReply<> AdapterPrivate::setDBusProperty(const QString &name, const Q
 void AdapterPrivate::propertiesChanged(const QString &interface, const QVariantMap &changed, const QStringList &invalidated)
 {
     Q_UNUSED(interface)
-    Q_UNUSED(invalidated)
 
     QVariantMap::const_iterator i;
     for (i = changed.constBegin(); i != changed.constEnd(); ++i) {
@@ -122,6 +121,12 @@ void AdapterPrivate::propertiesChanged(const QString &interface, const QVariantM
             PROPERTY_CHANGED(m_modalias, toString, modaliasChanged);
         } else if (property == QLatin1String("UUIDs")) {
             uuidsPropertyChanged(stringListToUpper(value.toStringList()));
+        }
+    }
+
+    Q_FOREACH (const QString &property, invalidated) {
+        if (property == QLatin1String("Modalias")) {
+            PROPERTY_INVALIDATED(m_modalias, QString(), modaliasChanged);
         }
     }
 
