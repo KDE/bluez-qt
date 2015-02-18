@@ -4,6 +4,9 @@
 #include <QDebug>
 #include <QEventLoop>
 #include <QCoreApplication>
+
+#include <QDBusReply>
+#include <QDBusInterface>
 #include <QDBusPendingCall>
 #include <QDBusServiceWatcher>
 
@@ -148,6 +151,17 @@ void FakeBluez::runAction(const QString &object, const QString &actionName, cons
 
     QDBusConnection::sessionBus().asyncCall(call);
     eventLoop.exec();
+}
+
+bool isBluez4Running()
+{
+    QDBusInterface introspection(QStringLiteral("org.bluez"),
+                                 QStringLiteral("/"),
+                                 QStringLiteral("org.freedesktop.DBus.Introspectable"),
+                                 QDBusConnection::systemBus());
+
+    QDBusReply<QString> reply = introspection.call(QStringLiteral("Introspect"));
+    return reply.value().contains(QLatin1String("<interface name=\"org.bluez.Manager\">"));
 }
 
 void verifyPropertiesChangedSignal(const QSignalSpy &spy, const QString &propertyName, const QVariant &propertyValue)

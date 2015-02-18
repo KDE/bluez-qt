@@ -15,7 +15,8 @@ extern void qbluez_initFakeBluezTestRun();
 using namespace QBluez;
 
 AdapterTest::AdapterTest(bool fakeBluezRun)
-    : m_fakeBluezRun(fakeBluezRun)
+    : m_manager(0)
+    , m_fakeBluezRun(fakeBluezRun)
 {
 }
 
@@ -24,7 +25,11 @@ void AdapterTest::initTestCase()
     QString service = QStringLiteral("org.bluez");
     QDBusConnection connection = QDBusConnection::systemBus();
 
-    if (m_fakeBluezRun) {
+    if (!m_fakeBluezRun) {
+        if (isBluez4Running()) {
+            QSKIP("This test can only run with Bluez 5");
+        }
+    } else {
         service = QStringLiteral("org.qbluez.fakebluez");
         connection = QDBusConnection::sessionBus();
 
