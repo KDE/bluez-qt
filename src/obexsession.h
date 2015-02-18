@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -20,14 +20,14 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef QBLUEZ_OBEXSESSION_H
-#define QBLUEZ_OBEXSESSION_H
+#ifndef BLUEZQT_OBEXSESSION_H
+#define BLUEZQT_OBEXSESSION_H
 
 #include <QObject>
 
-#include "qbluez_export.h"
+#include "bluezqt_export.h"
 
-namespace QBluez
+namespace BluezQt
 {
 
 class PendingCall;
@@ -37,7 +37,7 @@ class PendingCall;
  *
  * This class represents an OBEX session.
  */
-class QBLUEZ_EXPORT ObexSession : public QObject
+class BLUEZQT_EXPORT ObexSession : public QObject
 {
     Q_OBJECT
 
@@ -110,6 +110,6 @@ private:
     friend class ObexTransferPrivate;
 };
 
-} // namespace QBluez
+} // namespace BluezQt
 
-#endif // QBLUEZ_OBEXSESSION_H
+#endif // BLUEZQT_OBEXSESSION_H

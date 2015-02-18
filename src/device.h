@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -20,14 +20,14 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef QBLUEZ_DEVICE_H
-#define QBLUEZ_DEVICE_H
+#ifndef BLUEZQT_DEVICE_H
+#define BLUEZQT_DEVICE_H
 
 #include <QObject>
 
-#include "qbluez_export.h"
+#include "bluezqt_export.h"
 
-namespace QBluez
+namespace BluezQt
 {
 
 class Adapter;
@@ -38,7 +38,7 @@ class PendingCall;
  *
  * This class represents a Bluetooth device.
  */
-class QBLUEZ_EXPORT Device : public QObject
+class BLUEZQT_EXPORT Device : public QObject
 {
     Q_OBJECT
 
@@ -60,7 +60,7 @@ class QBLUEZ_EXPORT Device : public QObject
     Q_PROPERTY(bool connected READ isConnected NOTIFY connectedChanged)
     Q_PROPERTY(QStringList uuids READ uuids NOTIFY uuidsChanged)
     Q_PROPERTY(QString modalias READ modalias NOTIFY modaliasChanged)
-    Q_PROPERTY(QBluez::Adapter* adapter READ adapter)
+    Q_PROPERTY(BluezQt::Adapter* adapter READ adapter)
 
 public:
     /**
@@ -164,7 +164,7 @@ public:
      *
      * @return type of device
      */
-    QBluez::Device::DeviceType deviceType() const;
+    BluezQt::Device::DeviceType deviceType() const;
 
     /**
      * Returns an appearance of the device.
@@ -290,7 +290,7 @@ public Q_SLOTS:
      *
      * @return void pending call
      */
-    QBluez::PendingCall *connectDevice();
+    BluezQt::PendingCall *connectDevice();
 
     /**
      * Disconnects all connected profiles of the device.
@@ -301,7 +301,7 @@ public Q_SLOTS:
      *
      * @return void pending call
      */
-    QBluez::PendingCall *disconnectDevice();
+    BluezQt::PendingCall *disconnectDevice();
 
     /**
      * Connects a specific profile of the device.
@@ -312,7 +312,7 @@ public Q_SLOTS:
      * @param uuid service UUID
      * @return void pending call
      */
-    QBluez::PendingCall *connectProfile(const QString &uuid);
+    BluezQt::PendingCall *connectProfile(const QString &uuid);
 
     /**
      * Disconnects a specific profile of the device.
@@ -323,7 +323,7 @@ public Q_SLOTS:
      * @param uuid service UUID
      * @return void pending call
      */
-    QBluez::PendingCall *disconnectProfile(const QString &uuid);
+    BluezQt::PendingCall *disconnectProfile(const QString &uuid);
 
     /**
      * Initiates a pairing of the device.
@@ -335,7 +335,7 @@ public Q_SLOTS:
      *
      * @return void pending call
      */
-    QBluez::PendingCall *pair();
+    BluezQt::PendingCall *pair();
 
     /**
      * Cancels a pairing of the device.
@@ -346,18 +346,18 @@ public Q_SLOTS:
      *
      * @return void pending call
      */
-    QBluez::PendingCall *cancelPairing();
+    BluezQt::PendingCall *cancelPairing();
 
 Q_SIGNALS:
     /**
      * Indicates that the device was removed.
      */
-    void deviceRemoved(QBluez::Device *device);
+    void deviceRemoved(BluezQt::Device *device);
 
     /**
      * Indicates that at least one of the device's properties have changed.
      */
-    void deviceChanged(QBluez::Device *device);
+    void deviceChanged(BluezQt::Device *device);
 
     /**
      * Indicates that device's name have changed.
@@ -444,6 +444,6 @@ private:
     friend class Adapter;
 };
 
-} // namespace QBluez
+} // namespace BluezQt
 
-#endif // QBLUEZ_DEVICE_H
+#endif // BLUEZQT_DEVICE_H

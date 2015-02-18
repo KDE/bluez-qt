@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -22,4 +22,4 @@
 
 #include "debug_p.h"
 
-Q_LOGGING_CATEGORY(QBLUEZ, "QBluez")
+Q_LOGGING_CATEGORY(BLUEZQT, "BluezQt")

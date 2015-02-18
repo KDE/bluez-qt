@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -26,7 +26,7 @@
 
 #include "obexfiletransfer1.h"
 
-namespace QBluez
+namespace BluezQt
 {
 
 typedef org::bluez::obex::FileTransfer1 BluezFileTransfer;
@@ -105,4 +105,4 @@ PendingCall *ObexFileTransfer::deleteFile(const QString &fileName)
 }
 
 
-} // namespace QBluez
+} // namespace BluezQt

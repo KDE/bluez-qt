@@ -1,2 +1,2 @@
-module org.qbluez
-plugin qbluezextensionplugin
+module org.bluezqt
+plugin bluezqtextensionplugin

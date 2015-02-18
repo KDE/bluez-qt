@@ -9,11 +9,11 @@
 #include <QtTest/QSignalSpy>
 #include <QLoggingCategory>
 
-using namespace QBluez;
+using namespace BluezQt;
 
 void JobsTest::initTestCase()
 {
-    QLoggingCategory::setFilterRules(QStringLiteral("QBluez=false"));
+    QLoggingCategory::setFilterRules(QStringLiteral("BluezQt=false"));
 }
 
 void JobsTest::deleteManagerTest()

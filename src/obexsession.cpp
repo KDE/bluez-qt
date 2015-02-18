@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -25,7 +25,7 @@
 #include "pendingcall.h"
 #include "utils_p.h"
 
-namespace QBluez
+namespace BluezQt
 {
 
 ObexSessionPrivate::ObexSessionPrivate(ObexSession *q, const QString &path)
@@ -108,4 +108,4 @@ PendingCall *ObexSession::getCapabilities()
     return new PendingCall(d->m_bluezSession->GetCapabilities(), PendingCall::ReturnString, this);
 }
 
-} // namespace QBluez
+} // namespace BluezQt

@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -20,8 +20,8 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef QBLUEZ_OBEXMANAGER_P_H
-#define QBLUEZ_OBEXMANAGER_P_H
+#ifndef BLUEZQT_OBEXMANAGER_P_H
+#define BLUEZQT_OBEXMANAGER_P_H
 
 #include <QObject>
 #include <QTimer>
@@ -30,7 +30,7 @@
 #include "obexclient1.h"
 #include "obexagentmanager1.h"
 
-namespace QBluez
+namespace BluezQt
 {
 
 typedef org::bluez::obex::Client1 ObexClient;
@@ -72,6 +72,6 @@ Q_SIGNALS:
     void initFinished();
 };
 
-} // namespace QBluez
+} // namespace BluezQt
 
-#endif // QBLUEZ_OBEXMANAGER_P_H
+#endif // BLUEZQT_OBEXMANAGER_P_H

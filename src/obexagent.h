@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -20,17 +20,17 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef QBLUEZ_OBEXAGENT_H
-#define QBLUEZ_OBEXAGENT_H
+#ifndef BLUEZQT_OBEXAGENT_H
+#define BLUEZQT_OBEXAGENT_H
 
 #include <QObject>
 
 #include "request.h"
-#include "qbluez_export.h"
+#include "bluezqt_export.h"
 
 class QDBusObjectPath;
 
-namespace QBluez
+namespace BluezQt
 {
 
 class Device;
@@ -46,7 +46,7 @@ class ObexTransfer;
  * @note The return value of request will be sent asynchronously with Request class.
  *       It is also possible to cancel/reject the request.
  */
-class QBLUEZ_EXPORT ObexAgent : public QObject
+class BLUEZQT_EXPORT ObexAgent : public QObject
 {
     Q_OBJECT
 
@@ -109,6 +109,6 @@ public:
     virtual void release();
 };
 
-} // namespace QBluez
+} // namespace BluezQt
 
-#endif // QBLUEZ_OBEXAGENT_H
+#endif // BLUEZQT_OBEXAGENT_H

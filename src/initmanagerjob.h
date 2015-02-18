@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -20,15 +20,15 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef QBLUEZ_INITMANAGERJOB_H
-#define QBLUEZ_INITMANAGERJOB_H
+#ifndef BLUEZQT_INITMANAGERJOB_H
+#define BLUEZQT_INITMANAGERJOB_H
 
 #include <QObject>
 
 #include "job.h"
-#include "qbluez_export.h"
+#include "bluezqt_export.h"
 
-namespace QBluez
+namespace BluezQt
 {
 
 class Manager;
@@ -38,10 +38,10 @@ class Manager;
  *
  * This class represents a job that initializes Manager.
  */
-class QBLUEZ_EXPORT InitManagerJob : public Job
+class BLUEZQT_EXPORT InitManagerJob : public Job
 {
     Q_OBJECT
-    Q_PROPERTY(QBluez::Manager* manager READ manager)
+    Q_PROPERTY(BluezQt::Manager* manager READ manager)
 
 public:
     /**
@@ -74,6 +74,6 @@ private:
     friend class Manager;
 };
 
-} // namespace QBluez
+} // namespace BluezQt
 
-#endif // QBLUEZ_INITMANAGERJOB_H
+#endif // BLUEZQT_INITMANAGERJOB_H

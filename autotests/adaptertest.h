@@ -34,12 +34,12 @@ private Q_SLOTS:
 private:
     struct AdapterUnit
     {
-        QBluez::Adapter *adapter;
+        BluezQt::Adapter *adapter;
         org::bluez::Adapter1 *dbusAdapter;
         org::freedesktop::DBus::Properties *dbusProperties;
     };
 
-    QBluez::Manager *m_manager;
+    BluezQt::Manager *m_manager;
     QList<AdapterUnit> m_units;
     bool m_fakeBluezRun;
 };

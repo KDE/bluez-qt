@@ -1,4 +1,4 @@
-set(qbluez_SRCS
+set(bluezqt_SRCS
     debug_p.cpp
     manager.cpp
     manager_p.cpp
@@ -28,44 +28,44 @@ set(qbluez_SRCS
 )
 
 set(dbusobjectmanager_xml ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.freedesktop.DBus.ObjectManager.xml)
-set_source_files_properties(${dbusobjectmanager_xml} PROPERTIES INCLUDE "qbluez_dbustypes.h")
-qt5_add_dbus_interface(qbluez_SRCS ${dbusobjectmanager_xml} dbusobjectmanager)
+set_source_files_properties(${dbusobjectmanager_xml} PROPERTIES INCLUDE "bluezqt_dbustypes.h")
+qt5_add_dbus_interface(bluezqt_SRCS ${dbusobjectmanager_xml} dbusobjectmanager)
 
 set(obexfiletransfer1_xml ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.obex.FileTransfer1.xml)
-set_source_files_properties(${obexfiletransfer1_xml} PROPERTIES INCLUDE "qbluez_dbustypes.h")
-qt5_add_dbus_interface(qbluez_SRCS ${obexfiletransfer1_xml} obexfiletransfer1)
+set_source_files_properties(${obexfiletransfer1_xml} PROPERTIES INCLUDE "bluezqt_dbustypes.h")
+qt5_add_dbus_interface(bluezqt_SRCS ${obexfiletransfer1_xml} obexfiletransfer1)
 
-qt5_add_dbus_interface(qbluez_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.freedesktop.DBus.Properties.xml dbusproperties)
-qt5_add_dbus_interface(qbluez_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.Adapter1.xml bluezadapter1)
-qt5_add_dbus_interface(qbluez_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.AgentManager1.xml bluezagentmanager1)
-qt5_add_dbus_interface(qbluez_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.ProfileManager1.xml bluezprofilemanager1)
-qt5_add_dbus_interface(qbluez_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.Device1.xml bluezdevice1)
-qt5_add_dbus_interface(qbluez_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.obex.AgentManager1.xml obexagentmanager1)
-qt5_add_dbus_interface(qbluez_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.obex.Client1.xml obexclient1)
-qt5_add_dbus_interface(qbluez_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.obex.Transfer1.xml obextransfer1)
-qt5_add_dbus_interface(qbluez_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.obex.Session1.xml obexsession1)
-qt5_add_dbus_interface(qbluez_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.obex.ObjectPush1.xml obexobjectpush1)
+qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.freedesktop.DBus.Properties.xml dbusproperties)
+qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.Adapter1.xml bluezadapter1)
+qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.AgentManager1.xml bluezagentmanager1)
+qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.ProfileManager1.xml bluezprofilemanager1)
+qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.Device1.xml bluezdevice1)
+qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.obex.AgentManager1.xml obexagentmanager1)
+qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.obex.Client1.xml obexclient1)
+qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.obex.Transfer1.xml obextransfer1)
+qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.obex.Session1.xml obexsession1)
+qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.obex.ObjectPush1.xml obexobjectpush1)
 
-add_library(KF5QBluez ${qbluez_SRCS})
-generate_export_header(KF5QBluez BASE_NAME QBluez)
-add_library(KF5::QBluez ALIAS KF5QBluez)
+add_library(KF5BluezQt ${bluezqt_SRCS})
+generate_export_header(KF5BluezQt BASE_NAME BluezQt)
+add_library(KF5::BluezQt ALIAS KF5BluezQt)
 
-target_include_directories(KF5QBluez INTERFACE "$<INSTALL_INTERFACE:${INCLUDE_INSTALL_DIR}/QBluez>")
+target_include_directories(KF5BluezQt INTERFACE "$<INSTALL_INTERFACE:${INCLUDE_INSTALL_DIR}/BluezQt>")
 
-target_link_libraries(KF5QBluez
+target_link_libraries(KF5BluezQt
     PUBLIC
         Qt5::Core
         Qt5::DBus
         Qt5::Network
 )
 
-set_target_properties(KF5QBluez
-    PROPERTIES VERSION ${QBLUEZ_VERSION_STRING}
-    SOVERSION ${QBLUEZ_SOVERSION}
-    EXPORT_NAME "QBluez"
+set_target_properties(KF5BluezQt
+    PROPERTIES VERSION ${BLUEZQT_VERSION_STRING}
+    SOVERSION ${BLUEZQT_SOVERSION}
+    EXPORT_NAME "BluezQt"
 )
 
-ecm_generate_headers(QBluez_HEADERS
+ecm_generate_headers(BluezQt_HEADERS
     HEADER_NAMES
         Manager
         Adapter
@@ -86,26 +86,26 @@ ecm_generate_headers(QBluez_HEADERS
         ObexObjectPush
         ObexFileTransfer
 
-    REQUIRED_HEADERS QBluez_HEADERS
+    REQUIRED_HEADERS BluezQt_HEADERS
 )
 
 # Install files
-install(TARGETS KF5QBluez
-        EXPORT KF5QBluezTargets
+install(TARGETS KF5BluezQt
+        EXPORT KF5BluezQtTargets
         ${INSTALL_TARGETS_DEFAULT_ARGS})
 
 install(FILES
-            ${CMAKE_CURRENT_BINARY_DIR}/qbluez_export.h
-            ${CMAKE_CURRENT_BINARY_DIR}/qbluez_version.h
-            ${QBluez_HEADERS}
-        DESTINATION ${INCLUDE_INSTALL_DIR}/QBluez
+            ${CMAKE_CURRENT_BINARY_DIR}/bluezqt_export.h
+            ${CMAKE_CURRENT_BINARY_DIR}/bluezqt_version.h
+            ${BluezQt_HEADERS}
+        DESTINATION ${INCLUDE_INSTALL_DIR}/BluezQt
         COMPONENT Devel)
 
 include(ECMGeneratePriFile)
 
 ecm_generate_pri_file(
-    BASE_NAME QBluez
-    LIB_NAME KF5QBluez
+    BASE_NAME BluezQt
+    LIB_NAME KF5BluezQt
     DEPS "core"
     FILENAME_VAR PRI_FILENAME
 )

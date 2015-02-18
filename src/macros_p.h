@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2015 David Rosca <nowrep@gmail.com>
  *
@@ -20,8 +20,8 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef MACROS_P_H
-#define MACROS_P_H
+#ifndef BLUEZQT_MACROS_P_H
+#define BLUEZQT_MACROS_P_H
 
 // Change property value and emit propertyChanged signal
 #define PROPERTY_CHANGED(var, type_cast, signal) \
@@ -37,4 +37,4 @@
         Q_EMIT q->signal(var); \
     }
 
-#endif // MACROS_P_H
+#endif // BLUEZQT_MACROS_P_H

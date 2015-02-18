@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -25,7 +25,7 @@
 #include "manager_p.h"
 #include "debug_p.h"
 
-namespace QBluez
+namespace BluezQt
 {
 
 class InitManagerJobPrivate : public QObject
@@ -51,7 +51,7 @@ InitManagerJobPrivate::InitManagerJobPrivate(InitManagerJob *q, Manager *manager
 void InitManagerJobPrivate::doStart()
 {
     if (m_manager->d->m_initialized) {
-        qCWarning(QBLUEZ) << "InitManagerJob: Manager already initialized!";
+        qCWarning(BLUEZQT) << "InitManagerJob: Manager already initialized!";
         q->emitResult();
         return;
     }
@@ -63,7 +63,7 @@ void InitManagerJobPrivate::doStart()
 
 void InitManagerJobPrivate::initError(const QString &errorText)
 {
-    qCWarning(QBLUEZ) << "GetManagerJob Error:" << errorText;
+    qCWarning(BLUEZQT) << "GetManagerJob Error:" << errorText;
 
     q->setError(InitManagerJob::UserDefinedError);
     q->setErrorText(errorText);
@@ -84,7 +84,7 @@ InitManagerJob::InitManagerJob(Manager *manager)
 InitManagerJob::~InitManagerJob()
 {
     if (isRunning()) {
-        qCWarning(QBLUEZ) << "InitManagerJob Error: Job was deleted before finished!";
+        qCWarning(BLUEZQT) << "InitManagerJob Error: Job was deleted before finished!";
 
         setError(UserDefinedError);
         setErrorText(QStringLiteral("Job was deleted before finished."));
@@ -108,4 +108,4 @@ void InitManagerJob::doEmitResult()
     Q_EMIT result(this);
 }
 
-} // namespace QBluez
+} // namespace BluezQt

@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -25,7 +25,7 @@
 #include "utils_p.h"
 #include "macros_p.h"
 
-namespace QBluez
+namespace BluezQt
 {
 
 AdapterPrivate::AdapterPrivate(const QString &path, const QVariantMap &properties, Adapter *parent)
@@ -143,4 +143,4 @@ void AdapterPrivate::uuidsPropertyChanged(const QStringList &value)
 
 #undef PROPERTY_CHANGED
 
-} // namespace QBluez
+} // namespace BluezQt

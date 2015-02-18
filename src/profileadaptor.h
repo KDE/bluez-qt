@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -20,8 +20,8 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef QBLUEZ_PROFILEADAPTOR_H
-#define QBLUEZ_PROFILEADAPTOR_H
+#ifndef BLUEZQT_PROFILEADAPTOR_H
+#define BLUEZQT_PROFILEADAPTOR_H
 
 #include <QObject>
 #include <QDBusAbstractAdaptor>
@@ -30,7 +30,7 @@ class QDBusMessage;
 class QDBusObjectPath;
 class QDBusUnixFileDescriptor;
 
-namespace QBluez
+namespace BluezQt
 {
 
 class Device;
@@ -55,6 +55,6 @@ private:
     Manager *m_manager;
 };
 
-} // namespace QBluez
+} // namespace BluezQt
 
-#endif // QBLUEZ_PROFILEADAPTOR_H
+#endif // BLUEZQT_PROFILEADAPTOR_H

@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -20,8 +20,8 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef QBLUEZ_DEVICE_P_H
-#define QBLUEZ_DEVICE_P_H
+#ifndef BLUEZQT_DEVICE_P_H
+#define BLUEZQT_DEVICE_P_H
 
 #include <QObject>
 #include <QStringList>
@@ -29,7 +29,7 @@
 #include "bluezdevice1.h"
 #include "dbusproperties.h"
 
-namespace QBluez
+namespace BluezQt
 {
 
 typedef org::bluez::Device1 BluezDevice;
@@ -73,6 +73,6 @@ public:
     Adapter *m_adapter;
 };
 
-} // namespace QBluez
+} // namespace BluezQt
 
-#endif // QBLUEZ_DEVICE_P_H
+#endif // BLUEZQT_DEVICE_P_H

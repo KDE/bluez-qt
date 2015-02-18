@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -20,15 +20,15 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef QBLUEZ_PENDINGCALL_H
-#define QBLUEZ_PENDINGCALL_H
+#ifndef BLUEZQT_PENDINGCALL_H
+#define BLUEZQT_PENDINGCALL_H
 
 #include <QObject>
 #include <QDBusPendingReply>
 
-#include "qbluez_export.h"
+#include "bluezqt_export.h"
 
-namespace QBluez
+namespace BluezQt
 {
 
 /**
@@ -37,7 +37,7 @@ namespace QBluez
  * This class represents a pending method call. It is a convenient wrapper
  * around QDBusPendingReply and QDBusPendingCallWatcher.
  */
-class QBLUEZ_EXPORT PendingCall : public QObject
+class BLUEZQT_EXPORT PendingCall : public QObject
 {
     Q_OBJECT
 
@@ -166,7 +166,7 @@ Q_SIGNALS:
     /**
      * Indicates that the call have finished.
      */
-    void finished(QBluez::PendingCall *call);
+    void finished(BluezQt::PendingCall *call);
 
 private:
     enum ReturnType {
@@ -194,6 +194,6 @@ private:
     friend class ObexFileTransfer;
 };
 
-} // namespace QBluez
+} // namespace BluezQt
 
-#endif // QBLUEZ_PENDINGCALL_H
+#endif // BLUEZQT_PENDINGCALL_H

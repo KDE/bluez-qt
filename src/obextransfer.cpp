@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -31,7 +31,7 @@
 #include "obextransfer1.h"
 #include "dbusproperties.h"
 
-namespace QBluez
+namespace BluezQt
 {
 
 static ObexTransfer::Status stringToStatus(const QString &status)
@@ -197,4 +197,4 @@ PendingCall *ObexTransfer::resume()
     return new PendingCall(d->m_bluezTransfer->Resume(), PendingCall::ReturnVoid, this);
 }
 
-} // namespace QBluez
+} // namespace BluezQt

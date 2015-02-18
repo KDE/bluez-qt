@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -20,15 +20,15 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef QBLUEZ_INITOBEXMANAGERJOB_H
-#define QBLUEZ_INITOBEXMANAGERJOB_H
+#ifndef BLUEZQT_INITOBEXMANAGERJOB_H
+#define BLUEZQT_INITOBEXMANAGERJOB_H
 
 #include <QObject>
 
 #include "job.h"
-#include "qbluez_export.h"
+#include "bluezqt_export.h"
 
-namespace QBluez
+namespace BluezQt
 {
 
 class ObexManager;
@@ -38,10 +38,10 @@ class ObexManager;
  *
  * This class represents a job that initializes ObexManager.
  */
-class QBLUEZ_EXPORT InitObexManagerJob : public Job
+class BLUEZQT_EXPORT InitObexManagerJob : public Job
 {
     Q_OBJECT
-    Q_PROPERTY(QBluez::ObexManager* manager READ manager)
+    Q_PROPERTY(BluezQt::ObexManager* manager READ manager)
 
 public:
     /**
@@ -74,6 +74,6 @@ private:
     friend class ObexManager;
 };
 
-} // namespace QBluez
+} // namespace BluezQt
 
-#endif // QBLUEZ_INITOBEXMANAGERJOB_H
+#endif // BLUEZQT_INITOBEXMANAGERJOB_H

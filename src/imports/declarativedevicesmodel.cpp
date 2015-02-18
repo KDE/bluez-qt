@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -24,6 +24,6 @@
 #include "declarativemanager.h"
 
 DeclarativeDevicesModel::DeclarativeDevicesModel(QObject *parent)
-    : QBluez::DevicesModel(DeclarativeManager::self(), parent)
+    : BluezQt::DevicesModel(DeclarativeManager::self(), parent)
 {
 }

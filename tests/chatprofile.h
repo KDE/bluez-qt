@@ -3,7 +3,7 @@
 
 class QLocalSocket;
 
-class ChatProfile : public QBluez::Profile
+class ChatProfile : public BluezQt::Profile
 {
     Q_OBJECT
 
@@ -13,8 +13,8 @@ public:
     QDBusObjectPath objectPath() const;
     QString uuid() const;
 
-    void newConnection(QBluez::Device *device, const QDBusUnixFileDescriptor &fd, const QVariantMap &properties, const QBluez::Request<> &request);
-    void requestDisconnection(QBluez::Device *device, const QBluez::Request<> &request);
+    void newConnection(BluezQt::Device *device, const QDBusUnixFileDescriptor &fd, const QVariantMap &properties, const BluezQt::Request<> &request);
+    void requestDisconnection(BluezQt::Device *device, const BluezQt::Request<> &request);
     void release();
 
 private Q_SLOTS:

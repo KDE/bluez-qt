@@ -1,7 +1,7 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
- * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
+ * Copyright (C) 2014-2015 David Rosca <nowrep@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,22 +20,22 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef QBLUEZEXTENSIONPLUGIN_H
-#define QBLUEZEXTENSIONPLUGIN_H
+#ifndef BLUEZQTEXTENSIONPLUGIN_H
+#define BLUEZQTEXTENSIONPLUGIN_H
 
 #include <QQmlExtensionPlugin>
 
-class QBluezExtensionPlugin: public QQmlExtensionPlugin
+class BluezQtExtensionPlugin: public QQmlExtensionPlugin
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "org.kde.solid")
+    Q_PLUGIN_METADATA(IID "org.bluezqt")
 
 public:
-    QBluezExtensionPlugin(QObject *parent = 0);
+    BluezQtExtensionPlugin(QObject *parent = 0);
 
     void registerTypes(const char *uri) Q_DECL_OVERRIDE;
 
 };
 
-#endif // QBLUEZEXTENSIONPLUGIN_H
+#endif // BLUEZQTEXTENSIONPLUGIN_H
 

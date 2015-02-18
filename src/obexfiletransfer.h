@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -20,17 +20,17 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef QBLUEZ_OBEXFILETRANSFER_H
-#define QBLUEZ_OBEXFILETRANSFER_H
+#ifndef BLUEZQT_OBEXFILETRANSFER_H
+#define BLUEZQT_OBEXFILETRANSFER_H
 
 #include <QObject>
 #include <QDateTime>
 
-#include "qbluez_export.h"
+#include "bluezqt_export.h"
 
 class QDBusObjectPath;
 
-namespace QBluez
+namespace BluezQt
 {
 
 class PendingCall;
@@ -40,7 +40,7 @@ class PendingCall;
  *
  * This class represents an OBEX file transfer interface.
  */
-class QBLUEZ_EXPORT ObexFileTransfer : public QObject
+class BLUEZQT_EXPORT ObexFileTransfer : public QObject
 {
     Q_OBJECT
 
@@ -190,8 +190,8 @@ private:
     friend class ObexFileTransferPrivate;
 };
 
-} // namespace QBluez
+} // namespace BluezQt
 
-Q_DECLARE_METATYPE(QList<QBluez::ObexFileTransfer::Item>)
+Q_DECLARE_METATYPE(QList<BluezQt::ObexFileTransfer::Item>)
 
-#endif // QBLUEZ_OBEXFILETRANSFER_H
+#endif // BLUEZQT_OBEXFILETRANSFER_H

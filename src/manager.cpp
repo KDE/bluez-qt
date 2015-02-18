@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -33,7 +33,7 @@
 #include "utils_p.h"
 #include "debug_p.h"
 
-namespace QBluez
+namespace BluezQt
 {
 
 Manager::Manager(QObject *parent)
@@ -154,7 +154,7 @@ PendingCall *Manager::registerAgent(Agent *agent)
     new AgentAdaptor(agent, this);
 
     if (!DBusConnection::orgBluez().registerObject(agent->objectPath().path(), agent)) {
-        qCDebug(QBLUEZ) << "Cannot register object" << agent->objectPath().path();
+        qCDebug(BLUEZQT) << "Cannot register object" << agent->objectPath().path();
     }
 
     return new PendingCall(d->m_bluezAgentManager->RegisterAgent(agent->objectPath(), capability),
@@ -192,7 +192,7 @@ PendingCall *Manager::registerProfile(Profile *profile)
     new ProfileAdaptor(profile, this);
 
     if (!DBusConnection::orgBluez().registerObject(profile->objectPath().path(), profile)) {
-        qCDebug(QBLUEZ) << "Cannot register object" << profile->objectPath().path();
+        qCDebug(BLUEZQT) << "Cannot register object" << profile->objectPath().path();
     }
 
     return new PendingCall(d->m_bluezProfileManager->RegisterProfile(profile->objectPath(), profile->uuid(), profile->d->options),
@@ -211,4 +211,4 @@ PendingCall *Manager::unregisterProfile(Profile *profile)
                            PendingCall::ReturnVoid, this);
 }
 
-} // namespace QBluez
+} // namespace BluezQt

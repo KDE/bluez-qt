@@ -10,12 +10,12 @@
 #include <QLoggingCategory>
 #include <QDBusObjectPath>
 
-namespace QBluez
+namespace BluezQt
 {
-extern void qbluez_initFakeBluezTestRun();
+extern void bluezqt_initFakeBluezTestRun();
 }
 
-using namespace QBluez;
+using namespace BluezQt;
 
 
 // TestAgent
@@ -35,7 +35,7 @@ QDBusObjectPath TestAgent::objectPath() const
     return QDBusObjectPath(QStringLiteral("/testagent"));
 }
 
-void TestAgent::requestPinCode(Device *device, const QBluez::Request<QString> &request)
+void TestAgent::requestPinCode(Device *device, const BluezQt::Request<QString> &request)
 {
     m_device = device;
     m_pinRequested = true;
@@ -50,7 +50,7 @@ void TestAgent::displayPinCode(Device *device, const QString &pinCode)
     m_displayedPinCode = pinCode;
 }
 
-void TestAgent::requestPasskey(Device *device, const QBluez::Request<quint32> &request)
+void TestAgent::requestPasskey(Device *device, const BluezQt::Request<quint32> &request)
 {
     m_device = device;
     m_passkeyRequested = true;
@@ -65,7 +65,7 @@ void TestAgent::displayPasskey(Device *device, const QString &passkey, const QSt
     m_enteredPasskey = entered;
 }
 
-void TestAgent::requestConfirmation(Device *device, const QString &passkey, const QBluez::Request<> &request)
+void TestAgent::requestConfirmation(Device *device, const QString &passkey, const BluezQt::Request<> &request)
 {
     m_device = device;
     m_requestedPasskey = passkey;
@@ -73,7 +73,7 @@ void TestAgent::requestConfirmation(Device *device, const QString &passkey, cons
     request.accept();
 }
 
-void TestAgent::requestAuthorization(Device *device, const QBluez::Request<> &request)
+void TestAgent::requestAuthorization(Device *device, const BluezQt::Request<> &request)
 {
     m_device = device;
     m_authorizationRequested = true;
@@ -81,7 +81,7 @@ void TestAgent::requestAuthorization(Device *device, const QBluez::Request<> &re
     request.accept();
 }
 
-void TestAgent::authorizeService(Device *device, const QString &uuid, const QBluez::Request<> &request)
+void TestAgent::authorizeService(Device *device, const QString &uuid, const BluezQt::Request<> &request)
 {
     m_device = device;
     m_authorizedUuid = uuid;
@@ -102,8 +102,8 @@ void TestAgent::release()
 // AgentManagerTest
 void AgentManagerTest::initTestCase()
 {
-    qbluez_initFakeBluezTestRun();
-    QLoggingCategory::setFilterRules(QStringLiteral("QBluez=false"));
+    bluezqt_initFakeBluezTestRun();
+    QLoggingCategory::setFilterRules(QStringLiteral("BluezQt=false"));
 
     FakeBluez::start();
     FakeBluez::runTest(QStringLiteral("bluez-standard"));

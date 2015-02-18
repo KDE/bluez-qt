@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -20,19 +20,19 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef QBLUEZ_PROFILE_H
-#define QBLUEZ_PROFILE_H
+#ifndef BLUEZQT_PROFILE_H
+#define BLUEZQT_PROFILE_H
 
 #include <QObject>
 
 #include "request.h"
-#include "qbluez_export.h"
+#include "bluezqt_export.h"
 
 class QLocalSocket;
 class QDBusObjectPath;
 class QDBusUnixFileDescriptor;
 
-namespace QBluez
+namespace BluezQt
 {
 
 class Device;
@@ -55,7 +55,7 @@ class Device;
  *       It is also possible to cancel/reject all requests.
  *
  */
-class QBLUEZ_EXPORT Profile : public QObject
+class BLUEZQT_EXPORT Profile : public QObject
 {
     Q_OBJECT
 
@@ -235,7 +235,7 @@ public:
      * @param properties additional properties
      * @param request request to be used for sending reply
      */
-    virtual void newConnection(QBluez::Device *device, const QDBusUnixFileDescriptor &fd, const QVariantMap &properties, const QBluez::Request<> &request);
+    virtual void newConnection(BluezQt::Device *device, const QDBusUnixFileDescriptor &fd, const QVariantMap &properties, const BluezQt::Request<> &request);
 
     /**
      * Requests the disconnection of the profile.
@@ -245,7 +245,7 @@ public:
      * @param device device to be disconnected
      * @param request request to be used for sending reply
      */
-    virtual void requestDisconnection(QBluez::Device *device, const QBluez::Request<> &request);
+    virtual void requestDisconnection(BluezQt::Device *device, const BluezQt::Request<> &request);
 
     /**
      * Indicates that the profile was unregistered.
@@ -266,6 +266,6 @@ private:
     friend class Manager;
 };
 
-} // namespace QBluez
+} // namespace BluezQt
 
-#endif // QBLUEZ_PROFILE_H
+#endif // BLUEZQT_PROFILE_H

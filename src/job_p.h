@@ -18,14 +18,14 @@
     License along with this library. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef QBLUEZ_JOB_PRIVATE
-#define QBLUEZ_JOB_PRIVATE
+#ifndef BLUEZQT_JOB_PRIVATE
+#define BLUEZQT_JOB_PRIVATE
 
 #include "job.h"
 
 class QEventLoop;
 
-namespace QBluez
+namespace BluezQt
 {
 class JobPrivate
 {
@@ -42,4 +42,4 @@ public:
     Q_DECLARE_PUBLIC(Job)
 };
 }
-#endif //QBLUEZ_JOB_PRIVATE
+#endif // BLUEZQT_JOB_PRIVATE

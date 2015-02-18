@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -20,14 +20,14 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef QBLUEZ_MANAGER_H
-#define QBLUEZ_MANAGER_H
+#ifndef BLUEZQT_MANAGER_H
+#define BLUEZQT_MANAGER_H
 
 #include <QObject>
 
-#include "qbluez_export.h"
+#include "bluezqt_export.h"
 
-namespace QBluez
+namespace BluezQt
 {
 
 class Device;
@@ -49,10 +49,10 @@ class InitManagerJob;
  *
  * Example use in C++ code:
  * @code
- * QBluez::Manager *manager = new QBluez::Manager();
- * QBluez::InitManagerJob *job = manager->init();
+ * BluezQt::Manager *manager = new BluezQt::Manager();
+ * BluezQt::InitManagerJob *job = manager->init();
  * job->start();
- * connect(job, &QBluez::InitManagerJob::result, ...);
+ * connect(job, &BluezQt::InitManagerJob::result, ...);
  * @endcode
  *
  * In QML, manager is automatically starting initialization after instantiated.
@@ -61,9 +61,9 @@ class InitManagerJob;
 
  * Example use in QML code:
  * @code
- * import org.qbluez 1.0 as QBluez
+ * import org.bluezqt 1.0 as BluezQt
  *
- * QBluez.Manager {
+ * BluezQt.Manager {
  *     id: manager;
  *
  *     onInitialized: {
@@ -86,13 +86,13 @@ class InitManagerJob;
  *
  * @see InitManagerJob
  */
-class QBLUEZ_EXPORT Manager : public QObject
+class BLUEZQT_EXPORT Manager : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(QBluez::Adapter* usableAdapter READ usableAdapter NOTIFY usableAdapterChanged)
-    Q_PROPERTY(QList<QBluez::Adapter*> adapters READ adapters)
-    Q_PROPERTY(QList<QBluez::Device*> devices READ devices)
+    Q_PROPERTY(BluezQt::Adapter* usableAdapter READ usableAdapter NOTIFY usableAdapterChanged)
+    Q_PROPERTY(QList<BluezQt::Adapter*> adapters READ adapters)
+    Q_PROPERTY(QList<BluezQt::Device*> devices READ devices)
     Q_PROPERTY(bool initialized READ isInitialized)
     Q_PROPERTY(bool operational READ isOperational NOTIFY operationalChanged)
     Q_PROPERTY(bool bluetoothOperational READ isBluetoothOperational NOTIFY bluetoothOperationalChanged)
@@ -176,7 +176,7 @@ public:
      *
      * @return quint32 pending call
      */
-    static QBluez::PendingCall *startService();
+    static BluezQt::PendingCall *startService();
 
 public Q_SLOTS:
     /**
@@ -185,7 +185,7 @@ public Q_SLOTS:
      * @param address address of adapter (eg. "1C:E5:C3:BC:94:7E")
      * @return null if there is no adapter with specified address
      */
-    QBluez::Adapter *adapterForAddress(const QString &address) const;
+    BluezQt::Adapter *adapterForAddress(const QString &address) const;
 
     /**
      * Returns an adapter for specified UBI.
@@ -193,7 +193,7 @@ public Q_SLOTS:
      * @param ubi UBI of adapter (eg. "/org/bluez/hci0")
      * @return null if there is no adapter with specified UBI
      */
-    QBluez::Adapter *adapterForUbi(const QString &ubi) const;
+    BluezQt::Adapter *adapterForUbi(const QString &ubi) const;
 
     /**
      * Returns a device for specified address.
@@ -205,7 +205,7 @@ public Q_SLOTS:
      *       in multiple adapters). In this case, the first found device will
      *       be returned.
      */
-    QBluez::Device *deviceForAddress(const QString &address) const;
+    BluezQt::Device *deviceForAddress(const QString &address) const;
 
     /**
      * Returns a device for specified UBI.
@@ -213,7 +213,7 @@ public Q_SLOTS:
      * @param ubi UBI of device (eg. "/org/bluez/hci0/dev_40_79_6A_0C_39_75")
      * @return null if there is no device with specified UBI
      */
-    QBluez::Device *deviceForUbi(const QString &ubi) const;
+    BluezQt::Device *deviceForUbi(const QString &ubi) const;
 
     /**
      * Registers agent.
@@ -285,17 +285,17 @@ Q_SIGNALS:
     /**
      * Indicates that adapter was added.
      */
-    void adapterAdded(QBluez::Adapter *adapter);
+    void adapterAdded(BluezQt::Adapter *adapter);
 
     /**
      * Indicates that adapter was removed.
      */
-    void adapterRemoved(QBluez::Adapter *adapter);
+    void adapterRemoved(BluezQt::Adapter *adapter);
 
     /**
      * Indicates that usable adapter have changed.
      */
-    void usableAdapterChanged(QBluez::Adapter *adapter);
+    void usableAdapterChanged(BluezQt::Adapter *adapter);
 
     /**
      * Indicates that all adapters were removed.
@@ -309,6 +309,6 @@ private:
     friend class InitManagerJobPrivate;
 };
 
-} // namespace QBluez
+} // namespace BluezQt
 
-#endif // QBLUEZ_MANAGER_H
+#endif // BLUEZQT_MANAGER_H

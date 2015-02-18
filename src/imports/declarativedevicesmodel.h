@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -27,7 +27,7 @@
 
 class DeclarativeManager;
 
-class DeclarativeDevicesModel : public QBluez::DevicesModel
+class DeclarativeDevicesModel : public BluezQt::DevicesModel
 {
     Q_OBJECT
 

@@ -19,7 +19,7 @@
 // https://developer.android.com/samples/BluetoothChat/index.html
 
 ChatProfile::ChatProfile(QObject *parent)
-    : QBluez::Profile(parent)
+    : BluezQt::Profile(parent)
     , m_socket(0)
 {
     setName(QStringLiteral("BluetoothChatSecure"));
@@ -36,7 +36,7 @@ QString ChatProfile::uuid() const
     return QStringLiteral("fa87c0d0-afac-11de-8a39-0800200c9a66");
 }
 
-void ChatProfile::newConnection(QBluez::Device *device, const QDBusUnixFileDescriptor &fd, const QVariantMap &properties, const QBluez::Request<> &request)
+void ChatProfile::newConnection(BluezQt::Device *device, const QDBusUnixFileDescriptor &fd, const QVariantMap &properties, const BluezQt::Request<> &request)
 {
     qDebug() << "Connect" << device->name() << properties;
 
@@ -54,7 +54,7 @@ void ChatProfile::newConnection(QBluez::Device *device, const QDBusUnixFileDescr
     request.accept();
 }
 
-void ChatProfile::requestDisconnection(QBluez::Device *device, const QBluez::Request<> &request)
+void ChatProfile::requestDisconnection(BluezQt::Device *device, const BluezQt::Request<> &request)
 {
     qDebug() << "Disconnect" << device->name();
 
@@ -88,8 +88,8 @@ int main(int argc, char **argv)
 {
     QCoreApplication app(argc, argv);
 
-    QBluez::Manager *manager = new QBluez::Manager();
-    QBluez::InitManagerJob *initJob = manager->init();
+    BluezQt::Manager *manager = new BluezQt::Manager();
+    BluezQt::InitManagerJob *initJob = manager->init();
     initJob->exec();
 
     if (initJob->error()) {
@@ -97,7 +97,7 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    QBluez::PendingCall *call = manager->registerProfile(new ChatProfile(&app));
+    BluezQt::PendingCall *call = manager->registerProfile(new ChatProfile(&app));
     call->waitForFinished();
 
     if (call->error()) {

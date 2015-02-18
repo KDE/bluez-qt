@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -20,8 +20,8 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef QBLUEZ_MANAGER_P_H
-#define QBLUEZ_MANAGER_P_H
+#ifndef BLUEZQT_MANAGER_P_H
+#define BLUEZQT_MANAGER_P_H
 
 #include <QObject>
 #include <QHash>
@@ -30,7 +30,7 @@
 #include "bluezagentmanager1.h"
 #include "bluezprofilemanager1.h"
 
-namespace QBluez
+namespace BluezQt
 {
 
 typedef org::freedesktop::DBus::ObjectManager DBusObjectManager;
@@ -89,6 +89,6 @@ Q_SIGNALS:
     void initFinished();
 };
 
-} // namespace QBluez
+} // namespace BluezQt
 
-#endif // QBLUEZ_MANAGER_P_H
+#endif // BLUEZQT_MANAGER_P_H

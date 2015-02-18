@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 Alejandro Fiestas Olivares <afiestas@kde.org>
  *               2014 David Rosca <nowrep@gmail.com>
@@ -21,18 +21,18 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef QBLUEZ_JOB_H
-#define QBLUEZ_JOB_H
+#ifndef BLUEZQT_JOB_H
+#define BLUEZQT_JOB_H
 
 #include <QObject>
 
-#include "qbluez_export.h"
+#include "bluezqt_export.h"
 
-namespace QBluez
+namespace BluezQt
 {
 class JobPrivate;
 /**
- * This class represents an asynchronous job performed by QBluez,
+ * This class represents an asynchronous job performed by BluezQt,
  * it is usually not used directly but instead it is inherit by some
  * other class.
  *
@@ -53,7 +53,7 @@ class JobPrivate;
  * @see InitManagerJob
  * @see InitObexManagerJob
  */
-class QBLUEZ_EXPORT Job : public QObject
+class BLUEZQT_EXPORT Job : public QObject
 {
     Q_OBJECT
     Q_ENUMS(Error)
@@ -236,6 +236,6 @@ private:
 };
 
 }
-Q_DECLARE_METATYPE(QBluez::Job::Error)
+Q_DECLARE_METATYPE(BluezQt::Job::Error)
 
-#endif //QBLUEZ_JOB_H
+#endif //BLUEZQT_JOB_H

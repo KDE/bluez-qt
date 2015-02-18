@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -20,16 +20,16 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef QBLUEZ_OBEXMANAGER_H
-#define QBLUEZ_OBEXMANAGER_H
+#ifndef BLUEZQT_OBEXMANAGER_H
+#define BLUEZQT_OBEXMANAGER_H
 
 #include <QObject>
 
-#include "qbluez_export.h"
+#include "bluezqt_export.h"
 
 class QDBusObjectPath;
 
-namespace QBluez
+namespace BluezQt
 {
 
 class ObexAgent;
@@ -46,7 +46,7 @@ class InitObexManagerJob;
  * @note If manager is not operational, all methods that returns a PendingCall
  *       will fail with PendingCall::InternalError.
  */
-class QBLUEZ_EXPORT ObexManager : public QObject
+class BLUEZQT_EXPORT ObexManager : public QObject
 {
     Q_OBJECT
 
@@ -99,7 +99,7 @@ public:
      *
      * @return quint32 pending call
      */
-    static QBluez::PendingCall *startService();
+    static BluezQt::PendingCall *startService();
 
 public Q_SLOTS:
     /**
@@ -181,6 +181,6 @@ private:
     friend class InitObexManagerJobPrivate;
 };
 
-} // namespace QBluez
+} // namespace BluezQt
 
-#endif // QBLUEZ_OBEXMANAGER_H
+#endif // BLUEZQT_OBEXMANAGER_H

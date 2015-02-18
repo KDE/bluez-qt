@@ -7,12 +7,12 @@
 #include <QtTest/QSignalSpy>
 #include <QDebug>
 
-namespace QBluez
+namespace BluezQt
 {
-extern void qbluez_initFakeBluezTestRun();
+extern void bluezqt_initFakeBluezTestRun();
 }
 
-using namespace QBluez;
+using namespace BluezQt;
 
 AdapterTest::AdapterTest(bool fakeBluezRun)
     : m_manager(0)
@@ -30,10 +30,10 @@ void AdapterTest::initTestCase()
             QSKIP("This test can only run with Bluez 5");
         }
     } else {
-        service = QStringLiteral("org.qbluez.fakebluez");
+        service = QStringLiteral("org.bluezqt.fakebluez");
         connection = QDBusConnection::sessionBus();
 
-        qbluez_initFakeBluezTestRun();
+        bluezqt_initFakeBluezTestRun();
         FakeBluez::start();
         FakeBluez::runTest(QStringLiteral("bluez-standard"));
 

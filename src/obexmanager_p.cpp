@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -29,7 +29,7 @@
 
 #include <QDBusServiceWatcher>
 
-namespace QBluez
+namespace BluezQt
 {
 
 typedef org::freedesktop::DBus::ObjectManager DBusObjectManager;
@@ -184,7 +184,7 @@ void ObexManagerPrivate::clear()
 
 void ObexManagerPrivate::serviceRegistered()
 {
-    qCDebug(QBLUEZ) << "Obex service registered";
+    qCDebug(BLUEZQT) << "Obex service registered";
     m_obexRunning = true;
 
     // Client1 and AgentManager1 objects are not ready by the time org.bluez.obex is registered
@@ -195,7 +195,7 @@ void ObexManagerPrivate::serviceRegistered()
 
 void ObexManagerPrivate::serviceUnregistered()
 {
-    qCDebug(QBLUEZ) << "Obex service unregistered";
+    qCDebug(BLUEZQT) << "Obex service unregistered";
     m_obexRunning = false;
 
     clear();
@@ -209,4 +209,4 @@ void ObexManagerPrivate::interfacesRemoved(const QDBusObjectPath &objectPath, co
     }
 }
 
-} // namespace QBluez
+} // namespace BluezQt

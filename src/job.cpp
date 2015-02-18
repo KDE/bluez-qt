@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 Alejandro Fiestas Olivares <afiestas@kde.org>
  *               2014 David Rosca <nowrep@gmail.com>
@@ -26,7 +26,7 @@
 
 #include <QEventLoop>
 
-namespace QBluez
+namespace BluezQt
 {
 
 JobPrivate::JobPrivate()
@@ -135,4 +135,4 @@ Job::Job(JobPrivate &dd, QObject *parent) : QObject(parent), d_ptr(&dd)
 
 }
 
-} // namespace QBluez
+} // namespace BluezQt

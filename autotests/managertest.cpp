@@ -10,17 +10,17 @@
 #include <QLoggingCategory>
 #include <QDBusObjectPath>
 
-namespace QBluez
+namespace BluezQt
 {
-extern void qbluez_initFakeBluezTestRun();
+extern void bluezqt_initFakeBluezTestRun();
 }
 
-using namespace QBluez;
+using namespace BluezQt;
 
 void ManagerTest::initTestCase()
 {
-    qbluez_initFakeBluezTestRun();
-    QLoggingCategory::setFilterRules(QStringLiteral("QBluez=false"));
+    bluezqt_initFakeBluezTestRun();
+    QLoggingCategory::setFilterRules(QStringLiteral("BluezQt=false"));
 }
 
 void ManagerTest::cleanupTestCase()
@@ -157,9 +157,9 @@ void ManagerTest::bluezRestartTest()
     QVERIFY(device2);
 
     QSignalSpy allAdaptersRemovedSpy(manager, SIGNAL(allAdaptersRemoved()));
-    QSignalSpy adapterRemovedSpy(manager, SIGNAL(adapterRemoved(QBluez::Adapter*)));
-    QSignalSpy device1RemovedSpy(adapter1, SIGNAL(deviceRemoved(QBluez::Device*)));
-    QSignalSpy device2RemovedSpy(adapter2, SIGNAL(deviceRemoved(QBluez::Device*)));
+    QSignalSpy adapterRemovedSpy(manager, SIGNAL(adapterRemoved(BluezQt::Adapter*)));
+    QSignalSpy device1RemovedSpy(adapter1, SIGNAL(deviceRemoved(BluezQt::Device*)));
+    QSignalSpy device2RemovedSpy(adapter2, SIGNAL(deviceRemoved(BluezQt::Device*)));
 
     btOperationalChangedSpy.clear();
     FakeBluez::stop();

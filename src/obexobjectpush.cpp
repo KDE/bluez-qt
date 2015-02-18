@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -26,7 +26,7 @@
 
 #include "obexobjectpush1.h"
 
-namespace QBluez
+namespace BluezQt
 {
 
 typedef org::bluez::obex::ObjectPush1 BluezObjectPush;
@@ -74,4 +74,4 @@ PendingCall *ObexObjectPush::exchangeBusinessCards(const QString &clientFileName
                            PendingCall::ReturnTransferWithProperties, this);
 }
 
-} // namespace QBluez
+} // namespace BluezQt

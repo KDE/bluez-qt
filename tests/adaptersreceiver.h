@@ -1,5 +1,5 @@
 /*****************************************************************************
- * This file is part of the QBluez project                                   *
+ * This file is part of the BluezQt project                                   *
  *                                                                           *
  * Copyright (C) 2011 Rafael Fernández López <ereslibre@kde.org>             *
  * Copyright (C) 2011 UFO Coders <info@ufocoders.com>                        *
@@ -26,7 +26,7 @@
 
 #include <QObject>
 
-namespace QBluez {
+namespace BluezQt {
     class Manager;
     class Adapter;
     class Device;
@@ -37,17 +37,17 @@ class AdaptersReceiver : public QObject
     Q_OBJECT
 
 public:
-    AdaptersReceiver(QBluez::Manager *manager, QObject *parent = 0);
+    AdaptersReceiver(BluezQt::Manager *manager, QObject *parent = 0);
 
 public Q_SLOTS:
-    void adapterAdded(QBluez::Adapter *adapter);
-    void adapterRemoved(QBluez::Adapter *adapter);
-    void usableAdapterChanged(QBluez::Adapter *adapter);
+    void adapterAdded(BluezQt::Adapter *adapter);
+    void adapterRemoved(BluezQt::Adapter *adapter);
+    void usableAdapterChanged(BluezQt::Adapter *adapter);
     void allAdaptersRemoved();
     void bluetoothOperationalChanged(bool operational);
 
 private:
-    QBluez::Manager *m_manager;
+    BluezQt::Manager *m_manager;
 };
 
 #endif // ADAPTERSRECEIVER_H

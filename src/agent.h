@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -20,17 +20,17 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef QBLUEZ_AGENT_H
-#define QBLUEZ_AGENT_H
+#ifndef BLUEZQT_AGENT_H
+#define BLUEZQT_AGENT_H
 
 #include <QObject>
 
 #include "request.h"
-#include "qbluez_export.h"
+#include "bluezqt_export.h"
 
 class QDBusObjectPath;
 
-namespace QBluez
+namespace BluezQt
 {
 
 class Device;
@@ -45,7 +45,7 @@ class Device;
  * @note The return value of requests will be sent asynchronously with Request class.
  *       It is also possible to cancel/reject all requests.
  */
-class QBLUEZ_EXPORT Agent : public QObject
+class BLUEZQT_EXPORT Agent : public QObject
 {
     Q_OBJECT
 
@@ -205,6 +205,6 @@ public:
     virtual void release();
 };
 
-} // namespace QBluez
+} // namespace BluezQt
 
-#endif // QBLUEZ_AGENT_H
+#endif // BLUEZQT_AGENT_H

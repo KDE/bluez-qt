@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -20,8 +20,8 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef QBLUEZ_UTILS_P_H
-#define QBLUEZ_UTILS_P_H
+#ifndef BLUEZQT_UTILS_P_H
+#define BLUEZQT_UTILS_P_H
 
 #include "device.h"
 
@@ -29,7 +29,7 @@ class QString;
 class QStringList;
 class QDBusConnection;
 
-namespace QBluez
+namespace BluezQt
 {
 
 namespace Strings
@@ -60,6 +60,6 @@ QDBusConnection orgBluezObex();
 QStringList stringListToUpper(const QStringList &list);
 Device::DeviceType classToType(quint32 classNum);
 
-} // namespace QBluez
+} // namespace BluezQt
 
-#endif // QBLUEZ_UTILS_P_H
+#endif // BLUEZQT_UTILS_P_H

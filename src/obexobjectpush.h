@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -20,16 +20,16 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef QBLUEZ_OBEXOBJECTPUSH_H
-#define QBLUEZ_OBEXOBJECTPUSH_H
+#ifndef BLUEZQT_OBEXOBJECTPUSH_H
+#define BLUEZQT_OBEXOBJECTPUSH_H
 
 #include <QObject>
 
-#include "qbluez_export.h"
+#include "bluezqt_export.h"
 
 class QDBusObjectPath;
 
-namespace QBluez
+namespace BluezQt
 {
 
 class PendingCall;
@@ -39,7 +39,7 @@ class PendingCall;
  *
  * This class represents an OBEX object push interface.
  */
-class QBLUEZ_EXPORT ObexObjectPush : public QObject
+class BLUEZQT_EXPORT ObexObjectPush : public QObject
 {
     Q_OBJECT
 
@@ -120,6 +120,6 @@ private:
     friend class ObexObjectPushPrivate;
 };
 
-} // namespace QBluez
+} // namespace BluezQt
 
-#endif // QBLUEZ_OBEXOBJECTPUSH_H
+#endif // BLUEZQT_OBEXOBJECTPUSH_H

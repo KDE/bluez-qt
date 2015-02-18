@@ -7,7 +7,7 @@
 #include "agent.h"
 #include "device.h"
 
-class TestAgent : public QBluez::Agent
+class TestAgent : public BluezQt::Agent
 {
     Q_OBJECT
 
@@ -16,18 +16,18 @@ public:
 
     QDBusObjectPath objectPath() const Q_DECL_OVERRIDE;
 
-    void requestPinCode(QBluez::Device *device, const QBluez::Request<QString> &request) Q_DECL_OVERRIDE;
-    void displayPinCode(QBluez::Device *device, const QString &pinCode) Q_DECL_OVERRIDE;
-    void requestPasskey(QBluez::Device *device, const QBluez::Request<quint32> &request) Q_DECL_OVERRIDE;
-    void displayPasskey(QBluez::Device *device, const QString &passkey, const QString &entered) Q_DECL_OVERRIDE;
-    void requestConfirmation(QBluez::Device *device, const QString &passkey, const QBluez::Request<> &request) Q_DECL_OVERRIDE;
-    void requestAuthorization(QBluez::Device *device, const QBluez::Request<> &request) Q_DECL_OVERRIDE;
-    void authorizeService(QBluez::Device *device, const QString &uuid, const QBluez::Request<> &request) Q_DECL_OVERRIDE;
+    void requestPinCode(BluezQt::Device *device, const BluezQt::Request<QString> &request) Q_DECL_OVERRIDE;
+    void displayPinCode(BluezQt::Device *device, const QString &pinCode) Q_DECL_OVERRIDE;
+    void requestPasskey(BluezQt::Device *device, const BluezQt::Request<quint32> &request) Q_DECL_OVERRIDE;
+    void displayPasskey(BluezQt::Device *device, const QString &passkey, const QString &entered) Q_DECL_OVERRIDE;
+    void requestConfirmation(BluezQt::Device *device, const QString &passkey, const BluezQt::Request<> &request) Q_DECL_OVERRIDE;
+    void requestAuthorization(BluezQt::Device *device, const BluezQt::Request<> &request) Q_DECL_OVERRIDE;
+    void authorizeService(BluezQt::Device *device, const QString &uuid, const BluezQt::Request<> &request) Q_DECL_OVERRIDE;
 
     void cancel() Q_DECL_OVERRIDE;
     void release() Q_DECL_OVERRIDE;
 
-    QBluez::Device *m_device;
+    BluezQt::Device *m_device;
 
     // requestPinCode
     bool m_pinRequested;

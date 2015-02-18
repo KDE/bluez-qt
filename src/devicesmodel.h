@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -20,14 +20,14 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef QBLUEZ_DEVICESMODEL_H
-#define QBLUEZ_DEVICESMODEL_H
+#ifndef BLUEZQT_DEVICESMODEL_H
+#define BLUEZQT_DEVICESMODEL_H
 
 #include <QAbstractListModel>
 
-#include "qbluez_export.h"
+#include "bluezqt_export.h"
 
-namespace QBluez
+namespace BluezQt
 {
 
 class Manager;
@@ -40,7 +40,7 @@ class Device;
  *
  * In QML code, this class can only be used after Manager is instantiated.
  */
-class QBLUEZ_EXPORT DevicesModel : public QAbstractListModel
+class BLUEZQT_EXPORT DevicesModel : public QAbstractListModel
 {
     Q_OBJECT
 
@@ -131,17 +131,17 @@ Q_SIGNALS:
     /**
      * Indicates that new device was found.
      */
-    void deviceFound(QBluez::Device *device);
+    void deviceFound(BluezQt::Device *device);
 
     /**
      * Indicates that device was removed.
      */
-    void deviceRemoved(QBluez::Device *device);
+    void deviceRemoved(BluezQt::Device *device);
 
     /**
      * Indicates that at least one of the device's properties have changed.
      */
-    void deviceChanged(QBluez::Device *device);
+    void deviceChanged(BluezQt::Device *device);
 
 private:
     class DevicesModelPrivate *const d;
@@ -149,6 +149,6 @@ private:
     friend class DevicesModelPrivate;
 };
 
-} // namespace QBluez
+} // namespace BluezQt
 
-#endif // QBLUEZ_DEVICESMODEL_H
+#endif // BLUEZQT_DEVICESMODEL_H

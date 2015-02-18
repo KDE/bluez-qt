@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -32,7 +32,7 @@
 #include <QDBusConnection>
 #include <QDBusServiceWatcher>
 
-namespace QBluez
+namespace BluezQt
 {
 
 ManagerPrivate::ManagerPrivate(Manager *parent)
@@ -210,7 +210,7 @@ Adapter *ManagerPrivate::findUsableAdapter() const
 
 void ManagerPrivate::serviceRegistered()
 {
-    qCDebug(QBLUEZ) << "Bluez service registered";
+    qCDebug(BLUEZQT) << "Bluez service registered";
     m_bluezRunning = true;
 
     load();
@@ -218,7 +218,7 @@ void ManagerPrivate::serviceRegistered()
 
 void ManagerPrivate::serviceUnregistered()
 {
-    qCDebug(QBLUEZ) << "Bluez service unregistered";
+    qCDebug(BLUEZQT) << "Bluez service unregistered";
 
     bool wasBtOperational = q->isBluetoothOperational();
     m_bluezRunning = false;
@@ -349,4 +349,4 @@ void ManagerPrivate::setUsableAdapter(Adapter *adapter)
     }
 }
 
-} // namespace QBluez
+} // namespace BluezQt

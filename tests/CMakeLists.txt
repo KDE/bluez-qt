@@ -1,14 +1,14 @@
 include(ECMMarkAsTest)
 
-macro(qbluez_executable_tests)
+macro(bluezqt_executable_tests)
     foreach(_testname ${ARGN})
         add_executable(${_testname} ${_testname}.cpp)
-        target_link_libraries(${_testname} Qt5::Test KF5QBluez)
+        target_link_libraries(${_testname} Qt5::Test KF5BluezQt)
         ecm_mark_as_test(${_testname})
     endforeach(_testname)
 endmacro()
 
-qbluez_executable_tests(
+bluezqt_executable_tests(
     adaptersreceiver
     devicereceiver
     chatprofile

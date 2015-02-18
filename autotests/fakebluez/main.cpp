@@ -9,8 +9,8 @@ int main(int argc, char **argv)
 {
     QCoreApplication app(argc, argv);
 
-    if (!QDBusConnection::sessionBus().registerService(QStringLiteral("org.qbluez.fakebluez"))) {
-        std::cerr << "Cannot register org.qbluez.fakebluez service!" << std::endl;
+    if (!QDBusConnection::sessionBus().registerService(QStringLiteral("org.bluezqt.fakebluez"))) {
+        std::cerr << "Cannot register org.bluezqt.fakebluez service!" << std::endl;
         return 1;
     }
 

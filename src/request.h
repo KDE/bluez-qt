@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -20,14 +20,14 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef QBLUEZ_REQUEST_H
-#define QBLUEZ_REQUEST_H
+#ifndef BLUEZQT_REQUEST_H
+#define BLUEZQT_REQUEST_H
 
 #include <QDBusMessage>
 
-#include "qbluez_export.h"
+#include "bluezqt_export.h"
 
-namespace QBluez
+namespace BluezQt
 {
 
 enum AgentType {
@@ -36,9 +36,9 @@ enum AgentType {
     OrgBluezObexAgent
 };
 
-QBLUEZ_EXPORT void qbluez_acceptRequest(AgentType type, const QVariant &val, const QDBusMessage &req);
-QBLUEZ_EXPORT void qbluez_rejectRequest(AgentType type, const QDBusMessage &req);
-QBLUEZ_EXPORT void qbluez_cancelRequest(AgentType type, const QDBusMessage &req);
+BLUEZQT_EXPORT void bluezqt_acceptRequest(AgentType type, const QVariant &val, const QDBusMessage &req);
+BLUEZQT_EXPORT void bluezqt_rejectRequest(AgentType type, const QDBusMessage &req);
+BLUEZQT_EXPORT void bluezqt_cancelRequest(AgentType type, const QDBusMessage &req);
 
 /**
  * ObexAgent/Agent request.
@@ -82,7 +82,7 @@ public:
      */
     void accept(T returnValue) const
     {
-        qbluez_acceptRequest(m_type, returnValue, m_message);
+        bluezqt_acceptRequest(m_type, returnValue, m_message);
     }
 
     /**
@@ -93,7 +93,7 @@ public:
      */
     void reject() const
     {
-        qbluez_rejectRequest(m_type, m_message);
+        bluezqt_rejectRequest(m_type, m_message);
     }
 
     /**
@@ -104,7 +104,7 @@ public:
      */
     void cancel() const
     {
-        qbluez_cancelRequest(m_type, m_message);
+        bluezqt_cancelRequest(m_type, m_message);
     }
 
 private:
@@ -129,17 +129,17 @@ public:
 
     void accept() const
     {
-        qbluez_acceptRequest(m_type, QVariant(), m_message);
+        bluezqt_acceptRequest(m_type, QVariant(), m_message);
     }
 
     void reject() const
     {
-        qbluez_rejectRequest(m_type, m_message);
+        bluezqt_rejectRequest(m_type, m_message);
     }
 
     void cancel() const
     {
-        qbluez_cancelRequest(m_type, m_message);
+        bluezqt_cancelRequest(m_type, m_message);
     }
 
 private:
@@ -147,6 +147,6 @@ private:
     QDBusMessage m_message;
 };
 
-} // namespace QBluez
+} // namespace BluezQt
 
-#endif // QBLUEZ_REQUEST_H
+#endif // BLUEZQT_REQUEST_H

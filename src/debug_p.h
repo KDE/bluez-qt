@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -20,11 +20,11 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DEBUG_P_H
-#define DEBUG_P_H
+#ifndef BLUEZQT_DEBUG_P_H
+#define BLUEZQT_DEBUG_P_H
 
 #include <QLoggingCategory>
 
-Q_DECLARE_LOGGING_CATEGORY(QBLUEZ)
+Q_DECLARE_LOGGING_CATEGORY(BLUEZQT)
 
-#endif // DEBUG_P_H
+#endif // BLUEZQT_DEBUG_P_H

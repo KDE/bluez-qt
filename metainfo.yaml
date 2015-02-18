@@ -4,6 +4,6 @@ tier: 1
 platforms:
     - name: Linux
 libraries:
-    - qmake: QBluez
-      cmake: KF5::QBluez
-cmakename: KF5QBluez
+    - qmake: BluezQt
+      cmake: KF5::BluezQt
+cmakename: KF5BluezQt

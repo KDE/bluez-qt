@@ -7,17 +7,17 @@
 #include <QtTest/QSignalSpy>
 #include <QLoggingCategory>
 
-namespace QBluez
+namespace BluezQt
 {
-extern void qbluez_initFakeBluezTestRun();
+extern void bluezqt_initFakeBluezTestRun();
 }
 
-using namespace QBluez;
+using namespace BluezQt;
 
 void ObexManagerTest::initTestCase()
 {
-    qbluez_initFakeBluezTestRun();
-    QLoggingCategory::setFilterRules(QStringLiteral("QBluez=false"));
+    bluezqt_initFakeBluezTestRun();
+    QLoggingCategory::setFilterRules(QStringLiteral("BluezQt=false"));
 }
 
 void ObexManagerTest::cleanupTestCase()

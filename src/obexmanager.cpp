@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -31,7 +31,7 @@
 
 #include <QDBusServiceWatcher>
 
-namespace QBluez
+namespace BluezQt
 {
 
 ObexManager::ObexManager(QObject *parent)
@@ -81,7 +81,7 @@ PendingCall *ObexManager::registerAgent(ObexAgent *agent)
     new ObexAgentAdaptor(agent, this);
 
     if (!DBusConnection::orgBluezObex().registerObject(agent->objectPath().path(), agent)) {
-        qCDebug(QBLUEZ) << "Cannot register object" << agent->objectPath().path();
+        qCDebug(BLUEZQT) << "Cannot register object" << agent->objectPath().path();
     }
 
     return new PendingCall(d->m_obexAgentManager->RegisterAgent(agent->objectPath()),
@@ -120,4 +120,4 @@ PendingCall *ObexManager::removeSession(const QDBusObjectPath &session)
                            PendingCall::ReturnVoid, this);
 }
 
-} // namespace QBluez
+} // namespace BluezQt

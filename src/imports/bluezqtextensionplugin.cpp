@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -20,7 +20,7 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "qbluezextensionplugin.h"
+#include "bluezqtextensionplugin.h"
 #include "declarativemanager.h"
 #include "declarativedevicesmodel.h"
 #include "adapter.h"
@@ -30,7 +30,7 @@
 
 #include <QtQml>
 
-QBluezExtensionPlugin::QBluezExtensionPlugin(QObject *parent)
+BluezQtExtensionPlugin::BluezQtExtensionPlugin(QObject *parent)
     : QQmlExtensionPlugin(parent)
 {
 }
@@ -40,29 +40,29 @@ static QJSValue services_singletontype_provider(QQmlEngine *engine, QJSEngine *s
     Q_UNUSED(engine)
 
     QJSValue object = scriptEngine->newObject();
-    object.setProperty(QStringLiteral("SerialPort"), QBluez::Services::SerialPort);
-    object.setProperty(QStringLiteral("DialupNetworking"), QBluez::Services::DialupNetworking);
-    object.setProperty(QStringLiteral("ObexObjectPush"), QBluez::Services::ObexObjectPush);
-    object.setProperty(QStringLiteral("ObexFileTransfer"), QBluez::Services::ObexFileTransfer);
-    object.setProperty(QStringLiteral("AudioSource"), QBluez::Services::AudioSource);
-    object.setProperty(QStringLiteral("AudioVideoRemoteControlTarget"), QBluez::Services::AudioVideoRemoteControlTarget);
-    object.setProperty(QStringLiteral("AdvancedAudioDistributionProtocol"), QBluez::Services::AdvancedAudioDistributionProtocol);
-    object.setProperty(QStringLiteral("AudioVideoRemoteControl"), QBluez::Services::AudioVideoRemoteControl);
-    object.setProperty(QStringLiteral("HeadsetAudioGateway"), QBluez::Services::HeadsetAudioGateway);
-    object.setProperty(QStringLiteral("Nap"), QBluez::Services::Nap);
-    object.setProperty(QStringLiteral("HandsfreeAudioGateway"), QBluez::Services::HandsfreeAudioGateway);
-    object.setProperty(QStringLiteral("SimAccess"), QBluez::Services::SimAccess);
-    object.setProperty(QStringLiteral("PhonebookAccessPse"), QBluez::Services::PhonebookAccessPse);
-    object.setProperty(QStringLiteral("MessageAccessServer"), QBluez::Services::MessageAccessServer);
-    object.setProperty(QStringLiteral("PnpInformation"), QBluez::Services::PnpInformation);
+    object.setProperty(QStringLiteral("SerialPort"), BluezQt::Services::SerialPort);
+    object.setProperty(QStringLiteral("DialupNetworking"), BluezQt::Services::DialupNetworking);
+    object.setProperty(QStringLiteral("ObexObjectPush"), BluezQt::Services::ObexObjectPush);
+    object.setProperty(QStringLiteral("ObexFileTransfer"), BluezQt::Services::ObexFileTransfer);
+    object.setProperty(QStringLiteral("AudioSource"), BluezQt::Services::AudioSource);
+    object.setProperty(QStringLiteral("AudioVideoRemoteControlTarget"), BluezQt::Services::AudioVideoRemoteControlTarget);
+    object.setProperty(QStringLiteral("AdvancedAudioDistributionProtocol"), BluezQt::Services::AdvancedAudioDistributionProtocol);
+    object.setProperty(QStringLiteral("AudioVideoRemoteControl"), BluezQt::Services::AudioVideoRemoteControl);
+    object.setProperty(QStringLiteral("HeadsetAudioGateway"), BluezQt::Services::HeadsetAudioGateway);
+    object.setProperty(QStringLiteral("Nap"), BluezQt::Services::Nap);
+    object.setProperty(QStringLiteral("HandsfreeAudioGateway"), BluezQt::Services::HandsfreeAudioGateway);
+    object.setProperty(QStringLiteral("SimAccess"), BluezQt::Services::SimAccess);
+    object.setProperty(QStringLiteral("PhonebookAccessPse"), BluezQt::Services::PhonebookAccessPse);
+    object.setProperty(QStringLiteral("MessageAccessServer"), BluezQt::Services::MessageAccessServer);
+    object.setProperty(QStringLiteral("PnpInformation"), BluezQt::Services::PnpInformation);
     return object;
 }
 
-void QBluezExtensionPlugin::registerTypes(const char *uri)
+void BluezQtExtensionPlugin::registerTypes(const char *uri)
 {
-    using namespace QBluez;
+    using namespace BluezQt;
 
-    Q_ASSERT(QLatin1String(uri) == QLatin1String("org.qbluez"));
+    Q_ASSERT(QLatin1String(uri) == QLatin1String("org.bluezqt"));
 
     qmlRegisterType<DeclarativeManager>(uri, 1, 0, "Manager");
     qmlRegisterType<DeclarativeDevicesModel>(uri, 1, 0, "DevicesModel");

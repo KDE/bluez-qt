@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -21,12 +21,12 @@
  */
 
 #include "utils_p.h"
-#include "qbluez_export.h"
+#include "bluezqt_export.h"
 
 #include <QStringList>
 #include <QDBusConnection>
 
-namespace QBluez
+namespace BluezQt
 {
 
 class GlobalData
@@ -67,11 +67,11 @@ GlobalData::GlobalData()
 Q_GLOBAL_STATIC(GlobalData, globalData)
 
 // For fakebluez tests
-QBLUEZ_EXPORT void qbluez_initFakeBluezTestRun()
+BLUEZQT_EXPORT void bluezqt_initFakeBluezTestRun()
 {
     globalData->testRun = true;
-    globalData->orgBluez = QStringLiteral("org.qbluez.fakebluez");
-    globalData->orgBluezObex = QStringLiteral("org.qbluez.fakebluez");
+    globalData->orgBluez = QStringLiteral("org.bluezqt.fakebluez");
+    globalData->orgBluezObex = QStringLiteral("org.bluezqt.fakebluez");
 }
 
 QString Strings::orgFreedesktopDBus()
@@ -213,4 +213,4 @@ Device::DeviceType classToType(quint32 classNum)
     return Device::Any;
 }
 
-} // namespace QBluez
+} // namespace BluezQt

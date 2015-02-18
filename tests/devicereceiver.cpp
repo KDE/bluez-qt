@@ -1,5 +1,5 @@
 /*****************************************************************************
- * This file is part of the QBluez project                                   *
+ * This file is part of the BluezQt project                                   *
  *                                                                           *
  * Copyright (C) 2010 Rafael Fernández López <ereslibre@kde.org>             *
  * Copyright (C) 2010 UFO Coders <info@ufocoders.com>                        *
@@ -33,7 +33,7 @@
 #include "pendingcall.h"
 #include "initmanagerjob.h"
 
-using namespace QBluez;
+using namespace BluezQt;
 
 Manager *g_manager = 0;
 
@@ -68,13 +68,13 @@ void DeviceReceiver::scanDevices()
     usableAdapter->startDiscovery();
 }
 
-void DeviceReceiver::deviceFound(QBluez::Device *device)
+void DeviceReceiver::deviceFound(BluezQt::Device *device)
 {
     qDebug() << "*** Remote device found:" << device->name() << "(" << device->address() << ")";
     qDebug();
 }
 
-void DeviceReceiver::devicePropertyChanged(QBluez::Device *device)
+void DeviceReceiver::devicePropertyChanged(BluezQt::Device *device)
 {
     qDebug() << "*** Device with address" << device->address() << "changed some property";
     qDebug() << "\tAddress:\t" << device->address();
@@ -89,7 +89,7 @@ void DeviceReceiver::devicePropertyChanged(QBluez::Device *device)
     qDebug();
 }
 
-void DeviceReceiver::adapterAdded(QBluez::Adapter *adapter)
+void DeviceReceiver::adapterAdded(BluezQt::Adapter *adapter)
 {
     Q_UNUSED(adapter)
 

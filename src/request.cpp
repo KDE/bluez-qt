@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -27,7 +27,7 @@
 #include <QStringBuilder>
 #include <QDBusConnection>
 
-namespace QBluez
+namespace BluezQt
 {
 
 static bool sendMessage(AgentType type, const QDBusMessage &msg)
@@ -55,7 +55,7 @@ static QString interfaceName(AgentType type)
     return QString();
 }
 
-void qbluez_acceptRequest(AgentType type, const QVariant &val, const QDBusMessage &req)
+void bluezqt_acceptRequest(AgentType type, const QVariant &val, const QDBusMessage &req)
 {
     QDBusMessage reply;
     if (val.isValid()) {
@@ -65,26 +65,26 @@ void qbluez_acceptRequest(AgentType type, const QVariant &val, const QDBusMessag
     }
 
     if (!sendMessage(type, reply)) {
-        qCWarning(QBLUEZ) << "Request: Failed to put reply on DBus queue";
+        qCWarning(BLUEZQT) << "Request: Failed to put reply on DBus queue";
     }
 }
 
-void qbluez_rejectRequest(AgentType type, const QDBusMessage &req)
+void bluezqt_rejectRequest(AgentType type, const QDBusMessage &req)
 {
     const QDBusMessage &reply = req.createErrorReply(interfaceName(type) % QStringLiteral(".Rejected"),
                                 QStringLiteral("Rejected"));
     if (!sendMessage(type, reply)) {
-        qCWarning(QBLUEZ) << "Request: Failed to put reply on DBus queue";
+        qCWarning(BLUEZQT) << "Request: Failed to put reply on DBus queue";
     }
 }
 
-void qbluez_cancelRequest(AgentType type, const QDBusMessage &req)
+void bluezqt_cancelRequest(AgentType type, const QDBusMessage &req)
 {
     const QDBusMessage &reply = req.createErrorReply(interfaceName(type) % QStringLiteral(".Canceled"),
                                 QStringLiteral("Canceled"));
     if (!sendMessage(type, reply)) {
-        qCWarning(QBLUEZ) << "Request: Failed to put reply on DBus queue";
+        qCWarning(BLUEZQT) << "Request: Failed to put reply on DBus queue";
     }
 }
 
-} // namespace QBluez
+} // namespace BluezQt

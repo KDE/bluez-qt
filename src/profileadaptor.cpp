@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -28,7 +28,7 @@
 #include <QDBusObjectPath>
 #include <QDBusUnixFileDescriptor>
 
-namespace QBluez
+namespace BluezQt
 {
 
 ProfileAdaptor::ProfileAdaptor(Profile *parent, Manager *manager)
@@ -71,4 +71,4 @@ void ProfileAdaptor::Release()
     m_profile->release();
 }
 
-} // namespace QBluez
+} // namespace BluezQt

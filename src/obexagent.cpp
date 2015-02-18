@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -23,7 +23,7 @@
 #include "obexagent.h"
 #include "debug_p.h"
 
-namespace QBluez
+namespace BluezQt
 {
 
 ObexAgent::ObexAgent(QObject *parent)
@@ -45,4 +45,4 @@ void ObexAgent::release()
 {
 }
 
-} // namespace QBluez
+} // namespace BluezQt

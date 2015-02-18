@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -25,7 +25,7 @@
 #include "obexmanager_p.h"
 #include "debug_p.h"
 
-namespace QBluez
+namespace BluezQt
 {
 
 class InitObexManagerJobPrivate : public QObject
@@ -51,7 +51,7 @@ InitObexManagerJobPrivate::InitObexManagerJobPrivate(InitObexManagerJob *q, Obex
 void InitObexManagerJobPrivate::doStart()
 {
     if (m_manager->d->m_initialized) {
-        qCWarning(QBLUEZ) << "InitObexManagerJob: ObexManager already initialized!";
+        qCWarning(BLUEZQT) << "InitObexManagerJob: ObexManager already initialized!";
         q->emitResult();
         return;
     }
@@ -64,7 +64,7 @@ void InitObexManagerJobPrivate::doStart()
 
 void InitObexManagerJobPrivate::initError(const QString &errorText)
 {
-    qCWarning(QBLUEZ) << "InitObexManagerJob Error:" << errorText;
+    qCWarning(BLUEZQT) << "InitObexManagerJob Error:" << errorText;
 
     q->setError(InitObexManagerJob::UserDefinedError);
     q->setErrorText(errorText);
@@ -85,7 +85,7 @@ InitObexManagerJob::InitObexManagerJob(ObexManager *manager)
 InitObexManagerJob::~InitObexManagerJob()
 {
     if (isRunning()) {
-        qCWarning(QBLUEZ) << "InitObexManagerJob Error: Job was deleted before finished!";
+        qCWarning(BLUEZQT) << "InitObexManagerJob Error: Job was deleted before finished!";
 
         setError(UserDefinedError);
         setErrorText(QStringLiteral("Job was deleted before finished."));
@@ -109,4 +109,4 @@ void InitObexManagerJob::doEmitResult()
     Q_EMIT result(this);
 }
 
-} // namespace QBluez
+} // namespace BluezQt

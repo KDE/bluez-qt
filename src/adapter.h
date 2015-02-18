@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -20,16 +20,16 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef QBLUEZ_ADAPTER_H
-#define QBLUEZ_ADAPTER_H
+#ifndef BLUEZQT_ADAPTER_H
+#define BLUEZQT_ADAPTER_H
 
 #include <QObject>
 #include <QList>
 #include <QStringList>
 
-#include "qbluez_export.h"
+#include "bluezqt_export.h"
 
-namespace QBluez
+namespace BluezQt
 {
 
 class Device;
@@ -40,7 +40,7 @@ class PendingCall;
  *
  * This class represents a Bluetooth adapter.
  */
-class QBLUEZ_EXPORT Adapter : public QObject
+class BLUEZQT_EXPORT Adapter : public QObject
 {
     Q_OBJECT
 
@@ -57,7 +57,7 @@ class QBLUEZ_EXPORT Adapter : public QObject
     Q_PROPERTY(bool discovering READ isDiscovering NOTIFY discoveringChanged)
     Q_PROPERTY(QStringList uuids READ uuids NOTIFY uuidsChanged)
     Q_PROPERTY(QString modalias READ modalias NOTIFY modaliasChanged)
-    Q_PROPERTY(QList<QBluez::Device*> devices READ devices)
+    Q_PROPERTY(QList<BluezQt::Device*> devices READ devices)
 
 public:
     /**
@@ -234,7 +234,7 @@ public Q_SLOTS:
      * @param address address of device (eg. "40:79:6A:0C:39:75")
      * @return null if there is no device with specified address
      */
-    QBluez::Device *deviceForAddress(const QString &address) const;
+    BluezQt::Device *deviceForAddress(const QString &address) const;
 
     /**
      * Starts device discovery.
@@ -244,7 +244,7 @@ public Q_SLOTS:
      * @return void pending call
      * @see discoverableTimeout()
      */
-    QBluez::PendingCall *startDiscovery();
+    BluezQt::PendingCall *startDiscovery();
 
     /**
      * Stops device discovery.
@@ -253,7 +253,7 @@ public Q_SLOTS:
      *
      * @return void pending call
      */
-    QBluez::PendingCall *stopDiscovery();
+    BluezQt::PendingCall *stopDiscovery();
 
     /**
      * Removes the specified device.
@@ -265,13 +265,13 @@ public Q_SLOTS:
      * @param device device to be removed
      * @return void pending call
      */
-    QBluez::PendingCall *removeDevice(QBluez::Device *device);
+    BluezQt::PendingCall *removeDevice(BluezQt::Device *device);
 
 Q_SIGNALS:
     /**
      * Indicates that at least one of the adapter's properties have changed.
      */
-    void adapterChanged(QBluez::Adapter *adapter);
+    void adapterChanged(BluezQt::Adapter *adapter);
 
     /**
      * Indicates that adapter's name have changed.
@@ -331,17 +331,17 @@ Q_SIGNALS:
     /**
      * Indicates that a new device was found.
      */
-    void deviceFound(QBluez::Device *device);
+    void deviceFound(BluezQt::Device *device);
 
     /**
      * Indicates that a device was removed.
      */
-    void deviceRemoved(QBluez::Device *device);
+    void deviceRemoved(BluezQt::Device *device);
 
     /**
      * Indicates that at least one of the device's properties have changed.
      */
-    void deviceChanged(QBluez::Device *device);
+    void deviceChanged(BluezQt::Device *device);
 
 private:
     explicit Adapter(const QString &address, const QVariantMap &properties, QObject *parent);
@@ -353,6 +353,6 @@ private:
     friend class InitAdaptersJobPrivate;
 };
 
-} // namespace QBluez
+} // namespace BluezQt
 
-#endif // QBLUEZ_ADAPTER_H
+#endif // BLUEZQT_ADAPTER_H

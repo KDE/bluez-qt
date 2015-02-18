@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -29,7 +29,7 @@
 
 #include <QDBusObjectPath>
 
-namespace QBluez
+namespace BluezQt
 {
 
 AgentAdaptor::AgentAdaptor(Agent *parent, Manager *manager)
@@ -147,4 +147,4 @@ QString AgentAdaptor::passkeyToString(quint32 passkey) const
     return QString(QStringLiteral("%1")).arg(passkey, 6, 10, QLatin1Char('0'));
 }
 
-} // namespace QBluez
+} // namespace BluezQt

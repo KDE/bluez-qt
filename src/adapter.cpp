@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -26,14 +26,14 @@
 #include "device_p.h"
 #include "pendingcall.h"
 
-namespace QBluez
+namespace BluezQt
 {
 
 Adapter::Adapter(const QString &path, const QVariantMap &properties, QObject *parent)
     : QObject(parent)
     , d(new AdapterPrivate(path, properties, this))
 {
-    qRegisterMetaType<QBluez::Adapter*>("QBluez::Adapter*");
+    qRegisterMetaType<BluezQt::Adapter*>("BluezQt::Adapter*");
 }
 
 Adapter::~Adapter()
@@ -175,4 +175,4 @@ PendingCall *Adapter::removeDevice(Device *device)
                            PendingCall::ReturnVoid, this);
 }
 
-} // namespace QBluez
+} // namespace BluezQt

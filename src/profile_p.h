@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -20,12 +20,12 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef QBLUEZ_PROFILE_P_H
-#define QBLUEZ_PROFILE_P_H
+#ifndef BLUEZQT_PROFILE_P_H
+#define BLUEZQT_PROFILE_P_H
 
 #include <QVariantMap>
 
-namespace QBluez
+namespace BluezQt
 {
 
 class ProfilePrivate
@@ -34,6 +34,6 @@ public:
     QVariantMap options;
 };
 
-} // namepsace QBluez
+} // namepsace BluezQt
 
-#endif // QBLUEZ_PROFILE_P_H
+#endif // BLUEZQT_PROFILE_P_H

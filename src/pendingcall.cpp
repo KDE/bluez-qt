@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -24,13 +24,13 @@
 #include "obextransfer.h"
 #include "obextransfer_p.h"
 #include "obexfiletransfer.h"
-#include "qbluez_dbustypes.h"
+#include "bluezqt_dbustypes.h"
 #include "debug_p.h"
 
 #include <QTimer>
 #include <QDBusPendingCallWatcher>
 
-namespace QBluez
+namespace BluezQt
 {
 
 static PendingCall::Error nameToError(const QString &name)
@@ -220,7 +220,7 @@ bool PendingCallPrivate::processTransferWithPropertiesReply(const QDBusPendingRe
 void PendingCallPrivate::processError(const QDBusError &error)
 {
     if (error.isValid()) {
-        qCWarning(QBLUEZ) << "PendingCall Error:" << error.message();
+        qCWarning(BLUEZQT) << "PendingCall Error:" << error.message();
         m_error = nameToError(error.name());
         m_errorText = error.message();
     }
@@ -244,7 +244,7 @@ void PendingCallPrivate::emitDelayedFinished()
 
 void PendingCallPrivate::emitInternalError(const QString &errorText)
 {
-    qCWarning(QBLUEZ) << "PendingCall Error:" << errorText;
+    qCWarning(BLUEZQT) << "PendingCall Error:" << errorText;
     m_error = PendingCall::InternalError;
     m_errorText = errorText;
     emitFinished();
@@ -335,4 +335,4 @@ void PendingCall::setUserData(const QVariant &userData)
     d->m_userData = userData;
 }
 
-} // namespace QBluez
+} // namespace BluezQt

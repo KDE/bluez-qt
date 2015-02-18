@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -27,17 +27,17 @@
 
 #include <QQmlListProperty>
 
-class DeclarativeManager : public QBluez::Manager
+class DeclarativeManager : public BluezQt::Manager
 {
     Q_OBJECT
-    Q_PROPERTY(QQmlListProperty<QBluez::Adapter> adapters READ declarativeAdapters NOTIFY adaptersChanged)
-    Q_PROPERTY(QQmlListProperty<QBluez::Device> devices READ declarativeDevices NOTIFY devicesChanged)
+    Q_PROPERTY(QQmlListProperty<BluezQt::Adapter> adapters READ declarativeAdapters NOTIFY adaptersChanged)
+    Q_PROPERTY(QQmlListProperty<BluezQt::Device> devices READ declarativeDevices NOTIFY devicesChanged)
 
 public:
     DeclarativeManager(QObject *parent = 0);
 
-    QQmlListProperty<QBluez::Adapter> declarativeAdapters();
-    QQmlListProperty<QBluez::Device> declarativeDevices();
+    QQmlListProperty<BluezQt::Adapter> declarativeAdapters();
+    QQmlListProperty<BluezQt::Device> declarativeDevices();
 
     static DeclarativeManager *self();
 
@@ -45,16 +45,16 @@ Q_SIGNALS:
     void initialized();
     void initializeError(const QString &errorText);
 
-    void adaptersChanged(QQmlListProperty<QBluez::Adapter> adapters);
-    void devicesChanged(QQmlListProperty<QBluez::Device> devices);
+    void adaptersChanged(QQmlListProperty<BluezQt::Adapter> adapters);
+    void devicesChanged(QQmlListProperty<BluezQt::Device> devices);
 
 private:
-    void initJobResult(QBluez::InitManagerJob *job);
+    void initJobResult(BluezQt::InitManagerJob *job);
 
-    void slotAdapterAdded(QBluez::Adapter *adapter);
-    void slotAdapterRemoved(QBluez::Adapter *adapter);
-    void slotDeviceAdded(QBluez::Device *device);
-    void slotDeviceRemoved(QBluez::Device *device);
+    void slotAdapterAdded(BluezQt::Adapter *adapter);
+    void slotAdapterRemoved(BluezQt::Adapter *adapter);
+    void slotDeviceAdded(BluezQt::Device *device);
+    void slotDeviceRemoved(BluezQt::Device *device);
 };
 
 #endif // DECLARATIVEMANAGER_H

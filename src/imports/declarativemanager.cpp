@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -27,7 +27,7 @@
 
 DeclarativeManager *s_instance = 0;
 
-static int adaptersCountFunction(QQmlListProperty<QBluez::Adapter> *property)
+static int adaptersCountFunction(QQmlListProperty<BluezQt::Adapter> *property)
 {
     Q_ASSERT(qobject_cast<DeclarativeManager*>(property->object));
     DeclarativeManager *manager = static_cast<DeclarativeManager*>(property->object);
@@ -35,7 +35,7 @@ static int adaptersCountFunction(QQmlListProperty<QBluez::Adapter> *property)
     return manager->adapters().count();
 }
 
-static QBluez::Adapter *adaptersAtFunction(QQmlListProperty<QBluez::Adapter> *property, int index)
+static BluezQt::Adapter *adaptersAtFunction(QQmlListProperty<BluezQt::Adapter> *property, int index)
 {
     Q_ASSERT(qobject_cast<DeclarativeManager*>(property->object));
     DeclarativeManager *manager = static_cast<DeclarativeManager*>(property->object);
@@ -43,7 +43,7 @@ static QBluez::Adapter *adaptersAtFunction(QQmlListProperty<QBluez::Adapter> *pr
     return manager->adapters().at(index);
 }
 
-static int devicesCountFunction(QQmlListProperty<QBluez::Device> *property)
+static int devicesCountFunction(QQmlListProperty<BluezQt::Device> *property)
 {
     Q_ASSERT(qobject_cast<DeclarativeManager*>(property->object));
     DeclarativeManager *manager = static_cast<DeclarativeManager*>(property->object);
@@ -51,7 +51,7 @@ static int devicesCountFunction(QQmlListProperty<QBluez::Device> *property)
     return manager->devices().count();
 }
 
-static QBluez::Device *devicesAtFunction(QQmlListProperty<QBluez::Device> *property, int index)
+static BluezQt::Device *devicesAtFunction(QQmlListProperty<BluezQt::Device> *property, int index)
 {
     Q_ASSERT(qobject_cast<DeclarativeManager*>(property->object));
     DeclarativeManager *manager = static_cast<DeclarativeManager*>(property->object);
@@ -60,29 +60,29 @@ static QBluez::Device *devicesAtFunction(QQmlListProperty<QBluez::Device> *prope
 }
 
 DeclarativeManager::DeclarativeManager(QObject *parent)
-    : QBluez::Manager(parent)
+    : BluezQt::Manager(parent)
 {
     if (s_instance) {
         qWarning("DeclarativeManager: Only one instance is allowed!");
     }
     s_instance = this;
 
-    QBluez::InitManagerJob *job = init();
+    BluezQt::InitManagerJob *job = init();
     job->start();
-    connect(job, &QBluez::InitManagerJob::result, this, &DeclarativeManager::initJobResult);
+    connect(job, &BluezQt::InitManagerJob::result, this, &DeclarativeManager::initJobResult);
 
-    connect(this, &QBluez::Manager::adapterAdded, this, &DeclarativeManager::slotAdapterAdded);
-    connect(this, &QBluez::Manager::adapterRemoved, this, &DeclarativeManager::slotAdapterRemoved);
+    connect(this, &BluezQt::Manager::adapterAdded, this, &DeclarativeManager::slotAdapterAdded);
+    connect(this, &BluezQt::Manager::adapterRemoved, this, &DeclarativeManager::slotAdapterRemoved);
 }
 
-QQmlListProperty<QBluez::Adapter> DeclarativeManager::declarativeAdapters()
+QQmlListProperty<BluezQt::Adapter> DeclarativeManager::declarativeAdapters()
 {
-    return QQmlListProperty<QBluez::Adapter>(this, 0, adaptersCountFunction, adaptersAtFunction);
+    return QQmlListProperty<BluezQt::Adapter>(this, 0, adaptersCountFunction, adaptersAtFunction);
 }
 
-QQmlListProperty<QBluez::Device> DeclarativeManager::declarativeDevices()
+QQmlListProperty<BluezQt::Device> DeclarativeManager::declarativeDevices()
 {
-    return QQmlListProperty<QBluez::Device>(this, 0, devicesCountFunction, devicesAtFunction);
+    return QQmlListProperty<BluezQt::Device>(this, 0, devicesCountFunction, devicesAtFunction);
 }
 
 DeclarativeManager *DeclarativeManager::self()
@@ -90,7 +90,7 @@ DeclarativeManager *DeclarativeManager::self()
     return s_instance;
 }
 
-void DeclarativeManager::initJobResult(QBluez::InitManagerJob *job)
+void DeclarativeManager::initJobResult(BluezQt::InitManagerJob *job)
 {
     if (job->error()) {
         Q_EMIT initializeError(job->errorText());
@@ -100,29 +100,29 @@ void DeclarativeManager::initJobResult(QBluez::InitManagerJob *job)
     Q_EMIT initialized();
 }
 
-void DeclarativeManager::slotAdapterAdded(QBluez::Adapter *adapter)
+void DeclarativeManager::slotAdapterAdded(BluezQt::Adapter *adapter)
 {
     Q_EMIT adaptersChanged(declarativeAdapters());
 
-    connect(adapter, &QBluez::Adapter::deviceFound, this, &DeclarativeManager::slotDeviceAdded);
-    connect(adapter, &QBluez::Adapter::deviceRemoved, this, &DeclarativeManager::slotDeviceRemoved);
+    connect(adapter, &BluezQt::Adapter::deviceFound, this, &DeclarativeManager::slotDeviceAdded);
+    connect(adapter, &BluezQt::Adapter::deviceRemoved, this, &DeclarativeManager::slotDeviceRemoved);
 }
 
-void DeclarativeManager::slotAdapterRemoved(QBluez::Adapter *adapter)
+void DeclarativeManager::slotAdapterRemoved(BluezQt::Adapter *adapter)
 {
     Q_EMIT adaptersChanged(declarativeAdapters());
 
-    disconnect(adapter, &QBluez::Adapter::deviceFound, this, &DeclarativeManager::slotDeviceAdded);
-    disconnect(adapter, &QBluez::Adapter::deviceRemoved, this, &DeclarativeManager::slotDeviceRemoved);
+    disconnect(adapter, &BluezQt::Adapter::deviceFound, this, &DeclarativeManager::slotDeviceAdded);
+    disconnect(adapter, &BluezQt::Adapter::deviceRemoved, this, &DeclarativeManager::slotDeviceRemoved);
 }
 
-void DeclarativeManager::slotDeviceAdded(QBluez::Device *device)
+void DeclarativeManager::slotDeviceAdded(BluezQt::Device *device)
 {
     Q_UNUSED(device)
     Q_EMIT devicesChanged(declarativeDevices());
 }
 
-void DeclarativeManager::slotDeviceRemoved(QBluez::Device *device)
+void DeclarativeManager::slotDeviceRemoved(BluezQt::Device *device)
 {
     Q_UNUSED(device)
     Q_EMIT devicesChanged(declarativeDevices());

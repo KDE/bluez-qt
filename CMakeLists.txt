@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8.12)
 
-project(QBluez)
+project(BluezQt)
 
 # ECM setup
 find_package(ECM 0.0.10 REQUIRED NO_MODULE)
@@ -18,9 +18,9 @@ include(KDECMakeSettings)
 set(KF5_VERSION "5.1.0") # handled by release scripts
 
 ecm_setup_version(${KF5_VERSION}
-    VARIABLE_PREFIX QBLUEZ
-    VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/src/qbluez_version.h"
-    PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5QBluezConfigVersion.cmake"
+    VARIABLE_PREFIX BLUEZQT
+    VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/src/bluezqt_version.h"
+    PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5BluezQtConfigVersion.cmake"
 )
 
 # Dependencies
@@ -31,7 +31,7 @@ find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core DBus Network Test)
 
 # Optional Qt5 components to build this framework
 find_package(Qt5Qml ${REQUIRED_QT_VERSION} CONFIG)
-set_package_properties(Qt5Qml PROPERTIES DESCRIPTION "QML support for QBluez" TYPE OPTIONAL)
+set_package_properties(Qt5Qml PROPERTIES DESCRIPTION "QML support for BluezQt" TYPE OPTIONAL)
 
 # Subdirectories
 add_subdirectory(src)
@@ -43,23 +43,23 @@ if(Qt5Qml_FOUND)
 endif()
 
 # Create a Config.cmake and a ConfigVersion.cmake file and install them
-set(CMAKECONFIG_INSTALL_DIR "${CMAKECONFIG_INSTALL_PREFIX}/KF5QBluez")
+set(CMAKECONFIG_INSTALL_DIR "${CMAKECONFIG_INSTALL_PREFIX}/KF5BluezQt")
 
 ecm_configure_package_config_file(
-    "${CMAKE_CURRENT_SOURCE_DIR}/KF5QBluezConfig.cmake.in"
-    "${CMAKE_CURRENT_BINARY_DIR}/KF5QBluezConfig.cmake"
+    "${CMAKE_CURRENT_SOURCE_DIR}/KF5BluezQtConfig.cmake.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/KF5BluezQtConfig.cmake"
     INSTALL_DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
 )
 
 install(FILES
-            "${CMAKE_CURRENT_BINARY_DIR}/KF5QBluezConfig.cmake"
-            "${CMAKE_CURRENT_BINARY_DIR}/KF5QBluezConfigVersion.cmake"
+            "${CMAKE_CURRENT_BINARY_DIR}/KF5BluezQtConfig.cmake"
+            "${CMAKE_CURRENT_BINARY_DIR}/KF5BluezQtConfigVersion.cmake"
         DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
         COMPONENT Devel)
 
-install(EXPORT KF5QBluezTargets
+install(EXPORT KF5BluezQtTargets
         DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
-        FILE KF5QBluezTargets.cmake
+        FILE KF5BluezQtTargets.cmake
         NAMESPACE KF5::)
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)

@@ -1,5 +1,5 @@
 /*****************************************************************************
- * This file is part of the QBluez project                                   *
+ * This file is part of the BluezQt project                                   *
  *                                                                           *
  * Copyright (C) 2010 Rafael Fernández López <ereslibre@kde.org>             *
  * Copyright (C) 2010 UFO Coders <info@ufocoders.com>                        *
@@ -26,7 +26,7 @@
 
 #include <QObject>
 
-namespace QBluez
+namespace BluezQt
 {
 class Manager;
 class Adapter;
@@ -44,9 +44,9 @@ public:
     void scanDevices();
 
 public Q_SLOTS:
-    void deviceFound(QBluez::Device *device);
-    void devicePropertyChanged(QBluez::Device *device);
-    void adapterAdded(QBluez::Adapter *adapter);
+    void deviceFound(BluezQt::Device *device);
+    void devicePropertyChanged(BluezQt::Device *device);
+    void adapterAdded(BluezQt::Adapter *adapter);
 
 };
 

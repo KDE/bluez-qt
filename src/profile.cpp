@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -29,7 +29,7 @@
 #include <QLocalSocket>
 #include <QDBusUnixFileDescriptor>
 
-namespace QBluez
+namespace BluezQt
 {
 
 Profile::Profile(QObject *parent)
@@ -70,7 +70,7 @@ void Profile::setLocalRole(Profile::LocalRole role)
     }
 
     if (str.isEmpty()) {
-        qCWarning(QBLUEZ) << "Invalid local role!";
+        qCWarning(BLUEZQT) << "Invalid local role!";
         return;
     }
 
@@ -80,7 +80,7 @@ void Profile::setLocalRole(Profile::LocalRole role)
 void Profile::setChannel(quint16 channel)
 {
     if (channel > 31) {
-        qCWarning(QBLUEZ) << "Invalid channel number. Must be 0-31!";
+        qCWarning(BLUEZQT) << "Invalid channel number. Must be 0-31!";
         return;
     }
 
@@ -150,6 +150,6 @@ void Profile::release()
 {
 }
 
-} // namespace QBluez
+} // namespace BluezQt
 
 #include "moc_profile.cpp"

@@ -1,9 +1,9 @@
-#ifndef QBLUEZ_SERVICES_H
-#define QBLUEZ_SERVICES_H
+#ifndef BLUEZQT_SERVICES_H
+#define BLUEZQT_SERVICES_H
 
 #include <QString>
 
-namespace QBluez
+namespace BluezQt
 {
 
 namespace Services
@@ -27,6 +27,6 @@ const QString PnpInformation = QLatin1String("00001200-0000-1000-8000-00805F9B34
 
 }
 
-} // namespace QBluez
+} // namespace BluezQt
 
-#endif // QBLUEZ_SERVICES_H
+#endif // BLUEZQT_SERVICES_H

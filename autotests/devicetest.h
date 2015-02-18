@@ -30,12 +30,12 @@ private Q_SLOTS:
 private:
     struct DeviceUnit
     {
-        QBluez::Device *device;
+        BluezQt::Device *device;
         org::bluez::Device1 *dbusDevice;
         org::freedesktop::DBus::Properties *dbusProperties;
     };
 
-    QBluez::Manager *m_manager;
+    BluezQt::Manager *m_manager;
     QList<DeviceUnit> m_units;
     bool m_fakeBluezRun;
 };

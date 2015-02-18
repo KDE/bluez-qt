@@ -1,5 +1,5 @@
 /*
- * QBluez - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -28,7 +28,7 @@
 
 #include <QDBusObjectPath>
 
-namespace QBluez
+namespace BluezQt
 {
 
 ObexAgentAdaptor::ObexAgentAdaptor(ObexAgent *parent, ObexManager *manager)
@@ -73,4 +73,4 @@ void ObexAgentAdaptor::transferInitError()
     m_transferRequest.cancel();
 }
 
-} // namespace QBluez
+} // namespace BluezQt
