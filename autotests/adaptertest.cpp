@@ -194,7 +194,7 @@ void AdapterTest::setDiscoverableTest()
     // Discoverable cannot be changed when Adapter is off
 
     Q_FOREACH (const AdapterUnit &unit, m_units) {
-        bool wasPowered = unit.adapter->isPowered();
+        bool wasPowered = unit.dbusAdapter->powered();
         unit.adapter->setPowered(true)->waitForFinished();
 
         QSignalSpy adapterSpy(unit.adapter, SIGNAL(discoverableChanged(bool)));
