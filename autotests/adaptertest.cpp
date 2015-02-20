@@ -26,8 +26,8 @@ void AdapterTest::initTestCase()
     QDBusConnection connection = QDBusConnection::systemBus();
 
     if (!m_fakeBluezRun) {
-        if (isBluez4Running()) {
-            QSKIP("This test can only run with Bluez 5");
+        if (!isBluez5Running()) {
+            QSKIP("This test can only run with functional Bluez 5 org.bluez service");
         }
     } else {
         service = QStringLiteral("org.bluezqt.fakebluez");

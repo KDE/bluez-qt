@@ -20,7 +20,7 @@ public:
     static QProcess *s_process;
 };
 
-bool isBluez4Running();
+bool isBluez5Running();
 void verifyPropertiesChangedSignal(const QSignalSpy &spy, const QString &propertyName, const QVariant &propertyValue);
 
 #endif // AUTOTESTS_H

@@ -1,4 +1,5 @@
 #include "autotests.h"
+#include "bluezqt_dbustypes.h"
 
 #include <QDir>
 #include <QDebug>
@@ -6,9 +7,11 @@
 #include <QCoreApplication>
 
 #include <QDBusReply>
+#include <QDBusMetaType>
 #include <QDBusInterface>
 #include <QDBusPendingCall>
 #include <QDBusServiceWatcher>
+#include <QDBusConnectionInterface>
 
 QProcess *FakeBluez::s_process = 0;
 
@@ -153,15 +156,39 @@ void FakeBluez::runAction(const QString &object, const QString &actionName, cons
     eventLoop.exec();
 }
 
-bool isBluez4Running()
+bool isBluez5Running()
 {
+    // Check if org.bluez is registered
+    if (!QDBusConnection::systemBus().interface()->isServiceRegistered(QStringLiteral("org.bluez"))) {
+        return false;
+    }
+
     QDBusInterface introspection(QStringLiteral("org.bluez"),
                                  QStringLiteral("/"),
                                  QStringLiteral("org.freedesktop.DBus.Introspectable"),
                                  QDBusConnection::systemBus());
 
+    // Check if this is Bluez 4
     QDBusReply<QString> reply = introspection.call(QStringLiteral("Introspect"));
-    return reply.value().contains(QLatin1String("<interface name=\"org.bluez.Manager\">"));
+    if (reply.value().contains(QLatin1String("<interface name=\"org.bluez.Manager\">"))) {
+        return false;
+    }
+
+    QDBusInterface objectManager(QStringLiteral("org.bluez"),
+                                 QStringLiteral("/"),
+                                 QStringLiteral("org.freedesktop.DBus.ObjectManager"),
+                                 QDBusConnection::systemBus());
+
+    qDBusRegisterMetaType<QVariantMapMap>();
+    qDBusRegisterMetaType<DBusManagerStruct>();
+
+    // Check managed objects of Bluez 5
+    QDBusReply<DBusManagerStruct> reply2 = objectManager.call(QStringLiteral("GetManagedObjects"));
+    if (reply2.value().isEmpty()) {
+        return false;
+    }
+
+    return true;
 }
 
 void verifyPropertiesChangedSignal(const QSignalSpy &spy, const QString &propertyName, const QVariant &propertyValue)
