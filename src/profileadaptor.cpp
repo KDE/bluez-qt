@@ -43,7 +43,7 @@ void ProfileAdaptor::NewConnection(const QDBusObjectPath &device, const QDBusUni
     msg.setDelayedReply(true);
     Request<> req(OrgBluezProfile, msg);
 
-    Device *dev = m_manager->deviceForUbi(device.path());
+    DevicePtr dev = m_manager->deviceForUbi(device.path());
     if (!dev) {
         req.cancel();
         return;
@@ -57,7 +57,7 @@ void ProfileAdaptor::RequestDisconnection(const QDBusObjectPath &device, const Q
     msg.setDelayedReply(true);
     Request<> req(OrgBluezProfile, msg);
 
-    Device *dev = m_manager->deviceForUbi(device.path());
+    DevicePtr dev = m_manager->deviceForUbi(device.path());
     if (!dev) {
         req.cancel();
         return;

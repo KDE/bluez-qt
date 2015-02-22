@@ -16,18 +16,18 @@ public:
 
     QDBusObjectPath objectPath() const Q_DECL_OVERRIDE;
 
-    void requestPinCode(BluezQt::Device *device, const BluezQt::Request<QString> &request) Q_DECL_OVERRIDE;
-    void displayPinCode(BluezQt::Device *device, const QString &pinCode) Q_DECL_OVERRIDE;
-    void requestPasskey(BluezQt::Device *device, const BluezQt::Request<quint32> &request) Q_DECL_OVERRIDE;
-    void displayPasskey(BluezQt::Device *device, const QString &passkey, const QString &entered) Q_DECL_OVERRIDE;
-    void requestConfirmation(BluezQt::Device *device, const QString &passkey, const BluezQt::Request<> &request) Q_DECL_OVERRIDE;
-    void requestAuthorization(BluezQt::Device *device, const BluezQt::Request<> &request) Q_DECL_OVERRIDE;
-    void authorizeService(BluezQt::Device *device, const QString &uuid, const BluezQt::Request<> &request) Q_DECL_OVERRIDE;
+    void requestPinCode(BluezQt::DevicePtr device, const BluezQt::Request<QString> &request) Q_DECL_OVERRIDE;
+    void displayPinCode(BluezQt::DevicePtr device, const QString &pinCode) Q_DECL_OVERRIDE;
+    void requestPasskey(BluezQt::DevicePtr device, const BluezQt::Request<quint32> &request) Q_DECL_OVERRIDE;
+    void displayPasskey(BluezQt::DevicePtr device, const QString &passkey, const QString &entered) Q_DECL_OVERRIDE;
+    void requestConfirmation(BluezQt::DevicePtr device, const QString &passkey, const BluezQt::Request<> &request) Q_DECL_OVERRIDE;
+    void requestAuthorization(BluezQt::DevicePtr device, const BluezQt::Request<> &request) Q_DECL_OVERRIDE;
+    void authorizeService(BluezQt::DevicePtr device, const QString &uuid, const BluezQt::Request<> &request) Q_DECL_OVERRIDE;
 
     void cancel() Q_DECL_OVERRIDE;
     void release() Q_DECL_OVERRIDE;
 
-    BluezQt::Device *m_device;
+    BluezQt::DevicePtr m_device;
 
     // requestPinCode
     bool m_pinRequested;

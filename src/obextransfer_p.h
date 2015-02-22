@@ -39,14 +39,14 @@ class ObexTransferPrivate : public QObject
     Q_OBJECT
 
 public:
-    explicit ObexTransferPrivate(ObexTransfer *q, const QString &path);
+    explicit ObexTransferPrivate(const QString &path);
 
     void init();
     void getPropertiesFinished(QDBusPendingCallWatcher *watcher);
 
     void propertiesChanged(const QString &interface, const QVariantMap &changed, const QStringList &invalidated);
 
-    ObexTransfer *q;
+    QWeakPointer<ObexTransfer> q;
     BluezTransfer *m_bluezTransfer;
     DBusProperties *m_dbusProperties;
 

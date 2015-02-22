@@ -50,9 +50,8 @@ static ObexTransfer::Status stringToStatus(const QString &status)
     return ObexTransfer::Unknown;
 }
 
-ObexTransferPrivate::ObexTransferPrivate(ObexTransfer *q, const QString &path)
-    : QObject(q)
-    , q(q)
+ObexTransferPrivate::ObexTransferPrivate(const QString &path)
+    : QObject()
     , m_dbusProperties(0)
 {
     m_bluezTransfer = new BluezTransfer(Strings::orgBluezObex(), path, DBusConnection::orgBluezObex(), this);
@@ -111,7 +110,7 @@ void ObexTransferPrivate::propertiesChanged(const QString &interface, const QVar
             ObexTransfer::Status changedStatus = stringToStatus(value.toString());
             if (m_status != changedStatus) {
                 m_status = changedStatus;
-                Q_EMIT q->statusChanged(m_status);
+                Q_EMIT q.data()->statusChanged(m_status);
             }
         } else if (property == QLatin1String("Transferred")) {
             PROPERTY_CHANGED(m_transferred, toUInt, transferredChanged);
@@ -123,7 +122,7 @@ void ObexTransferPrivate::propertiesChanged(const QString &interface, const QVar
 
 ObexTransfer::ObexTransfer(const QString &path, QObject *parent)
     : QObject(parent)
-    , d(new ObexTransferPrivate(this, path))
+    , d(new ObexTransferPrivate(path))
 {
 }
 

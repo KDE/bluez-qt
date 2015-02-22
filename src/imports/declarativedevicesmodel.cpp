@@ -22,8 +22,34 @@
 
 #include "declarativedevicesmodel.h"
 #include "declarativemanager.h"
+#include "adapter.h"
+#include "device.h"
 
 DeclarativeDevicesModel::DeclarativeDevicesModel(QObject *parent)
     : BluezQt::DevicesModel(DeclarativeManager::self(), parent)
 {
+}
+
+QHash<int, QByteArray> DeclarativeDevicesModel::roleNames() const
+{
+    QHash<int, QByteArray> roles = BluezQt::DevicesModel::roleNames();
+
+    roles[DeviceRole] = QByteArrayLiteral("Device");
+    roles[AdapterRole] = QByteArrayLiteral("Adapter");
+
+    return roles;
+}
+
+QVariant DeclarativeDevicesModel::data(const QModelIndex &index, int role) const
+{
+    BluezQt::DevicePtr dev = device(index);
+
+    switch (role) {
+    case DeviceRole:
+        return QVariant::fromValue(dev.data());
+    case AdapterRole:
+        return QVariant::fromValue(dev->adapter().data());
+    default:
+        return BluezQt::DevicesModel::data(index, role);
+    }
 }

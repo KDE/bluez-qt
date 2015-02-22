@@ -26,6 +26,7 @@
 #include <QObject>
 #include <QHash>
 
+#include "types.h"
 #include "dbusobjectmanager.h"
 #include "bluezagentmanager1.h"
 #include "bluezprofilemanager1.h"
@@ -55,29 +56,29 @@ public:
     void getManagedObjectsFinished(QDBusPendingCallWatcher *watcher);
     void clear();
 
-    Adapter *findUsableAdapter() const;
+    AdapterPtr findUsableAdapter() const;
 
     void serviceRegistered();
     void serviceUnregistered();
     void interfacesAdded(const QDBusObjectPath &objectPath, const QVariantMapMap &interfaces);
     void interfacesRemoved(const QDBusObjectPath &objectPath, const QStringList &interfaces);
-    void adapterRemoved(Adapter *adapter);
+    void adapterRemoved(AdapterPtr adapter);
     void adapterPoweredChanged(bool powered);
 
     void addAdapter(const QString &adapterPath, const QVariantMap &properties);
     void addDevice(const QString &devicePath, const QVariantMap &properties);
     void removeAdapter(const QString &adapterPath);
     void removeDevice(const QString &devicePath);
-    void setUsableAdapter(Adapter *adapter);
+    void setUsableAdapter(AdapterPtr adapter);
 
     Manager *q;
     DBusObjectManager *m_dbusObjectManager;
     BluezAgentManager *m_bluezAgentManager;
     BluezProfileManager *m_bluezProfileManager;
 
-    QHash<QString, Adapter*> m_adapters;
-    QHash<QString, Device*> m_devices;
-    Adapter *m_usableAdapter;
+    QHash<QString, AdapterPtr> m_adapters;
+    QHash<QString, DevicePtr> m_devices;
+    AdapterPtr m_usableAdapter;
 
     bool m_initialized;
     bool m_bluezRunning;

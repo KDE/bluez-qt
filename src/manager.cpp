@@ -67,17 +67,17 @@ bool Manager::isBluetoothOperational() const
     return d->m_bluezRunning && d->m_loaded && d->m_usableAdapter;
 }
 
-Adapter *Manager::usableAdapter() const
+AdapterPtr Manager::usableAdapter() const
 {
     return d->m_usableAdapter;
 }
 
-QList<Adapter*> Manager::adapters() const
+QList<AdapterPtr> Manager::adapters() const
 {
     return d->m_adapters.values();
 }
 
-QList<Device*> Manager::devices() const
+QList<DevicePtr> Manager::devices() const
 {
     return d->m_devices.values();
 }
@@ -94,33 +94,33 @@ PendingCall *Manager::startService()
     return new PendingCall(DBusConnection::orgBluez().asyncCall(msg), PendingCall::ReturnUint32);
 }
 
-Adapter *Manager::adapterForAddress(const QString &address) const
+AdapterPtr Manager::adapterForAddress(const QString &address) const
 {
-    Q_FOREACH (Adapter *adapter, d->m_adapters) {
+    Q_FOREACH (AdapterPtr adapter, d->m_adapters) {
         if (adapter->address() == address) {
             return adapter;
         }
     }
-    return Q_NULLPTR;
+    return AdapterPtr();
 }
 
-Adapter *Manager::adapterForUbi(const QString &ubi) const
+AdapterPtr Manager::adapterForUbi(const QString &ubi) const
 {
     return d->m_adapters.value(ubi);
 }
 
-Device *Manager::deviceForAddress(const QString &address) const
+DevicePtr Manager::deviceForAddress(const QString &address) const
 {
-    Q_FOREACH (Adapter *adapter, d->m_adapters) {
-        Device *device = adapter->deviceForAddress(address);
+    Q_FOREACH (AdapterPtr adapter, d->m_adapters) {
+        DevicePtr device = adapter->deviceForAddress(address);
         if (device) {
             return device;
         }
     }
-    return Q_NULLPTR;
+    return DevicePtr();
 }
 
-Device *Manager::deviceForUbi(const QString &ubi) const
+DevicePtr Manager::deviceForUbi(const QString &ubi) const
 {
     return d->m_devices.value(ubi);
 }

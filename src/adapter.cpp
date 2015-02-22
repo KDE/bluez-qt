@@ -29,11 +29,10 @@
 namespace BluezQt
 {
 
-Adapter::Adapter(const QString &path, const QVariantMap &properties, QObject *parent)
-    : QObject(parent)
-    , d(new AdapterPrivate(path, properties, this))
+Adapter::Adapter(const QString &path, const QVariantMap &properties)
+    : QObject()
+    , d(new AdapterPrivate(path, properties))
 {
-    qRegisterMetaType<BluezQt::Adapter*>("BluezQt::Adapter*");
 }
 
 Adapter::~Adapter()
@@ -142,19 +141,19 @@ QString Adapter::modalias() const
     return d->m_modalias;
 }
 
-QList<Device*> Adapter::devices() const
+QList<DevicePtr> Adapter::devices() const
 {
     return d->m_devices;
 }
 
-Device *Adapter::deviceForAddress(const QString &address) const
+DevicePtr Adapter::deviceForAddress(const QString &address) const
 {
-    Q_FOREACH (Device *device, d->m_devices) {
+    Q_FOREACH (DevicePtr device, d->m_devices) {
         if (device->address() == address) {
             return device;
         }
     }
-    return Q_NULLPTR;
+    return DevicePtr();
 }
 
 PendingCall *Adapter::startDiscovery()
@@ -169,7 +168,7 @@ PendingCall *Adapter::stopDiscovery()
                            PendingCall::ReturnVoid, this);
 }
 
-PendingCall *Adapter::removeDevice(Device *device)
+PendingCall *Adapter::removeDevice(DevicePtr device)
 {
     return new PendingCall(d->m_bluezAdapter->RemoveDevice(QDBusObjectPath(device->ubi())),
                            PendingCall::ReturnVoid, this);

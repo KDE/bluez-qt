@@ -25,6 +25,7 @@
 
 #include <QAbstractListModel>
 
+#include "types.h"
 #include "bluezqt_export.h"
 
 namespace BluezQt
@@ -83,12 +84,8 @@ public:
         UuidsRole = Qt::UserRole + 115,
         /** Modalias of the device (QString) */
         ModaliasRole = Qt::UserRole + 116,
-        /** Actual Device object (Device) */
-        DeviceRole = Qt::UserRole + 117,
-        /** Adapter that discovered the device (Adapter) */
-        AdapterRole = Qt::UserRole + 118,
-        /** Last role useb by DevicesModel */
-        LastRole = Qt::UserRole + 119
+        /** Last role used by DevicesModel */
+        LastRole = Qt::UserRole + 117
     };
 
     /**
@@ -125,23 +122,23 @@ public:
      * @param index index in model
      * @return device object
      */
-    Device *device(const QModelIndex &index) const;
+    DevicePtr device(const QModelIndex &index) const;
 
 Q_SIGNALS:
     /**
      * Indicates that new device was found.
      */
-    void deviceFound(BluezQt::Device *device);
+    void deviceFound(BluezQt::DevicePtr device);
 
     /**
      * Indicates that device was removed.
      */
-    void deviceRemoved(BluezQt::Device *device);
+    void deviceRemoved(BluezQt::DevicePtr device);
 
     /**
      * Indicates that at least one of the device's properties have changed.
      */
-    void deviceChanged(BluezQt::Device *device);
+    void deviceChanged(BluezQt::DevicePtr device);
 
 private:
     class DevicesModelPrivate *const d;

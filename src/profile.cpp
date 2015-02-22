@@ -122,15 +122,15 @@ void Profile::setFeatures(quint16 features)
     d->options[QStringLiteral("Features")] = QVariant::fromValue(features);
 }
 
-QLocalSocket *Profile::createSocket(const QDBusUnixFileDescriptor &fd)
+QSharedPointer<QLocalSocket> Profile::createSocket(const QDBusUnixFileDescriptor &fd)
 {
     int newfd = ::dup(fd.fileDescriptor());
-    QLocalSocket *socket = new QLocalSocket(this);
+    QSharedPointer<QLocalSocket> socket(new QLocalSocket(this));
     socket->setSocketDescriptor(newfd);
     return socket;
 }
 
-void Profile::newConnection(Device *device, const QDBusUnixFileDescriptor &fd, const QVariantMap &properties, const Request<> &request)
+void Profile::newConnection(DevicePtr device, const QDBusUnixFileDescriptor &fd, const QVariantMap &properties, const Request<> &request)
 {
     Q_UNUSED(device)
     Q_UNUSED(fd)
@@ -139,7 +139,7 @@ void Profile::newConnection(Device *device, const QDBusUnixFileDescriptor &fd, c
     request.cancel();
 }
 
-void Profile::requestDisconnection(Device *device, const Request<> &request)
+void Profile::requestDisconnection(DevicePtr device, const Request<> &request)
 {
     Q_UNUSED(device)
 

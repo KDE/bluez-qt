@@ -27,6 +27,7 @@
 #include <QList>
 #include <QStringList>
 
+#include "types.h"
 #include "bluezqt_export.h"
 
 namespace BluezQt
@@ -57,7 +58,7 @@ class BLUEZQT_EXPORT Adapter : public QObject
     Q_PROPERTY(bool discovering READ isDiscovering NOTIFY discoveringChanged)
     Q_PROPERTY(QStringList uuids READ uuids NOTIFY uuidsChanged)
     Q_PROPERTY(QString modalias READ modalias NOTIFY modaliasChanged)
-    Q_PROPERTY(QList<BluezQt::Device*> devices READ devices)
+    Q_PROPERTY(QList<BluezQt::DevicePtr> devices READ devices)
 
 public:
     /**
@@ -225,7 +226,7 @@ public:
      *
      * @return list of devices
      */
-    QList<Device*> devices() const;
+    QList<DevicePtr> devices() const;
 
 public Q_SLOTS:
     /**
@@ -234,7 +235,7 @@ public Q_SLOTS:
      * @param address address of device (eg. "40:79:6A:0C:39:75")
      * @return null if there is no device with specified address
      */
-    BluezQt::Device *deviceForAddress(const QString &address) const;
+    BluezQt::DevicePtr deviceForAddress(const QString &address) const;
 
     /**
      * Starts device discovery.
@@ -265,13 +266,13 @@ public Q_SLOTS:
      * @param device device to be removed
      * @return void pending call
      */
-    BluezQt::PendingCall *removeDevice(BluezQt::Device *device);
+    BluezQt::PendingCall *removeDevice(BluezQt::DevicePtr device);
 
 Q_SIGNALS:
     /**
      * Indicates that at least one of the adapter's properties have changed.
      */
-    void adapterChanged(BluezQt::Adapter *adapter);
+    void adapterChanged(BluezQt::AdapterPtr adapter);
 
     /**
      * Indicates that adapter's name have changed.
@@ -331,20 +332,20 @@ Q_SIGNALS:
     /**
      * Indicates that a new device was found.
      */
-    void deviceFound(BluezQt::Device *device);
+    void deviceFound(BluezQt::DevicePtr device);
 
     /**
      * Indicates that a device was removed.
      */
-    void deviceRemoved(BluezQt::Device *device);
+    void deviceRemoved(BluezQt::DevicePtr device);
 
     /**
      * Indicates that at least one of the device's properties have changed.
      */
-    void deviceChanged(BluezQt::Device *device);
+    void deviceChanged(BluezQt::DevicePtr device);
 
 private:
-    explicit Adapter(const QString &address, const QVariantMap &properties, QObject *parent);
+    explicit Adapter(const QString &address, const QVariantMap &properties);
 
     class AdapterPrivate *const d;
 

@@ -29,9 +29,8 @@
 namespace BluezQt
 {
 
-DevicePrivate::DevicePrivate(const QString &path, const QVariantMap &properties, Adapter *adapter, Device *parent)
-    : QObject(parent)
-    , q(parent)
+DevicePrivate::DevicePrivate(const QString &path, const QVariantMap &properties, AdapterPtr adapter)
+    : QObject()
     , m_dbusProperties(0)
     , m_deviceClass(0)
     , m_appearance(0)
@@ -135,16 +134,16 @@ void DevicePrivate::propertiesChanged(const QString &interface, const QVariantMa
         }
     }
 
-    Q_EMIT q->deviceChanged(q);
-    Q_EMIT m_adapter->deviceChanged(q);
+    Q_EMIT q.data()->deviceChanged(q.toStrongRef());
+    Q_EMIT m_adapter->deviceChanged(q.toStrongRef());
 }
 
 void DevicePrivate::namePropertyChanged(const QString &value)
 {
     if (m_name != value) {
         m_name = value;
-        Q_EMIT q->nameChanged(m_name);
-        Q_EMIT q->friendlyNameChanged(q->friendlyName());
+        Q_EMIT q.data()->nameChanged(m_name);
+        Q_EMIT q.data()->friendlyNameChanged(q.data()->friendlyName());
     }
 }
 
@@ -152,8 +151,8 @@ void DevicePrivate::aliasPropertyChanged(const QString &value)
 {
     if (m_alias != value) {
         m_alias = value;
-        Q_EMIT q->aliasChanged(m_alias);
-        Q_EMIT q->friendlyNameChanged(q->friendlyName());
+        Q_EMIT q.data()->aliasChanged(m_alias);
+        Q_EMIT q.data()->friendlyNameChanged(q.data()->friendlyName());
     }
 }
 
@@ -161,8 +160,8 @@ void DevicePrivate::classPropertyChanged(quint32 value)
 {
     if (m_deviceClass != value) {
         m_deviceClass = value;
-        Q_EMIT q->deviceClassChanged(m_deviceClass);
-        Q_EMIT q->deviceTypeChanged(q->deviceType());
+        Q_EMIT q.data()->deviceClassChanged(m_deviceClass);
+        Q_EMIT q.data()->deviceTypeChanged(q.data()->deviceType());
     }
 }
 
@@ -170,7 +169,7 @@ void DevicePrivate::uuidsPropertyChanged(const QStringList &value)
 {
     if (m_uuids != value) {
         m_uuids = value;
-        Q_EMIT q->uuidsChanged(m_uuids);
+        Q_EMIT q.data()->uuidsChanged(m_uuids);
     }
 }
 

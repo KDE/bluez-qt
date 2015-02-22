@@ -26,11 +26,7 @@
 
 #include <QObject>
 
-namespace BluezQt {
-    class Manager;
-    class Adapter;
-    class Device;
-}
+#include "manager.h"
 
 class AdaptersReceiver : public QObject
 {
@@ -40,9 +36,9 @@ public:
     AdaptersReceiver(BluezQt::Manager *manager, QObject *parent = 0);
 
 public Q_SLOTS:
-    void adapterAdded(BluezQt::Adapter *adapter);
-    void adapterRemoved(BluezQt::Adapter *adapter);
-    void usableAdapterChanged(BluezQt::Adapter *adapter);
+    void adapterAdded(BluezQt::AdapterPtr adapter);
+    void adapterRemoved(BluezQt::AdapterPtr adapter);
+    void usableAdapterChanged(BluezQt::AdapterPtr adapter);
     void allAdaptersRemoved();
     void bluetoothOperationalChanged(bool operational);
 

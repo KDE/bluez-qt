@@ -75,7 +75,7 @@ void AdapterTest::initTestCase()
     initJob->exec();
     QVERIFY(!initJob->error());
 
-    Q_FOREACH (Adapter *adapter, m_manager->adapters()) {
+    Q_FOREACH (AdapterPtr adapter, m_manager->adapters()) {
         QVERIFY(!adapter->ubi().isEmpty());
 
         AdapterUnit u;
@@ -144,7 +144,7 @@ void AdapterTest::getPropertiesTest()
 void AdapterTest::setAliasTest()
 {
     Q_FOREACH (const AdapterUnit &unit, m_units) {
-        QSignalSpy adapterSpy(unit.adapter, SIGNAL(aliasChanged(QString)));
+        QSignalSpy adapterSpy(unit.adapter.data(), SIGNAL(aliasChanged(QString)));
         QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString,QVariantMap,QStringList)));
 
         QString originalValue = unit.adapter->alias();
@@ -167,7 +167,7 @@ void AdapterTest::setAliasTest()
 void AdapterTest::setPoweredTest()
 {
     Q_FOREACH (const AdapterUnit &unit, m_units) {
-        QSignalSpy adapterSpy(unit.adapter, SIGNAL(poweredChanged(bool)));
+        QSignalSpy adapterSpy(unit.adapter.data(), SIGNAL(poweredChanged(bool)));
         QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString,QVariantMap,QStringList)));
 
         bool originalValue = unit.adapter->isPowered();
@@ -197,7 +197,7 @@ void AdapterTest::setDiscoverableTest()
         bool wasPowered = unit.dbusAdapter->powered();
         unit.adapter->setPowered(true)->waitForFinished();
 
-        QSignalSpy adapterSpy(unit.adapter, SIGNAL(discoverableChanged(bool)));
+        QSignalSpy adapterSpy(unit.adapter.data(), SIGNAL(discoverableChanged(bool)));
         QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString,QVariantMap,QStringList)));
 
         bool originalValue = unit.adapter->isDiscoverable();
@@ -221,7 +221,7 @@ void AdapterTest::setDiscoverableTest()
 void AdapterTest::setDiscoverableTimeoutTest()
 {
     Q_FOREACH (const AdapterUnit &unit, m_units) {
-        QSignalSpy adapterSpy(unit.adapter, SIGNAL(discoverableTimeoutChanged(quint32)));
+        QSignalSpy adapterSpy(unit.adapter.data(), SIGNAL(discoverableTimeoutChanged(quint32)));
         QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString,QVariantMap,QStringList)));
 
         quint32 originalValue = unit.adapter->discoverableTimeout();
@@ -246,7 +246,7 @@ void AdapterTest::setDiscoverableTimeoutTest()
 void AdapterTest::setPairableTest()
 {
     Q_FOREACH (const AdapterUnit &unit, m_units) {
-        QSignalSpy adapterSpy(unit.adapter, SIGNAL(pairableChanged(bool)));
+        QSignalSpy adapterSpy(unit.adapter.data(), SIGNAL(pairableChanged(bool)));
         QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString,QVariantMap,QStringList)));
 
         bool originalValue = unit.adapter->isPairable();
@@ -269,7 +269,7 @@ void AdapterTest::setPairableTest()
 void AdapterTest::setPairableTimeoutTest()
 {
     Q_FOREACH (const AdapterUnit &unit, m_units) {
-        QSignalSpy adapterSpy(unit.adapter, SIGNAL(pairableTimeoutChanged(quint32)));
+        QSignalSpy adapterSpy(unit.adapter.data(), SIGNAL(pairableTimeoutChanged(quint32)));
         QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString,QVariantMap,QStringList)));
 
         quint32 originalValue = unit.adapter->pairableTimeout();
@@ -303,7 +303,7 @@ void AdapterTest::discoveryTest()
             unit.adapter->stopDiscovery()->waitForFinished();
         }
 
-        QSignalSpy adapterSpy(unit.adapter, SIGNAL(discoveringChanged(bool)));
+        QSignalSpy adapterSpy(unit.adapter.data(), SIGNAL(discoveringChanged(bool)));
         QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString,QVariantMap,QStringList)));
 
         // Start Discovery

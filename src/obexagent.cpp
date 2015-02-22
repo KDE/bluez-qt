@@ -31,7 +31,7 @@ ObexAgent::ObexAgent(QObject *parent)
 {
 }
 
-void ObexAgent::authorizePush(ObexTransfer *transfer, const Request<QString> &request)
+void ObexAgent::authorizePush(ObexTransferPtr transfer, const Request<QString> &request)
 {
     Q_UNUSED(transfer)
     Q_UNUSED(request)

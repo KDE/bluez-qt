@@ -28,9 +28,8 @@
 namespace BluezQt
 {
 
-AdapterPrivate::AdapterPrivate(const QString &path, const QVariantMap &properties, Adapter *parent)
-    : QObject(parent)
-    , q(parent)
+AdapterPrivate::AdapterPrivate(const QString &path, const QVariantMap &properties)
+    : QObject()
     , m_dbusProperties(0)
     , m_adapterClass(0)
     , m_powered(0)
@@ -72,17 +71,17 @@ void AdapterPrivate::init(const QVariantMap &properties)
     m_modalias = properties.value(QStringLiteral("Modalias")).toString();
 }
 
-void AdapterPrivate::addDevice(Device *device)
+void AdapterPrivate::addDevice(DevicePtr device)
 {
     m_devices.append(device);
-    Q_EMIT q->deviceFound(device);
+    Q_EMIT q.data()->deviceFound(device);
 }
 
-void AdapterPrivate::removeDevice(Device *device)
+void AdapterPrivate::removeDevice(DevicePtr device)
 {
     m_devices.removeOne(device);
     Q_EMIT device->deviceRemoved(device);
-    Q_EMIT q->deviceRemoved(device);
+    Q_EMIT q.data()->deviceRemoved(device);
 }
 
 QDBusPendingReply<> AdapterPrivate::setDBusProperty(const QString &name, const QVariant &value)
@@ -130,14 +129,14 @@ void AdapterPrivate::propertiesChanged(const QString &interface, const QVariantM
         }
     }
 
-    Q_EMIT q->adapterChanged(q);
+    Q_EMIT q.data()->adapterChanged(q.toStrongRef());
 }
 
 void AdapterPrivate::uuidsPropertyChanged(const QStringList &value)
 {
     if (m_uuids != value) {
         m_uuids = value;
-        Q_EMIT q->uuidsChanged(m_uuids);
+        Q_EMIT q.data()->uuidsChanged(m_uuids);
     }
 }
 

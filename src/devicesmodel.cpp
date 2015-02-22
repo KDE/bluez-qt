@@ -35,14 +35,14 @@ public:
 
     void init();
 
-    void adapterAdded(Adapter *adapter);
-    void deviceFound(Device *device);
-    void deviceRemoved(Device *device);
-    void deviceChanged(Device *device);
+    void adapterAdded(AdapterPtr adapter);
+    void deviceFound(DevicePtr device);
+    void deviceRemoved(DevicePtr device);
+    void deviceChanged(DevicePtr device);
 
     DevicesModel *q;
     Manager *m_manager;
-    QList<Device*> m_devices;
+    QList<DevicePtr> m_devices;
 };
 
 DevicesModelPrivate::DevicesModelPrivate(DevicesModel *q)
@@ -56,21 +56,21 @@ void DevicesModelPrivate::init()
 {
     m_devices = m_manager->devices();
 
-    Q_FOREACH (Adapter *adapter, m_manager->adapters()) {
+    Q_FOREACH (AdapterPtr adapter, m_manager->adapters()) {
         adapterAdded(adapter);
     }
 
     connect(m_manager, &Manager::adapterAdded, this, &DevicesModelPrivate::adapterAdded);
 }
 
-void DevicesModelPrivate::adapterAdded(Adapter *adapter)
+void DevicesModelPrivate::adapterAdded(AdapterPtr adapter)
 {
-    connect(adapter, &Adapter::deviceFound, this, &DevicesModelPrivate::deviceFound);
-    connect(adapter, &Adapter::deviceRemoved, this, &DevicesModelPrivate::deviceRemoved);
-    connect(adapter, &Adapter::deviceChanged, this, &DevicesModelPrivate::deviceChanged);
+    connect(adapter.data(), &Adapter::deviceFound, this, &DevicesModelPrivate::deviceFound);
+    connect(adapter.data(), &Adapter::deviceRemoved, this, &DevicesModelPrivate::deviceRemoved);
+    connect(adapter.data(), &Adapter::deviceChanged, this, &DevicesModelPrivate::deviceChanged);
 }
 
-void DevicesModelPrivate::deviceFound(Device *device)
+void DevicesModelPrivate::deviceFound(DevicePtr device)
 {
     q->beginInsertRows(QModelIndex(), m_devices.size(), m_devices.size());
     m_devices.append(device);
@@ -79,7 +79,7 @@ void DevicesModelPrivate::deviceFound(Device *device)
     Q_EMIT q->deviceFound(device);
 }
 
-void DevicesModelPrivate::deviceRemoved(Device *device)
+void DevicesModelPrivate::deviceRemoved(DevicePtr device)
 {
     int offset = m_devices.indexOf(device);
     Q_ASSERT(offset >= 0);
@@ -91,12 +91,12 @@ void DevicesModelPrivate::deviceRemoved(Device *device)
     Q_EMIT q->deviceRemoved(device);
 }
 
-void DevicesModelPrivate::deviceChanged(Device *device)
+void DevicesModelPrivate::deviceChanged(DevicePtr device)
 {
     int offset = m_devices.indexOf(device);
     Q_ASSERT(offset >= 0);
 
-    QModelIndex idx = q->createIndex(offset, 0, device);
+    QModelIndex idx = q->createIndex(offset, 0);
     Q_EMIT q->dataChanged(idx, idx);
 
     Q_EMIT q->deviceChanged(device);
@@ -131,8 +131,6 @@ QHash<int, QByteArray> DevicesModel::roleNames() const
     roles[ConnectedRole] = QByteArrayLiteral("Connected");
     roles[UuidsRole] = QByteArrayLiteral("Uuids");
     roles[ModaliasRole] = QByteArrayLiteral("Modalias");
-    roles[DeviceRole] = QByteArrayLiteral("Device");
-    roles[AdapterRole] = QByteArrayLiteral("Adapter");
 
     return roles;
 }
@@ -147,10 +145,7 @@ int DevicesModel::rowCount(const QModelIndex &parent) const
 
 QVariant DevicesModel::data(const QModelIndex &index, int role) const
 {
-    Device *dev = device(index);
-    if (!dev) {
-        return QVariant();
-    }
+    DevicePtr dev = device(index);
 
     switch (role) {
     case Qt::DisplayRole:
@@ -191,10 +186,6 @@ QVariant DevicesModel::data(const QModelIndex &index, int role) const
         return dev->uuids();
     case ModaliasRole:
         return dev->modalias();
-    case DeviceRole:
-        return QVariant::fromValue(dev);
-    case AdapterRole:
-        return QVariant::fromValue(dev->adapter());
     default:
         return QVariant();
     }
@@ -205,12 +196,12 @@ QModelIndex DevicesModel::index(int row, int column, const QModelIndex &parent) 
     if (!hasIndex(row, column, parent)) {
         return QModelIndex();
     }
-    return createIndex(row, 0, d->m_devices.at(row));
+    return createIndex(row, 0);
 }
 
-Device *DevicesModel::device(const QModelIndex &index) const
+DevicePtr DevicesModel::device(const QModelIndex &index) const
 {
-    return static_cast<Device*>(index.internalPointer());
+    return d->m_devices.at(index.row());
 }
 
 } // namespace BluezQt

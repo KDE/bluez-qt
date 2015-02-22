@@ -25,6 +25,7 @@
 
 #include <QObject>
 
+#include "types.h"
 #include "bluezqt_export.h"
 
 namespace BluezQt
@@ -60,7 +61,7 @@ class BLUEZQT_EXPORT Device : public QObject
     Q_PROPERTY(bool connected READ isConnected NOTIFY connectedChanged)
     Q_PROPERTY(QStringList uuids READ uuids NOTIFY uuidsChanged)
     Q_PROPERTY(QString modalias READ modalias NOTIFY modaliasChanged)
-    Q_PROPERTY(BluezQt::Adapter* adapter READ adapter)
+    Q_PROPERTY(BluezQt::AdapterPtr adapter READ adapter)
 
 public:
     /**
@@ -261,7 +262,7 @@ public:
      *
      * @return adapter of device
      */
-    Adapter *adapter() const;
+    AdapterPtr adapter() const;
 
     /**
      * Returns a string for device type.
@@ -352,12 +353,12 @@ Q_SIGNALS:
     /**
      * Indicates that the device was removed.
      */
-    void deviceRemoved(BluezQt::Device *device);
+    void deviceRemoved(BluezQt::DevicePtr device);
 
     /**
      * Indicates that at least one of the device's properties have changed.
      */
-    void deviceChanged(BluezQt::Device *device);
+    void deviceChanged(BluezQt::DevicePtr device);
 
     /**
      * Indicates that device's name have changed.
@@ -435,7 +436,7 @@ Q_SIGNALS:
     void modaliasChanged(const QString &modalias);
 
 private:
-    explicit Device(const QString &address, const QVariantMap &properties, Adapter *adapter, QObject *parent);
+    explicit Device(const QString &address, const QVariantMap &properties, AdapterPtr adapter);
 
     class DevicePrivate *const d;
 

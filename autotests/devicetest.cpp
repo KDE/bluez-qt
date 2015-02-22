@@ -95,10 +95,10 @@ void DeviceTest::initTestCase()
     initJob->exec();
     QVERIFY(!initJob->error());
 
-    Q_FOREACH (Adapter *adapter, m_manager->adapters()) {
+    Q_FOREACH (AdapterPtr adapter, m_manager->adapters()) {
         QVERIFY(!adapter->ubi().isEmpty());
 
-        Q_FOREACH (Device *device, adapter->devices()) {
+        Q_FOREACH (DevicePtr device, adapter->devices()) {
             QVERIFY(!device->ubi().isEmpty());
 
             DeviceUnit u;
@@ -172,7 +172,7 @@ void DeviceTest::getPropertiesTest()
 void DeviceTest::setAliasTest()
 {
     Q_FOREACH (const DeviceUnit &unit, m_units) {
-        QSignalSpy deviceSpy(unit.device, SIGNAL(aliasChanged(QString)));
+        QSignalSpy deviceSpy(unit.device.data(), SIGNAL(aliasChanged(QString)));
         QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString,QVariantMap,QStringList)));
 
         QString originalValue = unit.device->alias();
@@ -195,7 +195,7 @@ void DeviceTest::setAliasTest()
 void DeviceTest::setTrustedTest()
 {
     Q_FOREACH (const DeviceUnit &unit, m_units) {
-        QSignalSpy deviceSpy(unit.device, SIGNAL(trustedChanged(bool)));
+        QSignalSpy deviceSpy(unit.device.data(), SIGNAL(trustedChanged(bool)));
         QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString,QVariantMap,QStringList)));
 
         bool originalValue = unit.device->isTrusted();
@@ -218,7 +218,7 @@ void DeviceTest::setTrustedTest()
 void DeviceTest::setBlockedTest()
 {
     Q_FOREACH (const DeviceUnit &unit, m_units) {
-        QSignalSpy deviceSpy(unit.device, SIGNAL(blockedChanged(bool)));
+        QSignalSpy deviceSpy(unit.device.data(), SIGNAL(blockedChanged(bool)));
         QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString,QVariantMap,QStringList)));
 
         bool originalValue = unit.device->isBlocked();

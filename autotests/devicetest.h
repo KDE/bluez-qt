@@ -30,7 +30,7 @@ private Q_SLOTS:
 private:
     struct DeviceUnit
     {
-        BluezQt::Device *device;
+        BluezQt::DevicePtr device;
         org::bluez::Device1 *dbusDevice;
         org::freedesktop::DBus::Properties *dbusProperties;
     };

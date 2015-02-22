@@ -27,7 +27,6 @@
 #include <QTimer>
 #include <QCoreApplication>
 
-#include "manager.h"
 #include "adapter.h"
 #include "device.h"
 #include "pendingcall.h"
@@ -48,7 +47,7 @@ DeviceReceiver::~DeviceReceiver()
 
 void DeviceReceiver::scanDevices()
 {
-    Adapter *usableAdapter = g_manager->usableAdapter();
+    AdapterPtr usableAdapter = g_manager->usableAdapter();
     if (!usableAdapter && g_manager->adapters().isEmpty()) {
         qDebug() << "!!! No bluetooth adapters were found. Waiting for bluetooth adapters. Ctrl + C to cancel...";
         connect(g_manager, &Manager::adapterAdded, this, &DeviceReceiver::adapterAdded);
@@ -62,19 +61,19 @@ void DeviceReceiver::scanDevices()
     qDebug() << "*** Will scan devices until stopped...";
     qDebug();
 
-    connect(usableAdapter, &Adapter::deviceFound, this, &DeviceReceiver::deviceFound);
-    connect(usableAdapter, &Adapter::deviceChanged, this, &DeviceReceiver::devicePropertyChanged);
+    connect(usableAdapter.data(), &Adapter::deviceFound, this, &DeviceReceiver::deviceFound);
+    connect(usableAdapter.data(), &Adapter::deviceChanged, this, &DeviceReceiver::devicePropertyChanged);
 
     usableAdapter->startDiscovery();
 }
 
-void DeviceReceiver::deviceFound(BluezQt::Device *device)
+void DeviceReceiver::deviceFound(BluezQt::DevicePtr device)
 {
     qDebug() << "*** Remote device found:" << device->name() << "(" << device->address() << ")";
     qDebug();
 }
 
-void DeviceReceiver::devicePropertyChanged(BluezQt::Device *device)
+void DeviceReceiver::devicePropertyChanged(BluezQt::DevicePtr device)
 {
     qDebug() << "*** Device with address" << device->address() << "changed some property";
     qDebug() << "\tAddress:\t" << device->address();
@@ -89,7 +88,7 @@ void DeviceReceiver::devicePropertyChanged(BluezQt::Device *device)
     qDebug();
 }
 
-void DeviceReceiver::adapterAdded(BluezQt::Adapter *adapter)
+void DeviceReceiver::adapterAdded(BluezQt::AdapterPtr adapter)
 {
     Q_UNUSED(adapter)
 
@@ -101,7 +100,7 @@ void DeviceReceiver::adapterAdded(BluezQt::Adapter *adapter)
 static void stopDiscovering()
 {
     if (g_manager) {
-        Q_FOREACH (Adapter *adapter, g_manager->adapters()) {
+        Q_FOREACH (AdapterPtr adapter, g_manager->adapters()) {
             adapter->stopDiscovery();
         }
     }

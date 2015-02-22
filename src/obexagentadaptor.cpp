@@ -35,7 +35,6 @@ ObexAgentAdaptor::ObexAgentAdaptor(ObexAgent *parent, ObexManager *manager)
     : QDBusAbstractAdaptor(parent)
     , m_agent(parent)
     , m_manager(manager)
-    , m_transfer(0)
 {
 }
 
@@ -44,7 +43,8 @@ QString ObexAgentAdaptor::AuthorizePush(const QDBusObjectPath &transfer, const Q
     msg.setDelayedReply(true);
     m_transferRequest = Request<QString>(OrgBluezObexAgent, msg);
 
-    m_transfer = new ObexTransfer(transfer.path(), this);
+    m_transfer = ObexTransferPtr(new ObexTransfer(transfer.path()));
+    m_transfer->d->q = m_transfer.toWeakRef();
     m_transfer->d->init();
     connect(m_transfer->d, &ObexTransferPrivate::initFinished, this, &ObexAgentAdaptor::transferInitFinished);
     connect(m_transfer->d, &ObexTransferPrivate::initError, this, &ObexAgentAdaptor::transferInitError);
@@ -65,11 +65,12 @@ void ObexAgentAdaptor::Release()
 void ObexAgentAdaptor::transferInitFinished()
 {
     m_agent->authorizePush(m_transfer, m_transferRequest);
+    m_transfer.clear();
 }
 
 void ObexAgentAdaptor::transferInitError()
 {
-    m_transfer->deleteLater();
+    m_transfer.clear();
     m_transferRequest.cancel();
 }
 

@@ -26,6 +26,7 @@
 #include <QObject>
 #include <QDBusAbstractAdaptor>
 
+#include "types.h"
 #include "request.h"
 #include "bluezqt_export.h"
 
@@ -60,7 +61,7 @@ private Q_SLOTS:
 private:
     ObexAgent *m_agent;
     ObexManager *m_manager;
-    ObexTransfer *m_transfer;
+    ObexTransferPtr m_transfer;
     Request<QString> m_transferRequest;
 };
 

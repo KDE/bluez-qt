@@ -28,11 +28,10 @@
 namespace BluezQt
 {
 
-Device::Device(const QString &path, const QVariantMap &properties, Adapter *adapter, QObject *parent)
-    : QObject(parent)
-    , d(new DevicePrivate(path, properties, adapter, this))
+Device::Device(const QString &path, const QVariantMap &properties, AdapterPtr adapter)
+    : QObject()
+    , d(new DevicePrivate(path, properties, adapter))
 {
-    qRegisterMetaType<BluezQt::Device*>("BluezQt::Device*");
 }
 
 Device::~Device()
@@ -149,7 +148,7 @@ QString Device::modalias() const
     return d->m_modalias;
 }
 
-Adapter *Device::adapter() const
+AdapterPtr Device::adapter() const
 {
     return d->m_adapter;
 }

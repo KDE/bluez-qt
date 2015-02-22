@@ -25,6 +25,7 @@
 
 #include <QObject>
 
+#include "types.h"
 #include "request.h"
 #include "bluezqt_export.h"
 
@@ -84,7 +85,7 @@ public:
      * @param transfer transfer object
      * @param request request to be used for sending reply
      */
-    virtual void authorizePush(ObexTransfer *transfer, const Request<QString> &request);
+    virtual void authorizePush(ObexTransferPtr transfer, const Request<QString> &request);
 
     /**
      * Indicate that the agent request failed before receiving reply.

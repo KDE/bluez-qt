@@ -26,6 +26,7 @@
 #include <QObject>
 
 #include "request.h"
+#include "types.h"
 #include "bluezqt_export.h"
 
 class QDBusObjectPath;
@@ -102,7 +103,7 @@ public:
      * @param device device that invoked the action
      * @param request request to be used for sending reply
      */
-    virtual void requestPinCode(Device *device, const Request<QString> &request);
+    virtual void requestPinCode(DevicePtr device, const Request<QString> &request);
 
     /**
      * Requests the agent to display a PIN code.
@@ -116,7 +117,7 @@ public:
      * @param device device that invoked the action
      * @param pinCode PIN code to be displayed
      */
-    virtual void displayPinCode(Device *device, const QString &pinCode);
+    virtual void displayPinCode(DevicePtr device, const QString &pinCode);
 
     /**
      * Requests a passkey from the agent.
@@ -129,7 +130,7 @@ public:
      * @param device device that invoked the action
      * @param request request to be used for sending reply
      */
-    virtual void requestPasskey(Device *device, const Request<quint32> &request);
+    virtual void requestPasskey(DevicePtr device, const Request<quint32> &request);
 
     /**
      * Requests the agent to display a passkey.
@@ -144,7 +145,7 @@ public:
      * @param passkey passkey to be displayed
      * @param entered number of already typed keys on the remote side
      */
-    virtual void displayPasskey(Device *device, const QString &passkey, const QString &entered);
+    virtual void displayPasskey(DevicePtr device, const QString &passkey, const QString &entered);
 
     /**
      * Requests the agent to confirm a passkey.
@@ -156,7 +157,7 @@ public:
      * @param passkey passkey to be confirmed
      * @param request request to be used for sending reply
      */
-    virtual void requestConfirmation(Device *device, const QString &passkey, const Request<> &request);
+    virtual void requestConfirmation(DevicePtr device, const QString &passkey, const Request<> &request);
 
     /**
      * Requests the agent to authorize an incoming pairing attempt.
@@ -168,7 +169,7 @@ public:
      * @param device device that invoked the action
      * @param request request to be used for sending reply
      */
-    virtual void requestAuthorization(Device *device, const Request<> &request);
+    virtual void requestAuthorization(DevicePtr device, const Request<> &request);
 
     /**
      * Requests the agent to authorize a connection/service request.
@@ -180,7 +181,7 @@ public:
      * @param uuid UUID of service
      * @param request request to be used for sending reply
      */
-    virtual void authorizeService(Device *device, const QString &uuid, const Request<> &request);
+    virtual void authorizeService(DevicePtr device, const QString &uuid, const Request<> &request);
 
     /**
      * Indicate that the agent request failed before receiving reply.

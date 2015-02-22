@@ -26,7 +26,6 @@
 #include <QDebug>
 #include <QCoreApplication>
 
-#include "manager.h"
 #include "adapter.h"
 #include "initmanagerjob.h"
 
@@ -43,7 +42,7 @@ AdaptersReceiver::AdaptersReceiver(Manager *manager, QObject *parent)
     connect(manager, &Manager::bluetoothOperationalChanged, this, &AdaptersReceiver::bluetoothOperationalChanged);
 }
 
-void AdaptersReceiver::adapterAdded(BluezQt::Adapter *adapter)
+void AdaptersReceiver::adapterAdded(BluezQt::AdapterPtr adapter)
 {
     qDebug() << "Adapter added: " << adapter;
     qDebug() << "\tBluetooth Operational: " << m_manager->isBluetoothOperational();
@@ -51,7 +50,7 @@ void AdaptersReceiver::adapterAdded(BluezQt::Adapter *adapter)
     qDebug();
 }
 
-void AdaptersReceiver::adapterRemoved(BluezQt::Adapter *adapter)
+void AdaptersReceiver::adapterRemoved(BluezQt::AdapterPtr adapter)
 {
     qDebug() << "Adapter removed: " << adapter;
     qDebug() << "\tBluetooth Operational: " << m_manager->isBluetoothOperational();
@@ -59,7 +58,7 @@ void AdaptersReceiver::adapterRemoved(BluezQt::Adapter *adapter)
     qDebug();
 }
 
-void AdaptersReceiver::usableAdapterChanged(BluezQt::Adapter *adapter)
+void AdaptersReceiver::usableAdapterChanged(BluezQt::AdapterPtr adapter)
 {
     qDebug() << "Usable adapter changed: " << adapter;
     qDebug() << "\tBluetooth Operational: " << m_manager->isBluetoothOperational();

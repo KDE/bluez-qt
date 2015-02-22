@@ -13,8 +13,8 @@ public:
     QDBusObjectPath objectPath() const;
     QString uuid() const;
 
-    void newConnection(BluezQt::Device *device, const QDBusUnixFileDescriptor &fd, const QVariantMap &properties, const BluezQt::Request<> &request);
-    void requestDisconnection(BluezQt::Device *device, const BluezQt::Request<> &request);
+    void newConnection(BluezQt::DevicePtr device, const QDBusUnixFileDescriptor &fd, const QVariantMap &properties, const BluezQt::Request<> &request);
+    void requestDisconnection(BluezQt::DevicePtr device, const BluezQt::Request<> &request);
     void release();
 
 private Q_SLOTS:
@@ -23,5 +23,5 @@ private Q_SLOTS:
     void writeToSocket();
 
 private:
-    QLocalSocket *m_socket;
+    QSharedPointer<QLocalSocket> m_socket;
 };

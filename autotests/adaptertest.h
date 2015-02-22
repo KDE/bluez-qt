@@ -34,7 +34,7 @@ private Q_SLOTS:
 private:
     struct AdapterUnit
     {
-        BluezQt::Adapter *adapter;
+        BluezQt::AdapterPtr adapter;
         org::bluez::Adapter1 *dbusAdapter;
         org::freedesktop::DBus::Properties *dbusProperties;
     };

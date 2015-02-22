@@ -26,6 +26,7 @@
 #include <QObject>
 #include <QStringList>
 
+#include "types.h"
 #include "bluezadapter1.h"
 #include "dbusproperties.h"
 
@@ -41,18 +42,18 @@ class Adapter;
 class AdapterPrivate : public QObject
 {
 public:
-    explicit AdapterPrivate(const QString &path, const QVariantMap &properties, Adapter *parent);
+    explicit AdapterPrivate(const QString &path, const QVariantMap &properties);
 
     void init(const QVariantMap &properties);
 
-    void addDevice(Device *device);
-    void removeDevice(Device *device);
+    void addDevice(DevicePtr device);
+    void removeDevice(DevicePtr device);
 
     QDBusPendingReply<> setDBusProperty(const QString &name, const QVariant &value);
     void propertiesChanged(const QString &interface, const QVariantMap &changed, const QStringList &invalidated);
     void uuidsPropertyChanged(const QStringList &value);
 
-    Adapter *q;
+    QWeakPointer<Adapter> q;
     BluezAdapter *m_bluezAdapter;
     DBusProperties *m_dbusProperties;
 
@@ -67,7 +68,7 @@ public:
     quint32 m_pairableTimeout;
     bool m_discovering;
     QStringList m_uuids;
-    QList<Device*> m_devices;
+    QList<DevicePtr> m_devices;
     QString m_modalias;
 };
 

@@ -27,14 +27,14 @@
 #define PROPERTY_CHANGED(var, type_cast, signal) \
     if (var != value.type_cast()) { \
         var = value.type_cast(); \
-        Q_EMIT q->signal(var); \
+        Q_EMIT q.data()->signal(var); \
     }
 
 // Clears property value and emit propertyChanged signal
 #define PROPERTY_INVALIDATED(var, empty, signal) \
     if (var != empty) { \
         var = empty; \
-        Q_EMIT q->signal(var); \
+        Q_EMIT q.data()->signal(var); \
     }
 
 #endif // BLUEZQT_MACROS_P_H

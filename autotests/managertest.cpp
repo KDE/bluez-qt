@@ -146,10 +146,10 @@ void ManagerTest::bluezRestartTest()
     QCOMPARE(btOperationalChangedSpy.count(), 1);
     QCOMPARE(btOperationalChangedSpy.first().first().toBool(), true);
 
-    Adapter *adapter1 = manager->adapterForAddress(QStringLiteral("1C:E5:C3:BC:94:7E"));
-    Adapter *adapter2 = manager->adapterForAddress(QStringLiteral("2E:3A:C3:BC:85:7C"));
-    Device *device1 = manager->deviceForAddress(QStringLiteral("40:79:6A:0C:39:75"));
-    Device *device2 = manager->deviceForAddress(QStringLiteral("50:79:6A:0C:39:75"));
+    AdapterPtr adapter1 = manager->adapterForAddress(QStringLiteral("1C:E5:C3:BC:94:7E"));
+    AdapterPtr adapter2 = manager->adapterForAddress(QStringLiteral("2E:3A:C3:BC:85:7C"));
+    DevicePtr device1 = manager->deviceForAddress(QStringLiteral("40:79:6A:0C:39:75"));
+    DevicePtr device2 = manager->deviceForAddress(QStringLiteral("50:79:6A:0C:39:75"));
 
     QVERIFY(adapter1);
     QVERIFY(adapter2);
@@ -157,9 +157,9 @@ void ManagerTest::bluezRestartTest()
     QVERIFY(device2);
 
     QSignalSpy allAdaptersRemovedSpy(manager, SIGNAL(allAdaptersRemoved()));
-    QSignalSpy adapterRemovedSpy(manager, SIGNAL(adapterRemoved(BluezQt::Adapter*)));
-    QSignalSpy device1RemovedSpy(adapter1, SIGNAL(deviceRemoved(BluezQt::Device*)));
-    QSignalSpy device2RemovedSpy(adapter2, SIGNAL(deviceRemoved(BluezQt::Device*)));
+    QSignalSpy adapterRemovedSpy(manager, SIGNAL(adapterRemoved(BluezQt::AdapterPtr)));
+    QSignalSpy device1RemovedSpy(adapter1.data(), SIGNAL(deviceRemoved(BluezQt::DevicePtr)));
+    QSignalSpy device2RemovedSpy(adapter2.data(), SIGNAL(deviceRemoved(BluezQt::DevicePtr)));
 
     btOperationalChangedSpy.clear();
     FakeBluez::stop();

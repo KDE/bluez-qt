@@ -21,7 +21,6 @@ using namespace BluezQt;
 // TestAgent
 TestAgent::TestAgent(QObject *parent)
     : Agent(parent)
-    , m_device(0)
     , m_pinRequested(false)
     , m_passkeyRequested(false)
     , m_authorizationRequested(false)
@@ -35,7 +34,7 @@ QDBusObjectPath TestAgent::objectPath() const
     return QDBusObjectPath(QStringLiteral("/testagent"));
 }
 
-void TestAgent::requestPinCode(Device *device, const BluezQt::Request<QString> &request)
+void TestAgent::requestPinCode(DevicePtr device, const BluezQt::Request<QString> &request)
 {
     m_device = device;
     m_pinRequested = true;
@@ -44,13 +43,13 @@ void TestAgent::requestPinCode(Device *device, const BluezQt::Request<QString> &
 
 }
 
-void TestAgent::displayPinCode(Device *device, const QString &pinCode)
+void TestAgent::displayPinCode(DevicePtr device, const QString &pinCode)
 {
     m_device = device;
     m_displayedPinCode = pinCode;
 }
 
-void TestAgent::requestPasskey(Device *device, const BluezQt::Request<quint32> &request)
+void TestAgent::requestPasskey(DevicePtr device, const BluezQt::Request<quint32> &request)
 {
     m_device = device;
     m_passkeyRequested = true;
@@ -58,14 +57,14 @@ void TestAgent::requestPasskey(Device *device, const BluezQt::Request<quint32> &
     request.accept(0);
 }
 
-void TestAgent::displayPasskey(Device *device, const QString &passkey, const QString &entered)
+void TestAgent::displayPasskey(DevicePtr device, const QString &passkey, const QString &entered)
 {
     m_device = device;
     m_displayedPasskey = passkey;
     m_enteredPasskey = entered;
 }
 
-void TestAgent::requestConfirmation(Device *device, const QString &passkey, const BluezQt::Request<> &request)
+void TestAgent::requestConfirmation(DevicePtr device, const QString &passkey, const BluezQt::Request<> &request)
 {
     m_device = device;
     m_requestedPasskey = passkey;
@@ -73,7 +72,7 @@ void TestAgent::requestConfirmation(Device *device, const QString &passkey, cons
     request.accept();
 }
 
-void TestAgent::requestAuthorization(Device *device, const BluezQt::Request<> &request)
+void TestAgent::requestAuthorization(DevicePtr device, const BluezQt::Request<> &request)
 {
     m_device = device;
     m_authorizationRequested = true;
@@ -81,7 +80,7 @@ void TestAgent::requestAuthorization(Device *device, const BluezQt::Request<> &r
     request.accept();
 }
 
-void TestAgent::authorizeService(Device *device, const QString &uuid, const BluezQt::Request<> &request)
+void TestAgent::authorizeService(DevicePtr device, const QString &uuid, const BluezQt::Request<> &request)
 {
     m_device = device;
     m_authorizedUuid = uuid;

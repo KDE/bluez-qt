@@ -35,34 +35,34 @@ Agent::Capability Agent::capability() const
     return DisplayYesNo;
 }
 
-void Agent::requestPinCode(Device *device, const Request<QString> &request)
+void Agent::requestPinCode(DevicePtr device, const Request<QString> &request)
 {
     Q_UNUSED(device)
 
     request.cancel();
 }
 
-void Agent::displayPinCode(Device *device, const QString &pinCode)
+void Agent::displayPinCode(DevicePtr device, const QString &pinCode)
 {
     Q_UNUSED(device)
     Q_UNUSED(pinCode)
 }
 
-void Agent::requestPasskey(Device *device, const Request<quint32> &request)
+void Agent::requestPasskey(DevicePtr device, const Request<quint32> &request)
 {
     Q_UNUSED(device)
 
     request.cancel();
 }
 
-void Agent::displayPasskey(Device *device, const QString &passkey, const QString &entered)
+void Agent::displayPasskey(DevicePtr device, const QString &passkey, const QString &entered)
 {
     Q_UNUSED(device)
     Q_UNUSED(passkey)
     Q_UNUSED(entered)
 }
 
-void Agent::requestConfirmation(Device *device, const QString &passkey, const Request<> &request)
+void Agent::requestConfirmation(DevicePtr device, const QString &passkey, const Request<> &request)
 {
     Q_UNUSED(device)
     Q_UNUSED(passkey)
@@ -70,14 +70,14 @@ void Agent::requestConfirmation(Device *device, const QString &passkey, const Re
     request.cancel();
 }
 
-void Agent::requestAuthorization(Device *device, const Request<> &request)
+void Agent::requestAuthorization(DevicePtr device, const Request<> &request)
 {
     Q_UNUSED(device)
 
     request.cancel();
 }
 
-void Agent::authorizeService(Device *device, const QString &uuid, const Request<> &request)
+void Agent::authorizeService(DevicePtr device, const QString &uuid, const Request<> &request)
 {
     Q_UNUSED(device)
     Q_UNUSED(uuid)

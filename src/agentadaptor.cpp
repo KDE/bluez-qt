@@ -44,7 +44,7 @@ QString AgentAdaptor::RequestPinCode(const QDBusObjectPath &device, const QDBusM
     msg.setDelayedReply(true);
     Request<QString> req(OrgBluezAgent, msg);
 
-    Device *dev = m_manager->deviceForUbi(device.path());
+    DevicePtr dev = m_manager->deviceForUbi(device.path());
     if (!dev) {
         req.cancel();
         return QString();
@@ -56,7 +56,7 @@ QString AgentAdaptor::RequestPinCode(const QDBusObjectPath &device, const QDBusM
 
 void AgentAdaptor::DisplayPinCode(const QDBusObjectPath &device, const QString &pincode)
 {
-    Device *dev = m_manager->deviceForUbi(device.path());
+    DevicePtr dev = m_manager->deviceForUbi(device.path());
     if (!dev) {
         return;
     }
@@ -69,7 +69,7 @@ quint32 AgentAdaptor::RequestPasskey(const QDBusObjectPath &device, const QDBusM
     msg.setDelayedReply(true);
     Request<quint32> req(OrgBluezAgent, msg);
 
-    Device *dev = m_manager->deviceForUbi(device.path());
+    DevicePtr dev = m_manager->deviceForUbi(device.path());
     if (!dev) {
         req.cancel();
         return 0;
@@ -81,7 +81,7 @@ quint32 AgentAdaptor::RequestPasskey(const QDBusObjectPath &device, const QDBusM
 
 void AgentAdaptor::DisplayPasskey(const QDBusObjectPath &device, quint32 passkey, quint16 entered)
 {
-    Device *dev = m_manager->deviceForUbi(device.path());
+    DevicePtr dev = m_manager->deviceForUbi(device.path());
     if (!dev) {
         return;
     }
@@ -94,7 +94,7 @@ void AgentAdaptor::RequestConfirmation(const QDBusObjectPath &device, quint32 pa
     msg.setDelayedReply(true);
     Request<> req(OrgBluezAgent, msg);
 
-    Device *dev = m_manager->deviceForUbi(device.path());
+    DevicePtr dev = m_manager->deviceForUbi(device.path());
     if (!dev) {
         req.cancel();
         return;
@@ -108,7 +108,7 @@ void AgentAdaptor::RequestAuthorization(const QDBusObjectPath &device, const QDB
     msg.setDelayedReply(true);
     Request<> req(OrgBluezAgent, msg);
 
-    Device *dev = m_manager->deviceForUbi(device.path());
+    DevicePtr dev = m_manager->deviceForUbi(device.path());
     if (!dev) {
         req.cancel();
         return;
@@ -122,7 +122,7 @@ void AgentAdaptor::AuthorizeService(const QDBusObjectPath &device, const QString
     msg.setDelayedReply(true);
     Request<> req(OrgBluezAgent, msg);
 
-    Device *dev = m_manager->deviceForUbi(device.path());
+    DevicePtr dev = m_manager->deviceForUbi(device.path());
     if (!dev) {
         req.cancel();
         return;

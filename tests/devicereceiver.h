@@ -26,12 +26,7 @@
 
 #include <QObject>
 
-namespace BluezQt
-{
-class Manager;
-class Adapter;
-class Device;
-}
+#include "manager.h"
 
 class DeviceReceiver : public QObject
 {
@@ -44,9 +39,9 @@ public:
     void scanDevices();
 
 public Q_SLOTS:
-    void deviceFound(BluezQt::Device *device);
-    void devicePropertyChanged(BluezQt::Device *device);
-    void adapterAdded(BluezQt::Adapter *adapter);
+    void deviceFound(BluezQt::DevicePtr device);
+    void devicePropertyChanged(BluezQt::DevicePtr device);
+    void adapterAdded(BluezQt::AdapterPtr adapter);
 
 };
 

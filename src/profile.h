@@ -26,6 +26,7 @@
 #include <QObject>
 
 #include "request.h"
+#include "types.h"
 #include "bluezqt_export.h"
 
 class QLocalSocket;
@@ -201,15 +202,12 @@ public:
     /**
      * Creates a socket from file descriptor.
      *
-     * Returned socket will be parented to Profile, but you should
-     * take care of deletion when no longer needed.
-     *
      * @param fd socket file descriptor
      * @return socket
      *
      * @see newConnection()
      */
-    QLocalSocket *createSocket(const QDBusUnixFileDescriptor &fd);
+    QSharedPointer<QLocalSocket> createSocket(const QDBusUnixFileDescriptor &fd);
 
     /**
      * Requests the new connection.
@@ -235,7 +233,7 @@ public:
      * @param properties additional properties
      * @param request request to be used for sending reply
      */
-    virtual void newConnection(BluezQt::Device *device, const QDBusUnixFileDescriptor &fd, const QVariantMap &properties, const BluezQt::Request<> &request);
+    virtual void newConnection(BluezQt::DevicePtr device, const QDBusUnixFileDescriptor &fd, const QVariantMap &properties, const BluezQt::Request<> &request);
 
     /**
      * Requests the disconnection of the profile.
@@ -245,7 +243,7 @@ public:
      * @param device device to be disconnected
      * @param request request to be used for sending reply
      */
-    virtual void requestDisconnection(BluezQt::Device *device, const BluezQt::Request<> &request);
+    virtual void requestDisconnection(BluezQt::DevicePtr device, const BluezQt::Request<> &request);
 
     /**
      * Indicates that the profile was unregistered.

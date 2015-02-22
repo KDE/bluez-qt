@@ -1,7 +1,7 @@
 /*
  * BluezQt - Asynchronous Bluez wrapper library
  *
- * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
+ * Copyright (C) 2015 David Rosca <nowrep@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,29 +20,22 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DECLARATIVEDEVICESMODEL_H
-#define DECLARATIVEDEVICESMODEL_H
+#ifndef BLUEZQT_TYPES_H
+#define BLUEZQT_TYPES_H
 
-#include "devicesmodel.h"
+#include <QSharedPointer>
 
-class DeclarativeManager;
-
-class DeclarativeDevicesModel : public BluezQt::DevicesModel
+namespace BluezQt
 {
-    Q_OBJECT
 
-public:
-    enum DeclarativeDeviceRoles {
-        DeviceRole = BluezQt::DevicesModel::LastRole + 1,
-        AdapterRole = BluezQt::DevicesModel::LastRole + 2
-    };
+class Adapter;
+class Device;
+class ObexTransfer;
 
-    DeclarativeDevicesModel(QObject *parent = 0);
+typedef QSharedPointer<BluezQt::Adapter> AdapterPtr;
+typedef QSharedPointer<BluezQt::Device> DevicePtr;
+typedef QSharedPointer<BluezQt::ObexTransfer> ObexTransferPtr;
 
-    QHash<int, QByteArray> roleNames() const Q_DECL_OVERRIDE;
-    QVariant data(const QModelIndex &index, int role) const Q_DECL_OVERRIDE;
+}
 
-};
-
-#endif // DECLARATIVEMANAGER_H
-
+#endif // BLUEZQT_TYPES_H

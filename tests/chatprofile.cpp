@@ -20,7 +20,6 @@
 
 ChatProfile::ChatProfile(QObject *parent)
     : BluezQt::Profile(parent)
-    , m_socket(0)
 {
     setName(QStringLiteral("BluetoothChatSecure"));
     setChannel(0);
@@ -36,25 +35,24 @@ QString ChatProfile::uuid() const
     return QStringLiteral("fa87c0d0-afac-11de-8a39-0800200c9a66");
 }
 
-void ChatProfile::newConnection(BluezQt::Device *device, const QDBusUnixFileDescriptor &fd, const QVariantMap &properties, const BluezQt::Request<> &request)
+void ChatProfile::newConnection(BluezQt::DevicePtr device, const QDBusUnixFileDescriptor &fd, const QVariantMap &properties, const BluezQt::Request<> &request)
 {
     qDebug() << "Connect" << device->name() << properties;
 
     m_socket = createSocket(fd);
     if (!m_socket->isValid()) {
-        delete m_socket;
         request.cancel();
         return;
     }
 
-    connect(m_socket, &QLocalSocket::readyRead, this, &ChatProfile::socketReadyRead);
-    connect(m_socket, &QLocalSocket::disconnected, this, &ChatProfile::socketDisconnected);
+    connect(m_socket.data(), &QLocalSocket::readyRead, this, &ChatProfile::socketReadyRead);
+    connect(m_socket.data(), &QLocalSocket::disconnected, this, &ChatProfile::socketDisconnected);
     QTimer::singleShot(1000, this, SLOT(writeToSocket()));
 
     request.accept();
 }
 
-void ChatProfile::requestDisconnection(BluezQt::Device *device, const BluezQt::Request<> &request)
+void ChatProfile::requestDisconnection(BluezQt::DevicePtr device, const BluezQt::Request<> &request)
 {
     qDebug() << "Disconnect" << device->name();
 
@@ -74,8 +72,7 @@ void ChatProfile::socketReadyRead()
 void ChatProfile::socketDisconnected()
 {
     qDebug() << "Socket disconnected";
-    m_socket->deleteLater();
-    m_socket = 0;
+    m_socket.clear();
 }
 
 void ChatProfile::writeToSocket()
