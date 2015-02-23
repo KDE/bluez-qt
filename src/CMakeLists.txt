@@ -67,6 +67,7 @@ set_target_properties(KF5BluezQt
 
 ecm_generate_headers(BluezQt_HEADERS
     HEADER_NAMES
+        Types
         Manager
         Adapter
         Device
