@@ -53,18 +53,18 @@ QString Adapter::address() const
 
 QString Adapter::name() const
 {
-    return d->m_name;
-}
-
-QString Adapter::alias() const
-{
     return d->m_alias;
 }
 
-PendingCall *Adapter::setAlias(const QString &alias)
+PendingCall *Adapter::setName(const QString &name)
 {
-    return new PendingCall(d->setDBusProperty(QStringLiteral("Alias"), alias),
+    return new PendingCall(d->setDBusProperty(QStringLiteral("Alias"), name),
                            PendingCall::ReturnVoid, this);
+}
+
+QString Adapter::systemName() const
+{
+    return d->m_name;
 }
 
 quint32 Adapter::adapterClass() const

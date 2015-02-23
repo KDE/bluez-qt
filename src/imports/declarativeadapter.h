@@ -33,8 +33,8 @@ class DeclarativeAdapter : public QObject
 
     Q_PROPERTY(QString ubi READ ubi)
     Q_PROPERTY(QString address READ address)
-    Q_PROPERTY(QString name READ name NOTIFY nameChanged)
-    Q_PROPERTY(QString alias READ alias WRITE setAlias NOTIFY aliasChanged)
+    Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
+    Q_PROPERTY(QString systemName READ systemName NOTIFY systemNameChanged)
     Q_PROPERTY(quint32 adapterClass READ adapterClass NOTIFY adapterClassChanged)
     Q_PROPERTY(bool powered READ isPowered WRITE setPowered NOTIFY poweredChanged)
     Q_PROPERTY(bool discoverable READ isDiscoverable WRITE setDiscoverable NOTIFY discoverableChanged)
@@ -54,9 +54,9 @@ public:
     QString address() const;
 
     QString name() const;
+    BluezQt::PendingCall *setName(const QString &name);
 
-    QString alias() const;
-    BluezQt::PendingCall *setAlias(const QString &alias);
+    QString systemName() const;
 
     quint32 adapterClass() const;
 
@@ -94,7 +94,7 @@ public Q_SLOTS:
 Q_SIGNALS:
     void adapterChanged(DeclarativeAdapter *adapter);
     void nameChanged(const QString &name);
-    void aliasChanged(const QString &name);
+    void systemNameChanged(const QString &name);
     void adapterClassChanged(quint32 adapterClass);
     void poweredChanged(bool powered);
     void discoverableChanged(bool discoverable);

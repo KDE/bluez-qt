@@ -47,8 +47,8 @@ class BLUEZQT_EXPORT Adapter : public QObject
 
     Q_PROPERTY(QString ubi READ ubi)
     Q_PROPERTY(QString address READ address)
-    Q_PROPERTY(QString name READ name NOTIFY nameChanged)
-    Q_PROPERTY(QString alias READ alias WRITE setAlias NOTIFY aliasChanged)
+    Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
+    Q_PROPERTY(QString systemName READ systemName NOTIFY systemNameChanged)
     Q_PROPERTY(quint32 adapterClass READ adapterClass NOTIFY adapterClassChanged)
     Q_PROPERTY(bool powered READ isPowered WRITE setPowered NOTIFY poweredChanged)
     Q_PROPERTY(bool discoverable READ isDiscoverable WRITE setDiscoverable NOTIFY discoverableChanged)
@@ -92,19 +92,19 @@ public:
     QString name() const;
 
     /**
-     * Returns an alias of the adapter.
+     * Sets the name of the adapter.
      *
-     * @return alias of adapter
-     */
-    QString alias() const;
-
-    /**
-     * Sets the alias for the adapter.
-     *
-     * @param alias alias for adapter
+     * @param name name of adapter
      * @return void pending call
      */
-    BluezQt::PendingCall *setAlias(const QString &alias);
+    BluezQt::PendingCall *setName(const QString &name);
+
+    /**
+     * Returns a system name (hostname) of the adapter.
+     *
+     * @return system name of adapter
+     */
+    QString systemName() const;
 
     /**
      * Returns a class of the adapter.
@@ -279,9 +279,9 @@ Q_SIGNALS:
     void nameChanged(const QString &name);
 
     /**
-     * Indicates that adapter's alias have changed.
+     * Indicates that adapter's system name have changed.
      */
-    void aliasChanged(const QString &name);
+    void systemNameChanged(const QString &systemName);
 
     /**
      * Indicates that adapter's class have changed.

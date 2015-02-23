@@ -126,8 +126,8 @@ void AdapterTest::getPropertiesTest()
     Q_FOREACH (const AdapterUnit &unit, m_units) {
         QCOMPARE(unit.adapter->ubi(), unit.dbusAdapter->path());
         QCOMPARE(unit.adapter->address(), unit.dbusAdapter->address());
-        QCOMPARE(unit.adapter->name(), unit.dbusAdapter->name());
-        QCOMPARE(unit.adapter->alias(), unit.dbusAdapter->alias());
+        QCOMPARE(unit.adapter->name(), unit.dbusAdapter->alias());
+        QCOMPARE(unit.adapter->systemName(), unit.dbusAdapter->name());
         QCOMPARE(unit.adapter->adapterClass(), unit.dbusAdapter->adapterClass());
         QCOMPARE(unit.adapter->isPowered(), unit.dbusAdapter->powered());
         QCOMPARE(unit.adapter->isDiscoverable(), unit.dbusAdapter->discoverable());
@@ -144,23 +144,23 @@ void AdapterTest::getPropertiesTest()
 void AdapterTest::setAliasTest()
 {
     Q_FOREACH (const AdapterUnit &unit, m_units) {
-        QSignalSpy adapterSpy(unit.adapter.data(), SIGNAL(aliasChanged(QString)));
+        QSignalSpy adapterSpy(unit.adapter.data(), SIGNAL(nameChanged(QString)));
         QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString,QVariantMap,QStringList)));
 
-        QString originalValue = unit.adapter->alias();
+        QString originalValue = unit.adapter->name();
         QString value = originalValue + QLatin1String("_tst_alias");
 
-        unit.adapter->setAlias(value);
+        unit.adapter->setName(value);
         QTRY_COMPARE(adapterSpy.count(), 1);
 
         QList<QVariant> adapterArguments = adapterSpy.takeFirst();
         QCOMPARE(adapterArguments.at(0).toString(), value);
         verifyPropertiesChangedSignal(dbusSpy, QStringLiteral("Alias"), value);
 
-        QCOMPARE(unit.adapter->alias(), value);
+        QCOMPARE(unit.adapter->name(), value);
         QCOMPARE(unit.dbusAdapter->alias(), value);
 
-        unit.adapter->setAlias(originalValue)->waitForFinished();
+        unit.adapter->setName(originalValue)->waitForFinished();
     }
 }
 

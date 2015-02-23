@@ -44,7 +44,7 @@ DeclarativeAdapter::DeclarativeAdapter(BluezQt::AdapterPtr adapter, QObject *par
     , m_adapter(adapter)
 {
     connect(m_adapter.data(), &BluezQt::Adapter::nameChanged, this, &DeclarativeAdapter::nameChanged);
-    connect(m_adapter.data(), &BluezQt::Adapter::aliasChanged, this, &DeclarativeAdapter::aliasChanged);
+    connect(m_adapter.data(), &BluezQt::Adapter::systemNameChanged, this, &DeclarativeAdapter::systemNameChanged);
     connect(m_adapter.data(), &BluezQt::Adapter::adapterClassChanged, this, &DeclarativeAdapter::adapterClassChanged);
     connect(m_adapter.data(), &BluezQt::Adapter::poweredChanged, this, &DeclarativeAdapter::poweredChanged);
     connect(m_adapter.data(), &BluezQt::Adapter::discoverableChanged, this, &DeclarativeAdapter::discoverableChanged);
@@ -89,14 +89,14 @@ QString DeclarativeAdapter::name() const
     return m_adapter->name();
 }
 
-QString DeclarativeAdapter::alias() const
+BluezQt::PendingCall *DeclarativeAdapter::setName(const QString &name)
 {
-    return m_adapter->alias();
+    return m_adapter->setName(name);
 }
 
-BluezQt::PendingCall *DeclarativeAdapter::setAlias(const QString &alias)
+QString DeclarativeAdapter::systemName() const
 {
-    return m_adapter->setAlias(alias);
+    return m_adapter->systemName();
 }
 
 quint32 DeclarativeAdapter::adapterClass() const

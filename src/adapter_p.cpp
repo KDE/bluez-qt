@@ -99,9 +99,9 @@ void AdapterPrivate::propertiesChanged(const QString &interface, const QVariantM
         const QString &property = i.key();
 
         if (property == QLatin1String("Name")) {
-            PROPERTY_CHANGED(m_name, toString, nameChanged);
+            PROPERTY_CHANGED(m_name, toString, systemNameChanged);
         } else if (property == QLatin1String("Alias")) {
-            PROPERTY_CHANGED(m_alias, toString, aliasChanged);
+            PROPERTY_CHANGED(m_alias, toString, nameChanged);
         } else if (property == QLatin1String("Class")) {
             PROPERTY_CHANGED(m_adapterClass, toUInt, adapterClassChanged);
         } else if (property == QLatin1String("Powered")) {
