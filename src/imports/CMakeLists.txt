@@ -13,5 +13,5 @@ target_link_libraries(bluezqtextensionplugin
     KF5::BluezQt
 )
 
-install(TARGETS bluezqtextensionplugin DESTINATION ${QML_INSTALL_DIR}/org/bluezqt)
-install(FILES qmldir DESTINATION ${QML_INSTALL_DIR}/org/bluezqt)
+install(TARGETS bluezqtextensionplugin DESTINATION ${QML_INSTALL_DIR}/org/kde/bluezqt)
+install(FILES qmldir DESTINATION ${QML_INSTALL_DIR}/org/kde/bluezqt)

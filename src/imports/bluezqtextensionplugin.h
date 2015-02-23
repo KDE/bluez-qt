@@ -28,7 +28,7 @@
 class BluezQtExtensionPlugin: public QQmlExtensionPlugin
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "org.bluezqt")
+    Q_PLUGIN_METADATA(IID "org.kde.bluezqt")
 
 public:
     BluezQtExtensionPlugin(QObject *parent = 0);

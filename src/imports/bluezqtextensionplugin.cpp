@@ -62,7 +62,7 @@ void BluezQtExtensionPlugin::registerTypes(const char *uri)
 {
     using namespace BluezQt;
 
-    Q_ASSERT(QLatin1String(uri) == QLatin1String("org.bluezqt"));
+    Q_ASSERT(QLatin1String(uri) == QLatin1String("org.kde.bluezqt"));
 
     qmlRegisterType<DeclarativeManager>(uri, 1, 0, "Manager");
     qmlRegisterType<DeclarativeDevicesModel>(uri, 1, 0, "DevicesModel");

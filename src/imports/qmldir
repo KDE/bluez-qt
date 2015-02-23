@@ -1,2 +1,2 @@
-module org.bluezqt
+module org.kde.bluezqt
 plugin bluezqtextensionplugin
