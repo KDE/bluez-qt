@@ -32,6 +32,7 @@ Device::Device(const QString &path, const QVariantMap &properties, AdapterPtr ad
     : QObject()
     , d(new DevicePrivate(path, properties, adapter))
 {
+    qRegisterMetaType<BluezQt::DevicePtr>("BluezQt::DevicePtr");
 }
 
 Device::~Device()
