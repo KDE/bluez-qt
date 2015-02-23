@@ -26,6 +26,8 @@
 #include "adapter.h"
 #include "device.h"
 
+#include <QQmlEngine>
+
 DeclarativeManager *s_instance = 0;
 
 static int adaptersCountFunction(QQmlListProperty<DeclarativeAdapter> *property)
@@ -158,7 +160,9 @@ void DeclarativeManager::slotAdapterRemoved(BluezQt::AdapterPtr adapter)
 
 void DeclarativeManager::slotDeviceAdded(BluezQt::DevicePtr device)
 {
-    Q_UNUSED(device)
+    // Device has no parent so make sure QML won't take ownership!
+    QQmlEngine::setObjectOwnership(device.data(), QQmlEngine::CppOwnership);
+
     Q_EMIT devicesChanged(declarativeDevices());
 }
 
