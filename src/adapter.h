@@ -104,7 +104,7 @@ public:
      * @param alias alias for adapter
      * @return void pending call
      */
-    PendingCall *setAlias(const QString &alias);
+    BluezQt::PendingCall *setAlias(const QString &alias);
 
     /**
      * Returns a class of the adapter.
@@ -126,7 +126,7 @@ public:
      * @param powered powered state
      * @return void pending call
      */
-    PendingCall *setPowered(bool powered);
+    BluezQt::PendingCall *setPowered(bool powered);
 
     /**
      * Returns whether the adapter is discoverable by other devices.
@@ -141,7 +141,7 @@ public:
      * @param discoverable discoverable state
      * @return void pending call
      */
-    PendingCall *setDiscoverable(bool discoverable);
+    BluezQt::PendingCall *setDiscoverable(bool discoverable);
 
     /**
      * Returns the discoverable timeout in seconds of the adapter.
@@ -161,7 +161,7 @@ public:
      * @param timeout timeout in seconds
      * @return void pending call
      */
-    PendingCall *setDiscoverableTimeout(quint32 timeout);
+    BluezQt::PendingCall *setDiscoverableTimeout(quint32 timeout);
 
     /**
      * Returns whether the adapter is pairable with other devices.
@@ -176,7 +176,7 @@ public:
      * @param pairable pairable state
      * @return void pending call
      */
-    PendingCall *setPairable(bool pairable);
+    BluezQt::PendingCall *setPairable(bool pairable);
 
     /**
      * Returns the pairable timeout in seconds of the adapter.
@@ -196,7 +196,7 @@ public:
      * @param timeout timeout in seconds
      * @return void pending call
      */
-    PendingCall *setPairableTimeout(quint32 timeout);
+    BluezQt::PendingCall *setPairableTimeout(quint32 timeout);
 
     /**
      * Returns whether the adapter is discovering for other devices
@@ -226,9 +226,8 @@ public:
      *
      * @return list of devices
      */
-    QList<DevicePtr> devices() const;
+    QList<BluezQt::DevicePtr> devices() const;
 
-public Q_SLOTS:
     /**
      * Returns a device for specified address.
      *

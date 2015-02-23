@@ -22,8 +22,8 @@
 
 #include "bluezqtextensionplugin.h"
 #include "declarativemanager.h"
+#include "declarativeadapter.h"
 #include "declarativedevicesmodel.h"
-#include "adapter.h"
 #include "device.h"
 #include "pendingcall.h"
 #include "services.h"
@@ -66,7 +66,7 @@ void BluezQtExtensionPlugin::registerTypes(const char *uri)
 
     qmlRegisterType<DeclarativeManager>(uri, 1, 0, "Manager");
     qmlRegisterType<DeclarativeDevicesModel>(uri, 1, 0, "DevicesModel");
-    qmlRegisterUncreatableType<Adapter>(uri, 1, 0, "Adapter", QStringLiteral("Adapter cannot be created"));
+    qmlRegisterUncreatableType<DeclarativeAdapter>(uri, 1, 0, "Adapter", QStringLiteral("Adapter cannot be created"));
     qmlRegisterUncreatableType<Device>(uri, 1, 0, "Device", QStringLiteral("Device cannot be created"));
     qmlRegisterUncreatableType<PendingCall>(uri, 1, 0, "PendingCall", QStringLiteral("PendingCall cannot be created"));
     qmlRegisterSingletonType(uri, 1, 0, "Services", services_singletontype_provider);

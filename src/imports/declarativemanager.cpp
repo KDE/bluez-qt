@@ -1,7 +1,7 @@
 /*
  * BluezQt - Asynchronous Bluez wrapper library
  *
- * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
+ * Copyright (C) 2014-2015 David Rosca <nowrep@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -21,26 +21,27 @@
  */
 
 #include "declarativemanager.h"
+#include "declarativeadapter.h"
 #include "initmanagerjob.h"
 #include "adapter.h"
 #include "device.h"
 
 DeclarativeManager *s_instance = 0;
 
-static int adaptersCountFunction(QQmlListProperty<BluezQt::Adapter> *property)
+static int adaptersCountFunction(QQmlListProperty<DeclarativeAdapter> *property)
 {
     Q_ASSERT(qobject_cast<DeclarativeManager*>(property->object));
     DeclarativeManager *manager = static_cast<DeclarativeManager*>(property->object);
 
-    return manager->adapters().count();
+    return manager->m_adapters.count();
 }
 
-static BluezQt::Adapter *adaptersAtFunction(QQmlListProperty<BluezQt::Adapter> *property, int index)
+static DeclarativeAdapter *adaptersAtFunction(QQmlListProperty<DeclarativeAdapter> *property, int index)
 {
     Q_ASSERT(qobject_cast<DeclarativeManager*>(property->object));
     DeclarativeManager *manager = static_cast<DeclarativeManager*>(property->object);
 
-    return manager->adapters().at(index).data();
+    return manager->m_adapters.values().at(index);
 }
 
 static int devicesCountFunction(QQmlListProperty<BluezQt::Device> *property)
@@ -76,14 +77,14 @@ DeclarativeManager::DeclarativeManager(QObject *parent)
     connect(this, SIGNAL(usableAdapterChanged(BluezQt::AdapterPtr)), this, SLOT(slotUsableAdapterChanged(BluezQt::AdapterPtr)));
 }
 
-BluezQt::Adapter *DeclarativeManager::usableAdapter() const
+DeclarativeAdapter *DeclarativeManager::usableAdapter() const
 {
-    return BluezQt::Manager::usableAdapter().data();
+    return declarativeAdapterFromPtr(BluezQt::Manager::usableAdapter());
 }
 
-QQmlListProperty<BluezQt::Adapter> DeclarativeManager::declarativeAdapters()
+QQmlListProperty<DeclarativeAdapter> DeclarativeManager::declarativeAdapters()
 {
-    return QQmlListProperty<BluezQt::Adapter>(this, 0, adaptersCountFunction, adaptersAtFunction);
+    return QQmlListProperty<DeclarativeAdapter>(this, 0, adaptersCountFunction, adaptersAtFunction);
 }
 
 QQmlListProperty<BluezQt::Device> DeclarativeManager::declarativeDevices()
@@ -96,14 +97,19 @@ DeclarativeManager *DeclarativeManager::self()
     return s_instance;
 }
 
-BluezQt::Adapter *DeclarativeManager::adapterForAddress(const QString &address) const
+DeclarativeAdapter *DeclarativeManager::adapterForDevice(BluezQt::Device *device) const
 {
-    return BluezQt::Manager::adapterForAddress(address).data();
+    return declarativeAdapterFromPtr(device->adapter());
 }
 
-BluezQt::Adapter *DeclarativeManager::adapterForUbi(const QString &ubi) const
+DeclarativeAdapter *DeclarativeManager::adapterForAddress(const QString &address) const
 {
-    return BluezQt::Manager::adapterForUbi(ubi).data();
+    return declarativeAdapterFromPtr(BluezQt::Manager::adapterForAddress(address));
+}
+
+DeclarativeAdapter *DeclarativeManager::adapterForUbi(const QString &ubi) const
+{
+    return declarativeAdapterFromPtr(BluezQt::Manager::adapterForUbi(ubi));
 }
 
 BluezQt::Device *DeclarativeManager::deviceForAddress(const QString &address) const
@@ -128,6 +134,10 @@ void DeclarativeManager::initJobResult(BluezQt::InitManagerJob *job)
 
 void DeclarativeManager::slotAdapterAdded(BluezQt::AdapterPtr adapter)
 {
+    DeclarativeAdapter *dAdapter = new DeclarativeAdapter(adapter, this);
+    m_adapters[adapter->ubi()] = dAdapter;
+
+    Q_EMIT adapterAdded(dAdapter);
     Q_EMIT adaptersChanged(declarativeAdapters());
 
     connect(adapter.data(), &BluezQt::Adapter::deviceFound, this, &DeclarativeManager::slotDeviceAdded);
@@ -136,6 +146,10 @@ void DeclarativeManager::slotAdapterAdded(BluezQt::AdapterPtr adapter)
 
 void DeclarativeManager::slotAdapterRemoved(BluezQt::AdapterPtr adapter)
 {
+    DeclarativeAdapter *dAdapter = m_adapters.take(adapter->ubi());
+    dAdapter->deleteLater();
+
+    Q_EMIT adapterRemoved(dAdapter);
     Q_EMIT adaptersChanged(declarativeAdapters());
 
     disconnect(adapter.data(), &BluezQt::Adapter::deviceFound, this, &DeclarativeManager::slotDeviceAdded);
@@ -156,5 +170,13 @@ void DeclarativeManager::slotDeviceRemoved(BluezQt::DevicePtr device)
 
 void DeclarativeManager::slotUsableAdapterChanged(BluezQt::AdapterPtr adapter)
 {
-    Q_EMIT usableAdapterChanged(adapter.data());
+    Q_EMIT usableAdapterChanged(declarativeAdapterFromPtr(adapter));
+}
+
+DeclarativeAdapter *DeclarativeManager::declarativeAdapterFromPtr(BluezQt::AdapterPtr ptr) const
+{
+    if (!ptr) {
+        return Q_NULLPTR;
+    }
+    return m_adapters.value(ptr->ubi());
 }

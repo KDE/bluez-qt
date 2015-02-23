@@ -25,8 +25,6 @@
 
 #include "devicesmodel.h"
 
-class DeclarativeManager;
-
 class DeclarativeDevicesModel : public BluezQt::DevicesModel
 {
     Q_OBJECT

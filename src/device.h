@@ -151,7 +151,7 @@ public:
      * @param alias alias for device
      * @return void pending call
      */
-    PendingCall *setAlias(const QString &alias);
+    BluezQt::PendingCall *setAlias(const QString &alias);
 
     /**
      * Returns a class of the device.
@@ -203,7 +203,7 @@ public:
      * @param trusted trusted state
      * @return void pending call
      */
-    PendingCall *setTrusted(bool trusted);
+    BluezQt::PendingCall *setTrusted(bool trusted);
 
     /**
      * Returns whether the device is blocked.
@@ -218,7 +218,7 @@ public:
      * @param blocked blocked state
      * @return void pending call
      */
-    PendingCall *setBlocked(bool blocked);
+    BluezQt::PendingCall *setBlocked(bool blocked);
 
     /**
      * Returns whether the device has legacy pairing.

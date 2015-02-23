@@ -22,7 +22,7 @@
 
 #include "declarativedevicesmodel.h"
 #include "declarativemanager.h"
-#include "adapter.h"
+#include "declarativeadapter.h"
 #include "device.h"
 
 DeclarativeDevicesModel::DeclarativeDevicesModel(QObject *parent)
@@ -48,7 +48,7 @@ QVariant DeclarativeDevicesModel::data(const QModelIndex &index, int role) const
     case DeviceRole:
         return QVariant::fromValue(dev.data());
     case AdapterRole:
-        return QVariant::fromValue(dev->adapter().data());
+        return QVariant::fromValue(DeclarativeManager::self()->adapterForDevice(dev.data()));
     default:
         return BluezQt::DevicesModel::data(index, role);
     }

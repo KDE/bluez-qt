@@ -1,7 +1,7 @@
 /*
  * BluezQt - Asynchronous Bluez wrapper library
  *
- * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
+ * Copyright (C) 2014-2015 David Rosca <nowrep@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -25,40 +25,45 @@
 
 #include "manager.h"
 
+#include <QHash>
 #include <QQmlListProperty>
+
+class DeclarativeAdapter;
 
 class DeclarativeManager : public BluezQt::Manager
 {
     Q_OBJECT
-    Q_PROPERTY(BluezQt::Adapter* usableAdapter READ usableAdapter NOTIFY usableAdapterChanged)
-    Q_PROPERTY(QQmlListProperty<BluezQt::Adapter> adapters READ declarativeAdapters NOTIFY adaptersChanged)
+    Q_PROPERTY(DeclarativeAdapter* usableAdapter READ usableAdapter NOTIFY usableAdapterChanged)
+    Q_PROPERTY(QQmlListProperty<DeclarativeAdapter> adapters READ declarativeAdapters NOTIFY adaptersChanged)
     Q_PROPERTY(QQmlListProperty<BluezQt::Device> devices READ declarativeDevices NOTIFY devicesChanged)
 
 public:
     DeclarativeManager(QObject *parent = 0);
 
-    BluezQt::Adapter *usableAdapter() const;
-    QQmlListProperty<BluezQt::Adapter> declarativeAdapters();
+    DeclarativeAdapter *usableAdapter() const;
+    QQmlListProperty<DeclarativeAdapter> declarativeAdapters();
     QQmlListProperty<BluezQt::Device> declarativeDevices();
+
+    QHash<QString, DeclarativeAdapter*> m_adapters;
 
     static DeclarativeManager *self();
 
 public Q_SLOTS:
-    BluezQt::Adapter *adapterForAddress(const QString &address) const;
-    BluezQt::Adapter *adapterForUbi(const QString &ubi) const;
+    DeclarativeAdapter *adapterForDevice(BluezQt::Device *device) const;
+    DeclarativeAdapter *adapterForAddress(const QString &address) const;
+    DeclarativeAdapter *adapterForUbi(const QString &ubi) const;
     BluezQt::Device *deviceForAddress(const QString &address) const;
     BluezQt::Device *deviceForUbi(const QString &ubi) const;
 
 Q_SIGNALS:
     void initialized();
     void initializeError(const QString &errorText);
+    void adapterAdded(DeclarativeAdapter *adapter);
+    void adapterRemoved(DeclarativeAdapter *adapter);
+    void usableAdapterChanged(DeclarativeAdapter *adapter);
 
-    void adaptersChanged(QQmlListProperty<BluezQt::Adapter> adapters);
+    void adaptersChanged(QQmlListProperty<DeclarativeAdapter> adapters);
     void devicesChanged(QQmlListProperty<BluezQt::Device> devices);
-
-    void adapterAdded(BluezQt::Adapter *adapter);
-    void adapterRemoved(BluezQt::Adapter *adapter);
-    void usableAdapterChanged(BluezQt::Adapter *adapter);
 
 private Q_SLOTS:
     void initJobResult(BluezQt::InitManagerJob *job);
@@ -68,6 +73,9 @@ private Q_SLOTS:
     void slotDeviceAdded(BluezQt::DevicePtr device);
     void slotDeviceRemoved(BluezQt::DevicePtr device);
     void slotUsableAdapterChanged(BluezQt::AdapterPtr adapter);
+
+private:
+    DeclarativeAdapter *declarativeAdapterFromPtr(BluezQt::AdapterPtr ptr) const;
 };
 
 #endif // DECLARATIVEMANAGER_H

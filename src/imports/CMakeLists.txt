@@ -1,5 +1,6 @@
 set(bluezqtextensionplugin_SRCS
     declarativemanager.cpp
+    declarativeadapter.cpp
     declarativedevicesmodel.cpp
     bluezqtextensionplugin.cpp
     )
