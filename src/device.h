@@ -46,9 +46,9 @@ class BLUEZQT_EXPORT Device : public QObject
     Q_ENUMS(DeviceType)
     Q_PROPERTY(QString ubi READ ubi)
     Q_PROPERTY(QString address READ address)
-    Q_PROPERTY(QString name READ name NOTIFY nameChanged)
+    Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
     Q_PROPERTY(QString friendlyName READ friendlyName NOTIFY friendlyNameChanged)
-    Q_PROPERTY(QString alias READ alias WRITE setAlias NOTIFY aliasChanged)
+    Q_PROPERTY(QString remoteName READ remoteName NOTIFY remoteNameChanged)
     Q_PROPERTY(quint32 deviceClass READ deviceClass NOTIFY deviceClassChanged)
     Q_PROPERTY(DeviceType deviceType READ deviceType NOTIFY deviceTypeChanged)
     Q_PROPERTY(quint16 appearance READ appearance NOTIFY appearanceChanged)
@@ -82,7 +82,7 @@ public:
         Headset,
         /** Indicates that the device is a headphones. */
         Headphones,
-        /** Indicates that the device is not specified audio device. */
+        /** Indicates that the device is an unspecified audio device. */
         OtherAudio,
         /** Indicates that the device is a keyboard. */
         Keyboard,
@@ -124,34 +124,37 @@ public:
     /**
      * Returns a name of the device.
      *
-     * @return  name of device
+     * If the name of the device wasn't previously changed,
+     * remoteName is returned.
+     *
+     * @return name of device
      */
     QString name() const;
 
     /**
+     * Sets the name of the device.
+     *
+     * @param name name for device
+     * @return void pending call
+     */
+    BluezQt::PendingCall *setName(const QString &name);
+
+    /**
      * Returns a friendly name of the device.
      *
-     * Friendly name is a string "alias (name)".
-     * If the alias is empty or same as name, it returns just name.
+     * Friendly name is a string "name (remoteName)".
+     * If the remoteName is same as name, it returns just name.
      *
      * @return friendly name of device
      */
     QString friendlyName() const;
 
     /**
-     * Returns an alias of the device.
+     * Returns a remote name of the device.
      *
-     * @return alias of device
+     * @return remote name of device
      */
-    QString alias() const;
-
-    /**
-     * Sets the alias of the device.
-     *
-     * @param alias alias for device
-     * @return void pending call
-     */
-    BluezQt::PendingCall *setAlias(const QString &alias);
+    QString remoteName() const;
 
     /**
      * Returns a class of the device.
@@ -371,9 +374,9 @@ Q_SIGNALS:
     void friendlyNameChanged(const QString &friendlyName);
 
     /**
-     * Indicates that device's alias have changed.
+     * Indicates that device's remote name have changed.
      */
-    void aliasChanged(const QString &alias);
+    void remoteNameChanged(const QString &remoteName);
 
     /**
      * Indicates that device's class have changed.

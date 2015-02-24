@@ -58,8 +58,8 @@ public:
         NameRole = Qt::UserRole + 102,
         /** Friendly name of the device (QString) */
         FriendlyNameRole = Qt::UserRole + 103,
-        /** Alias of the device (QString) */
-        AliasRole = Qt::UserRole + 104,
+        /** Remote name of the device (QString) */
+        RemoteNameRole = Qt::UserRole + 104,
         /** Class of the device (quint32) */
         DeviceClassRole = Qt::UserRole + 105,
         /** Type of the device (DeviceType) */

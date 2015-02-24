@@ -52,29 +52,29 @@ QString Device::address() const
 
 QString Device::name() const
 {
-    return d->m_name;
+    return d->m_alias;
+}
+
+PendingCall *Device::setName(const QString &name)
+{
+    return new PendingCall(d->setDBusProperty(QStringLiteral("Alias"), name),
+                           PendingCall::ReturnVoid, this);
 }
 
 QString Device::friendlyName() const
 {
-    if (alias().isEmpty() || alias() == name()) {
+    if (name().isEmpty() || name() == remoteName()) {
         return name();
     }
-    if (name().isEmpty()) {
-        return alias();
+    if (remoteName().isEmpty()) {
+        return name();
     }
-    return QString(QStringLiteral("%1 (%2)")).arg(alias(), name());
+    return QString(QStringLiteral("%1 (%2)")).arg(name(), remoteName());
 }
 
-QString Device::alias() const
+QString Device::remoteName() const
 {
-    return d->m_alias;
-}
-
-PendingCall *Device::setAlias(const QString &alias)
-{
-    return new PendingCall(d->setDBusProperty(QStringLiteral("Alias"), alias),
-                           PendingCall::ReturnVoid, this);
+    return d->m_name;
 }
 
 quint32 Device::deviceClass() const

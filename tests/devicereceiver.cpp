@@ -77,7 +77,6 @@ void DeviceReceiver::devicePropertyChanged(BluezQt::DevicePtr device)
 {
     qDebug() << "*** Device with address" << device->address() << "changed some property";
     qDebug() << "\tAddress:\t" << device->address();
-    qDebug() << "\tAlias:\t\t" << device->alias();
     qDebug() << "\tClass:\t\t" << device->deviceClass();
     qDebug() << "\tIcon:\t\t" << device->icon();
     qDebug() << "\tLegacy Pairing:\t" << (device->hasLegacyPairing() ? "yes" : "no");

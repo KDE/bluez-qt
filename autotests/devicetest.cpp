@@ -151,8 +151,8 @@ void DeviceTest::getPropertiesTest()
     Q_FOREACH (const DeviceUnit &unit, m_units) {
         QCOMPARE(unit.device->ubi(), unit.dbusDevice->path());
         QCOMPARE(unit.device->address(), unit.dbusDevice->address());
-        QCOMPARE(unit.device->name(), unit.dbusDevice->name());
-        QCOMPARE(unit.device->alias(), unit.dbusDevice->alias());
+        QCOMPARE(unit.device->name(), unit.dbusDevice->alias());
+        QCOMPARE(unit.device->remoteName(), unit.dbusDevice->name());
         QCOMPARE(unit.device->deviceClass(), unit.dbusDevice->deviceClass());
         QCOMPARE(unit.device->appearance(), unit.dbusDevice->appearance());
         QCOMPARE(unit.device->icon(), unit.dbusDevice->icon());
@@ -172,23 +172,23 @@ void DeviceTest::getPropertiesTest()
 void DeviceTest::setAliasTest()
 {
     Q_FOREACH (const DeviceUnit &unit, m_units) {
-        QSignalSpy deviceSpy(unit.device.data(), SIGNAL(aliasChanged(QString)));
+        QSignalSpy deviceSpy(unit.device.data(), SIGNAL(nameChanged(QString)));
         QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString,QVariantMap,QStringList)));
 
-        QString originalValue = unit.device->alias();
+        QString originalValue = unit.device->name();
         QString value = originalValue + QLatin1String("_tst_alias");
 
-        unit.device->setAlias(value);
+        unit.device->setName(value);
         QTRY_COMPARE(deviceSpy.count(), 1);
 
         QList<QVariant> arguments = deviceSpy.takeFirst();
         QCOMPARE(arguments.at(0).toString(), value);
         verifyPropertiesChangedSignal(dbusSpy, QStringLiteral("Alias"), value);
 
-        QCOMPARE(unit.device->alias(), value);
+        QCOMPARE(unit.device->name(), value);
         QCOMPARE(unit.dbusDevice->alias(), value);
 
-        unit.device->setAlias(originalValue)->waitForFinished();
+        unit.device->setName(originalValue)->waitForFinished();
     }
 }
 

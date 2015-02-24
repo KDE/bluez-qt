@@ -142,7 +142,7 @@ void DevicePrivate::namePropertyChanged(const QString &value)
 {
     if (m_name != value) {
         m_name = value;
-        Q_EMIT q.data()->nameChanged(m_name);
+        Q_EMIT q.data()->remoteNameChanged(m_name);
         Q_EMIT q.data()->friendlyNameChanged(q.data()->friendlyName());
     }
 }
@@ -151,7 +151,7 @@ void DevicePrivate::aliasPropertyChanged(const QString &value)
 {
     if (m_alias != value) {
         m_alias = value;
-        Q_EMIT q.data()->aliasChanged(m_alias);
+        Q_EMIT q.data()->nameChanged(m_alias);
         Q_EMIT q.data()->friendlyNameChanged(q.data()->friendlyName());
     }
 }
