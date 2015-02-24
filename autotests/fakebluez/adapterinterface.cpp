@@ -17,6 +17,9 @@ AdapterInterface::AdapterInterface(const QDBusObjectPath &path, const QVariantMa
     setPath(path);
     setProperties(properties);
     setName(QStringLiteral("org.bluez.Adapter1"));
+
+    // Alias needs special handling
+    setAlias(properties.value(QStringLiteral("Alias")).toString());
 }
 
 QString AdapterInterface::address() const
@@ -36,7 +39,7 @@ QString AdapterInterface::alias() const
 
 void AdapterInterface::setAlias(const QString &alias)
 {
-    Object::changeProperty(QStringLiteral("Alias"), alias);
+    Object::changeProperty(QStringLiteral("Alias"), alias.isEmpty() ? name() : alias);
 }
 
 quint32 AdapterInterface::adapterClass() const

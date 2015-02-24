@@ -17,6 +17,9 @@ DeviceInterface::DeviceInterface(const QDBusObjectPath &path, const QVariantMap 
     setPath(path);
     setProperties(properties);
     setName(QStringLiteral("org.bluez.Device1"));
+
+    // Alias needs special handling
+    setAlias(properties.value(QStringLiteral("Alias")).toString());
 }
 
 QString DeviceInterface::address() const
@@ -36,7 +39,7 @@ QString DeviceInterface::alias() const
 
 void DeviceInterface::setAlias(const QString &alias)
 {
-    Object::changeProperty(QStringLiteral("Alias"), alias);
+    Object::changeProperty(QStringLiteral("Alias"), alias.isEmpty() ? name() : alias);
 }
 
 QString DeviceInterface::icon() const
