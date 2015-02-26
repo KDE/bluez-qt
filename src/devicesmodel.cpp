@@ -36,7 +36,7 @@ public:
     void init();
 
     void adapterAdded(AdapterPtr adapter);
-    void deviceFound(DevicePtr device);
+    void deviceAdded(DevicePtr device);
     void deviceRemoved(DevicePtr device);
     void deviceChanged(DevicePtr device);
 
@@ -65,18 +65,18 @@ void DevicesModelPrivate::init()
 
 void DevicesModelPrivate::adapterAdded(AdapterPtr adapter)
 {
-    connect(adapter.data(), &Adapter::deviceFound, this, &DevicesModelPrivate::deviceFound);
+    connect(adapter.data(), &Adapter::deviceAdded, this, &DevicesModelPrivate::deviceAdded);
     connect(adapter.data(), &Adapter::deviceRemoved, this, &DevicesModelPrivate::deviceRemoved);
     connect(adapter.data(), &Adapter::deviceChanged, this, &DevicesModelPrivate::deviceChanged);
 }
 
-void DevicesModelPrivate::deviceFound(DevicePtr device)
+void DevicesModelPrivate::deviceAdded(DevicePtr device)
 {
     q->beginInsertRows(QModelIndex(), m_devices.size(), m_devices.size());
     m_devices.append(device);
     q->endInsertRows();
 
-    Q_EMIT q->deviceFound(device);
+    Q_EMIT q->deviceAdded(device);
 }
 
 void DevicesModelPrivate::deviceRemoved(DevicePtr device)

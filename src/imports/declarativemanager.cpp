@@ -142,7 +142,7 @@ void DeclarativeManager::slotAdapterAdded(BluezQt::AdapterPtr adapter)
     Q_EMIT adapterAdded(dAdapter);
     Q_EMIT adaptersChanged(declarativeAdapters());
 
-    connect(adapter.data(), &BluezQt::Adapter::deviceFound, this, &DeclarativeManager::slotDeviceAdded);
+    connect(adapter.data(), &BluezQt::Adapter::deviceAdded, this, &DeclarativeManager::slotDeviceAdded);
     connect(adapter.data(), &BluezQt::Adapter::deviceRemoved, this, &DeclarativeManager::slotDeviceRemoved);
 }
 
@@ -154,7 +154,7 @@ void DeclarativeManager::slotAdapterRemoved(BluezQt::AdapterPtr adapter)
     Q_EMIT adapterRemoved(dAdapter);
     Q_EMIT adaptersChanged(declarativeAdapters());
 
-    disconnect(adapter.data(), &BluezQt::Adapter::deviceFound, this, &DeclarativeManager::slotDeviceAdded);
+    disconnect(adapter.data(), &BluezQt::Adapter::deviceAdded, this, &DeclarativeManager::slotDeviceAdded);
     disconnect(adapter.data(), &BluezQt::Adapter::deviceRemoved, this, &DeclarativeManager::slotDeviceRemoved);
 }
 

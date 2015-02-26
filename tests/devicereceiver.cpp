@@ -61,7 +61,7 @@ void DeviceReceiver::scanDevices()
     qDebug() << "*** Will scan devices until stopped...";
     qDebug();
 
-    connect(usableAdapter.data(), &Adapter::deviceFound, this, &DeviceReceiver::deviceFound);
+    connect(usableAdapter.data(), &Adapter::deviceAdded, this, &DeviceReceiver::deviceFound);
     connect(usableAdapter.data(), &Adapter::deviceChanged, this, &DeviceReceiver::devicePropertyChanged);
 
     usableAdapter->startDiscovery();

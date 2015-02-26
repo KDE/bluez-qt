@@ -74,7 +74,7 @@ void AdapterPrivate::init(const QVariantMap &properties)
 void AdapterPrivate::addDevice(DevicePtr device)
 {
     m_devices.append(device);
-    Q_EMIT q.data()->deviceFound(device);
+    Q_EMIT q.data()->deviceAdded(device);
 }
 
 void AdapterPrivate::removeDevice(DevicePtr device)

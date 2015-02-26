@@ -126,9 +126,9 @@ public:
 
 Q_SIGNALS:
     /**
-     * Indicates that new device was found.
+     * Indicates that new device was added.
      */
-    void deviceFound(BluezQt::DevicePtr device);
+    void deviceAdded(BluezQt::DevicePtr device);
 
     /**
      * Indicates that device was removed.

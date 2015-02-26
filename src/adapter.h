@@ -334,9 +334,9 @@ Q_SIGNALS:
     void modaliasChanged(const QString &modalias);
 
     /**
-     * Indicates that a new device was found.
+     * Indicates that a new device was added (eg. found by discovery).
      */
-    void deviceFound(BluezQt::DevicePtr device);
+    void deviceAdded(BluezQt::DevicePtr device);
 
     /**
      * Indicates that a device was removed.
