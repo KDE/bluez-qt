@@ -92,6 +92,7 @@ public Q_SLOTS:
     BluezQt::PendingCall *removeDevice(BluezQt::Device *device);
 
 Q_SIGNALS:
+    void adapterRemoved(DeclarativeAdapter *adapter);
     void adapterChanged(DeclarativeAdapter *adapter);
     void nameChanged(const QString &name);
     void systemNameChanged(const QString &name);

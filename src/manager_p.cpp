@@ -176,6 +176,7 @@ void ManagerPrivate::clear()
     while (!m_adapters.isEmpty()) {
         AdapterPtr adapter = m_adapters.begin().value();
         m_adapters.remove(m_adapters.begin().key());
+        Q_EMIT adapter->adapterRemoved(adapter);
         Q_EMIT q->adapterRemoved(adapter);
 
         if (m_adapters.isEmpty()) {
@@ -315,6 +316,7 @@ void ManagerPrivate::removeAdapter(const QString &adapterPath)
         return;
     }
 
+    Q_EMIT adapter->adapterRemoved(adapter);
     Q_EMIT q->adapterRemoved(adapter);
 
     if (m_adapters.isEmpty()) {

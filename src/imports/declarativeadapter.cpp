@@ -55,6 +55,10 @@ DeclarativeAdapter::DeclarativeAdapter(BluezQt::AdapterPtr adapter, QObject *par
     connect(m_adapter.data(), &BluezQt::Adapter::uuidsChanged, this, &DeclarativeAdapter::uuidsChanged);
     connect(m_adapter.data(), &BluezQt::Adapter::modaliasChanged, this, &DeclarativeAdapter::modaliasChanged);
 
+    connect(m_adapter.data(), &BluezQt::Adapter::adapterRemoved, [ this ]() {
+        Q_EMIT adapterRemoved(this);
+    });
+
     connect(m_adapter.data(), &BluezQt::Adapter::adapterChanged, [ this ]() {
         Q_EMIT adapterChanged(this);
     });

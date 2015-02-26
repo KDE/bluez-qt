@@ -269,6 +269,11 @@ public:
 
 Q_SIGNALS:
     /**
+     * Indicates that the adapter was removed.
+     */
+    void adapterRemoved(BluezQt::AdapterPtr adapter);
+
+    /**
      * Indicates that at least one of the adapter's properties have changed.
      */
     void adapterChanged(BluezQt::AdapterPtr adapter);
