@@ -27,6 +27,8 @@ private Q_SLOTS:
     void setTrustedTest();
     void setBlockedTest();
 
+    void deviceRemovedTest();
+
 private:
     struct DeviceUnit
     {

@@ -372,7 +372,29 @@ void AdapterTest::removeDeviceTest()
 
             QTRY_COMPARE(adapterSpy.count(), 1);
             QTRY_COMPARE(deviceSpy.count(), 1);
+
+            QCOMPARE(adapterSpy.at(0).at(0).value<DevicePtr>(), device);
+            QCOMPARE(deviceSpy.at(0).at(0).value<DevicePtr>(), device);
         }
+    }
+}
+
+void AdapterTest::adapterRemovedTest()
+{
+    if (!m_fakeBluezRun) {
+        return;
+    }
+
+    Q_FOREACH (const AdapterUnit &unit, m_units) {
+        QSignalSpy managerSpy(m_manager, SIGNAL(adapterRemoved(BluezQt::AdapterPtr)));
+
+        QVariantMap properties;
+        properties[QStringLiteral("Path")] = QVariant::fromValue(QDBusObjectPath(unit.adapter->ubi()));
+        FakeBluez::runAction(QStringLiteral("devicemanager"), QStringLiteral("remove-adapter"), properties);
+
+        QTRY_COMPARE(managerSpy.count(), 1);
+
+        QCOMPARE(managerSpy.at(0).at(0).value<AdapterPtr>(), unit.adapter);
     }
 }
 

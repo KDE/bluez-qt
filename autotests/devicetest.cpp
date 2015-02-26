@@ -238,6 +238,28 @@ void DeviceTest::setBlockedTest()
     }
 }
 
+void DeviceTest::deviceRemovedTest()
+{
+    if (!m_fakeBluezRun) {
+        return;
+    }
+
+    Q_FOREACH (const DeviceUnit &unit, m_units) {
+        QSignalSpy adapterSpy(unit.device->adapter().data(), SIGNAL(deviceRemoved(BluezQt::DevicePtr)));
+        QSignalSpy deviceSpy(unit.device.data(), SIGNAL(deviceRemoved(BluezQt::DevicePtr)));
+
+        QVariantMap properties;
+        properties[QStringLiteral("Path")] = QVariant::fromValue(QDBusObjectPath(unit.device->ubi()));
+        FakeBluez::runAction(QStringLiteral("devicemanager"), QStringLiteral("remove-device"), properties);
+
+        QTRY_COMPARE(adapterSpy.count(), 1);
+        QTRY_COMPARE(deviceSpy.count(), 1);
+
+        QCOMPARE(adapterSpy.at(0).at(0).value<DevicePtr>(), unit.device);
+        QCOMPARE(deviceSpy.at(0).at(0).value<DevicePtr>(), unit.device);
+    }
+}
+
 int main(int argc, char *argv[])
 {
     QCoreApplication app(argc, argv);

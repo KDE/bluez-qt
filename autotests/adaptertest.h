@@ -31,6 +31,7 @@ private Q_SLOTS:
 
     void discoveryTest();
     void removeDeviceTest();
+    void adapterRemovedTest();
 
 private:
     struct AdapterUnit

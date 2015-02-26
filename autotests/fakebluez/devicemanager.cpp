@@ -15,6 +15,10 @@ void DeviceManager::runAction(const QString &actionName, const QVariantMap &prop
         runCreateAdapterAction(properties);
     } else if (actionName == QLatin1String("create-device")) {
         runCreateDeviceAction(properties);
+    } else if (actionName == QLatin1String("remove-adapter")) {
+        runRemoveAdapterAction(properties);
+    } else if (actionName == QLatin1String("remove-device")) {
+        runRemoveDeviceAction(properties);
     } else if (actionName == QLatin1String("change-adapter-property")) {
         runChangeAdapterProperty(properties);
     } else if (actionName == QLatin1String("change-device-property")) {
@@ -44,6 +48,18 @@ void DeviceManager::runCreateDeviceAction(const QVariantMap &properties)
     DeviceInterface *device = new DeviceInterface(path, props, deviceObj);
     m_objectManager->addObject(device);
     m_objectManager->addAutoDeleteObject(deviceObj);
+}
+
+void DeviceManager::runRemoveAdapterAction(const QVariantMap &properties)
+{
+    const QDBusObjectPath &path = properties.value(QStringLiteral("Path")).value<QDBusObjectPath>();
+    m_objectManager->removeObject(m_objectManager->objectByPath(path));
+}
+
+void DeviceManager::runRemoveDeviceAction(const QVariantMap &properties)
+{
+    const QDBusObjectPath &path = properties.value(QStringLiteral("Path")).value<QDBusObjectPath>();
+    m_objectManager->removeObject(m_objectManager->objectByPath(path));
 }
 
 void DeviceManager::runChangeAdapterProperty(const QVariantMap &properties)
