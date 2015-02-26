@@ -30,6 +30,7 @@ private Q_SLOTS:
     void setPairableTimeoutTest();
 
     void discoveryTest();
+    void removeDeviceTest();
 
 private:
     struct AdapterUnit

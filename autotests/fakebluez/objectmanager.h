@@ -29,6 +29,8 @@ public:
 
     Object *objectByPath(const QDBusObjectPath &path) const;
 
+    static ObjectManager *self();
+
 public Q_SLOTS:
     DBusManagerStruct GetManagedObjects();
 

@@ -5,9 +5,13 @@
 #include <QDBusMetaType>
 #include <QDBusConnection>
 
+ObjectManager *s_instance = 0;
+
 ObjectManager::ObjectManager(QObject *parent)
     : QDBusAbstractAdaptor(parent)
 {
+    s_instance = this;
+
     qDBusRegisterMetaType<QVariantMapMap>();
     qDBusRegisterMetaType<DBusManagerStruct>();
 
@@ -43,6 +47,11 @@ void ObjectManager::addAutoDeleteObject(QObject *object)
 Object *ObjectManager::objectByPath(const QDBusObjectPath &path) const
 {
     return m_objects.value(path.path());
+}
+
+ObjectManager *ObjectManager::self()
+{
+    return s_instance;
 }
 
 DBusManagerStruct ObjectManager::GetManagedObjects()

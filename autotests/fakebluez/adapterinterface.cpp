@@ -1,4 +1,5 @@
 #include "adapterinterface.h"
+#include "objectmanager.h"
 
 #include <QTimer>
 #include <QDBusConnection>
@@ -132,8 +133,8 @@ void AdapterInterface::StopDiscovery()
 
 void AdapterInterface::RemoveDevice(const QDBusObjectPath &device)
 {
-    // TODO
-    Q_UNUSED(device)
+    ObjectManager *manager = ObjectManager::self();
+    manager->removeObject(manager->objectByPath(device));
 }
 
 void AdapterInterface::resetPairable()
