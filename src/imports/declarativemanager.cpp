@@ -95,6 +95,11 @@ DeclarativeManager::DeclarativeManager(QObject *parent)
     });
 }
 
+DeclarativeManager::~DeclarativeManager()
+{
+    s_instance = 0;
+}
+
 DeclarativeAdapter *DeclarativeManager::usableAdapter() const
 {
     return declarativeAdapterFromPtr(BluezQt::Manager::usableAdapter());

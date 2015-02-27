@@ -39,6 +39,7 @@ class DeclarativeManager : public BluezQt::Manager
 
 public:
     DeclarativeManager(QObject *parent = 0);
+    ~DeclarativeManager();
 
     DeclarativeAdapter *usableAdapter() const;
     QQmlListProperty<DeclarativeAdapter> declarativeAdapters();
