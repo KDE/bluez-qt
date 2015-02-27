@@ -27,16 +27,21 @@ ecm_setup_version(${KF5_VERSION}
 set(REQUIRED_QT_VERSION "5.2.0")
 
 # Required Qt5 components to build this framework
-find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core DBus Network Test)
+find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core DBus Network)
 
 # Optional Qt5 components to build this framework
+find_package(Qt5Test ${REQUIRED_QT_VERSION} CONFIG)
+set_package_properties(Qt5Test PROPERTIES DESCRIPTION "Autotests for BluezQt" TYPE OPTIONAL)
 find_package(Qt5Qml ${REQUIRED_QT_VERSION} CONFIG)
 set_package_properties(Qt5Qml PROPERTIES DESCRIPTION "QML support for BluezQt" TYPE OPTIONAL)
 
 # Subdirectories
 add_subdirectory(src)
-add_subdirectory(autotests)
 add_subdirectory(tests)
+
+if(Qt5Test_FOUND)
+    add_subdirectory(autotests)
+endif()
 
 if(Qt5Qml_FOUND)
     add_subdirectory(src/imports)
