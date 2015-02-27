@@ -222,4 +222,3 @@ void Autotests::verifyPropertiesChangedSignal(const QSignalSpy &spy, const QStri
 }
 
 #include "autotests.moc"
-

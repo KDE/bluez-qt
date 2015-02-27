@@ -5,6 +5,10 @@ set(bluezqtextensionplugin_SRCS
     bluezqtextensionplugin.cpp
     )
 
+# Needed to run QML autotests
+configure_file(qmldir org/kde/bluezqt/qmldir COPYONLY)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY org/kde/bluezqt)
+
 add_library(bluezqtextensionplugin SHARED ${bluezqtextensionplugin_SRCS})
 
 target_link_libraries(bluezqtextensionplugin

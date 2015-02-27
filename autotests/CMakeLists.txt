@@ -27,3 +27,10 @@ bluezqt_tests(
     devicetest
     jobstest
 )
+
+if(Qt5Qml_FOUND AND Qt5QuickTest_FOUND)
+    add_executable(qmltests qmltests.cpp ${bluezqt_autotests_SRCS})
+    target_link_libraries(qmltests Qt5::Test Qt5::Qml Qt5::QuickTest KF5BluezQt)
+    add_test(bluezqt-qmltests qmltests)
+    ecm_mark_as_test(qmltests)
+endif()
