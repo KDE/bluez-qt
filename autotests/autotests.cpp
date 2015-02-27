@@ -8,6 +8,7 @@
 #include <QEventLoop>
 #include <QCoreApplication>
 
+#include <QTest>
 #include <QDBusReply>
 #include <QDBusMetaType>
 #include <QDBusInterface>
@@ -37,7 +38,7 @@ private:
 
 StartJob::StartJob()
     : QObject(0)
-    , m_fakebluezPath(qApp->applicationDirPath() + QStringLiteral("/fakebluez/fakebluez"))
+    , m_fakebluezPath(QFINDTESTDATA("fakebluez/fakebluez"))
 {
 }
 
