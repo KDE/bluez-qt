@@ -35,7 +35,6 @@ public:
 
     void init();
 
-    void adapterAdded(AdapterPtr adapter);
     void deviceAdded(DevicePtr device);
     void deviceRemoved(DevicePtr device);
     void deviceChanged(DevicePtr device);
@@ -56,18 +55,9 @@ void DevicesModelPrivate::init()
 {
     m_devices = m_manager->devices();
 
-    Q_FOREACH (AdapterPtr adapter, m_manager->adapters()) {
-        adapterAdded(adapter);
-    }
-
-    connect(m_manager, &Manager::adapterAdded, this, &DevicesModelPrivate::adapterAdded);
-}
-
-void DevicesModelPrivate::adapterAdded(AdapterPtr adapter)
-{
-    connect(adapter.data(), &Adapter::deviceAdded, this, &DevicesModelPrivate::deviceAdded);
-    connect(adapter.data(), &Adapter::deviceRemoved, this, &DevicesModelPrivate::deviceRemoved);
-    connect(adapter.data(), &Adapter::deviceChanged, this, &DevicesModelPrivate::deviceChanged);
+    connect(m_manager, &Manager::deviceAdded, this, &DevicesModelPrivate::deviceAdded);
+    connect(m_manager, &Manager::deviceRemoved, this, &DevicesModelPrivate::deviceRemoved);
+    connect(m_manager, &Manager::deviceChanged, this, &DevicesModelPrivate::deviceChanged);
 }
 
 void DevicesModelPrivate::deviceAdded(DevicePtr device)
@@ -75,8 +65,6 @@ void DevicesModelPrivate::deviceAdded(DevicePtr device)
     q->beginInsertRows(QModelIndex(), m_devices.size(), m_devices.size());
     m_devices.append(device);
     q->endInsertRows();
-
-    Q_EMIT q->deviceAdded(device);
 }
 
 void DevicesModelPrivate::deviceRemoved(DevicePtr device)
@@ -87,8 +75,6 @@ void DevicesModelPrivate::deviceRemoved(DevicePtr device)
     q->beginRemoveRows(QModelIndex(), offset, offset);
     m_devices.removeAt(offset);
     q->endRemoveRows();
-
-    Q_EMIT q->deviceRemoved(device);
 }
 
 void DevicesModelPrivate::deviceChanged(DevicePtr device)
@@ -98,8 +84,6 @@ void DevicesModelPrivate::deviceChanged(DevicePtr device)
 
     QModelIndex idx = q->createIndex(offset, 0);
     Q_EMIT q->dataChanged(idx, idx);
-
-    Q_EMIT q->deviceChanged(device);
 }
 
 DevicesModel::DevicesModel(Manager *manager, QObject *parent)

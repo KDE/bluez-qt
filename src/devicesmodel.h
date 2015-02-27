@@ -124,22 +124,6 @@ public:
      */
     DevicePtr device(const QModelIndex &index) const;
 
-Q_SIGNALS:
-    /**
-     * Indicates that new device was added.
-     */
-    void deviceAdded(BluezQt::DevicePtr device);
-
-    /**
-     * Indicates that device was removed.
-     */
-    void deviceRemoved(BluezQt::DevicePtr device);
-
-    /**
-     * Indicates that at least one of the device's properties have changed.
-     */
-    void deviceChanged(BluezQt::DevicePtr device);
-
 private:
     class DevicesModelPrivate *const d;
 
