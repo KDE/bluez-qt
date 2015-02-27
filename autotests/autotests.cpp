@@ -1,4 +1,6 @@
 #include "autotests.h"
+#include "device.h"
+#include "adapter.h"
 #include "bluezqt_dbustypes.h"
 
 #include <QDir>
@@ -156,7 +158,7 @@ void FakeBluez::runAction(const QString &object, const QString &actionName, cons
     eventLoop.exec();
 }
 
-bool isBluez5Running()
+bool Autotests::isBluez5Running()
 {
     // Check if org.bluez is registered
     if (!QDBusConnection::systemBus().interface()->isServiceRegistered(QStringLiteral("org.bluez"))) {
@@ -191,7 +193,13 @@ bool isBluez5Running()
     return true;
 }
 
-void verifyPropertiesChangedSignal(const QSignalSpy &spy, const QString &propertyName, const QVariant &propertyValue)
+void Autotests::registerMetatypes()
+{
+    qRegisterMetaType<BluezQt::DevicePtr>("BluezQt::DevicePtr");
+    qRegisterMetaType<BluezQt::AdapterPtr>("BluezQt::AdapterPtr");
+}
+
+void Autotests::verifyPropertiesChangedSignal(const QSignalSpy &spy, const QString &propertyName, const QVariant &propertyValue)
 {
     int changes = 0;
 
@@ -213,3 +221,4 @@ void verifyPropertiesChangedSignal(const QSignalSpy &spy, const QString &propert
 }
 
 #include "autotests.moc"
+

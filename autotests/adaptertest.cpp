@@ -19,6 +19,7 @@ AdapterTest::AdapterTest(bool fakeBluezRun)
     : m_manager(0)
     , m_fakeBluezRun(fakeBluezRun)
 {
+    Autotests::registerMetatypes();
 }
 
 void AdapterTest::initTestCase()
@@ -27,7 +28,7 @@ void AdapterTest::initTestCase()
     QDBusConnection connection = QDBusConnection::systemBus();
 
     if (!m_fakeBluezRun) {
-        if (!isBluez5Running()) {
+        if (!Autotests::isBluez5Running()) {
             QSKIP("This test can only run with functional Bluez 5 org.bluez service");
         }
     } else {
@@ -172,7 +173,7 @@ void AdapterTest::setAliasTest()
 
         QList<QVariant> adapterArguments = adapterSpy.takeFirst();
         QCOMPARE(adapterArguments.at(0).toString(), value);
-        verifyPropertiesChangedSignal(dbusSpy, QStringLiteral("Alias"), value);
+        Autotests::verifyPropertiesChangedSignal(dbusSpy, QStringLiteral("Alias"), value);
 
         QCOMPARE(unit.adapter->name(), value);
         QCOMPARE(unit.dbusAdapter->alias(), value);
@@ -194,7 +195,7 @@ void AdapterTest::setPoweredTest()
         QTRY_COMPARE(adapterSpy.count(), 1);
 
         QVERIFY(dbusSpy.count() >= 1);
-        verifyPropertiesChangedSignal(dbusSpy, QStringLiteral("Powered"), value);
+        Autotests::verifyPropertiesChangedSignal(dbusSpy, QStringLiteral("Powered"), value);
 
         QList<QVariant> adapterArguments = adapterSpy.takeFirst();
         QCOMPARE(adapterArguments.at(0).toBool(), value);
@@ -225,7 +226,7 @@ void AdapterTest::setDiscoverableTest()
 
         QList<QVariant> adapterArguments = adapterSpy.takeFirst();
         QCOMPARE(adapterArguments.at(0).toBool(), value);
-        verifyPropertiesChangedSignal(dbusSpy, QStringLiteral("Discoverable"), value);
+        Autotests::verifyPropertiesChangedSignal(dbusSpy, QStringLiteral("Discoverable"), value);
 
         QCOMPARE(unit.adapter->isDiscoverable(), value);
         QCOMPARE(unit.dbusAdapter->discoverable(), value);
@@ -248,7 +249,7 @@ void AdapterTest::setDiscoverableTimeoutTest()
         QTRY_COMPARE(adapterSpy.count(), 1);
 
         QVERIFY(dbusSpy.count() >= 1);
-        verifyPropertiesChangedSignal(dbusSpy, QStringLiteral("DiscoverableTimeout"), value);
+        Autotests::verifyPropertiesChangedSignal(dbusSpy, QStringLiteral("DiscoverableTimeout"), value);
 
         QList<QVariant> adapterArguments = adapterSpy.takeFirst();
         QCOMPARE(adapterArguments.at(0).toUInt(), value);
@@ -274,7 +275,7 @@ void AdapterTest::setPairableTest()
 
         QList<QVariant> adapterArguments = adapterSpy.takeFirst();
         QCOMPARE(adapterArguments.at(0).toBool(), value);
-        verifyPropertiesChangedSignal(dbusSpy, QStringLiteral("Pairable"), value);
+        Autotests::verifyPropertiesChangedSignal(dbusSpy, QStringLiteral("Pairable"), value);
 
         QCOMPARE(unit.adapter->isPairable(), value);
         QCOMPARE(unit.dbusAdapter->pairable(), value);
@@ -296,7 +297,7 @@ void AdapterTest::setPairableTimeoutTest()
         QTRY_COMPARE(adapterSpy.count(), 1);
 
         QVERIFY(dbusSpy.count() >= 1);
-        verifyPropertiesChangedSignal(dbusSpy, QStringLiteral("PairableTimeout"), value);
+        Autotests::verifyPropertiesChangedSignal(dbusSpy, QStringLiteral("PairableTimeout"), value);
 
         QList<QVariant> adapterArguments = adapterSpy.takeFirst();
         QCOMPARE(adapterArguments.at(0).toUInt(), value);
@@ -328,7 +329,7 @@ void AdapterTest::discoveryTest()
         QTRY_COMPARE(adapterSpy.count(), 1);
 
         QVERIFY(dbusSpy.count() >= 1);
-        verifyPropertiesChangedSignal(dbusSpy, QStringLiteral("Discovering"), true);
+        Autotests::verifyPropertiesChangedSignal(dbusSpy, QStringLiteral("Discovering"), true);
 
         QList<QVariant> adapterArguments = adapterSpy.takeFirst();
         QCOMPARE(adapterArguments.at(0).toBool(), true);
@@ -344,7 +345,7 @@ void AdapterTest::discoveryTest()
         QTRY_COMPARE(adapterSpy.count(), 1);
 
         QVERIFY(dbusSpy.count() >= 1);
-        verifyPropertiesChangedSignal(dbusSpy, QStringLiteral("Discovering"), false);
+        Autotests::verifyPropertiesChangedSignal(dbusSpy, QStringLiteral("Discovering"), false);
 
         adapterArguments = adapterSpy.takeFirst();
         QCOMPARE(adapterArguments.at(0).toBool(), false);

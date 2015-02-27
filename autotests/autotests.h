@@ -20,7 +20,13 @@ public:
     static QProcess *s_process;
 };
 
+namespace Autotests
+{
+
 bool isBluez5Running();
+void registerMetatypes();
 void verifyPropertiesChangedSignal(const QSignalSpy &spy, const QString &propertyName, const QVariant &propertyValue);
+
+}
 
 #endif // AUTOTESTS_H

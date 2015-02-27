@@ -33,7 +33,6 @@ Adapter::Adapter(const QString &path, const QVariantMap &properties)
     : QObject()
     , d(new AdapterPrivate(path, properties))
 {
-    qRegisterMetaType<BluezQt::AdapterPtr>("BluezQt::AdapterPtr");
 }
 
 Adapter::~Adapter()

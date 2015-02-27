@@ -18,6 +18,7 @@ DeviceTest::DeviceTest(bool fakeBluezRun)
     : m_manager(0)
     , m_fakeBluezRun(fakeBluezRun)
 {
+    Autotests::registerMetatypes();
 }
 
 void DeviceTest::initTestCase()
@@ -26,7 +27,7 @@ void DeviceTest::initTestCase()
     QDBusConnection connection = QDBusConnection::systemBus();
 
     if (!m_fakeBluezRun) {
-        if (!isBluez5Running()) {
+        if (!Autotests::isBluez5Running()) {
             QSKIP("This test can only run with functional Bluez 5 org.bluez service");
         }
     } else {
@@ -183,7 +184,7 @@ void DeviceTest::setAliasTest()
 
         QList<QVariant> arguments = deviceSpy.takeFirst();
         QCOMPARE(arguments.at(0).toString(), value);
-        verifyPropertiesChangedSignal(dbusSpy, QStringLiteral("Alias"), value);
+        Autotests::verifyPropertiesChangedSignal(dbusSpy, QStringLiteral("Alias"), value);
 
         QCOMPARE(unit.device->name(), value);
         QCOMPARE(unit.dbusDevice->alias(), value);
@@ -206,7 +207,7 @@ void DeviceTest::setTrustedTest()
 
         QList<QVariant> arguments = deviceSpy.takeFirst();
         QCOMPARE(arguments.at(0).toBool(), value);
-        verifyPropertiesChangedSignal(dbusSpy, QStringLiteral("Trusted"), value);
+        Autotests::verifyPropertiesChangedSignal(dbusSpy, QStringLiteral("Trusted"), value);
 
         QCOMPARE(unit.device->isTrusted(), value);
         QCOMPARE(unit.dbusDevice->trusted(), value);
@@ -229,7 +230,7 @@ void DeviceTest::setBlockedTest()
 
         QList<QVariant> arguments = deviceSpy.takeFirst();
         QCOMPARE(arguments.at(0).toBool(), value);
-        verifyPropertiesChangedSignal(dbusSpy, QStringLiteral("Blocked"), value);
+        Autotests::verifyPropertiesChangedSignal(dbusSpy, QStringLiteral("Blocked"), value);
 
         QCOMPARE(unit.device->isBlocked(), value);
         QCOMPARE(unit.dbusDevice->blocked(), value);
