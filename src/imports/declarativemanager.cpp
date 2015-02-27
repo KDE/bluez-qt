@@ -143,11 +143,11 @@ BluezQt::Device *DeclarativeManager::deviceForUbi(const QString &ubi) const
 void DeclarativeManager::initJobResult(BluezQt::InitManagerJob *job)
 {
     if (job->error()) {
-        Q_EMIT initializeError(job->errorText());
+        Q_EMIT initError(job->errorText());
         return;
     }
 
-    Q_EMIT initialized();
+    Q_EMIT initFinished();
 }
 
 void DeclarativeManager::slotAdapterAdded(BluezQt::AdapterPtr adapter)

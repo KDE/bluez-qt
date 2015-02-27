@@ -56,8 +56,8 @@ public Q_SLOTS:
     BluezQt::Device *deviceForUbi(const QString &ubi) const;
 
 Q_SIGNALS:
-    void initialized();
-    void initializeError(const QString &errorText);
+    void initFinished();
+    void initError(const QString &errorText);
     void adapterAdded(DeclarativeAdapter *adapter);
     void adapterRemoved(DeclarativeAdapter *adapter);
     void adapterChanged(DeclarativeAdapter *adapter);
