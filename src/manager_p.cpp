@@ -177,7 +177,6 @@ void ManagerPrivate::clear()
         AdapterPtr adapter = m_adapters.begin().value();
         m_adapters.remove(m_adapters.begin().key());
         Q_EMIT adapter->adapterRemoved(adapter);
-        Q_EMIT q->adapterRemoved(adapter);
 
         if (m_adapters.isEmpty()) {
             Q_EMIT q->allAdaptersRemoved();
@@ -289,7 +288,6 @@ void ManagerPrivate::addAdapter(const QString &adapterPath, const QVariantMap &p
     AdapterPtr adapter = AdapterPtr(new Adapter(adapterPath, properties));
     adapter->d->q = adapter.toWeakRef();
     m_adapters.insert(adapterPath, adapter);
-    connect(adapter.data(), &Adapter::poweredChanged, this, &ManagerPrivate::adapterPoweredChanged);
 
     Q_EMIT q->adapterAdded(adapter);
 
@@ -297,6 +295,11 @@ void ManagerPrivate::addAdapter(const QString &adapterPath, const QVariantMap &p
     if (!m_usableAdapter && adapter->isPowered()) {
         setUsableAdapter(adapter);
     }
+
+    connect(adapter.data(), &Adapter::deviceAdded, q, &Manager::deviceAdded);
+    connect(adapter.data(), &Adapter::adapterRemoved, q, &Manager::adapterRemoved);
+    connect(adapter.data(), &Adapter::adapterChanged, q, &Manager::adapterChanged);
+    connect(adapter.data(), &Adapter::poweredChanged, this, &ManagerPrivate::adapterPoweredChanged);
 }
 
 void ManagerPrivate::addDevice(const QString &devicePath, const QVariantMap &properties)
@@ -304,9 +307,12 @@ void ManagerPrivate::addDevice(const QString &devicePath, const QVariantMap &pro
     AdapterPtr adapter = m_adapters.value(properties.value(QStringLiteral("Adapter")).value<QDBusObjectPath>().path());
     Q_ASSERT(adapter);
     DevicePtr device = DevicePtr(new Device(devicePath, properties, adapter));
+    m_devices.insert(devicePath, device);
     device->d->q = device.toWeakRef();
     adapter->d->addDevice(device);
-    m_devices.insert(devicePath, device);
+
+    connect(device.data(), &Device::deviceRemoved, q, &Manager::deviceRemoved);
+    connect(device.data(), &Device::deviceChanged, q, &Manager::deviceChanged);
 }
 
 void ManagerPrivate::removeAdapter(const QString &adapterPath)
@@ -317,7 +323,6 @@ void ManagerPrivate::removeAdapter(const QString &adapterPath)
     }
 
     Q_EMIT adapter->adapterRemoved(adapter);
-    Q_EMIT q->adapterRemoved(adapter);
 
     if (m_adapters.isEmpty()) {
         Q_EMIT q->allAdaptersRemoved();

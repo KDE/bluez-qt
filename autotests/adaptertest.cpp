@@ -365,14 +365,17 @@ void AdapterTest::removeDeviceTest()
 
     Q_FOREACH (const AdapterUnit &unit, m_units) {
         Q_FOREACH (const DevicePtr &device, unit.adapter->devices()) {
+            QSignalSpy managerSpy(m_manager, SIGNAL(deviceRemoved(BluezQt::DevicePtr)));
             QSignalSpy adapterSpy(unit.adapter.data(), SIGNAL(deviceRemoved(BluezQt::DevicePtr)));
             QSignalSpy deviceSpy(device.data(), SIGNAL(deviceRemoved(BluezQt::DevicePtr)));
 
             unit.adapter->removeDevice(device);
 
+            QTRY_COMPARE(managerSpy.count(), 1);
             QTRY_COMPARE(adapterSpy.count(), 1);
             QTRY_COMPARE(deviceSpy.count(), 1);
 
+            QCOMPARE(managerSpy.at(0).at(0).value<DevicePtr>(), device);
             QCOMPARE(adapterSpy.at(0).at(0).value<DevicePtr>(), device);
             QCOMPARE(deviceSpy.at(0).at(0).value<DevicePtr>(), device);
         }

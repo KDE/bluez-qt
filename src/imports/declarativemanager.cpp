@@ -77,6 +77,22 @@ DeclarativeManager::DeclarativeManager(QObject *parent)
     connect(this, SIGNAL(adapterAdded(BluezQt::AdapterPtr)), this, SLOT(slotAdapterAdded(BluezQt::AdapterPtr)));
     connect(this, SIGNAL(adapterRemoved(BluezQt::AdapterPtr)), this, SLOT(slotAdapterRemoved(BluezQt::AdapterPtr)));
     connect(this, SIGNAL(usableAdapterChanged(BluezQt::AdapterPtr)), this, SLOT(slotUsableAdapterChanged(BluezQt::AdapterPtr)));
+
+    connect(this, &BluezQt::Manager::adapterChanged, [ this ](BluezQt::AdapterPtr adapter) {
+        Q_EMIT adapterChanged(declarativeAdapterFromPtr(adapter));
+    });
+
+    connect(this, &BluezQt::Manager::deviceAdded, [ this ](BluezQt::DevicePtr device) {
+        Q_EMIT deviceAdded(device.data());
+    });
+
+    connect(this, &BluezQt::Manager::deviceRemoved, [ this ](BluezQt::DevicePtr device) {
+        Q_EMIT deviceRemoved(device.data());
+    });
+
+    connect(this, &BluezQt::Manager::deviceChanged, [ this ](BluezQt::DevicePtr device) {
+        Q_EMIT deviceChanged(device.data());
+    });
 }
 
 DeclarativeAdapter *DeclarativeManager::usableAdapter() const

@@ -135,7 +135,6 @@ void DevicePrivate::propertiesChanged(const QString &interface, const QVariantMa
     }
 
     Q_EMIT q.data()->deviceChanged(q.toStrongRef());
-    Q_EMIT m_adapter->deviceChanged(q.toStrongRef());
 }
 
 void DevicePrivate::namePropertyChanged(const QString &value)

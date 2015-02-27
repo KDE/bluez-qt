@@ -60,6 +60,10 @@ Q_SIGNALS:
     void initializeError(const QString &errorText);
     void adapterAdded(DeclarativeAdapter *adapter);
     void adapterRemoved(DeclarativeAdapter *adapter);
+    void adapterChanged(DeclarativeAdapter *adapter);
+    void deviceAdded(BluezQt::Device *device);
+    void deviceRemoved(BluezQt::Device *device);
+    void deviceChanged(BluezQt::Device *device);
     void usableAdapterChanged(DeclarativeAdapter *adapter);
 
     void adaptersChanged(QQmlListProperty<DeclarativeAdapter> adapters);

@@ -75,6 +75,8 @@ void AdapterPrivate::addDevice(DevicePtr device)
 {
     m_devices.append(device);
     Q_EMIT q.data()->deviceAdded(device);
+
+    connect(device.data(), &Device::deviceChanged, q.data(), &Adapter::deviceChanged);
 }
 
 void AdapterPrivate::removeDevice(DevicePtr device)

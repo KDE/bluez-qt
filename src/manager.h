@@ -293,6 +293,26 @@ Q_SIGNALS:
     void adapterRemoved(BluezQt::AdapterPtr adapter);
 
     /**
+     * Indicates that at least one of the adapter's properties have changed.
+     */
+    void adapterChanged(BluezQt::AdapterPtr adapter);
+
+    /**
+     * Indicates that a new device was added (eg. found by discovery).
+     */
+    void deviceAdded(BluezQt::DevicePtr device);
+
+    /**
+     * Indicates that a device was removed.
+     */
+    void deviceRemoved(BluezQt::DevicePtr device);
+
+    /**
+     * Indicates that at least one of the device's properties have changed.
+     */
+    void deviceChanged(BluezQt::DevicePtr device);
+
+    /**
      * Indicates that usable adapter have changed.
      */
     void usableAdapterChanged(BluezQt::AdapterPtr adapter);
