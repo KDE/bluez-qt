@@ -55,25 +55,25 @@ DeclarativeAdapter::DeclarativeAdapter(BluezQt::AdapterPtr adapter, QObject *par
     connect(m_adapter.data(), &BluezQt::Adapter::uuidsChanged, this, &DeclarativeAdapter::uuidsChanged);
     connect(m_adapter.data(), &BluezQt::Adapter::modaliasChanged, this, &DeclarativeAdapter::modaliasChanged);
 
-    connect(m_adapter.data(), &BluezQt::Adapter::adapterRemoved, [ this ]() {
+    connect(m_adapter.data(), &BluezQt::Adapter::adapterRemoved, this, [ this ]() {
         Q_EMIT adapterRemoved(this);
     });
 
-    connect(m_adapter.data(), &BluezQt::Adapter::adapterChanged, [ this ]() {
+    connect(m_adapter.data(), &BluezQt::Adapter::adapterChanged, this, [ this ]() {
         Q_EMIT adapterChanged(this);
     });
 
-    connect(m_adapter.data(), &BluezQt::Adapter::deviceAdded, [ this ](BluezQt::DevicePtr device) {
+    connect(m_adapter.data(), &BluezQt::Adapter::deviceAdded, this, [ this ](BluezQt::DevicePtr device) {
         Q_EMIT deviceFound(device.data());
         Q_EMIT devicesChanged(devices());
     });
 
-    connect(m_adapter.data(), &BluezQt::Adapter::deviceRemoved, [ this ](BluezQt::DevicePtr device) {
+    connect(m_adapter.data(), &BluezQt::Adapter::deviceRemoved, this, [ this ](BluezQt::DevicePtr device) {
         Q_EMIT deviceRemoved(device.data());
         Q_EMIT devicesChanged(devices());
     });
 
-    connect(m_adapter.data(), &BluezQt::Adapter::deviceChanged, [ this ](BluezQt::DevicePtr device) {
+    connect(m_adapter.data(), &BluezQt::Adapter::deviceChanged, this, [ this ](BluezQt::DevicePtr device) {
         Q_EMIT deviceChanged(device.data());
     });
 }
