@@ -21,6 +21,7 @@ void ManagerTest::initTestCase()
 {
     bluezqt_initFakeBluezTestRun();
     QLoggingCategory::setFilterRules(QStringLiteral("BluezQt=false"));
+    Autotests::registerMetatypes();
 }
 
 void ManagerTest::cleanupTestCase()
@@ -93,7 +94,7 @@ void ManagerTest::bluezNoAdaptersTest()
     QVERIFY(!manager->isBluetoothOperational());
 }
 
-void ManagerTest::bluezRestartTest()
+void ManagerTest::bluezShutdownTest()
 {
     // tests whether the adapter/device removed signals work correctly
 
@@ -173,6 +174,69 @@ void ManagerTest::bluezRestartTest()
 
     QCOMPARE(btOperationalChangedSpy.count(), 1);
     QCOMPARE(btOperationalChangedSpy.first().first().toBool(), false);
+}
+
+void ManagerTest::usableAdapterTest()
+{
+    FakeBluez::start();
+    FakeBluez::runTest(QStringLiteral("bluez-standard"));
+
+    // Create adapters
+    QDBusObjectPath adapter1path = QDBusObjectPath(QStringLiteral("/org/bluez/hci0"));
+    QVariantMap adapterProps;
+    adapterProps[QStringLiteral("Path")] = QVariant::fromValue(adapter1path);
+    adapterProps[QStringLiteral("Address")] = QStringLiteral("1C:E5:C3:BC:94:7E");
+    adapterProps[QStringLiteral("Name")] = QStringLiteral("TestAdapter");
+    adapterProps[QStringLiteral("Powered")] = false;
+    FakeBluez::runAction(QStringLiteral("devicemanager"), QStringLiteral("create-adapter"), adapterProps);
+
+    QDBusObjectPath adapter2path = QDBusObjectPath(QStringLiteral("/org/bluez/hci1"));
+    adapterProps[QStringLiteral("Path")] = QVariant::fromValue(adapter2path);
+    adapterProps[QStringLiteral("Address")] = QStringLiteral("2E:3A:C3:BC:85:7C");
+    adapterProps[QStringLiteral("Name")] = QStringLiteral("TestAdapter2");
+    adapterProps[QStringLiteral("Powered")] = false;
+    FakeBluez::runAction(QStringLiteral("devicemanager"), QStringLiteral("create-adapter"), adapterProps);
+
+    Manager *manager = new Manager;
+
+    QSignalSpy usableAdapterChangedSpy(manager, SIGNAL(usableAdapterChanged(BluezQt::AdapterPtr)));
+
+    InitManagerJob *job = manager->init();
+    job->exec();
+
+    QVERIFY(!job->error());
+    QVERIFY(manager->isInitialized());
+    QVERIFY(manager->isOperational());
+    QVERIFY(!manager->isBluetoothOperational());
+    QCOMPARE(usableAdapterChangedSpy.count(), 0);
+    QCOMPARE(manager->adapters().count(), 2);
+    QCOMPARE(manager->devices().count(), 0);
+
+    QVariantMap properties;
+    properties[QStringLiteral("Path")] = QVariant::fromValue(adapter1path);
+    properties[QStringLiteral("Name")] = QStringLiteral("Powered");
+    properties[QStringLiteral("Value")] = true;
+    FakeBluez::runAction(QStringLiteral("devicemanager"), QStringLiteral("change-adapter-property"), properties);
+
+    QTRY_COMPARE(usableAdapterChangedSpy.count(), 1);
+    QCOMPARE(manager->usableAdapter()->ubi(), adapter1path.path());
+
+    usableAdapterChangedSpy.clear();
+
+    properties[QStringLiteral("Value")] = false;
+    FakeBluez::runAction(QStringLiteral("devicemanager"), QStringLiteral("change-adapter-property"), properties);
+
+    QTRY_COMPARE(usableAdapterChangedSpy.count(), 1);
+    QVERIFY(manager->usableAdapter().isNull());
+
+    usableAdapterChangedSpy.clear();
+
+    properties[QStringLiteral("Path")] = QVariant::fromValue(adapter2path);
+    properties[QStringLiteral("Value")] = true;
+    FakeBluez::runAction(QStringLiteral("devicemanager"), QStringLiteral("change-adapter-property"), properties);
+
+    QTRY_COMPARE(usableAdapterChangedSpy.count(), 1);
+    QCOMPARE(manager->usableAdapter()->ubi(), adapter2path.path());
 }
 
 QTEST_MAIN(ManagerTest)
