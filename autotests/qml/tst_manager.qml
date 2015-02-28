@@ -1,19 +1,21 @@
 import QtTest 1.0
 import org.kde.bluezqt.fakebluez 1.0
-import org.kde.bluezqt.testcontroller 1.0
-import "utils.js" as Utils
 
 TestCase {
     name: "Manager"
 
+    TestUtils {
+        id: utils
+    }
+
     function initTestCase()
     {
-        TestController.disableDebugOutput();
+        utils.disableDebugOutput();
     }
 
     function cleanupTestCase()
     {
-        TestController.enableDebugOutput();
+        utils.enableDebugOutput();
     }
 
     function cleanup()
@@ -21,25 +23,15 @@ TestCase {
         FakeBluez.stop();
     }
 
-    SignalSpy {
-        id: initSpy
-        signalName: "initFinished"
-    }
-
-    SignalSpy {
-        id: initErrorSpy
-        signalName: "initError"
-    }
-
     function test_bluezNotRunning()
     {
-        var manager = Utils.createManager(this);
-        initSpy.target = manager;
+        var manager = utils.createManager(this);
+        var initResult = utils.initManager(manager);
 
-        tryCompare(initSpy, "count", 1);
-        verify(manager.initialized);
-        verify(!manager.operational);
-        verify(!manager.bluetoothOperational);
+        compare(initResult, "initFinished", "cmp1");
+        verify(manager.initialized, "vrf2");
+        verify(!manager.operational, "vrf3");
+        verify(!manager.bluetoothOperational, "vrf4");
 
         manager.destroy();
     }
@@ -49,13 +41,13 @@ TestCase {
         FakeBluez.start();
         FakeBluez.runTest("bluez-not-exporting-interfaces");
 
-        var manager = Utils.createManager(this);
-        initErrorSpy.target = manager;
+        var manager = utils.createManager(this);
+        var initResult = utils.initManager(manager);
 
-        tryCompare(initErrorSpy, "count", 1);
-        verify(!manager.initialized);
-        verify(!manager.operational);
-        verify(!manager.bluetoothOperational);
+        compare(initResult, "initError", "cmp1");
+        verify(!manager.initialized, "vrf2");
+        verify(!manager.operational, "vrf3");
+        verify(!manager.bluetoothOperational, "vrf4");
 
         manager.destroy();
     }
