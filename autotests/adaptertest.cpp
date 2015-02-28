@@ -365,7 +365,9 @@ void AdapterTest::removeDeviceTest()
     }
 
     Q_FOREACH (const AdapterUnit &unit, m_units) {
-        Q_FOREACH (const DevicePtr &device, unit.adapter->devices()) {
+        while (!unit.adapter->devices().isEmpty()) {
+            DevicePtr device = unit.adapter->devices().first();
+
             QSignalSpy managerSpy(m_manager, SIGNAL(deviceRemoved(BluezQt::DevicePtr)));
             QSignalSpy adapterSpy(unit.adapter.data(), SIGNAL(deviceRemoved(BluezQt::DevicePtr)));
             QSignalSpy deviceSpy(device.data(), SIGNAL(deviceRemoved(BluezQt::DevicePtr)));
