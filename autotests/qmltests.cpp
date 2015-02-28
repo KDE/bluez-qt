@@ -3,6 +3,7 @@
 #include <QDir>
 #include <QtQml>
 #include <QtQuickTest>
+#include <QDBusObjectPath>
 
 class FakeBluezObject : public QObject
 {
@@ -29,11 +30,17 @@ public Q_SLOTS:
         FakeBluez::runTest(testName);
     }
 
-    void runAction(const QString &object, const QString &actionName, const QVariantMap &properties = QVariantMap())
+    void runAction(const QString &object, const QString &actionName, QVariantMap properties = QVariantMap())
     {
+        const QStringList &toDBusObjectPath = properties.value(QStringLiteral("_toDBusObjectPath")).toStringList();
+        Q_FOREACH (const QString &name, toDBusObjectPath) {
+            const QString &val = properties.value(name).toString();
+            properties[name] = QVariant::fromValue(QDBusObjectPath(val));
+        }
+        properties.remove(QStringLiteral("_toDBusObjectPath"));
+
         FakeBluez::runAction(object, actionName, properties);
     }
-
 };
 
 class TestController : public QObject
