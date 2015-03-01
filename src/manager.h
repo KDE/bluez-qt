@@ -56,9 +56,9 @@ class InitManagerJob;
  * connect(job, &BluezQt::InitManagerJob::result, ...);
  * @endcode
  *
- * In QML, manager is automatically starting initialization after instantiated.
+ * In QML, manager is automatically starting initialization when instantiated.
  *
- * There are 2 new signals: initialized() and initializeError(string errorText).
+ * There are 2 new signals: initFinished() and initError(string errorText).
 
  * Example use in QML code:
  * @code
@@ -67,17 +67,15 @@ class InitManagerJob;
  * BluezQt.Manager {
  *     id: manager;
  *
- *     onInitialized: {
+ *     onInitFinished: {
  *         console.log("Initialized");
  *     }
  *
- *     onInitializeError: {
+ *     onInitError: {
  *         console.log("Error: ", errorText);
  *     }
  * }
  * @endcode
- *
- * @note All adapters and devices are owned by manager. You should NOT delete them!
  *
  * @note All communication with Bluez daemon happens asynchronously. Almost all methods
  *       returns PendingCall to help track the call progress and to check for any errors.
