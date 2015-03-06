@@ -96,11 +96,10 @@ install(TARGETS KF5BluezQt
         ${INSTALL_TARGETS_DEFAULT_ARGS})
 
 install(FILES
-            ${CMAKE_CURRENT_BINARY_DIR}/bluezqt_export.h
-            ${CMAKE_CURRENT_BINARY_DIR}/bluezqt_version.h
-            ${BluezQt_HEADERS}
-        DESTINATION ${INCLUDE_INSTALL_DIR}/BluezQt
-        COMPONENT Devel)
+    ${CMAKE_CURRENT_BINARY_DIR}/bluezqt_export.h
+    ${BluezQt_HEADERS}
+    DESTINATION ${INCLUDE_INSTALL_DIR}/BluezQt
+    COMPONENT Devel)
 
 include(ECMGeneratePriFile)
 

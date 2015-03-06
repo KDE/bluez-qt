@@ -19,7 +19,7 @@ set(KF5_VERSION "5.1.0") # handled by release scripts
 
 ecm_setup_version(${KF5_VERSION}
     VARIABLE_PREFIX BLUEZQT
-    VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/src/bluezqt_version.h"
+    VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/bluezqt_version.h"
     PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5BluezQtConfigVersion.cmake"
 )
 
@@ -59,14 +59,19 @@ ecm_configure_package_config_file(
 )
 
 install(FILES
-            "${CMAKE_CURRENT_BINARY_DIR}/KF5BluezQtConfig.cmake"
-            "${CMAKE_CURRENT_BINARY_DIR}/KF5BluezQtConfigVersion.cmake"
-        DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
-        COMPONENT Devel)
+    "${CMAKE_CURRENT_BINARY_DIR}/KF5BluezQtConfig.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/KF5BluezQtConfigVersion.cmake"
+    DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
+    COMPONENT Devel)
 
 install(EXPORT KF5BluezQtTargets
-        DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
-        FILE KF5BluezQtTargets.cmake
-        NAMESPACE KF5::)
+    DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
+    FILE KF5BluezQtTargets.cmake
+    NAMESPACE KF5::)
+
+install(FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/bluezqt_version.h
+    DESTINATION ${INCLUDE_INSTALL_DIR}
+    COMPONENT Devel)
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
