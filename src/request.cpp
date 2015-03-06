@@ -25,66 +25,215 @@
 #include "utils_p.h"
 
 #include <QStringBuilder>
+#include <QDBusMessage>
 #include <QDBusConnection>
 
 namespace BluezQt
 {
 
-static bool sendMessage(AgentType type, const QDBusMessage &msg)
+class RequestPrivate
 {
-    if (type == OrgBluezAgent || type == OrgBluezProfile) {
+public:
+    RequestOriginatingType m_type;
+    QDBusMessage m_message;
+
+    bool sendMessage(const QDBusMessage &msg);
+    QString interfaceName();
+
+    void acceptRequest(const QVariant &val);
+    void rejectRequest();
+    void cancelRequest();
+};
+
+bool RequestPrivate::sendMessage(const QDBusMessage &msg)
+{
+    switch (m_type) {
+    case OrgBluezAgent:
+    case OrgBluezProfile:
         return DBusConnection::orgBluez().send(msg);
-    }
-    if (type == OrgBluezObexAgent) {
+    case OrgBluezObexAgent:
         return DBusConnection::orgBluezObex().send(msg);
+
+    default:
+        return false;
     }
-    return false;
 }
 
-static QString interfaceName(AgentType type)
+QString RequestPrivate::interfaceName()
 {
-    if (type == OrgBluezAgent) {
+    switch (m_type) {
+    case OrgBluezAgent:
         return QStringLiteral("org.bluez.Agent1");
-    }
-    if (type == OrgBluezProfile) {
+    case OrgBluezProfile:
         return QStringLiteral("org.bluez.Profile1");
-    }
-    if (type == OrgBluezObexAgent) {
+    case OrgBluezObexAgent:
         return QStringLiteral("org.bluez.obex.Agent1");
+    default:
+        return QString();
     }
-    return QString();
 }
 
-void bluezqt_acceptRequest(AgentType type, const QVariant &val, const QDBusMessage &req)
+void RequestPrivate::acceptRequest(const QVariant &val)
 {
     QDBusMessage reply;
     if (val.isValid()) {
-        reply = req.createReply(val);
+        reply = m_message.createReply(val);
     } else {
-        reply = req.createReply();
+        reply = m_message.createReply();
     }
 
-    if (!sendMessage(type, reply)) {
+    if (!sendMessage(reply)) {
         qCWarning(BLUEZQT) << "Request: Failed to put reply on DBus queue";
     }
 }
 
-void bluezqt_rejectRequest(AgentType type, const QDBusMessage &req)
+void RequestPrivate::rejectRequest()
 {
-    const QDBusMessage &reply = req.createErrorReply(interfaceName(type) % QStringLiteral(".Rejected"),
+    const QDBusMessage &reply = m_message.createErrorReply(interfaceName() % QStringLiteral(".Rejected"),
                                 QStringLiteral("Rejected"));
-    if (!sendMessage(type, reply)) {
+    if (!sendMessage(reply)) {
         qCWarning(BLUEZQT) << "Request: Failed to put reply on DBus queue";
     }
 }
 
-void bluezqt_cancelRequest(AgentType type, const QDBusMessage &req)
+void RequestPrivate::cancelRequest()
 {
-    const QDBusMessage &reply = req.createErrorReply(interfaceName(type) % QStringLiteral(".Canceled"),
+    const QDBusMessage &reply = m_message.createErrorReply(interfaceName() % QStringLiteral(".Canceled"),
                                 QStringLiteral("Canceled"));
-    if (!sendMessage(type, reply)) {
+    if (!sendMessage(reply)) {
         qCWarning(BLUEZQT) << "Request: Failed to put reply on DBus queue";
     }
 }
+
+// T
+template<typename T>
+Request<T>::Request()
+    : d(new RequestPrivate)
+{
+}
+
+template<typename T>
+Request<T>::Request(RequestOriginatingType type, const QDBusMessage &message)
+    : d(new RequestPrivate)
+{
+    d->m_type = type;
+    d->m_message = message;
+}
+
+template<typename T>
+Request<T>::~Request()
+{
+    delete d;
+}
+
+template<typename T>
+Request<T>::Request(const Request &other)
+    : d(new RequestPrivate)
+{
+    *d = *other.d;
+}
+
+template<typename T>
+Request<T>::Request(Request &&other)
+    : d(std::move(other.d))
+{
+}
+
+template<typename T>
+Request<T> &Request<T>::operator=(const Request<T> &other)
+{
+    if (d != other.d) {
+        *this = Request<T>(other);
+    }
+    return *this;
+}
+
+template<typename T>
+Request<T> &Request<T>::operator=(Request<T> &&other)
+{
+    std::swap(d, other.d);
+    return *this;
+}
+
+template<typename T>
+void Request<T>::accept(T returnValue) const
+{
+    d->acceptRequest(returnValue);
+}
+
+template<typename T>
+void Request<T>::reject() const
+{
+    d->rejectRequest();
+}
+
+template<typename T>
+void Request<T>::cancel() const
+{
+    d->cancelRequest();
+}
+
+// void
+Request<void>::Request()
+    : d(new RequestPrivate)
+{
+}
+
+Request<void>::Request(RequestOriginatingType type, const QDBusMessage &message)
+    : d(new RequestPrivate)
+{
+    d->m_type = type;
+    d->m_message = message;
+}
+
+Request<void>::~Request()
+{
+    delete d;
+}
+
+Request<void>::Request(const Request &other)
+    : d(new RequestPrivate)
+{
+    *d = *other.d;
+}
+
+Request<void>::Request(Request &&other)
+    : d(std::move(other.d))
+{
+}
+
+Request<void> &Request<void>::operator=(const Request<void> &other)
+{
+    if (d != other.d) {
+        *this = Request<void>(other);
+    }
+    return *this;
+}
+
+Request<void> &Request<void>::operator=(Request<void> &&other)
+{
+    std::swap(d, other.d);
+    return *this;
+}
+
+void Request<void>::accept() const
+{
+    d->acceptRequest(QVariant());
+}
+
+void Request<void>::reject() const
+{
+    d->rejectRequest();
+}
+
+void Request<void>::cancel() const
+{
+    d->cancelRequest();
+}
+
+// Generate classes
+template class Request<void>;
+template class Request<unsigned>;
+template class Request<QString>;
 
 } // namespace BluezQt

@@ -27,6 +27,7 @@
 #include "device.h"
 #include "request.h"
 
+#include <QDBusMessage>
 #include <QDBusObjectPath>
 
 namespace BluezQt

@@ -28,6 +28,7 @@
 #include "debug_p.h"
 
 #include <QTimer>
+#include <QDBusPendingReply>
 #include <QDBusPendingCallWatcher>
 
 namespace BluezQt

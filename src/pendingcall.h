@@ -24,9 +24,10 @@
 #define BLUEZQT_PENDINGCALL_H
 
 #include <QObject>
-#include <QDBusPendingReply>
 
 #include <bluezqt_export.h>
+
+class QDBusPendingCall;
 
 namespace BluezQt
 {

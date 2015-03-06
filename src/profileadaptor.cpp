@@ -25,6 +25,7 @@
 #include "manager.h"
 #include "device.h"
 
+#include <QDBusMessage>
 #include <QDBusObjectPath>
 #include <QDBusUnixFileDescriptor>
 

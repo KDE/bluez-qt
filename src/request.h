@@ -23,51 +23,68 @@
 #ifndef BLUEZQT_REQUEST_H
 #define BLUEZQT_REQUEST_H
 
-#include <QDBusMessage>
-
 #include <bluezqt_export.h>
+
+class QDBusMessage;
 
 namespace BluezQt
 {
 
-enum AgentType {
+enum RequestOriginatingType {
     OrgBluezAgent,
     OrgBluezProfile,
     OrgBluezObexAgent
 };
 
-BLUEZQT_EXPORT void bluezqt_acceptRequest(AgentType type, const QVariant &val, const QDBusMessage &req);
-BLUEZQT_EXPORT void bluezqt_rejectRequest(AgentType type, const QDBusMessage &req);
-BLUEZQT_EXPORT void bluezqt_cancelRequest(AgentType type, const QDBusMessage &req);
-
 /**
- * ObexAgent/Agent request.
+ * Request.
  *
- * This class represents a request from an agent. It is a convenient wrapper around
- * QDBusMessage and easily allows sending replies and handling errors.
+ * This class represents a request from a Bluetooth daemon. It is a convenient
+ * wrapper around QDBusMessage and easily allows sending replies and handling errors.
+ *
+ * @see Agent, ObexAgent, Profile
  */
 template<typename T = void>
-class Request
+class BLUEZQT_EXPORT Request
 {
 public:
     /**
      * Creates a new Request object.
      */
-    Request()
-    {
-    }
+    Request();
 
     /**
-     * Creates a new Request object.
-     *
-     * @param type type of agent
-     * @param message message used for reply
+     * Destroys a Request object.
      */
-    Request(AgentType type, const QDBusMessage &message)
-        : m_type(type)
-        , m_message(message)
-    {
-    }
+    virtual ~Request();
+
+    /**
+     * Copy constructor.
+     *
+     * @param other
+     */
+    Request(const Request &other);
+
+    /**
+     * Move constructor.
+     *
+     * @param other
+     */
+    Request(Request &&other);
+
+    /**
+     * Copy assignment operator.
+     *
+     * @param other
+     */
+    Request &operator=(const Request &other);
+
+    /**
+     * Move assignment operator.
+     *
+     * @param other
+     */
+    Request &operator=(Request &&other);
 
     /**
      * Accepts the request.
@@ -80,10 +97,7 @@ public:
      *
      * @param returnValue return value of request
      */
-    void accept(T returnValue) const
-    {
-        bluezqt_acceptRequest(m_type, returnValue, m_message);
-    }
+    void accept(T returnValue) const;
 
     /**
      * Rejects the request.
@@ -91,10 +105,7 @@ public:
      * This method should be called to send an error reply to
      * indicate the request was rejected.
      */
-    void reject() const
-    {
-        bluezqt_rejectRequest(m_type, m_message);
-    }
+    void reject() const;
 
     /**
      * Cancels the request.
@@ -102,49 +113,44 @@ public:
      * This method should be called to send an error reply to
      * indicate the request was canceled.
      */
-    void cancel() const
-    {
-        bluezqt_cancelRequest(m_type, m_message);
-    }
+    void cancel() const;
 
 private:
-    AgentType m_type;
-    QDBusMessage m_message;
+    explicit Request(RequestOriginatingType type, const QDBusMessage &message);
+
+    class RequestPrivate *d;
+
+    friend class AgentAdaptor;
+    friend class ObexAgentAdaptor;
+    friend class ProfileAdaptor;
 };
 
 // void
 template<>
-class Request<void>
+class BLUEZQT_EXPORT Request<void>
 {
 public:
-    Request()
-    {
-    }
+    Request();
+    virtual ~Request();
 
-    Request(AgentType type, const QDBusMessage &message)
-        : m_type(type)
-        , m_message(message)
-    {
-    }
+    Request(const Request &other);
+    Request(Request &&other);
 
-    void accept() const
-    {
-        bluezqt_acceptRequest(m_type, QVariant(), m_message);
-    }
+    Request &operator=(const Request &other);
+    Request &operator=(Request &&other);
 
-    void reject() const
-    {
-        bluezqt_rejectRequest(m_type, m_message);
-    }
-
-    void cancel() const
-    {
-        bluezqt_cancelRequest(m_type, m_message);
-    }
+    void accept() const;
+    void reject() const;
+    void cancel() const;
 
 private:
-    AgentType m_type;
-    QDBusMessage m_message;
+    explicit Request(RequestOriginatingType type, const QDBusMessage &message);
+
+    class RequestPrivate *d;
+
+    friend class AgentAdaptor;
+    friend class ObexAgentAdaptor;
+    friend class ProfileAdaptor;
 };
 
 } // namespace BluezQt
