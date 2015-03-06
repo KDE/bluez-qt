@@ -13,7 +13,7 @@ qt5_add_dbus_interface(bluezqt_autotests_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interf
 macro(bluezqt_tests)
     foreach(_testname ${ARGN})
         add_executable(${_testname} ${_testname}.cpp ${bluezqt_autotests_SRCS})
-        target_link_libraries(${_testname} Qt5::Test KF5BluezQt)
+        target_link_libraries(${_testname} Qt5::DBus Qt5::Test KF5BluezQt)
         add_test(bluezqt-${_testname} ${_testname})
         ecm_mark_as_test(${_testname})
     endforeach(_testname)
@@ -30,7 +30,7 @@ bluezqt_tests(
 
 if(Qt5Qml_FOUND AND Qt5QuickTest_FOUND)
     add_executable(qmltests qmltests.cpp ${bluezqt_autotests_SRCS})
-    target_link_libraries(qmltests Qt5::Test Qt5::Qml Qt5::QuickTest KF5BluezQt)
+    target_link_libraries(qmltests Qt5::DBus Qt5::Test Qt5::Qml Qt5::QuickTest KF5BluezQt)
     add_test(bluezqt-qmltests qmltests)
     ecm_mark_as_test(qmltests)
 endif()

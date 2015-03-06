@@ -55,6 +55,7 @@ target_include_directories(KF5BluezQt INTERFACE "$<INSTALL_INTERFACE:${INCLUDE_I
 target_link_libraries(KF5BluezQt
     PUBLIC
         Qt5::Core
+    PRIVATE
         Qt5::DBus
         Qt5::Network
 )
