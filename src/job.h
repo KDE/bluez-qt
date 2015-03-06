@@ -2,7 +2,7 @@
  * BluezQt - Asynchronous Bluez wrapper library
  *
  * Copyright (C) 2014 Alejandro Fiestas Olivares <afiestas@kde.org>
- *               2014 David Rosca <nowrep@gmail.com>
+ *               2014-2015 David Rosca <nowrep@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -26,7 +26,7 @@
 
 #include <QObject>
 
-#include "bluezqt_export.h"
+#include <bluezqt_export.h>
 
 namespace BluezQt
 {
