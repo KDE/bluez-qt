@@ -62,7 +62,7 @@ class InitManagerJob;
 
  * Example use in QML code:
  * @code
- * import org.bluezqt 1.0 as BluezQt
+ * import org.kde.bluezqt 1.0 as BluezQt
  *
  * BluezQt.Manager {
  *     id: manager;
@@ -254,7 +254,6 @@ public:
      * Possible errors: PendingCall::InvalidArguments, PendingCall::AlreadyExists
      *
      * @param profile profile to be registered
-     * @param options additional options
      * @return void pending call
      */
     PendingCall *registerProfile(Profile *profile);
