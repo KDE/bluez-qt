@@ -1,8 +1,13 @@
 maintainer: drosca
-description: Async Bluez 5 wrapper library
+description: Qt wrapper for Bluez 5 DBus API
 tier: 1
+type: integration
+portingAid: false
+deprecated: false
+release: false
 platforms:
     - name: Linux
+      note: Functional only with running Bluez 5
 libraries:
     - qmake: BluezQt
       cmake: KF5::BluezQt
