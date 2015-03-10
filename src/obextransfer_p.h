@@ -51,7 +51,7 @@ public:
     DBusProperties *m_dbusProperties;
 
     ObexTransfer::Status m_status;
-    ObexSession* m_session;
+    ObexSession *m_session;
     QString m_name;
     QString m_type;
     quint64 m_time;

@@ -8,7 +8,7 @@ class FakeBluez;
 class TestInterface : public QDBusAbstractAdaptor
 {
     Q_OBJECT
-    Q_CLASSINFO("D-Bus Interface", "org.bluezqt.fakebluez.Test")
+    Q_CLASSINFO("D-Bus Interface", "org.kde.bluezqt.fakebluez.Test")
 
 public:
     explicit TestInterface(FakeBluez *parent);

@@ -70,8 +70,8 @@ Q_GLOBAL_STATIC(GlobalData, globalData)
 BLUEZQT_EXPORT void bluezqt_initFakeBluezTestRun()
 {
     globalData->testRun = true;
-    globalData->orgBluez = QStringLiteral("org.bluezqt.fakebluez");
-    globalData->orgBluezObex = QStringLiteral("org.bluezqt.fakebluez");
+    globalData->orgBluez = QStringLiteral("org.kde.bluezqt.fakebluez");
+    globalData->orgBluezObex = QStringLiteral("org.kde.bluezqt.fakebluez");
 }
 
 QString Strings::orgFreedesktopDBus()

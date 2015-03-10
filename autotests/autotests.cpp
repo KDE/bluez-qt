@@ -44,7 +44,7 @@ StartJob::StartJob()
 
 void StartJob::exec()
 {
-    QDBusServiceWatcher watcher(QStringLiteral("org.bluezqt.fakebluez"),
+    QDBusServiceWatcher watcher(QStringLiteral("org.kde.bluezqt.fakebluez"),
                                 QDBusConnection::sessionBus(),
                                 QDBusServiceWatcher::WatchForRegistration);
 
@@ -124,9 +124,9 @@ void FakeBluez::runTest(const QString &testName)
         return;
     }
 
-    QDBusMessage call = QDBusMessage::createMethodCall(QStringLiteral("org.bluezqt.fakebluez"),
+    QDBusMessage call = QDBusMessage::createMethodCall(QStringLiteral("org.kde.bluezqt.fakebluez"),
                         QStringLiteral("/"),
-                        QStringLiteral("org.bluezqt.fakebluez.Test"),
+                        QStringLiteral("org.kde.bluezqt.fakebluez.Test"),
                         QStringLiteral("runTest"));
 
     call << testName;
@@ -139,9 +139,9 @@ void FakeBluez::runAction(const QString &object, const QString &actionName, cons
         return;
     }
 
-    QDBusMessage call = QDBusMessage::createMethodCall(QStringLiteral("org.bluezqt.fakebluez"),
+    QDBusMessage call = QDBusMessage::createMethodCall(QStringLiteral("org.kde.bluezqt.fakebluez"),
                         QStringLiteral("/"),
-                        QStringLiteral("org.bluezqt.fakebluez.Test"),
+                        QStringLiteral("org.kde.bluezqt.fakebluez.Test"),
                         QStringLiteral("runAction"));
 
     call << object;
@@ -149,9 +149,9 @@ void FakeBluez::runAction(const QString &object, const QString &actionName, cons
     call << properties;
 
     QEventLoop eventLoop;
-    QDBusConnection::sessionBus().connect(QStringLiteral("org.bluezqt.fakebluez"),
+    QDBusConnection::sessionBus().connect(QStringLiteral("org.kde.bluezqt.fakebluez"),
                                           QStringLiteral("/"),
-                                          QStringLiteral("org.bluezqt.fakebluez.Test"),
+                                          QStringLiteral("org.kde.bluezqt.fakebluez.Test"),
                                           QStringLiteral("actionFinished"),
                                           &eventLoop, SLOT(quit()));
 

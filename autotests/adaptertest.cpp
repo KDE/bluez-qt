@@ -32,7 +32,7 @@ void AdapterTest::initTestCase()
             QSKIP("This test can only run with functional Bluez 5 org.bluez service");
         }
     } else {
-        service = QStringLiteral("org.bluezqt.fakebluez");
+        service = QStringLiteral("org.kde.bluezqt.fakebluez");
         connection = QDBusConnection::sessionBus();
 
         bluezqt_initFakeBluezTestRun();
