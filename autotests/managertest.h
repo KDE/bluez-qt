@@ -18,6 +18,7 @@ private Q_SLOTS:
     void bluezShutdownTest();
 
     void usableAdapterTest();
+    void deviceForAddressTest();
 
 };
 

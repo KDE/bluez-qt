@@ -201,7 +201,7 @@ public:
      *
      * @note There may be more devices with the same address (same device
      *       in multiple adapters). In this case, the first found device will
-     *       be returned.
+     *       be returned while preferring powered adapters in search.
      */
     BluezQt::DevicePtr deviceForAddress(const QString &address) const;
 

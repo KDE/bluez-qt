@@ -111,13 +111,23 @@ AdapterPtr Manager::adapterForUbi(const QString &ubi) const
 
 DevicePtr Manager::deviceForAddress(const QString &address) const
 {
+    DevicePtr device;
+
     Q_FOREACH (AdapterPtr adapter, d->m_adapters) {
-        DevicePtr device = adapter->deviceForAddress(address);
-        if (device) {
-            return device;
+        DevicePtr d = adapter->deviceForAddress(address);
+        if (!d) {
+            continue;
+        }
+
+        // Prefer powered adapter
+        if (!device) {
+            device = d;
+        } else if (adapter->isPowered()) {
+            device = d;
         }
     }
-    return DevicePtr();
+
+    return device;
 }
 
 DevicePtr Manager::deviceForUbi(const QString &ubi) const
