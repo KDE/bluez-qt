@@ -99,7 +99,7 @@ install(TARGETS KF5BluezQt
 install(FILES
     ${CMAKE_CURRENT_BINARY_DIR}/bluezqt_export.h
     ${BluezQt_HEADERS}
-    DESTINATION ${INCLUDE_INSTALL_DIR}/BluezQt
+    DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}/BluezQt
     COMPONENT Devel)
 
 include(ECMGeneratePriFile)
