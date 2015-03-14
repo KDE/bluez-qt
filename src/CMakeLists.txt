@@ -50,7 +50,7 @@ add_library(KF5BluezQt ${bluezqt_SRCS})
 generate_export_header(KF5BluezQt BASE_NAME BluezQt)
 add_library(KF5::BluezQt ALIAS KF5BluezQt)
 
-target_include_directories(KF5BluezQt INTERFACE "$<INSTALL_INTERFACE:${INCLUDE_INSTALL_DIR}/BluezQt>")
+target_include_directories(KF5BluezQt INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF5}/BluezQt>")
 
 target_link_libraries(KF5BluezQt
     PUBLIC
@@ -94,7 +94,7 @@ ecm_generate_headers(BluezQt_HEADERS
 # Install files
 install(TARGETS KF5BluezQt
         EXPORT KF5BluezQtTargets
-        ${INSTALL_TARGETS_DEFAULT_ARGS})
+        ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
 
 install(FILES
     ${CMAKE_CURRENT_BINARY_DIR}/bluezqt_export.h
