@@ -131,6 +131,11 @@ ObexTransfer::~ObexTransfer()
     delete d;
 }
 
+ObexTransferPtr ObexTransfer::toSharedPtr() const
+{
+    return d->q.toStrongRef();
+}
+
 QDBusObjectPath ObexTransfer::objectPath() const
 {
     return QDBusObjectPath(d->m_bluezTransfer->path());

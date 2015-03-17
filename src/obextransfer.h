@@ -25,6 +25,7 @@
 
 #include <QObject>
 
+#include "types.h"
 #include <bluezqt_export.h>
 
 class QDBusObjectPath;
@@ -78,6 +79,13 @@ public:
      * Destroys an ObexTransfer object.
      */
     ~ObexTransfer();
+
+    /**
+     * Returns a shared pointer from this.
+     *
+     * @return ObexTransferPtr
+     */
+    BluezQt::ObexTransferPtr toSharedPtr() const;
 
     /**
      * D-Bus object path of the transfer.
