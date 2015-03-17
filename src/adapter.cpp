@@ -40,6 +40,11 @@ Adapter::~Adapter()
     delete d;
 }
 
+AdapterPtr Adapter::toSharedPtr() const
+{
+    return d->q.toStrongRef();
+}
+
 QString Adapter::ubi() const
 {
     return d->m_bluezAdapter->path();

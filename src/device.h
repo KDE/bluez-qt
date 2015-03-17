@@ -104,6 +104,13 @@ public:
     ~Device();
 
     /**
+     * Returns a shared pointer from this.
+     *
+     * @return DevicePtr
+     */
+    BluezQt::DevicePtr toSharedPtr() const;
+
+    /**
      * Returns an UBI of the device.
      *
      * Example UBI: "/org/bluez/hci0/dev_40_79_6A_0C_39_75"

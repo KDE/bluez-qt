@@ -67,6 +67,13 @@ public:
     ~Adapter();
 
     /**
+     * Returns a shared pointer from this.
+     *
+     * @return AdapterPtr
+     */
+    BluezQt::AdapterPtr toSharedPtr() const;
+
+    /**
      * Returns an UBI of the adapter.
      *
      * Example UBI: "/org/bluez/hci0"

@@ -270,7 +270,7 @@ void ManagerPrivate::adapterRemoved(AdapterPtr adapter)
 void ManagerPrivate::adapterPoweredChanged(bool powered)
 {
     Q_ASSERT(qobject_cast<Adapter*>(sender()));
-    AdapterPtr adapter = static_cast<Adapter*>(sender())->d->q.toStrongRef();
+    AdapterPtr adapter = static_cast<Adapter*>(sender())->toSharedPtr();
 
     // Current usable adapter was powered off
     if (m_usableAdapter == adapter && !powered) {

@@ -39,6 +39,11 @@ Device::~Device()
     delete d;
 }
 
+DevicePtr Device::toSharedPtr() const
+{
+    return d->q.toStrongRef();
+}
+
 QString Device::ubi() const
 {
     return d->m_bluezDevice->path();
