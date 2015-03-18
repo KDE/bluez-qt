@@ -134,7 +134,7 @@ public:
      *
      * @param targetFileName full local path where the file will be saved
      * @param sourceFileName file within the remote device
-     * @return ObexTransfer * pending call
+     * @return ObexTransferPtr pending call
      */
     PendingCall *getFile(const QString &targetFileName, const QString &sourceFileName);
 
@@ -148,7 +148,7 @@ public:
      *
      * @param sourceFileName full path of the local file
      * @param targetFileName file to be saved within the remote device
-     * @return ObexTransfer * pending call
+     * @return ObexTransferPtr pending call
      */
     PendingCall *putFile(const QString &sourceFileName, const QString &targetFileName);
 

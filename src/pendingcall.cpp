@@ -209,7 +209,7 @@ bool PendingCallPrivate::processTransferWithPropertiesReply(const QDBusPendingRe
     if (reply.isError()) {
         return true;
     }
-    ObexTransfer *transfer = new ObexTransfer(reply.argumentAt(0).value<QDBusObjectPath>().path(), 0);
+    ObexTransferPtr transfer = ObexTransferPtr(new ObexTransfer(reply.argumentAt(0).value<QDBusObjectPath>().path()));
     m_value.append(QVariant::fromValue(transfer));
 
     transfer->d->init();
