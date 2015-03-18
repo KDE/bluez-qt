@@ -134,8 +134,6 @@ QVariant DevicesModel::data(const QModelIndex &index, int role) const
     switch (role) {
     case Qt::DisplayRole:
         return dev->name();
-    case Qt::ToolTipRole:
-        return dev->friendlyName();
     case UbiRole:
         return dev->ubi();
     case AddressRole:
