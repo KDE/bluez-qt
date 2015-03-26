@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 2.8.12)
 
 project(BluezQt)
+set(PROJECT_VERSION "5.2.90")
 
 # ECM setup
 find_package(ECM 1.7.0 REQUIRED NO_MODULE)
@@ -15,12 +16,13 @@ include(KDEInstallDirs)
 include(KDEFrameworkCompilerSettings)
 include(KDECMakeSettings)
 
-set(KF5_VERSION "5.1.0") # handled by release scripts
+set(KF5_VERSION ${PROJECT_VERSION})
 
 ecm_setup_version(${KF5_VERSION}
     VARIABLE_PREFIX BLUEZQT
     VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/bluezqt_version.h"
     PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5BluezQtConfigVersion.cmake"
+    SOVERSION 5
 )
 
 # Dependencies
