@@ -145,7 +145,7 @@ void AgentAdaptor::Release()
 QString AgentAdaptor::passkeyToString(quint32 passkey) const
 {
     // Passkey will always be a 6-digit number, zero-pad it at the start
-    return QString(QStringLiteral("%1")).arg(passkey, 6, 10, QLatin1Char('0'));
+    return QStringLiteral("%1").arg(passkey, 6, 10, QLatin1Char('0'));
 }
 
 } // namespace BluezQt

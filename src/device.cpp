@@ -73,7 +73,7 @@ QString Device::friendlyName() const
     if (remoteName().isEmpty()) {
         return name();
     }
-    return QString(QStringLiteral("%1 (%2)")).arg(name(), remoteName());
+    return QStringLiteral("%1 (%2)").arg(name(), remoteName());
 }
 
 QString Device::remoteName() const
