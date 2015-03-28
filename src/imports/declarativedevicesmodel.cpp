@@ -26,13 +26,27 @@
 #include "device.h"
 
 DeclarativeDevicesModel::DeclarativeDevicesModel(QObject *parent)
-    : BluezQt::DevicesModel(DeclarativeManager::self(), parent)
+    : QSortFilterProxyModel(parent)
+    , m_manager(0)
+    , m_model(0)
 {
+}
+
+DeclarativeManager *DeclarativeDevicesModel::manager() const
+{
+    return m_manager;
+}
+
+void DeclarativeDevicesModel::setManager(DeclarativeManager *manager)
+{
+    m_manager = manager;
+    m_model = new BluezQt::DevicesModel(m_manager, this);
+    setSourceModel(m_model);
 }
 
 QHash<int, QByteArray> DeclarativeDevicesModel::roleNames() const
 {
-    QHash<int, QByteArray> roles = BluezQt::DevicesModel::roleNames();
+    QHash<int, QByteArray> roles = QSortFilterProxyModel::roleNames();
 
     roles[DeviceRole] = QByteArrayLiteral("Device");
     roles[AdapterRole] = QByteArrayLiteral("Adapter");
@@ -42,14 +56,18 @@ QHash<int, QByteArray> DeclarativeDevicesModel::roleNames() const
 
 QVariant DeclarativeDevicesModel::data(const QModelIndex &index, int role) const
 {
-    BluezQt::DevicePtr dev = device(index);
+    if (!m_model) {
+        return QSortFilterProxyModel::data(index, role);
+    }
+
+    BluezQt::DevicePtr dev = m_model->device(mapToSource(index));
 
     switch (role) {
     case DeviceRole:
         return QVariant::fromValue(dev.data());
     case AdapterRole:
-        return QVariant::fromValue(DeclarativeManager::self()->adapterForDevice(dev.data()));
+        return QVariant::fromValue(m_manager->adapterForDevice(dev.data()));
     default:
-        return BluezQt::DevicesModel::data(index, role);
+        return QSortFilterProxyModel::data(index, role);
     }
 }

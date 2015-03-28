@@ -25,9 +25,14 @@
 
 #include "devicesmodel.h"
 
-class DeclarativeDevicesModel : public BluezQt::DevicesModel
+#include <QSortFilterProxyModel>
+
+class DeclarativeManager;
+
+class DeclarativeDevicesModel : public QSortFilterProxyModel
 {
     Q_OBJECT
+    Q_PROPERTY(DeclarativeManager* manager READ manager WRITE setManager)
 
 public:
     enum DeclarativeDeviceRoles {
@@ -37,9 +42,15 @@ public:
 
     DeclarativeDevicesModel(QObject *parent = 0);
 
+    DeclarativeManager *manager() const;
+    void setManager(DeclarativeManager *manager);
+
     QHash<int, QByteArray> roleNames() const Q_DECL_OVERRIDE;
     QVariant data(const QModelIndex &index, int role) const Q_DECL_OVERRIDE;
 
+private:
+    DeclarativeManager *m_manager;
+    BluezQt::DevicesModel *m_model;
 };
 
 #endif // DECLARATIVEMANAGER_H

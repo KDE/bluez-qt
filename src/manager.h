@@ -65,7 +65,7 @@ class InitManagerJob;
  * import org.kde.bluezqt 1.0 as BluezQt
  *
  * BluezQt.Manager {
- *     id: manager;
+ *     id: btManager;
  *
  *     onInitFinished: {
  *         console.log("Initialized");

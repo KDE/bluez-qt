@@ -35,7 +35,7 @@ BluezQtExtensionPlugin::BluezQtExtensionPlugin(QObject *parent)
 {
 }
 
-static QJSValue services_singletontype_provider(QQmlEngine *engine, QJSEngine *scriptEngine)
+static QJSValue services_singleton(QQmlEngine *engine, QJSEngine *scriptEngine)
 {
     Q_UNUSED(engine)
 
@@ -69,5 +69,5 @@ void BluezQtExtensionPlugin::registerTypes(const char *uri)
     qmlRegisterUncreatableType<DeclarativeAdapter>(uri, 1, 0, "Adapter", QStringLiteral("Adapter cannot be created"));
     qmlRegisterUncreatableType<Device>(uri, 1, 0, "Device", QStringLiteral("Device cannot be created"));
     qmlRegisterUncreatableType<PendingCall>(uri, 1, 0, "PendingCall", QStringLiteral("PendingCall cannot be created"));
-    qmlRegisterSingletonType(uri, 1, 0, "Services", services_singletontype_provider);
+    qmlRegisterSingletonType(uri, 1, 0, "Services", services_singleton);
 }

@@ -28,8 +28,6 @@
 
 #include <QQmlEngine>
 
-DeclarativeManager *s_instance = 0;
-
 static int adaptersCountFunction(QQmlListProperty<DeclarativeAdapter> *property)
 {
     Q_ASSERT(qobject_cast<DeclarativeManager*>(property->object));
@@ -65,11 +63,6 @@ static BluezQt::Device *devicesAtFunction(QQmlListProperty<BluezQt::Device> *pro
 DeclarativeManager::DeclarativeManager(QObject *parent)
     : BluezQt::Manager(parent)
 {
-    if (s_instance) {
-        qWarning("DeclarativeManager: Only one instance is allowed!");
-    }
-    s_instance = this;
-
     BluezQt::InitManagerJob *job = init();
     job->start();
     connect(job, &BluezQt::InitManagerJob::result, this, &DeclarativeManager::initJobResult);
@@ -95,11 +88,6 @@ DeclarativeManager::DeclarativeManager(QObject *parent)
     });
 }
 
-DeclarativeManager::~DeclarativeManager()
-{
-    s_instance = 0;
-}
-
 DeclarativeAdapter *DeclarativeManager::usableAdapter() const
 {
     return declarativeAdapterFromPtr(BluezQt::Manager::usableAdapter());
@@ -113,11 +101,6 @@ QQmlListProperty<DeclarativeAdapter> DeclarativeManager::declarativeAdapters()
 QQmlListProperty<BluezQt::Device> DeclarativeManager::declarativeDevices()
 {
     return QQmlListProperty<BluezQt::Device>(this, 0, devicesCountFunction, devicesAtFunction);
-}
-
-DeclarativeManager *DeclarativeManager::self()
-{
-    return s_instance;
 }
 
 DeclarativeAdapter *DeclarativeManager::adapterForDevice(BluezQt::Device *device) const

@@ -39,7 +39,18 @@ class Device;
  *
  * This class represents a model of all devices.
  *
- * In QML code, this class can only be used after Manager is instantiated.
+ * Example use in QML code:
+ * @code
+ * import org.kde.bluezqt 1.0 as BluezQt
+ *
+ * BluezQt.Manager {
+ *     id: btManager;
+ * }
+ *
+ * BluezQt.DevicesModel {
+ *     manager: btManager
+ * }
+ * @endcode
  */
 class BLUEZQT_EXPORT DevicesModel : public QAbstractListModel
 {

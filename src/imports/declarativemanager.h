@@ -39,15 +39,12 @@ class DeclarativeManager : public BluezQt::Manager
 
 public:
     DeclarativeManager(QObject *parent = 0);
-    ~DeclarativeManager();
 
     DeclarativeAdapter *usableAdapter() const;
     QQmlListProperty<DeclarativeAdapter> declarativeAdapters();
     QQmlListProperty<BluezQt::Device> declarativeDevices();
 
     QHash<QString, DeclarativeAdapter*> m_adapters;
-
-    static DeclarativeManager *self();
 
 public Q_SLOTS:
     DeclarativeAdapter *adapterForDevice(BluezQt::Device *device) const;
