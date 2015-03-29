@@ -146,6 +146,9 @@ int DevicesModel::rowCount(const QModelIndex &parent) const
 QVariant DevicesModel::data(const QModelIndex &index, int role) const
 {
     DevicePtr dev = device(index);
+    if (!dev) {
+        return QVariant();
+    }
 
     switch (role) {
     case Qt::DisplayRole:
@@ -213,6 +216,9 @@ QModelIndex DevicesModel::index(int row, int column, const QModelIndex &parent) 
 
 DevicePtr DevicesModel::device(const QModelIndex &index) const
 {
+    if (!index.isValid()) {
+        return DevicePtr();
+    }
     return d->m_devices.at(index.row());
 }
 
