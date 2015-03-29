@@ -95,8 +95,22 @@ public:
         UuidsRole = Qt::UserRole + 115,
         /** Modalias of the device (QString) */
         ModaliasRole = Qt::UserRole + 116,
+        /** Name of the associated adapter (QString) */
+        AdapterNameRole = Qt::UserRole + 117,
+        /** Address of the associated adapter (QString) */
+        AdapterAddressRole = Qt::UserRole + 118,
+        /** Indicates whether the associated adapter is powered (bool) */
+        AdapterPoweredRole = Qt::UserRole + 119,
+        /** Indicates whether the associated adapter is discoverable (bool) */
+        AdapterDiscoverableRole = Qt::UserRole + 120,
+        /** Indicates whether the associated adapter is pairable (bool) */
+        AdapterPairableRole = Qt::UserRole + 121,
+        /** Indicates whether the associated adapter is discovering (bool) */
+        AdapterDiscoveringRole = Qt::UserRole + 122,
+        /** UUIDs of supported services by the associated adapter (QStringList) */
+        AdapterUuidsRole = Qt::UserRole + 123,
         /** Last role used by DevicesModel */
-        LastRole = Qt::UserRole + 117
+        LastRole = Qt::UserRole + 124
     };
 
     /**

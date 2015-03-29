@@ -38,6 +38,7 @@ public:
     void deviceAdded(DevicePtr device);
     void deviceRemoved(DevicePtr device);
     void deviceChanged(DevicePtr device);
+    void adapterChanged(AdapterPtr adapter);
 
     DevicesModel *q;
     Manager *m_manager;
@@ -58,6 +59,7 @@ void DevicesModelPrivate::init()
     connect(m_manager, &Manager::deviceAdded, this, &DevicesModelPrivate::deviceAdded);
     connect(m_manager, &Manager::deviceRemoved, this, &DevicesModelPrivate::deviceRemoved);
     connect(m_manager, &Manager::deviceChanged, this, &DevicesModelPrivate::deviceChanged);
+    connect(m_manager, &Manager::adapterChanged, this, &DevicesModelPrivate::adapterChanged);
 }
 
 void DevicesModelPrivate::deviceAdded(DevicePtr device)
@@ -84,6 +86,13 @@ void DevicesModelPrivate::deviceChanged(DevicePtr device)
 
     QModelIndex idx = q->createIndex(offset, 0);
     Q_EMIT q->dataChanged(idx, idx);
+}
+
+void DevicesModelPrivate::adapterChanged(AdapterPtr adapter)
+{
+    Q_FOREACH (DevicePtr device, adapter->devices()) {
+        deviceChanged(device);
+    }
 }
 
 DevicesModel::DevicesModel(Manager *manager, QObject *parent)
@@ -115,6 +124,13 @@ QHash<int, QByteArray> DevicesModel::roleNames() const
     roles[ConnectedRole] = QByteArrayLiteral("Connected");
     roles[UuidsRole] = QByteArrayLiteral("Uuids");
     roles[ModaliasRole] = QByteArrayLiteral("Modalias");
+    roles[AdapterNameRole] = QByteArrayLiteral("AdapterName");
+    roles[AdapterAddressRole] = QByteArrayLiteral("AdapterAddress");
+    roles[AdapterPoweredRole] = QByteArrayLiteral("AdapterPowered");
+    roles[AdapterDiscoverableRole] = QByteArrayLiteral("AdapterDiscoverable");
+    roles[AdapterPairableRole] = QByteArrayLiteral("AdapterPairable");
+    roles[AdapterDiscoveringRole] = QByteArrayLiteral("AdapterDiscovering");
+    roles[AdapterUuidsRole] = QByteArrayLiteral("AdapterUuids");
 
     return roles;
 }
@@ -168,6 +184,20 @@ QVariant DevicesModel::data(const QModelIndex &index, int role) const
         return dev->uuids();
     case ModaliasRole:
         return dev->modalias();
+    case AdapterNameRole:
+        return dev->adapter()->name();
+    case AdapterAddressRole:
+        return dev->adapter()->address();
+    case AdapterPoweredRole:
+        return dev->adapter()->isPowered();
+    case AdapterDiscoverableRole:
+        return dev->adapter()->isDiscoverable();
+    case AdapterPairableRole:
+        return dev->adapter()->isPairable();
+    case AdapterDiscoveringRole:
+        return dev->adapter()->isDiscovering();
+    case AdapterUuidsRole:
+        return dev->adapter()->uuids();
     default:
         return QVariant();
     }
