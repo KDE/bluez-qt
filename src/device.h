@@ -94,7 +94,7 @@ public:
         Printer,
         /** Indicates that the device is a joypad. */
         Joypad,
-        /** Indicates that the device is a tablet. */
+        /** Indicates that the device is a graphics tablet (input device). */
         Tablet
     };
 
