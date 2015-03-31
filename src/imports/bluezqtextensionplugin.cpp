@@ -46,11 +46,12 @@ static QJSValue services_singleton(QQmlEngine *engine, QJSEngine *scriptEngine)
     object.setProperty(QStringLiteral("ObexFileTransfer"), BluezQt::Services::ObexFileTransfer);
     object.setProperty(QStringLiteral("AudioSource"), BluezQt::Services::AudioSource);
     object.setProperty(QStringLiteral("AudioVideoRemoteControlTarget"), BluezQt::Services::AudioVideoRemoteControlTarget);
-    object.setProperty(QStringLiteral("AdvancedAudioDistributionProtocol"), BluezQt::Services::AdvancedAudioDistributionProtocol);
+    object.setProperty(QStringLiteral("AdvancedAudioDistribution"), BluezQt::Services::AdvancedAudioDistribution);
     object.setProperty(QStringLiteral("AudioVideoRemoteControl"), BluezQt::Services::AudioVideoRemoteControl);
     object.setProperty(QStringLiteral("HeadsetAudioGateway"), BluezQt::Services::HeadsetAudioGateway);
     object.setProperty(QStringLiteral("Nap"), BluezQt::Services::Nap);
     object.setProperty(QStringLiteral("HandsfreeAudioGateway"), BluezQt::Services::HandsfreeAudioGateway);
+    object.setProperty(QStringLiteral("HumanInterfaceDevice"), BluezQt::Services::HumanInterfaceDevice);
     object.setProperty(QStringLiteral("SimAccess"), BluezQt::Services::SimAccess);
     object.setProperty(QStringLiteral("PhonebookAccessPse"), BluezQt::Services::PhonebookAccessPse);
     object.setProperty(QStringLiteral("MessageAccessServer"), BluezQt::Services::MessageAccessServer);
