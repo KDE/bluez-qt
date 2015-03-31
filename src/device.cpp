@@ -98,7 +98,14 @@ quint16 Device::appearance() const
 
 QString Device::icon() const
 {
-    return d->m_icon.isEmpty() ? QStringLiteral("preferences-system-bluetooth") : d->m_icon;
+    switch (deviceType()) {
+    case Headset:
+        return QStringLiteral("audio-headset");
+    case Headphones:
+        return QStringLiteral("audio-headphones");
+    default:
+        return d->m_icon.isEmpty() ? QStringLiteral("preferences-system-bluetooth") : d->m_icon;
+    }
 }
 
 bool Device::isPaired() const
