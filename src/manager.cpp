@@ -30,8 +30,8 @@
 #include "profileadaptor.h"
 #include "pendingcall.h"
 #include "initmanagerjob.h"
-#include "utils_p.h"
-#include "debug_p.h"
+#include "utils.h"
+#include "debug.h"
 
 namespace BluezQt
 {

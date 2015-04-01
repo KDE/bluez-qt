@@ -23,7 +23,7 @@
 #include "initmanagerjob.h"
 #include "manager.h"
 #include "manager_p.h"
-#include "debug_p.h"
+#include "debug.h"
 
 namespace BluezQt
 {

@@ -23,11 +23,11 @@
 #include "obexmanager.h"
 #include "obexmanager_p.h"
 #include "initobexmanagerjob.h"
-#include "debug_p.h"
+#include "debug.h"
 #include "pendingcall.h"
 #include "obexagent.h"
 #include "obexagentadaptor.h"
-#include "utils_p.h"
+#include "utils.h"
 
 #include <QDBusServiceWatcher>
 

@@ -1,5 +1,5 @@
 set(bluezqt_SRCS
-    debug_p.cpp
+    debug.cpp
     manager.cpp
     manager_p.cpp
     adapter.cpp
@@ -10,7 +10,7 @@ set(bluezqt_SRCS
     job.cpp
     initmanagerjob.cpp
     initobexmanagerjob.cpp
-    utils_p.cpp
+    utils.cpp
     agent.cpp
     agentadaptor.cpp
     profile.cpp

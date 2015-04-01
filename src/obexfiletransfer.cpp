@@ -22,7 +22,7 @@
 
 #include "obexfiletransfer.h"
 #include "pendingcall.h"
-#include "utils_p.h"
+#include "utils.h"
 
 #include "obexfiletransfer1.h"
 

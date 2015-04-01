@@ -25,8 +25,8 @@
 #include "obexsession.h"
 #include "obexsession_p.h"
 #include "pendingcall.h"
-#include "utils_p.h"
-#include "macros_p.h"
+#include "utils.h"
+#include "macros.h"
 
 #include "obextransfer1.h"
 #include "dbusproperties.h"

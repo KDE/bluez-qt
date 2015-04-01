@@ -22,8 +22,8 @@
 
 #include "obexmanager_p.h"
 #include "obexmanager.h"
-#include "debug_p.h"
-#include "utils_p.h"
+#include "debug.h"
+#include "utils.h"
 
 #include "dbusobjectmanager.h"
 

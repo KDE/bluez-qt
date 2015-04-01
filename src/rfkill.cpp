@@ -21,7 +21,7 @@
  */
 
 #include "rfkill.h"
-#include "debug_p.h"
+#include "debug.h"
 
 #include <fcntl.h>
 #include <string.h>

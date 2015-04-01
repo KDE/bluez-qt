@@ -22,8 +22,8 @@
 
 #include "adapter_p.h"
 #include "adapter.h"
-#include "utils_p.h"
-#include "macros_p.h"
+#include "utils.h"
+#include "macros.h"
 
 namespace BluezQt
 {

@@ -21,7 +21,7 @@
  */
 
 #include "obexagent.h"
-#include "debug_p.h"
+#include "debug.h"
 
 namespace BluezQt
 {

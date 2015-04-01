@@ -22,7 +22,7 @@
 
 #include "profile.h"
 #include "profile_p.h"
-#include "debug_p.h"
+#include "debug.h"
 
 #include <unistd.h>
 

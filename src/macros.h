@@ -1,7 +1,7 @@
 /*
  * BluezQt - Asynchronous Bluez wrapper library
  *
- * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
+ * Copyright (C) 2015 David Rosca <nowrep@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,6 +20,21 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "debug_p.h"
+#ifndef BLUEZQT_MACROS_H
+#define BLUEZQT_MACROS_H
 
-Q_LOGGING_CATEGORY(BLUEZQT, "BluezQt")
+// Change property value and emit propertyChanged signal
+#define PROPERTY_CHANGED(var, type_cast, signal) \
+    if (var != value.type_cast()) { \
+        var = value.type_cast(); \
+        Q_EMIT q.data()->signal(var); \
+    }
+
+// Clears property value and emit propertyChanged signal
+#define PROPERTY_INVALIDATED(var, empty, signal) \
+    if (var != empty) { \
+        var = empty; \
+        Q_EMIT q.data()->signal(var); \
+    }
+
+#endif // BLUEZQT_MACROS_H

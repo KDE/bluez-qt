@@ -22,7 +22,7 @@
 
 #include "obexobjectpush.h"
 #include "pendingcall.h"
-#include "utils_p.h"
+#include "utils.h"
 
 #include "obexobjectpush1.h"
 

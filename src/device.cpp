@@ -23,7 +23,7 @@
 #include "device.h"
 #include "device_p.h"
 #include "pendingcall.h"
-#include "utils_p.h"
+#include "utils.h"
 
 namespace BluezQt
 {

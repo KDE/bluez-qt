@@ -23,7 +23,7 @@
 #include "initobexmanagerjob.h"
 #include "obexmanager.h"
 #include "obexmanager_p.h"
-#include "debug_p.h"
+#include "debug.h"
 
 namespace BluezQt
 {

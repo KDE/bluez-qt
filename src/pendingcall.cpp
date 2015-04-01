@@ -25,7 +25,7 @@
 #include "obextransfer_p.h"
 #include "obexfiletransfer.h"
 #include "bluezqt_dbustypes.h"
-#include "debug_p.h"
+#include "debug.h"
 
 #include <QTimer>
 #include <QDBusPendingReply>
