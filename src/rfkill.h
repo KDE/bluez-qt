@@ -56,8 +56,8 @@ private Q_SLOTS:
 private:
     void init();
     bool openForWriting();
-    State readState() const;
     bool setSoftBlock(quint8 soft);
+    State readState(bool *haveBluetooth) const;
 
     int m_readFd;
     int m_writeFd;

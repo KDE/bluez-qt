@@ -75,10 +75,10 @@ bool Manager::isBluetoothBlocked() const
 bool Manager::setBluetoothBlocked(bool blocked)
 {
     if (blocked) {
+        return d->m_rfkill->block();
+    } else {
         return d->m_rfkill->unblock();
     }
-
-    return d->m_rfkill->block();
 }
 
 AdapterPtr Manager::usableAdapter() const

@@ -102,8 +102,11 @@ bool Rfkill::unblock()
 
 void Rfkill::devReadyRead()
 {
-    State changed = readState();
-    if (m_state != changed) {
+    bool haveBluetooth;
+    State changed = readState(&haveBluetooth);
+
+    // Now we only want Bluetooth events
+    if (haveBluetooth && m_state != changed) {
         m_state = changed;
         Q_EMIT stateChanged(m_state);
     }
@@ -124,7 +127,8 @@ void Rfkill::init()
         return;
     }
 
-    m_state = readState();
+    bool tmp;
+    m_state = readState(&tmp);
 
     QSocketNotifier *notifier = new QSocketNotifier(m_readFd, QSocketNotifier::Read, this);
     connect(notifier, &QSocketNotifier::activated, this, &Rfkill::devReadyRead);
@@ -152,30 +156,6 @@ bool Rfkill::openForWriting()
     return true;
 }
 
-Rfkill::State Rfkill::readState() const
-{
-    if (m_readFd == -1) {
-        return Unknown;
-    }
-
-    rfkill_event event;
-    while (::read(m_readFd, &event, sizeof(event)) == sizeof(event)) {
-        if (event.type != RFKILL_TYPE_BLUETOOTH) {
-            continue;
-        }
-
-        if (event.soft) {
-            return SoftBlocked;
-        } else if (event.hard) {
-            return HardBlocked;
-        } else {
-            return Unblocked;
-        }
-    }
-
-    return Unknown;
-}
-
 bool Rfkill::setSoftBlock(quint8 soft)
 {
     if (!openForWriting()) {
@@ -189,6 +169,34 @@ bool Rfkill::setSoftBlock(quint8 soft)
     event.soft = soft;
 
     return ::write(m_writeFd, &event, sizeof(event)) == sizeof(event);
+}
+
+Rfkill::State Rfkill::readState(bool *haveBluetooth) const
+{
+    *haveBluetooth = false;
+
+    if (m_readFd == -1) {
+        return Unknown;
+    }
+
+    rfkill_event event;
+    while (::read(m_readFd, &event, sizeof(event)) == sizeof(event)) {
+        if (event.type != RFKILL_TYPE_BLUETOOTH) {
+            continue;
+        }
+
+        *haveBluetooth = true;
+
+        if (event.soft) {
+            return SoftBlocked;
+        } else if (event.hard) {
+            return HardBlocked;
+        } else {
+            return Unblocked;
+        }
+    }
+
+    return Unknown;
 }
 
 } // namespace BluezQt
