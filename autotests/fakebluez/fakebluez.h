@@ -18,7 +18,7 @@ class FakeBluez : public QObject
     Q_OBJECT
 
 public:
-    explicit FakeBluez(QObject *parent = 0);
+    explicit FakeBluez(QObject *parent = Q_NULLPTR);
 
     void runTest(const QString &testName);
     void runAction(const QString &object, const QString &actionName, const QVariantMap &properties);

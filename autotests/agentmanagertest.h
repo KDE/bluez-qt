@@ -12,7 +12,7 @@ class TestAgent : public BluezQt::Agent
     Q_OBJECT
 
 public:
-    explicit TestAgent(QObject *parent = 0);
+    explicit TestAgent(QObject *parent = Q_NULLPTR);
 
     QDBusObjectPath objectPath() const Q_DECL_OVERRIDE;
 

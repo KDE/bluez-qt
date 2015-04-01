@@ -59,7 +59,7 @@ public:
      *
      * @param parent
      */
-    explicit ObexManager(QObject *parent = 0);
+    explicit ObexManager(QObject *parent = Q_NULLPTR);
 
     /**
      * Destroys an ObexManager object.

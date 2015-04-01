@@ -16,7 +16,7 @@
 #include <QDBusServiceWatcher>
 #include <QDBusConnectionInterface>
 
-QProcess *FakeBluez::s_process = 0;
+QProcess *FakeBluez::s_process = Q_NULLPTR;
 
 class StartJob : public QObject
 {

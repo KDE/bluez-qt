@@ -76,7 +76,7 @@ public:
      *
      * @param parent
      */
-    explicit Profile(QObject *parent = 0);
+    explicit Profile(QObject *parent = Q_NULLPTR);
 
     /**
      * Destroys a Profile object.

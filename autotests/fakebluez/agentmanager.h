@@ -13,7 +13,7 @@ class AgentManager : public QDBusAbstractAdaptor, public Object
     Q_CLASSINFO("D-Bus Interface", "org.bluez.AgentManager1")
 
 public:
-    explicit AgentManager(QObject *parent = 0);
+    explicit AgentManager(QObject *parent = Q_NULLPTR);
 
     void runAction(const QString &actionName, const QVariantMap &properties);
 

@@ -119,7 +119,7 @@ public:
      * @param manager manager to be used
      * @param parent
      */
-    explicit DevicesModel(Manager *manager, QObject *parent = 0);
+    explicit DevicesModel(Manager *manager, QObject *parent = Q_NULLPTR);
 
     /**
       * Reimplemented from QAbstractListModel::roleNames()

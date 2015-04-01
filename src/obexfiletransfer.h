@@ -81,7 +81,7 @@ public:
      * @param path path of session
      * @param parent
      */
-    explicit ObexFileTransfer(const QDBusObjectPath &path, QObject *parent = 0);
+    explicit ObexFileTransfer(const QDBusObjectPath &path, QObject *parent = Q_NULLPTR);
 
     /**
      * Destroys an ObexFileTransfer object.

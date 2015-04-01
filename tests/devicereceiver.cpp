@@ -34,7 +34,7 @@
 
 using namespace BluezQt;
 
-Manager *g_manager = 0;
+Manager *g_manager = Q_NULLPTR;
 
 DeviceReceiver::DeviceReceiver(QObject *parent)
     : QObject(parent)

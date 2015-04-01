@@ -33,7 +33,7 @@ class AdaptersReceiver : public QObject
     Q_OBJECT
 
 public:
-    AdaptersReceiver(BluezQt::Manager *manager, QObject *parent = 0);
+    AdaptersReceiver(BluezQt::Manager *manager, QObject *parent = Q_NULLPTR);
 
 public Q_SLOTS:
     void adapterAdded(BluezQt::AdapterPtr adapter);

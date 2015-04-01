@@ -102,7 +102,7 @@ public:
     PendingCall *getCapabilities();
 
 private:
-    explicit ObexSession(const QString &path, QObject *parent = 0);
+    explicit ObexSession(const QString &path, QObject *parent = Q_NULLPTR);
 
     class ObexSessionPrivate *const d;
 

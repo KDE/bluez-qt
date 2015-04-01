@@ -33,7 +33,7 @@ class DeviceReceiver : public QObject
     Q_OBJECT
 
 public:
-    DeviceReceiver(QObject *parent = 0);
+    DeviceReceiver(QObject *parent = Q_NULLPTR);
     virtual ~DeviceReceiver();
 
     void scanDevices();

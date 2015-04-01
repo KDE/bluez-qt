@@ -40,7 +40,7 @@ public:
         AdapterRole = BluezQt::DevicesModel::LastRole + 2
     };
 
-    DeclarativeDevicesModel(QObject *parent = 0);
+    DeclarativeDevicesModel(QObject *parent = Q_NULLPTR);
 
     DeclarativeManager *manager() const;
     void setManager(DeclarativeManager *manager);

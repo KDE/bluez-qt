@@ -10,7 +10,7 @@ class QDBusObjectPath;
 class AdapterObject : public QObject
 {
 public:
-    explicit AdapterObject(const QDBusObjectPath &path, QObject *parent = 0);
+    explicit AdapterObject(const QDBusObjectPath &path, QObject *parent = Q_NULLPTR);
 };
 
 class AdapterInterface : public QDBusAbstractAdaptor, public Object
@@ -31,7 +31,7 @@ class AdapterInterface : public QDBusAbstractAdaptor, public Object
     Q_PROPERTY(QString Modalias READ modalias)
 
 public:
-    explicit AdapterInterface(const QDBusObjectPath &path, const QVariantMap &properties, QObject *parent = 0);
+    explicit AdapterInterface(const QDBusObjectPath &path, const QVariantMap &properties, QObject *parent = Q_NULLPTR);
 
     QString address() const;
 

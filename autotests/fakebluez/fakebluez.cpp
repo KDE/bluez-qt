@@ -14,7 +14,7 @@
 class ObexObject : public QObject
 {
 public:
-    explicit ObexObject(QObject *parent = 0)
+    explicit ObexObject(QObject *parent = Q_NULLPTR)
         : QObject(parent)
     {
         QDBusConnection::sessionBus().registerObject(QStringLiteral("/org/bluez/obex"), this);

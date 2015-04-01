@@ -13,7 +13,7 @@ class ObexClient : public QDBusAbstractAdaptor, public Object
     Q_CLASSINFO("D-Bus Interface", "org.bluez.obex.Client1")
 
 public:
-    explicit ObexClient(QObject *parent = 0);
+    explicit ObexClient(QObject *parent = Q_NULLPTR);
 
     void runAction(const QString &actionName, const QVariantMap &properties);
 

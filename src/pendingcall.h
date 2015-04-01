@@ -179,8 +179,8 @@ private:
         ReturnTransferWithProperties
     };
 
-    explicit PendingCall(const QDBusPendingCall &call, ReturnType type, QObject *parent = 0);
-    explicit PendingCall(Error error, const QString &errorText, QObject *parent = 0);
+    explicit PendingCall(const QDBusPendingCall &call, ReturnType type, QObject *parent = Q_NULLPTR);
+    explicit PendingCall(Error error, const QString &errorText, QObject *parent = Q_NULLPTR);
 
     class PendingCallPrivate *const d;
 

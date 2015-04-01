@@ -13,7 +13,7 @@ class ObexAgentManager : public QDBusAbstractAdaptor, public Object
     Q_CLASSINFO("D-Bus Interface", "org.bluez.obex.AgentManager1")
 
 public:
-    explicit ObexAgentManager(QObject *parent = 0);
+    explicit ObexAgentManager(QObject *parent = Q_NULLPTR);
 
     void runAction(const QString &actionName, const QVariantMap &properties);
 

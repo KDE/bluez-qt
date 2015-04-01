@@ -38,7 +38,7 @@ class DeclarativeManager : public BluezQt::Manager
     Q_PROPERTY(QQmlListProperty<BluezQt::Device> devices READ declarativeDevices NOTIFY devicesChanged)
 
 public:
-    DeclarativeManager(QObject *parent = 0);
+    DeclarativeManager(QObject *parent = Q_NULLPTR);
 
     DeclarativeAdapter *usableAdapter() const;
     QQmlListProperty<DeclarativeAdapter> declarativeAdapters();

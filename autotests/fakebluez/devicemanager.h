@@ -8,7 +8,7 @@ class ObjectManager;
 class DeviceManager : public QObject
 {
 public:
-    explicit DeviceManager(ObjectManager *parent = 0);
+    explicit DeviceManager(ObjectManager *parent = Q_NULLPTR);
 
     void runAction(const QString &actionName, const QVariantMap &properties);
 

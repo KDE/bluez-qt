@@ -47,7 +47,7 @@ class DeclarativeAdapter : public QObject
     Q_PROPERTY(QQmlListProperty<BluezQt::Device> devices READ devices NOTIFY devicesChanged)
 
 public:
-    explicit DeclarativeAdapter(BluezQt::AdapterPtr adapter, QObject *parent = 0);
+    explicit DeclarativeAdapter(BluezQt::AdapterPtr adapter, QObject *parent = Q_NULLPTR);
 
     QString ubi() const;
 

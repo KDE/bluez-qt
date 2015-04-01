@@ -69,7 +69,7 @@ public:
      *
      * @param parent
      */
-    explicit Agent(QObject *parent = 0);
+    explicit Agent(QObject *parent = Q_NULLPTR);
 
     /**
      * D-Bus object path of the agent.

@@ -5,7 +5,7 @@
 #include <QDBusMetaType>
 #include <QDBusConnection>
 
-ObjectManager *s_instance = 0;
+ObjectManager *s_instance = Q_NULLPTR;
 
 ObjectManager::ObjectManager(QObject *parent)
     : QDBusAbstractAdaptor(parent)
