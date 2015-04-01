@@ -40,43 +40,51 @@ AdaptersReceiver::AdaptersReceiver(Manager *manager, QObject *parent)
     connect(manager, &Manager::usableAdapterChanged, this, &AdaptersReceiver::usableAdapterChanged);
     connect(manager, &Manager::allAdaptersRemoved, this, &AdaptersReceiver::allAdaptersRemoved);
     connect(manager, &Manager::bluetoothOperationalChanged, this, &AdaptersReceiver::bluetoothOperationalChanged);
+    connect(manager, &Manager::bluetoothBlockedChanged, this, &AdaptersReceiver::bluetoothBlockedChanged);
 }
 
 void AdaptersReceiver::adapterAdded(BluezQt::AdapterPtr adapter)
 {
-    qDebug() << "Adapter added: " << adapter;
-    qDebug() << "\tBluetooth Operational: " << m_manager->isBluetoothOperational();
-    qDebug() << "\tUsable Adapter: " << m_manager->usableAdapter();
-    qDebug();
+    qDebug() << "Adapter added: " << adapter->name();
+    printStatus();
 }
 
 void AdaptersReceiver::adapterRemoved(BluezQt::AdapterPtr adapter)
 {
-    qDebug() << "Adapter removed: " << adapter;
-    qDebug() << "\tBluetooth Operational: " << m_manager->isBluetoothOperational();
-    qDebug() << "\tUsable Adapter: " << m_manager->usableAdapter();
-    qDebug();
+    qDebug() << "Adapter removed: " << adapter->name();
+    printStatus();
 }
 
 void AdaptersReceiver::usableAdapterChanged(BluezQt::AdapterPtr adapter)
 {
     qDebug() << "Usable adapter changed: " << adapter;
-    qDebug() << "\tBluetooth Operational: " << m_manager->isBluetoothOperational();
-    qDebug() << "\tUsable Adapter: " << m_manager->usableAdapter();
-    qDebug();
+    printStatus();
 }
 
 void AdaptersReceiver::allAdaptersRemoved()
 {
     qDebug() << "All adapters have been removed";
-    qDebug() << "\tBluetooth Operational: " << m_manager->isBluetoothOperational();
-    qDebug() << "\tUsable Adapter: " << m_manager->usableAdapter();
-    qDebug();
+    printStatus();
 }
 
 void AdaptersReceiver::bluetoothOperationalChanged(bool operational)
 {
     qDebug() << "Bluetooth operational changed: " << operational;
+    printStatus();
+}
+
+void AdaptersReceiver::bluetoothBlockedChanged(bool blocked)
+{
+    qDebug() << "Bluetooth blocked changed: " << blocked;
+    printStatus();
+}
+
+void AdaptersReceiver::printStatus()
+{
+    qDebug() << "\tBluetooth Blocked: " << m_manager->isBluetoothBlocked();
+    qDebug() << "\tBluetooth Operational: " << m_manager->isBluetoothOperational();
+    qDebug() << "\tUsable Adapter: " << m_manager->usableAdapter();
+    qDebug() << "";
 }
 
 int main(int argc, char **argv)

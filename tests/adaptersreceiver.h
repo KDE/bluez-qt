@@ -41,6 +41,8 @@ public Q_SLOTS:
     void usableAdapterChanged(BluezQt::AdapterPtr adapter);
     void allAdaptersRemoved();
     void bluetoothOperationalChanged(bool operational);
+    void bluetoothBlockedChanged(bool blocked);
+    void printStatus();
 
 private:
     BluezQt::Manager *m_manager;
