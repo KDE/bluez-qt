@@ -27,6 +27,7 @@
 #include <QHash>
 
 #include "types.h"
+#include "rfkill.h"
 #include "dbusobjectmanager.h"
 #include "bluezagentmanager1.h"
 #include "bluezprofilemanager1.h"
@@ -64,14 +65,17 @@ public:
     void interfacesRemoved(const QDBusObjectPath &objectPath, const QStringList &interfaces);
     void adapterRemoved(AdapterPtr adapter);
     void adapterPoweredChanged(bool powered);
+    void rfkillStateChanged(Rfkill::State state);
 
     void addAdapter(const QString &adapterPath, const QVariantMap &properties);
     void addDevice(const QString &devicePath, const QVariantMap &properties);
     void removeAdapter(const QString &adapterPath);
     void removeDevice(const QString &devicePath);
     void setUsableAdapter(AdapterPtr adapter);
+    bool rfkillBlocked() const;
 
     Manager *q;
+    Rfkill *m_rfkill;
     DBusObjectManager *m_dbusObjectManager;
     BluezAgentManager *m_bluezAgentManager;
     BluezProfileManager *m_bluezProfileManager;
@@ -84,6 +88,7 @@ public:
     bool m_bluezRunning;
     bool m_loaded;
     bool m_adaptersLoaded;
+    bool m_bluetoothBlocked;
 
 Q_SIGNALS:
     void initError(const QString &errorText);

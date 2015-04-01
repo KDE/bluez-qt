@@ -67,6 +67,20 @@ bool Manager::isBluetoothOperational() const
     return d->m_bluezRunning && d->m_loaded && d->m_usableAdapter;
 }
 
+bool Manager::isBluetoothBlocked() const
+{
+    return d->m_bluetoothBlocked;
+}
+
+bool Manager::setBluetoothBlocked(bool blocked)
+{
+    if (blocked) {
+        return d->m_rfkill->unblock();
+    }
+
+    return d->m_rfkill->block();
+}
+
 AdapterPtr Manager::usableAdapter() const
 {
     return d->m_usableAdapter;

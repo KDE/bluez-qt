@@ -51,6 +51,10 @@ ManagerPrivate::ManagerPrivate(Manager *parent)
     qDBusRegisterMetaType<DBusManagerStruct>();
     qDBusRegisterMetaType<QVariantMapMap>();
 
+    m_rfkill = new Rfkill(this);
+    m_bluetoothBlocked = rfkillBlocked();
+    connect(m_rfkill, &Rfkill::stateChanged, this, &ManagerPrivate::rfkillStateChanged);
+
     connect(q, &Manager::adapterRemoved, this, &ManagerPrivate::adapterRemoved);
 }
 
@@ -283,6 +287,18 @@ void ManagerPrivate::adapterPoweredChanged(bool powered)
     }
 }
 
+void ManagerPrivate::rfkillStateChanged(Rfkill::State state)
+{
+    Q_UNUSED(state)
+
+    bool blocked = rfkillBlocked();
+
+    if (m_bluetoothBlocked != blocked) {
+        m_bluetoothBlocked = blocked;
+        Q_EMIT q->bluetoothBlockedChanged(m_bluetoothBlocked);
+    }
+}
+
 void ManagerPrivate::addAdapter(const QString &adapterPath, const QVariantMap &properties)
 {
     AdapterPtr adapter = AdapterPtr(new Adapter(adapterPath, properties));
@@ -353,6 +369,11 @@ void ManagerPrivate::setUsableAdapter(AdapterPtr adapter)
     if (wasBtOperational != q->isBluetoothOperational()) {
         Q_EMIT q->bluetoothOperationalChanged(q->isBluetoothOperational());
     }
+}
+
+bool ManagerPrivate::rfkillBlocked() const
+{
+    return m_rfkill->state() == Rfkill::SoftBlocked || m_rfkill->state() == Rfkill::HardBlocked;
 }
 
 } // namespace BluezQt

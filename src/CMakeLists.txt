@@ -17,6 +17,7 @@ set(bluezqt_SRCS
     profileadaptor.cpp
     pendingcall.cpp
     request.cpp
+    rfkill.cpp
     obexmanager.cpp
     obexmanager_p.cpp
     obexagent.cpp

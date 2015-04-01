@@ -48,6 +48,9 @@ class InitManagerJob;
  *
  * You must call init() before other functions can be used.
  *
+ * The only functions that can be used before initialization are rfkill-related functions:
+ * isBluetoothBlocked(), setBluetoothBlocked() and bluetoothBlockedChanged() signal.
+ *
  * Example use in C++ code:
  * @code
  * BluezQt::Manager *manager = new BluezQt::Manager();
@@ -95,6 +98,7 @@ class BLUEZQT_EXPORT Manager : public QObject
     Q_PROPERTY(bool initialized READ isInitialized)
     Q_PROPERTY(bool operational READ isOperational NOTIFY operationalChanged)
     Q_PROPERTY(bool bluetoothOperational READ isBluetoothOperational NOTIFY bluetoothOperationalChanged)
+    Q_PROPERTY(bool bluetoothBlocked READ isBluetoothBlocked WRITE setBluetoothBlocked NOTIFY bluetoothBlockedChanged)
 
 public:
     /**
@@ -142,6 +146,31 @@ public:
      * @return true if Bluetooth is operational
      */
     bool isBluetoothOperational() const;
+
+    /**
+     * Returns whether Bluetooth is blocked.
+     *
+     * Bluetooth is blocked if rfkill state for Bluetooth is either
+     * SOFT_BLOCKED or HARD_BLOCKED.
+     *
+     * @note This requires read access to /dev/rfkill.
+     *
+     * @return true if Bluetooth is blocked
+     */
+    bool isBluetoothBlocked() const;
+
+    /**
+     * Sets a Bluetooth blocked state.
+     *
+     * This may fail either due to insufficent permissions or
+     * because rfkill state is HARD_BLOCKED. In that case,
+     * this function returns false.
+     *
+     * @note This requires write access to /dev/rfkill.
+     *
+     * @return true if Bluetooth blocked state was changed
+     */
+    bool setBluetoothBlocked(bool blocked);
 
     /**
      * Returns a usable adapter.
@@ -278,6 +307,11 @@ Q_SIGNALS:
      * Indicates that Bluetooth operational state have changed.
      */
     void bluetoothOperationalChanged(bool operational);
+
+    /**
+     * Indicates that Bluetooth blocked state have changed.
+     */
+    void bluetoothBlockedChanged(bool blocked);
 
     /**
      * Indicates that adapter was added.
