@@ -290,7 +290,7 @@ public:
     /**
      * Unregisters profile.
      *
-     * Possible errors: PendingCall::DoesNotExists
+     * Possible errors: PendingCall::DoesNotExist
      *
      * @param profile profile to be unregistered
      * @return void pending call

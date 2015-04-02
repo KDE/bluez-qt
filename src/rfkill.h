@@ -23,6 +23,7 @@
 #ifndef BLUEZQT_RFKILL_H
 #define BLUEZQT_RFKILL_H
 
+#include <QHash>
 #include <QObject>
 
 namespace BluezQt
@@ -34,10 +35,10 @@ class Rfkill : public QObject
 
 public:
     enum State {
-        Unblocked,
-        SoftBlocked,
-        HardBlocked,
-        Unknown
+        Unblocked = 0,
+        SoftBlocked = 1,
+        HardBlocked = 2,
+        Unknown = 3
     };
 
     explicit Rfkill(QObject *parent = Q_NULLPTR);
@@ -56,12 +57,13 @@ private Q_SLOTS:
 private:
     void init();
     bool openForWriting();
+    void updateRfkillDevices();
     bool setSoftBlock(quint8 soft);
-    State readState(bool *haveBluetooth) const;
 
     int m_readFd;
     int m_writeFd;
     State m_state;
+    QHash<quint32, State> m_devices;
 };
 
 } // namespace BluezQt

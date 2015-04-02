@@ -50,11 +50,11 @@ enum rfkill_operation {
 };
 
 struct rfkill_event {
-    uint32_t idx;
-    uint8_t type;
-    uint8_t op;
-    uint8_t soft;
-    uint8_t hard;
+    quint32 idx;
+    quint8 type;
+    quint8 op;
+    quint8 soft;
+    quint8 hard;
 };
 
 Rfkill::Rfkill(QObject *parent)
@@ -84,6 +84,10 @@ Rfkill::State Rfkill::state() const
 
 bool Rfkill::block()
 {
+    if (m_state == SoftBlocked || m_state == HardBlocked) {
+        return true;
+    }
+
     if (m_state != Unblocked) {
         return false;
     }
@@ -93,6 +97,10 @@ bool Rfkill::block()
 
 bool Rfkill::unblock()
 {
+    if (m_state == Unblocked) {
+        return true;
+    }
+
     if (m_state != SoftBlocked) {
         return false;
     }
@@ -102,12 +110,11 @@ bool Rfkill::unblock()
 
 void Rfkill::devReadyRead()
 {
-    bool haveBluetooth;
-    State changed = readState(&haveBluetooth);
+    State oldState = m_state;
 
-    // Now we only want Bluetooth events
-    if (haveBluetooth && m_state != changed) {
-        m_state = changed;
+    updateRfkillDevices();
+
+    if (m_state != oldState) {
         Q_EMIT stateChanged(m_state);
     }
 }
@@ -127,8 +134,7 @@ void Rfkill::init()
         return;
     }
 
-    bool tmp;
-    m_state = readState(&tmp);
+    updateRfkillDevices();
 
     QSocketNotifier *notifier = new QSocketNotifier(m_readFd, QSocketNotifier::Read, this);
     connect(notifier, &QSocketNotifier::activated, this, &Rfkill::devReadyRead);
@@ -156,6 +162,59 @@ bool Rfkill::openForWriting()
     return true;
 }
 
+static Rfkill::State getState(const rfkill_event &event)
+{
+    if (event.hard) {
+        return Rfkill::HardBlocked;
+    } else if (event.soft) {
+        return Rfkill::SoftBlocked;
+    }
+    return Rfkill::Unblocked;
+}
+
+void Rfkill::updateRfkillDevices()
+{
+    if (m_readFd == -1) {
+        return;
+    }
+
+    rfkill_event event;
+    while (::read(m_readFd, &event, sizeof(event)) == sizeof(event)) {
+        if (event.type != RFKILL_TYPE_BLUETOOTH) {
+            continue;
+        }
+
+        switch (event.op) {
+        case RFKILL_OP_ADD:
+        case RFKILL_OP_CHANGE:
+            m_devices[event.idx] = getState(event);
+            break;
+
+        case RFKILL_OP_DEL:
+            m_devices.remove(event.idx);
+            break;
+
+        case RFKILL_OP_CHANGE_ALL:
+            Q_FOREACH (quint32 id, m_devices.keys()) {
+                m_devices[id] = getState(event);
+            }
+            break;
+
+        default:
+            break;
+        }
+    }
+
+    // Update global state
+    m_state = Unknown;
+
+    Q_FOREACH (State state, m_devices) {
+        if (state < m_state) {
+            m_state = state;
+        }
+    }
+}
+
 bool Rfkill::setSoftBlock(quint8 soft)
 {
     if (!openForWriting()) {
@@ -169,34 +228,6 @@ bool Rfkill::setSoftBlock(quint8 soft)
     event.soft = soft;
 
     return ::write(m_writeFd, &event, sizeof(event)) == sizeof(event);
-}
-
-Rfkill::State Rfkill::readState(bool *haveBluetooth) const
-{
-    *haveBluetooth = false;
-
-    if (m_readFd == -1) {
-        return Unknown;
-    }
-
-    rfkill_event event;
-    while (::read(m_readFd, &event, sizeof(event)) == sizeof(event)) {
-        if (event.type != RFKILL_TYPE_BLUETOOTH) {
-            continue;
-        }
-
-        *haveBluetooth = true;
-
-        if (event.soft) {
-            return SoftBlocked;
-        } else if (event.hard) {
-            return HardBlocked;
-        } else {
-            return Unblocked;
-        }
-    }
-
-    return Unknown;
 }
 
 } // namespace BluezQt
