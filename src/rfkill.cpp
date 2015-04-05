@@ -23,16 +23,19 @@
 #include "rfkill.h"
 #include "debug.h"
 
+#ifdef Q_OS_LINUX
 #include <fcntl.h>
 #include <string.h>
 #include <unistd.h>
 #include <stdint.h>
+#endif
 
 #include <QSocketNotifier>
 
 namespace BluezQt
 {
 
+#ifdef Q_OS_LINUX
 enum rfkill_type {
     RFKILL_TYPE_ALL = 0,
     RFKILL_TYPE_WLAN,
@@ -56,6 +59,7 @@ struct rfkill_event {
     quint8 soft;
     quint8 hard;
 };
+#endif
 
 Rfkill::Rfkill(QObject *parent)
     : QObject(parent)
@@ -68,6 +72,7 @@ Rfkill::Rfkill(QObject *parent)
 
 Rfkill::~Rfkill()
 {
+#ifdef Q_OS_LINUX
     if (m_readFd != -1) {
         ::close(m_readFd);
     }
@@ -75,6 +80,7 @@ Rfkill::~Rfkill()
     if (m_writeFd != -1) {
         ::close(m_writeFd);
     }
+#endif
 }
 
 Rfkill::State Rfkill::state() const
@@ -121,6 +127,7 @@ void Rfkill::devReadyRead()
 
 void Rfkill::init()
 {
+#ifdef Q_OS_LINUX
     m_readFd = ::open("/dev/rfkill", O_RDONLY);
 
     if (m_readFd == -1) {
@@ -138,10 +145,14 @@ void Rfkill::init()
 
     QSocketNotifier *notifier = new QSocketNotifier(m_readFd, QSocketNotifier::Read, this);
     connect(notifier, &QSocketNotifier::activated, this, &Rfkill::devReadyRead);
+#endif
 }
 
 bool Rfkill::openForWriting()
 {
+#ifndef Q_OS_LINUX
+    return false;
+#else
     if (m_writeFd != -1) {
         return true;
     }
@@ -160,8 +171,10 @@ bool Rfkill::openForWriting()
     }
 
     return true;
+#endif
 }
 
+#ifdef Q_OS_LINUX
 static Rfkill::State getState(const rfkill_event &event)
 {
     if (event.hard) {
@@ -171,9 +184,11 @@ static Rfkill::State getState(const rfkill_event &event)
     }
     return Rfkill::Unblocked;
 }
+#endif
 
 void Rfkill::updateRfkillDevices()
 {
+#ifdef Q_OS_LINUX
     if (m_readFd == -1) {
         return;
     }
@@ -213,10 +228,15 @@ void Rfkill::updateRfkillDevices()
             m_state = state;
         }
     }
+#endif
 }
 
 bool Rfkill::setSoftBlock(quint8 soft)
 {
+#ifndef Q_OS_LINUX
+    Q_UNUSED(soft)
+    return false;
+#else
     if (!openForWriting()) {
         return false;
     }
@@ -228,6 +248,7 @@ bool Rfkill::setSoftBlock(quint8 soft)
     event.soft = soft;
 
     return ::write(m_writeFd, &event, sizeof(event)) == sizeof(event);
+#endif
 }
 
 } // namespace BluezQt
