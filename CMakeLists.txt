@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.12)
 
 project(BluezQt)
-set(PROJECT_VERSION "5.2.90")
+set(PROJECT_VERSION "5.2.95")
 
 # ECM setup
 find_package(ECM 1.7.0 REQUIRED NO_MODULE)
