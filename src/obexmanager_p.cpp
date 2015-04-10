@@ -60,14 +60,14 @@ ObexManagerPrivate::~ObexManagerPrivate()
 
 void ObexManagerPrivate::init()
 {
-    // Keep an eye on bluez.obex service
+    // Keep an eye on org.bluez.obex service
     QDBusServiceWatcher *serviceWatcher = new QDBusServiceWatcher(Strings::orgBluezObex(), DBusConnection::orgBluezObex(),
             QDBusServiceWatcher::WatchForRegistration | QDBusServiceWatcher::WatchForUnregistration, this);
 
     connect(serviceWatcher, &QDBusServiceWatcher::serviceRegistered, this, &ObexManagerPrivate::serviceRegistered);
     connect(serviceWatcher, &QDBusServiceWatcher::serviceUnregistered, this, &ObexManagerPrivate::serviceUnregistered);
 
-    // Update the current state of bluez.obex service
+    // Update the current state of org.bluez.obex service
     if (!DBusConnection::orgBluezObex().isConnected()) {
         Q_EMIT initError(QStringLiteral("DBus session bus is not connected!"));
         return;
@@ -109,6 +109,14 @@ void ObexManagerPrivate::load()
     if (!m_obexRunning || m_loaded) {
         return;
     }
+
+    // Force QDBus to cache owner of org.bluez.obex - this will be the only blocking call on session connection
+    DBusConnection::orgBluezObex().connect(Strings::orgBluezObex(),
+                                           QStringLiteral("/"),
+                                           Strings::orgFreedesktopDBus(),
+                                           QStringLiteral("Dummy"),
+                                           this,
+                                           SLOT(dummy()));
 
     m_dbusObjectManager = new DBusObjectManager(Strings::orgBluezObex(), QStringLiteral("/"),
             DBusConnection::orgBluezObex(), this);
@@ -207,6 +215,10 @@ void ObexManagerPrivate::interfacesRemoved(const QDBusObjectPath &objectPath, co
     if (interfaces.contains(Strings::orgBluezObexSession1())) {
         Q_EMIT q->sessionRemoved(objectPath);
     }
+}
+
+void ObexManagerPrivate::dummy()
+{
 }
 
 } // namespace BluezQt
