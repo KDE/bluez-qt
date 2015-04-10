@@ -70,6 +70,9 @@ public:
 Q_SIGNALS:
     void initError(const QString &errorText);
     void initFinished();
+
+private Q_SLOTS:
+    void dummy();
 };
 
 } // namespace BluezQt

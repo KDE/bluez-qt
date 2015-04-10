@@ -60,14 +60,14 @@ ManagerPrivate::ManagerPrivate(Manager *parent)
 
 void ManagerPrivate::init()
 {
-    // Keep an eye on bluez service
+    // Keep an eye on org.bluez service
     QDBusServiceWatcher *serviceWatcher = new QDBusServiceWatcher(Strings::orgBluez(), DBusConnection::orgBluez(),
             QDBusServiceWatcher::WatchForRegistration | QDBusServiceWatcher::WatchForUnregistration, this);
 
     connect(serviceWatcher, &QDBusServiceWatcher::serviceRegistered, this, &ManagerPrivate::serviceRegistered);
     connect(serviceWatcher, &QDBusServiceWatcher::serviceUnregistered, this, &ManagerPrivate::serviceUnregistered);
 
-    // Update the current state of bluez service
+    // Update the current state of org.bluez service
     if (!DBusConnection::orgBluez().isConnected()) {
         Q_EMIT initError(QStringLiteral("DBus system bus is not connected!"));
         return;
@@ -109,6 +109,14 @@ void ManagerPrivate::load()
     if (!m_bluezRunning || m_loaded) {
         return;
     }
+
+    // Force QDBus to cache owner of org.bluez - this will be the only blocking call on system connection
+    DBusConnection::orgBluez().connect(Strings::orgBluez(),
+                                       QStringLiteral("/"),
+                                       Strings::orgFreedesktopDBus(),
+                                       QStringLiteral("Dummy"),
+                                       this,
+                                       SLOT(dummy()));
 
     m_dbusObjectManager = new DBusObjectManager(Strings::orgBluez(), QStringLiteral("/"),
             DBusConnection::orgBluez(), this);
@@ -374,6 +382,10 @@ void ManagerPrivate::setUsableAdapter(AdapterPtr adapter)
 bool ManagerPrivate::rfkillBlocked() const
 {
     return m_rfkill->state() == Rfkill::SoftBlocked || m_rfkill->state() == Rfkill::HardBlocked;
+}
+
+void ManagerPrivate::dummy()
+{
 }
 
 } // namespace BluezQt
