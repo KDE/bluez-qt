@@ -76,7 +76,13 @@ install(FILES
     DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}
     COMPONENT Devel)
 
-set(UDEV_RULES_INSTALL_DIR /lib/udev/rules.d CACHE PATH "The location of udev rules")
-install(FILES 61-kde-bluetooth-rfkill.rules DESTINATION ${UDEV_RULES_INSTALL_DIR})
+if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+    set(INSTALL_UDEV_RULE ON CACHE BOOL "Whether to install udev rule")
+    set(UDEV_RULES_INSTALL_DIR /lib/udev/rules.d CACHE PATH "The location of udev rules")
+
+    if(${INSTALL_UDEV_RULE})
+        install(FILES 61-kde-bluetooth-rfkill.rules DESTINATION ${UDEV_RULES_INSTALL_DIR})
+    endif()
+endif()
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
