@@ -122,6 +122,11 @@ public:
     explicit DevicesModel(Manager *manager, QObject *parent = Q_NULLPTR);
 
     /**
+      * Destroys a DevicesModel object.
+      */
+    ~DevicesModel();
+
+    /**
       * Reimplemented from QAbstractListModel::roleNames()
       */
     QHash<int, QByteArray> roleNames() const Q_DECL_OVERRIDE;

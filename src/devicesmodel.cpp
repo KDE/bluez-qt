@@ -103,6 +103,11 @@ DevicesModel::DevicesModel(Manager *manager, QObject *parent)
     d->init();
 }
 
+DevicesModel::~DevicesModel()
+{
+    delete d;
+}
+
 QHash<int, QByteArray> DevicesModel::roleNames() const
 {
     QHash<int, QByteArray> roles = QAbstractListModel::roleNames();
