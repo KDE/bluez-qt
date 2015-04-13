@@ -26,7 +26,7 @@
 
 #include <QObject>
 
-#include <bluezqt_export.h>
+#include "bluezqt_export.h"
 
 namespace BluezQt
 {

@@ -67,7 +67,7 @@ set_target_properties(KF5BluezQt
     EXPORT_NAME "BluezQt"
 )
 
-ecm_generate_headers(BluezQt_HEADERS
+ecm_generate_headers(BluezQt_CamelCase_HEADERS
     HEADER_NAMES
         Types
         Manager
@@ -90,6 +90,7 @@ ecm_generate_headers(BluezQt_HEADERS
         ObexFileTransfer
 
     REQUIRED_HEADERS BluezQt_HEADERS
+    PREFIX BluezQt
 )
 
 # Install files
@@ -98,9 +99,14 @@ install(TARGETS KF5BluezQt
         ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
 
 install(FILES
+    ${BluezQt_CamelCase_HEADERS}
+    DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}/BluezQt/BluezQt
+    COMPONENT Devel)
+
+install(FILES
     ${CMAKE_CURRENT_BINARY_DIR}/bluezqt_export.h
     ${BluezQt_HEADERS}
-    DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}/BluezQt
+    DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}/BluezQt/bluezqt
     COMPONENT Devel)
 
 include(ECMGeneratePriFile)

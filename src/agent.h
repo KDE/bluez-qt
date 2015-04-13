@@ -27,7 +27,7 @@
 
 #include "request.h"
 #include "types.h"
-#include <bluezqt_export.h>
+#include "bluezqt_export.h"
 
 class QDBusObjectPath;
 

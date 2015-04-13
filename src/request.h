@@ -23,7 +23,7 @@
 #ifndef BLUEZQT_REQUEST_H
 #define BLUEZQT_REQUEST_H
 
-#include <bluezqt_export.h>
+#include "bluezqt_export.h"
 
 class QDBusMessage;
 

@@ -26,7 +26,7 @@
 #include <QObject>
 #include <QDateTime>
 
-#include <bluezqt_export.h>
+#include "bluezqt_export.h"
 
 class QDBusObjectPath;
 
