@@ -235,7 +235,6 @@ private:
     Q_DECLARE_PRIVATE(Job)
 };
 
-}
-Q_DECLARE_METATYPE(BluezQt::Job::Error)
+} // namespace BluezQt
 
 #endif //BLUEZQT_JOB_H

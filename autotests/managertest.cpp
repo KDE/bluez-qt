@@ -158,9 +158,9 @@ void ManagerTest::bluezShutdownTest()
     QVERIFY(device2);
 
     QSignalSpy allAdaptersRemovedSpy(manager, SIGNAL(allAdaptersRemoved()));
-    QSignalSpy adapterRemovedSpy(manager, SIGNAL(adapterRemoved(BluezQt::AdapterPtr)));
-    QSignalSpy device1RemovedSpy(adapter1.data(), SIGNAL(deviceRemoved(BluezQt::DevicePtr)));
-    QSignalSpy device2RemovedSpy(adapter2.data(), SIGNAL(deviceRemoved(BluezQt::DevicePtr)));
+    QSignalSpy adapterRemovedSpy(manager, SIGNAL(adapterRemoved(AdapterPtr)));
+    QSignalSpy device1RemovedSpy(adapter1.data(), SIGNAL(deviceRemoved(DevicePtr)));
+    QSignalSpy device2RemovedSpy(adapter2.data(), SIGNAL(deviceRemoved(DevicePtr)));
 
     btOperationalChangedSpy.clear();
     FakeBluez::stop();
@@ -199,7 +199,7 @@ void ManagerTest::usableAdapterTest()
 
     Manager *manager = new Manager;
 
-    QSignalSpy usableAdapterChangedSpy(manager, SIGNAL(usableAdapterChanged(BluezQt::AdapterPtr)));
+    QSignalSpy usableAdapterChangedSpy(manager, SIGNAL(usableAdapterChanged(AdapterPtr)));
 
     InitManagerJob *job = manager->init();
     job->exec();

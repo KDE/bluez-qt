@@ -67,9 +67,9 @@ DeclarativeManager::DeclarativeManager(QObject *parent)
     job->start();
     connect(job, &BluezQt::InitManagerJob::result, this, &DeclarativeManager::initJobResult);
 
-    connect(this, SIGNAL(adapterAdded(BluezQt::AdapterPtr)), this, SLOT(slotAdapterAdded(BluezQt::AdapterPtr)));
-    connect(this, SIGNAL(adapterRemoved(BluezQt::AdapterPtr)), this, SLOT(slotAdapterRemoved(BluezQt::AdapterPtr)));
-    connect(this, SIGNAL(usableAdapterChanged(BluezQt::AdapterPtr)), this, SLOT(slotUsableAdapterChanged(BluezQt::AdapterPtr)));
+    connect(this, &BluezQt::Manager::adapterAdded, this, &DeclarativeManager::slotAdapterAdded);
+    connect(this, &BluezQt::Manager::adapterRemoved, this, &DeclarativeManager::slotAdapterRemoved);
+    connect(this, &BluezQt::Manager::usableAdapterChanged, this, &DeclarativeManager::slotUsableAdapterChanged);
 
     connect(this, &BluezQt::Manager::adapterChanged, this, [this](BluezQt::AdapterPtr adapter) {
         Q_EMIT adapterChanged(declarativeAdapterFromPtr(adapter));

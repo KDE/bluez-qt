@@ -61,7 +61,7 @@ class BLUEZQT_EXPORT Device : public QObject
     Q_PROPERTY(bool connected READ isConnected NOTIFY connectedChanged)
     Q_PROPERTY(QStringList uuids READ uuids NOTIFY uuidsChanged)
     Q_PROPERTY(QString modalias READ modalias NOTIFY modaliasChanged)
-    Q_PROPERTY(BluezQt::AdapterPtr adapter READ adapter)
+    Q_PROPERTY(AdapterPtr adapter READ adapter)
 
 public:
     /**
@@ -108,7 +108,7 @@ public:
      *
      * @return DevicePtr
      */
-    BluezQt::DevicePtr toSharedPtr() const;
+    DevicePtr toSharedPtr() const;
 
     /**
      * Returns an UBI of the device.
@@ -144,7 +144,7 @@ public:
      * @param name name for device
      * @return void pending call
      */
-    BluezQt::PendingCall *setName(const QString &name);
+    PendingCall *setName(const QString &name);
 
     /**
      * Returns a friendly name of the device.
@@ -175,7 +175,7 @@ public:
      *
      * @return type of device
      */
-    BluezQt::Device::DeviceType deviceType() const;
+    Device::DeviceType deviceType() const;
 
     /**
      * Returns an appearance of the device.
@@ -213,7 +213,7 @@ public:
      * @param trusted trusted state
      * @return void pending call
      */
-    BluezQt::PendingCall *setTrusted(bool trusted);
+    PendingCall *setTrusted(bool trusted);
 
     /**
      * Returns whether the device is blocked.
@@ -228,7 +228,7 @@ public:
      * @param blocked blocked state
      * @return void pending call
      */
-    BluezQt::PendingCall *setBlocked(bool blocked);
+    PendingCall *setBlocked(bool blocked);
 
     /**
      * Returns whether the device has legacy pairing.
@@ -301,7 +301,7 @@ public Q_SLOTS:
      *
      * @return void pending call
      */
-    BluezQt::PendingCall *connectDevice();
+    PendingCall *connectDevice();
 
     /**
      * Disconnects all connected profiles of the device.
@@ -312,7 +312,7 @@ public Q_SLOTS:
      *
      * @return void pending call
      */
-    BluezQt::PendingCall *disconnectDevice();
+    PendingCall *disconnectDevice();
 
     /**
      * Connects a specific profile of the device.
@@ -323,7 +323,7 @@ public Q_SLOTS:
      * @param uuid service UUID
      * @return void pending call
      */
-    BluezQt::PendingCall *connectProfile(const QString &uuid);
+    PendingCall *connectProfile(const QString &uuid);
 
     /**
      * Disconnects a specific profile of the device.
@@ -334,7 +334,7 @@ public Q_SLOTS:
      * @param uuid service UUID
      * @return void pending call
      */
-    BluezQt::PendingCall *disconnectProfile(const QString &uuid);
+    PendingCall *disconnectProfile(const QString &uuid);
 
     /**
      * Initiates a pairing of the device.
@@ -346,7 +346,7 @@ public Q_SLOTS:
      *
      * @return void pending call
      */
-    BluezQt::PendingCall *pair();
+    PendingCall *pair();
 
     /**
      * Cancels a pairing of the device.
@@ -357,18 +357,18 @@ public Q_SLOTS:
      *
      * @return void pending call
      */
-    BluezQt::PendingCall *cancelPairing();
+    PendingCall *cancelPairing();
 
 Q_SIGNALS:
     /**
      * Indicates that the device was removed.
      */
-    void deviceRemoved(BluezQt::DevicePtr device);
+    void deviceRemoved(DevicePtr device);
 
     /**
      * Indicates that at least one of the device's properties have changed.
      */
-    void deviceChanged(BluezQt::DevicePtr device);
+    void deviceChanged(DevicePtr device);
 
     /**
      * Indicates that device's name have changed.

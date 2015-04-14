@@ -85,7 +85,7 @@ public:
      *
      * @return ObexTransferPtr
      */
-    BluezQt::ObexTransferPtr toSharedPtr() const;
+    ObexTransferPtr toSharedPtr() const;
 
     /**
      * D-Bus object path of the transfer.

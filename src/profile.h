@@ -233,7 +233,7 @@ public:
      * @param properties additional properties
      * @param request request to be used for sending reply
      */
-    virtual void newConnection(BluezQt::DevicePtr device, const QDBusUnixFileDescriptor &fd, const QVariantMap &properties, const BluezQt::Request<> &request);
+    virtual void newConnection(DevicePtr device, const QDBusUnixFileDescriptor &fd, const QVariantMap &properties, const Request<> &request);
 
     /**
      * Requests the disconnection of the profile.
@@ -243,7 +243,7 @@ public:
      * @param device device to be disconnected
      * @param request request to be used for sending reply
      */
-    virtual void requestDisconnection(BluezQt::DevicePtr device, const BluezQt::Request<> &request);
+    virtual void requestDisconnection(DevicePtr device, const Request<> &request);
 
     /**
      * Indicates that the profile was unregistered.

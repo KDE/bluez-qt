@@ -58,7 +58,7 @@ class BLUEZQT_EXPORT Adapter : public QObject
     Q_PROPERTY(bool discovering READ isDiscovering NOTIFY discoveringChanged)
     Q_PROPERTY(QStringList uuids READ uuids NOTIFY uuidsChanged)
     Q_PROPERTY(QString modalias READ modalias NOTIFY modaliasChanged)
-    Q_PROPERTY(QList<BluezQt::DevicePtr> devices READ devices)
+    Q_PROPERTY(QList<DevicePtr> devices READ devices)
 
 public:
     /**
@@ -71,7 +71,7 @@ public:
      *
      * @return AdapterPtr
      */
-    BluezQt::AdapterPtr toSharedPtr() const;
+    AdapterPtr toSharedPtr() const;
 
     /**
      * Returns an UBI of the adapter.
@@ -104,7 +104,7 @@ public:
      * @param name name of adapter
      * @return void pending call
      */
-    BluezQt::PendingCall *setName(const QString &name);
+    PendingCall *setName(const QString &name);
 
     /**
      * Returns a system name (hostname) of the adapter.
@@ -133,7 +133,7 @@ public:
      * @param powered powered state
      * @return void pending call
      */
-    BluezQt::PendingCall *setPowered(bool powered);
+    PendingCall *setPowered(bool powered);
 
     /**
      * Returns whether the adapter is discoverable by other devices.
@@ -148,7 +148,7 @@ public:
      * @param discoverable discoverable state
      * @return void pending call
      */
-    BluezQt::PendingCall *setDiscoverable(bool discoverable);
+    PendingCall *setDiscoverable(bool discoverable);
 
     /**
      * Returns the discoverable timeout in seconds of the adapter.
@@ -168,7 +168,7 @@ public:
      * @param timeout timeout in seconds
      * @return void pending call
      */
-    BluezQt::PendingCall *setDiscoverableTimeout(quint32 timeout);
+    PendingCall *setDiscoverableTimeout(quint32 timeout);
 
     /**
      * Returns whether the adapter is pairable with other devices.
@@ -183,7 +183,7 @@ public:
      * @param pairable pairable state
      * @return void pending call
      */
-    BluezQt::PendingCall *setPairable(bool pairable);
+    PendingCall *setPairable(bool pairable);
 
     /**
      * Returns the pairable timeout in seconds of the adapter.
@@ -203,7 +203,7 @@ public:
      * @param timeout timeout in seconds
      * @return void pending call
      */
-    BluezQt::PendingCall *setPairableTimeout(quint32 timeout);
+    PendingCall *setPairableTimeout(quint32 timeout);
 
     /**
      * Returns whether the adapter is discovering for other devices
@@ -233,7 +233,7 @@ public:
      *
      * @return list of devices
      */
-    QList<BluezQt::DevicePtr> devices() const;
+    QList<DevicePtr> devices() const;
 
     /**
      * Returns a device for specified address.
@@ -241,7 +241,7 @@ public:
      * @param address address of device (eg. "40:79:6A:0C:39:75")
      * @return null if there is no device with specified address
      */
-    BluezQt::DevicePtr deviceForAddress(const QString &address) const;
+    DevicePtr deviceForAddress(const QString &address) const;
 
     /**
      * Starts device discovery.
@@ -251,7 +251,7 @@ public:
      * @return void pending call
      * @see discoverableTimeout()
      */
-    BluezQt::PendingCall *startDiscovery();
+    PendingCall *startDiscovery();
 
     /**
      * Stops device discovery.
@@ -260,7 +260,7 @@ public:
      *
      * @return void pending call
      */
-    BluezQt::PendingCall *stopDiscovery();
+    PendingCall *stopDiscovery();
 
     /**
      * Removes the specified device.
@@ -272,18 +272,18 @@ public:
      * @param device device to be removed
      * @return void pending call
      */
-    BluezQt::PendingCall *removeDevice(BluezQt::DevicePtr device);
+    PendingCall *removeDevice(DevicePtr device);
 
 Q_SIGNALS:
     /**
      * Indicates that the adapter was removed.
      */
-    void adapterRemoved(BluezQt::AdapterPtr adapter);
+    void adapterRemoved(AdapterPtr adapter);
 
     /**
      * Indicates that at least one of the adapter's properties have changed.
      */
-    void adapterChanged(BluezQt::AdapterPtr adapter);
+    void adapterChanged(AdapterPtr adapter);
 
     /**
      * Indicates that adapter's name have changed.
@@ -343,17 +343,17 @@ Q_SIGNALS:
     /**
      * Indicates that a new device was added (eg. found by discovery).
      */
-    void deviceAdded(BluezQt::DevicePtr device);
+    void deviceAdded(DevicePtr device);
 
     /**
      * Indicates that a device was removed.
      */
-    void deviceRemoved(BluezQt::DevicePtr device);
+    void deviceRemoved(DevicePtr device);
 
     /**
      * Indicates that at least one of the device's properties have changed.
      */
-    void deviceChanged(BluezQt::DevicePtr device);
+    void deviceChanged(DevicePtr device);
 
 private:
     explicit Adapter(const QString &address, const QVariantMap &properties);

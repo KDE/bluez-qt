@@ -196,8 +196,8 @@ bool Autotests::isBluez5Running()
 
 void Autotests::registerMetatypes()
 {
-    qRegisterMetaType<BluezQt::DevicePtr>("BluezQt::DevicePtr");
-    qRegisterMetaType<BluezQt::AdapterPtr>("BluezQt::AdapterPtr");
+    qRegisterMetaType<BluezQt::DevicePtr>("DevicePtr");
+    qRegisterMetaType<BluezQt::AdapterPtr>("AdapterPtr");
 }
 
 void Autotests::verifyPropertiesChangedSignal(const QSignalSpy &spy, const QString &propertyName, const QVariant &propertyValue)

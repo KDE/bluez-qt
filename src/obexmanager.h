@@ -99,7 +99,7 @@ public:
      *
      * @return quint32 pending call
      */
-    static BluezQt::PendingCall *startService();
+    static PendingCall *startService();
 
 public Q_SLOTS:
     /**

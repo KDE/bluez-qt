@@ -41,7 +41,7 @@ class ObexManager;
 class BLUEZQT_EXPORT InitObexManagerJob : public Job
 {
     Q_OBJECT
-    Q_PROPERTY(BluezQt::ObexManager* manager READ manager)
+    Q_PROPERTY(ObexManager* manager READ manager)
 
 public:
     /**

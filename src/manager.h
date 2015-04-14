@@ -92,9 +92,9 @@ class BLUEZQT_EXPORT Manager : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(BluezQt::AdapterPtr usableAdapter READ usableAdapter NOTIFY usableAdapterChanged)
-    Q_PROPERTY(QList<BluezQt::AdapterPtr> adapters READ adapters)
-    Q_PROPERTY(QList<BluezQt::DevicePtr> devices READ devices)
+    Q_PROPERTY(AdapterPtr usableAdapter READ usableAdapter NOTIFY usableAdapterChanged)
+    Q_PROPERTY(QList<AdapterPtr> adapters READ adapters)
+    Q_PROPERTY(QList<DevicePtr> devices READ devices)
     Q_PROPERTY(bool initialized READ isInitialized)
     Q_PROPERTY(bool operational READ isOperational NOTIFY operationalChanged)
     Q_PROPERTY(bool bluetoothOperational READ isBluetoothOperational NOTIFY bluetoothOperationalChanged)
@@ -204,7 +204,7 @@ public:
      *
      * @return quint32 pending call
      */
-    static BluezQt::PendingCall *startService();
+    static PendingCall *startService();
 
     /**
      * Returns an adapter for specified address.
@@ -212,7 +212,7 @@ public:
      * @param address address of adapter (eg. "1C:E5:C3:BC:94:7E")
      * @return null if there is no adapter with specified address
      */
-    BluezQt::AdapterPtr adapterForAddress(const QString &address) const;
+    AdapterPtr adapterForAddress(const QString &address) const;
 
     /**
      * Returns an adapter for specified UBI.
@@ -220,7 +220,7 @@ public:
      * @param ubi UBI of adapter (eg. "/org/bluez/hci0")
      * @return null if there is no adapter with specified UBI
      */
-    BluezQt::AdapterPtr adapterForUbi(const QString &ubi) const;
+    AdapterPtr adapterForUbi(const QString &ubi) const;
 
     /**
      * Returns a device for specified address.
@@ -232,7 +232,7 @@ public:
      *       in multiple adapters). In this case, the first found device will
      *       be returned while preferring powered adapters in search.
      */
-    BluezQt::DevicePtr deviceForAddress(const QString &address) const;
+    DevicePtr deviceForAddress(const QString &address) const;
 
     /**
      * Returns a device for specified UBI.
@@ -240,7 +240,7 @@ public:
      * @param ubi UBI of device (eg. "/org/bluez/hci0/dev_40_79_6A_0C_39_75")
      * @return null if there is no device with specified UBI
      */
-    BluezQt::DevicePtr deviceForUbi(const QString &ubi) const;
+    DevicePtr deviceForUbi(const QString &ubi) const;
 
     /**
      * Registers agent.
@@ -316,37 +316,37 @@ Q_SIGNALS:
     /**
      * Indicates that adapter was added.
      */
-    void adapterAdded(BluezQt::AdapterPtr adapter);
+    void adapterAdded(AdapterPtr adapter);
 
     /**
      * Indicates that adapter was removed.
      */
-    void adapterRemoved(BluezQt::AdapterPtr adapter);
+    void adapterRemoved(AdapterPtr adapter);
 
     /**
      * Indicates that at least one of the adapter's properties have changed.
      */
-    void adapterChanged(BluezQt::AdapterPtr adapter);
+    void adapterChanged(AdapterPtr adapter);
 
     /**
      * Indicates that a new device was added (eg. found by discovery).
      */
-    void deviceAdded(BluezQt::DevicePtr device);
+    void deviceAdded(DevicePtr device);
 
     /**
      * Indicates that a device was removed.
      */
-    void deviceRemoved(BluezQt::DevicePtr device);
+    void deviceRemoved(DevicePtr device);
 
     /**
      * Indicates that at least one of the device's properties have changed.
      */
-    void deviceChanged(BluezQt::DevicePtr device);
+    void deviceChanged(DevicePtr device);
 
     /**
      * Indicates that usable adapter have changed.
      */
-    void usableAdapterChanged(BluezQt::AdapterPtr adapter);
+    void usableAdapterChanged(AdapterPtr adapter);
 
     /**
      * Indicates that all adapters were removed.

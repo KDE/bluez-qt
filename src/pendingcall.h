@@ -167,7 +167,7 @@ Q_SIGNALS:
     /**
      * Indicates that the call have finished.
      */
-    void finished(BluezQt::PendingCall *call);
+    void finished(PendingCall *call);
 
 private:
     enum ReturnType {

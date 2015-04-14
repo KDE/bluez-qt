@@ -41,7 +41,7 @@ class Manager;
 class BLUEZQT_EXPORT InitManagerJob : public Job
 {
     Q_OBJECT
-    Q_PROPERTY(BluezQt::Manager* manager READ manager)
+    Q_PROPERTY(Manager* manager READ manager)
 
 public:
     /**
