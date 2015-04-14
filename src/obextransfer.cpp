@@ -107,11 +107,7 @@ void ObexTransferPrivate::propertiesChanged(const QString &interface, const QVar
         const QString &property = i.key();
 
         if (property == QLatin1String("Status")) {
-            ObexTransfer::Status changedStatus = stringToStatus(value.toString());
-            if (m_status != changedStatus) {
-                m_status = changedStatus;
-                Q_EMIT q.data()->statusChanged(m_status);
-            }
+            PROPERTY_CHANGED2(m_status, stringToStatus(value.toString()), statusChanged);
         } else if (property == QLatin1String("Transferred")) {
             PROPERTY_CHANGED(m_transferred, toUInt, transferredChanged);
         } else if (property == QLatin1String("Filename")) {

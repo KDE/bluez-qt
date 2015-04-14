@@ -51,7 +51,6 @@ public:
     void namePropertyChanged(const QString &value);
     void aliasPropertyChanged(const QString &value);
     void classPropertyChanged(quint32 value);
-    void uuidsPropertyChanged(const QStringList &value);
 
     QWeakPointer<Device> q;
     BluezDevice *m_bluezDevice;

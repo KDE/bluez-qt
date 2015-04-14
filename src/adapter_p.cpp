@@ -121,7 +121,7 @@ void AdapterPrivate::propertiesChanged(const QString &interface, const QVariantM
         } else if (property == QLatin1String("Modalias")) {
             PROPERTY_CHANGED(m_modalias, toString, modaliasChanged);
         } else if (property == QLatin1String("UUIDs")) {
-            uuidsPropertyChanged(stringListToUpper(value.toStringList()));
+            PROPERTY_CHANGED2(m_uuids, stringListToUpper(value.toStringList()), uuidsChanged);
         }
     }
 
@@ -133,15 +133,5 @@ void AdapterPrivate::propertiesChanged(const QString &interface, const QVariantM
 
     Q_EMIT q.data()->adapterChanged(q.toStrongRef());
 }
-
-void AdapterPrivate::uuidsPropertyChanged(const QStringList &value)
-{
-    if (m_uuids != value) {
-        m_uuids = value;
-        Q_EMIT q.data()->uuidsChanged(m_uuids);
-    }
-}
-
-#undef PROPERTY_CHANGED
 
 } // namespace BluezQt

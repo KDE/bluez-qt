@@ -30,6 +30,13 @@
         Q_EMIT q.data()->signal(var); \
     }
 
+#define PROPERTY_CHANGED2(var, value, signal) \
+    const auto &val = value; \
+    if (var != val) { \
+        var = val; \
+        Q_EMIT q.data()->signal(var); \
+    }
+
 // Clears property value and emit propertyChanged signal
 #define PROPERTY_INVALIDATED(var, empty, signal) \
     if (var != empty) { \

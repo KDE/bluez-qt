@@ -112,7 +112,7 @@ void DevicePrivate::propertiesChanged(const QString &interface, const QVariantMa
         } else if (property == QLatin1String("Modalias")) {
             PROPERTY_CHANGED(m_modalias, toString, modaliasChanged);
         } else if (property == QLatin1String("UUIDs")) {
-            uuidsPropertyChanged(stringListToUpper(value.toStringList()));
+            PROPERTY_CHANGED2(m_uuids, stringListToUpper(value.toStringList()), uuidsChanged);
         }
     }
 
@@ -130,7 +130,7 @@ void DevicePrivate::propertiesChanged(const QString &interface, const QVariantMa
         } else if (property == QLatin1String("Modalias")) {
             PROPERTY_INVALIDATED(m_modalias, QString(), modaliasChanged);
         } else if (property == QLatin1String("UUIDs")) {
-            uuidsPropertyChanged(QStringList());
+            PROPERTY_INVALIDATED(m_uuids, QStringList(), uuidsChanged);
         }
     }
 
@@ -163,15 +163,5 @@ void DevicePrivate::classPropertyChanged(quint32 value)
         Q_EMIT q.data()->deviceTypeChanged(q.data()->deviceType());
     }
 }
-
-void DevicePrivate::uuidsPropertyChanged(const QStringList &value)
-{
-    if (m_uuids != value) {
-        m_uuids = value;
-        Q_EMIT q.data()->uuidsChanged(m_uuids);
-    }
-}
-
-#undef PROPERTY_CHANGED
 
 } // namespace BluezQt
