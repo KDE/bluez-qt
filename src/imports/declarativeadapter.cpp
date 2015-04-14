@@ -21,22 +21,22 @@
  */
 
 #include "declarativeadapter.h"
-#include "device.h"
+#include "declarativedevice.h"
 
-static int devicesCountFunction(QQmlListProperty<BluezQt::Device> *property)
+static int devicesCountFunction(QQmlListProperty<DeclarativeDevice> *property)
 {
     Q_ASSERT(qobject_cast<DeclarativeAdapter*>(property->object));
     DeclarativeAdapter *adapter = static_cast<DeclarativeAdapter*>(property->object);
 
-    return adapter->m_adapter->devices().count();
+    return adapter->m_devices.count();
 }
 
-static BluezQt::Device *devicesAtFunction(QQmlListProperty<BluezQt::Device> *property, int index)
+static DeclarativeDevice *devicesAtFunction(QQmlListProperty<DeclarativeDevice> *property, int index)
 {
     Q_ASSERT(qobject_cast<DeclarativeAdapter*>(property->object));
     DeclarativeAdapter *adapter = static_cast<DeclarativeAdapter*>(property->object);
 
-    return adapter->m_adapter->devices().at(index).data();
+    return adapter->m_devices.values().at(index);
 }
 
 DeclarativeAdapter::DeclarativeAdapter(BluezQt::AdapterPtr adapter, QObject *parent)
@@ -55,6 +55,9 @@ DeclarativeAdapter::DeclarativeAdapter(BluezQt::AdapterPtr adapter, QObject *par
     connect(m_adapter.data(), &BluezQt::Adapter::uuidsChanged, this, &DeclarativeAdapter::uuidsChanged);
     connect(m_adapter.data(), &BluezQt::Adapter::modaliasChanged, this, &DeclarativeAdapter::modaliasChanged);
 
+    connect(m_adapter.data(), &BluezQt::Adapter::deviceAdded, this, &DeclarativeAdapter::slotDeviceAdded);
+    connect(m_adapter.data(), &BluezQt::Adapter::deviceRemoved, this, &DeclarativeAdapter::slotDeviceRemoved);
+
     connect(m_adapter.data(), &BluezQt::Adapter::adapterRemoved, this, [this]() {
         Q_EMIT adapterRemoved(this);
     });
@@ -63,18 +66,8 @@ DeclarativeAdapter::DeclarativeAdapter(BluezQt::AdapterPtr adapter, QObject *par
         Q_EMIT adapterChanged(this);
     });
 
-    connect(m_adapter.data(), &BluezQt::Adapter::deviceAdded, this, [this](BluezQt::DevicePtr device) {
-        Q_EMIT deviceFound(device.data());
-        Q_EMIT devicesChanged(devices());
-    });
-
-    connect(m_adapter.data(), &BluezQt::Adapter::deviceRemoved, this, [this](BluezQt::DevicePtr device) {
-        Q_EMIT deviceRemoved(device.data());
-        Q_EMIT devicesChanged(devices());
-    });
-
     connect(m_adapter.data(), &BluezQt::Adapter::deviceChanged, this, [this](BluezQt::DevicePtr device) {
-        Q_EMIT deviceChanged(device.data());
+        Q_EMIT deviceChanged(declarativeDeviceFromPtr(device));
     });
 }
 
@@ -93,9 +86,9 @@ QString DeclarativeAdapter::name() const
     return m_adapter->name();
 }
 
-BluezQt::PendingCall *DeclarativeAdapter::setName(const QString &name)
+void DeclarativeAdapter::setName(const QString &name)
 {
-    return m_adapter->setName(name);
+    m_adapter->setName(name);
 }
 
 QString DeclarativeAdapter::systemName() const
@@ -113,9 +106,9 @@ bool DeclarativeAdapter::isPowered() const
     return m_adapter->isPowered();
 }
 
-BluezQt::PendingCall *DeclarativeAdapter::setPowered(bool powered)
+void DeclarativeAdapter::setPowered(bool powered)
 {
-    return m_adapter->setPowered(powered);
+    m_adapter->setPowered(powered);
 }
 
 bool DeclarativeAdapter::isDiscoverable() const
@@ -123,9 +116,9 @@ bool DeclarativeAdapter::isDiscoverable() const
     return m_adapter->isDiscoverable();
 }
 
-BluezQt::PendingCall *DeclarativeAdapter::setDiscoverable(bool discoverable)
+void DeclarativeAdapter::setDiscoverable(bool discoverable)
 {
-    return m_adapter->setDiscoverable(discoverable);
+    m_adapter->setDiscoverable(discoverable);
 }
 
 quint32 DeclarativeAdapter::discoverableTimeout() const
@@ -133,9 +126,9 @@ quint32 DeclarativeAdapter::discoverableTimeout() const
     return m_adapter->discoverableTimeout();
 }
 
-BluezQt::PendingCall *DeclarativeAdapter::setDiscoverableTimeout(quint32 timeout)
+void DeclarativeAdapter::setDiscoverableTimeout(quint32 timeout)
 {
-    return m_adapter->setDiscoverableTimeout(timeout);
+    m_adapter->setDiscoverableTimeout(timeout);
 }
 
 bool DeclarativeAdapter::isPairable() const
@@ -143,9 +136,9 @@ bool DeclarativeAdapter::isPairable() const
     return m_adapter->isPairable();
 }
 
-BluezQt::PendingCall *DeclarativeAdapter::setPairable(bool pairable)
+void DeclarativeAdapter::setPairable(bool pairable)
 {
-    return m_adapter->setPairable(pairable);
+    m_adapter->setPairable(pairable);
 }
 
 quint32 DeclarativeAdapter::pairableTimeout() const
@@ -153,9 +146,9 @@ quint32 DeclarativeAdapter::pairableTimeout() const
     return m_adapter->pairableTimeout();
 }
 
-BluezQt::PendingCall *DeclarativeAdapter::setPairableTimeout(quint32 timeout)
+void DeclarativeAdapter::setPairableTimeout(quint32 timeout)
 {
-    return m_adapter->setPairableTimeout(timeout);
+    m_adapter->setPairableTimeout(timeout);
 }
 
 bool DeclarativeAdapter::isDiscovering()
@@ -173,14 +166,14 @@ QString DeclarativeAdapter::modalias() const
     return m_adapter->modalias();
 }
 
-QQmlListProperty<BluezQt::Device> DeclarativeAdapter::devices()
+QQmlListProperty<DeclarativeDevice> DeclarativeAdapter::devices()
 {
-    return QQmlListProperty<BluezQt::Device>(this, 0, devicesCountFunction, devicesAtFunction);
+    return QQmlListProperty<DeclarativeDevice>(this, 0, devicesCountFunction, devicesAtFunction);
 }
 
-BluezQt::Device *DeclarativeAdapter::deviceForAddress(const QString &address) const
+DeclarativeDevice *DeclarativeAdapter::deviceForAddress(const QString &address) const
 {
-    return m_adapter->deviceForAddress(address).data();
+    return declarativeDeviceFromPtr(m_adapter->deviceForAddress(address));
 }
 
 BluezQt::PendingCall *DeclarativeAdapter::startDiscovery()
@@ -193,7 +186,27 @@ BluezQt::PendingCall *DeclarativeAdapter::stopDiscovery()
     return m_adapter->stopDiscovery();
 }
 
-BluezQt::PendingCall *DeclarativeAdapter::removeDevice(BluezQt::Device *device)
+BluezQt::PendingCall *DeclarativeAdapter::removeDevice(DeclarativeDevice *device)
 {
     return m_adapter->removeDevice(m_adapter->deviceForAddress(device->address()));
+}
+
+void DeclarativeAdapter::slotDeviceAdded(BluezQt::DevicePtr device)
+{
+    Q_EMIT deviceFound(declarativeDeviceFromPtr(device));
+    Q_EMIT devicesChanged(devices());
+}
+
+void DeclarativeAdapter::slotDeviceRemoved(BluezQt::DevicePtr device)
+{
+    Q_EMIT deviceRemoved(declarativeDeviceFromPtr(device));
+    Q_EMIT devicesChanged(devices());
+}
+
+DeclarativeDevice *DeclarativeAdapter::declarativeDeviceFromPtr(BluezQt::DevicePtr ptr) const
+{
+    if (!ptr) {
+        return Q_NULLPTR;
+    }
+    return m_devices.value(ptr->ubi());
 }

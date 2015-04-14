@@ -27,6 +27,8 @@
 
 #include <QQmlListProperty>
 
+class DeclarativeDevice;
+
 class DeclarativeAdapter : public QObject
 {
     Q_OBJECT
@@ -44,7 +46,7 @@ class DeclarativeAdapter : public QObject
     Q_PROPERTY(bool discovering READ isDiscovering NOTIFY discoveringChanged)
     Q_PROPERTY(QStringList uuids READ uuids NOTIFY uuidsChanged)
     Q_PROPERTY(QString modalias READ modalias NOTIFY modaliasChanged)
-    Q_PROPERTY(QQmlListProperty<BluezQt::Device> devices READ devices NOTIFY devicesChanged)
+    Q_PROPERTY(QQmlListProperty<DeclarativeDevice> devices READ devices NOTIFY devicesChanged)
 
 public:
     explicit DeclarativeAdapter(BluezQt::AdapterPtr adapter, QObject *parent = Q_NULLPTR);
@@ -54,26 +56,26 @@ public:
     QString address() const;
 
     QString name() const;
-    BluezQt::PendingCall *setName(const QString &name);
+    void setName(const QString &name);
 
     QString systemName() const;
 
     quint32 adapterClass() const;
 
     bool isPowered() const;
-    BluezQt::PendingCall *setPowered(bool powered);
+    void setPowered(bool powered);
 
     bool isDiscoverable() const;
-    BluezQt::PendingCall *setDiscoverable(bool discoverable);
+    void setDiscoverable(bool discoverable);
 
     quint32 discoverableTimeout() const;
-    BluezQt::PendingCall *setDiscoverableTimeout(quint32 timeout);
+    void setDiscoverableTimeout(quint32 timeout);
 
     bool isPairable() const;
-    BluezQt::PendingCall *setPairable(bool pairable);
+    void setPairable(bool pairable);
 
     quint32 pairableTimeout() const;
-    BluezQt::PendingCall *setPairableTimeout(quint32 timeout);
+    void setPairableTimeout(quint32 timeout);
 
     bool isDiscovering();
 
@@ -81,15 +83,16 @@ public:
 
     QString modalias() const;
 
-    QQmlListProperty<BluezQt::Device> devices();
+    QQmlListProperty<DeclarativeDevice> devices();
 
     BluezQt::AdapterPtr m_adapter;
+    QHash<QString, DeclarativeDevice*> m_devices;
 
 public Q_SLOTS:
-    BluezQt::Device *deviceForAddress(const QString &address) const;
+    DeclarativeDevice *deviceForAddress(const QString &address) const;
     BluezQt::PendingCall *startDiscovery();
     BluezQt::PendingCall *stopDiscovery();
-    BluezQt::PendingCall *removeDevice(BluezQt::Device *device);
+    BluezQt::PendingCall *removeDevice(DeclarativeDevice *device);
 
 Q_SIGNALS:
     void adapterRemoved(DeclarativeAdapter *adapter);
@@ -105,12 +108,18 @@ Q_SIGNALS:
     void discoveringChanged(bool discovering);
     void uuidsChanged(const QStringList &uuids);
     void modaliasChanged(const QString &modalias);
-    void deviceFound(BluezQt::Device *device);
-    void deviceRemoved(BluezQt::Device *device);
-    void deviceChanged(BluezQt::Device *device);
+    void deviceFound(DeclarativeDevice *device);
+    void deviceRemoved(DeclarativeDevice *device);
+    void deviceChanged(DeclarativeDevice *device);
 
-    void devicesChanged(QQmlListProperty<BluezQt::Device> devices);
+    void devicesChanged(QQmlListProperty<DeclarativeDevice> devices);
 
+private Q_SLOTS:
+    void slotDeviceAdded(BluezQt::DevicePtr device);
+    void slotDeviceRemoved(BluezQt::DevicePtr device);
+
+private:
+    DeclarativeDevice *declarativeDeviceFromPtr(BluezQt::DevicePtr ptr) const;
 };
 
 #endif // DECLARATIVEADAPTER_H

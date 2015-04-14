@@ -23,6 +23,7 @@
 #include "declarativedevicesmodel.h"
 #include "declarativemanager.h"
 #include "declarativeadapter.h"
+#include "declarativedevice.h"
 #include "device.h"
 
 DeclarativeDevicesModel::DeclarativeDevicesModel(QObject *parent)
@@ -61,12 +62,15 @@ QVariant DeclarativeDevicesModel::data(const QModelIndex &index, int role) const
     }
 
     BluezQt::DevicePtr dev = m_model->device(mapToSource(index));
+    if (!dev) {
+        return QSortFilterProxyModel::data(index, role);
+    }
 
     switch (role) {
     case DeviceRole:
-        return QVariant::fromValue(dev.data());
+        return QVariant::fromValue(m_manager->declarativeDeviceFromPtr(dev));
     case AdapterRole:
-        return QVariant::fromValue(m_manager->adapterForDevice(dev.data()));
+        return QVariant::fromValue(m_manager->declarativeAdapterFromPtr(dev->adapter()));
     default:
         return QSortFilterProxyModel::data(index, role);
     }
