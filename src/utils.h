@@ -39,6 +39,7 @@ QString orgFreedesktopDBus();
 QString orgBluez();
 QString orgBluezAdapter1();
 QString orgBluezDevice1();
+QString orgBluezMediaPlayer1();
 QString orgBluezAgentManager1();
 QString orgBluezProfileManager1();
 QString orgBluezObex();

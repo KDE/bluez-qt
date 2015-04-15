@@ -23,9 +23,9 @@
 #ifndef DECLARATIVEADAPTER_H
 #define DECLARATIVEADAPTER_H
 
-#include "adapter.h"
-
 #include <QQmlListProperty>
+
+#include "adapter.h"
 
 class DeclarativeDevice;
 

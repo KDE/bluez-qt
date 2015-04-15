@@ -188,6 +188,7 @@ private:
     friend class Manager;
     friend class Adapter;
     friend class Device;
+    friend class MediaPlayer;
     friend class ObexManager;
     friend class ObexTransfer;
     friend class ObexSession;

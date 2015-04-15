@@ -73,6 +73,20 @@ void DevicePrivate::init(const QVariantMap &properties)
     m_modalias = properties.value(QStringLiteral("Modalias")).toString();
 }
 
+void DevicePrivate::addMediaPlayer(MediaPlayerPtr player)
+{
+    m_mediaPlayer = player;
+    Q_EMIT q.data()->mediaPlayerChanged(m_mediaPlayer);
+    Q_EMIT q.data()->deviceChanged(q.toStrongRef());
+}
+
+void DevicePrivate::removeMediaPlayer()
+{
+    m_mediaPlayer.clear();
+    Q_EMIT q.data()->mediaPlayerChanged(m_mediaPlayer);
+    Q_EMIT q.data()->deviceChanged(q.toStrongRef());
+}
+
 QDBusPendingReply<> DevicePrivate::setDBusProperty(const QString &name, const QVariant &value)
 {
     return m_dbusProperties->Set(Strings::orgBluezDevice1(), name, QDBusVariant(value));

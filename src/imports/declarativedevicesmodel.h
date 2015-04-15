@@ -23,9 +23,9 @@
 #ifndef DECLARATIVEDEVICESMODEL_H
 #define DECLARATIVEDEVICESMODEL_H
 
-#include "devicesmodel.h"
-
 #include <QSortFilterProxyModel>
+
+#include "devicesmodel.h"
 
 class DeclarativeManager;
 
@@ -37,7 +37,8 @@ class DeclarativeDevicesModel : public QSortFilterProxyModel
 public:
     enum DeclarativeDeviceRoles {
         DeviceRole = BluezQt::DevicesModel::LastRole + 1,
-        AdapterRole = BluezQt::DevicesModel::LastRole + 2
+        AdapterRole = BluezQt::DevicesModel::LastRole + 2,
+        MediaPlayerRole = BluezQt::DevicesModel::LastRole + 3
     };
 
     DeclarativeDevicesModel(QObject *parent = Q_NULLPTR);

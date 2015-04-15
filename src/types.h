@@ -30,10 +30,12 @@ namespace BluezQt
 
 class Adapter;
 class Device;
+class MediaPlayer;
 class ObexTransfer;
 
 typedef QSharedPointer<BluezQt::Adapter> AdapterPtr;
 typedef QSharedPointer<BluezQt::Device> DevicePtr;
+typedef QSharedPointer<BluezQt::MediaPlayer> MediaPlayerPtr;
 typedef QSharedPointer<BluezQt::ObexTransfer> ObexTransferPtr;
 
 }

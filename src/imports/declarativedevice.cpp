@@ -22,11 +22,15 @@
 
 #include "declarativedevice.h"
 #include "declarativeadapter.h"
+#include "declarativemediaplayer.h"
+
+#include <QStringList>
 
 DeclarativeDevice::DeclarativeDevice(BluezQt::DevicePtr device, DeclarativeAdapter *adapter)
     : QObject(adapter)
     , m_device(device)
     , m_adapter(adapter)
+    , m_mediaPlayer(0)
 {
     connect(m_device.data(), &BluezQt::Device::nameChanged, this, &DeclarativeDevice::nameChanged);
     connect(m_device.data(), &BluezQt::Device::friendlyNameChanged, this, &DeclarativeDevice::friendlyNameChanged);
@@ -50,6 +54,11 @@ DeclarativeDevice::DeclarativeDevice(BluezQt::DevicePtr device, DeclarativeAdapt
 
     connect(m_device.data(), &BluezQt::Device::deviceChanged, this, [this]() {
         Q_EMIT deviceChanged(this);
+    });
+
+    connect(m_device.data(), &BluezQt::Device::mediaPlayerChanged, this, [this]() {
+        updateMediaPlayer();
+        Q_EMIT mediaPlayerChanged(m_mediaPlayer);
     });
 }
 
@@ -153,6 +162,11 @@ QString DeclarativeDevice::modalias() const
     return m_device->modalias();
 }
 
+DeclarativeMediaPlayer *DeclarativeDevice::mediaPlayer() const
+{
+    return m_mediaPlayer;
+}
+
 DeclarativeAdapter *DeclarativeDevice::adapter() const
 {
     return m_adapter;
@@ -186,4 +200,14 @@ BluezQt::PendingCall *DeclarativeDevice::pair()
 BluezQt::PendingCall *DeclarativeDevice::cancelPairing()
 {
     return m_device->cancelPairing();
+}
+
+void DeclarativeDevice::updateMediaPlayer()
+{
+    if (m_device->mediaPlayer()) {
+        m_mediaPlayer = new DeclarativeMediaPlayer(m_device->mediaPlayer(), this);
+    } else {
+        m_mediaPlayer->deleteLater();
+        m_mediaPlayer = Q_NULLPTR;
+    }
 }

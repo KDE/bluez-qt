@@ -23,10 +23,10 @@
 #ifndef DECLARATIVEMANAGER_H
 #define DECLARATIVEMANAGER_H
 
-#include "manager.h"
-
 #include <QHash>
 #include <QQmlListProperty>
+
+#include "manager.h"
 
 class DeclarativeDevice;
 class DeclarativeAdapter;

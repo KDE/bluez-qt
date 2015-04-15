@@ -24,7 +24,7 @@
 #include "declarativemanager.h"
 #include "declarativeadapter.h"
 #include "declarativedevice.h"
-#include "device.h"
+#include "declarativemediaplayer.h"
 
 DeclarativeDevicesModel::DeclarativeDevicesModel(QObject *parent)
     : QSortFilterProxyModel(parent)
@@ -51,6 +51,7 @@ QHash<int, QByteArray> DeclarativeDevicesModel::roleNames() const
 
     roles[DeviceRole] = QByteArrayLiteral("Device");
     roles[AdapterRole] = QByteArrayLiteral("Adapter");
+    roles[MediaPlayerRole] = QByteArrayLiteral("MediaPlayer");
 
     return roles;
 }
@@ -71,6 +72,11 @@ QVariant DeclarativeDevicesModel::data(const QModelIndex &index, int role) const
         return QVariant::fromValue(m_manager->declarativeDeviceFromPtr(dev));
     case AdapterRole:
         return QVariant::fromValue(m_manager->declarativeAdapterFromPtr(dev->adapter()));
+    case MediaPlayerRole:
+        if (DeclarativeDevice *device = m_manager->declarativeDeviceFromPtr(dev)) {
+            return QVariant::fromValue(device->mediaPlayer());
+        }
+        // fallthrough
     default:
         return QSortFilterProxyModel::data(index, role);
     }

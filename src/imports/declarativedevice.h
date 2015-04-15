@@ -23,11 +23,10 @@
 #ifndef DECLARATIVEDEVICE_H
 #define DECLARATIVEDEVICE_H
 
-#include <QStringList>
-
 #include "device.h"
 
 class DeclarativeAdapter;
+class DeclarativeMediaPlayer;
 
 class DeclarativeDevice : public QObject
 {
@@ -50,6 +49,7 @@ class DeclarativeDevice : public QObject
     Q_PROPERTY(bool connected READ isConnected NOTIFY connectedChanged)
     Q_PROPERTY(QStringList uuids READ uuids NOTIFY uuidsChanged)
     Q_PROPERTY(QString modalias READ modalias NOTIFY modaliasChanged)
+    Q_PROPERTY(DeclarativeMediaPlayer* mediaPlayer READ mediaPlayer NOTIFY mediaPlayerChanged)
     Q_PROPERTY(DeclarativeAdapter* adapter READ adapter)
 
 public:
@@ -92,6 +92,8 @@ public:
 
     QString modalias() const;
 
+    DeclarativeMediaPlayer *mediaPlayer() const;
+
     DeclarativeAdapter *adapter() const;
 
 public Q_SLOTS:
@@ -120,10 +122,14 @@ Q_SIGNALS:
     void connectedChanged(bool connected);
     void uuidsChanged(const QStringList &uuids);
     void modaliasChanged(const QString &modalias);
+    void mediaPlayerChanged(DeclarativeMediaPlayer *mediaPlayer);
 
 private:
+    void updateMediaPlayer();
+
     BluezQt::DevicePtr m_device;
     DeclarativeAdapter *m_adapter;
+    DeclarativeMediaPlayer *m_mediaPlayer;
 };
 
 #endif // DECLARATIVEDEVICE_H

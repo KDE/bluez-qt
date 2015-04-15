@@ -69,8 +69,10 @@ public:
 
     void addAdapter(const QString &adapterPath, const QVariantMap &properties);
     void addDevice(const QString &devicePath, const QVariantMap &properties);
+    void addMediaPlayer(const QString &playerPath, const QVariantMap &properties);
     void removeAdapter(const QString &adapterPath);
     void removeDevice(const QString &devicePath);
+    void removeMediaPlayer(const QString &playerPath);
     void setUsableAdapter(AdapterPtr adapter);
     bool rfkillBlocked() const;
 

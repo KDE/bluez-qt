@@ -160,6 +160,11 @@ QString Device::modalias() const
     return d->m_modalias;
 }
 
+MediaPlayerPtr Device::mediaPlayer() const
+{
+    return d->m_mediaPlayer;
+}
+
 AdapterPtr Device::adapter() const
 {
     return d->m_adapter;

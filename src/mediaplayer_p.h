@@ -1,7 +1,7 @@
 /*
  * BluezQt - Asynchronous Bluez wrapper library
  *
- * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
+ * Copyright (C) 2015 David Rosca <nowrep@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,63 +20,45 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BLUEZQT_DEVICE_P_H
-#define BLUEZQT_DEVICE_P_H
+#ifndef BLUEZQT_MEDIAPLAYER_P_H
+#define BLUEZQT_MEDIAPLAYER_P_H
 
 #include <QObject>
-#include <QStringList>
 
 #include "types.h"
-#include "bluezdevice1.h"
+#include "mediaplayer.h"
+#include "bluezmediaplayer1.h"
 #include "dbusproperties.h"
 
 namespace BluezQt
 {
 
-typedef org::bluez::Device1 BluezDevice;
+typedef org::bluez::MediaPlayer1 BluezMediaPlayer;
 typedef org::freedesktop::DBus::Properties DBusProperties;
 
-class Device;
-class Adapter;
-
-class DevicePrivate : public QObject
+class MediaPlayerPrivate : public QObject
 {
 public:
-    explicit DevicePrivate(const QString &path, const QVariantMap &properties, AdapterPtr adapter);
+    explicit MediaPlayerPrivate(const QString &path, const QVariantMap &properties);
 
     void init(const QVariantMap &properties);
 
-    void addMediaPlayer(MediaPlayerPtr player);
-    void removeMediaPlayer();
-
     QDBusPendingReply<> setDBusProperty(const QString &name, const QVariant &value);
     void propertiesChanged(const QString &interface, const QVariantMap &changed, const QStringList &invalidated);
-    void namePropertyChanged(const QString &value);
-    void aliasPropertyChanged(const QString &value);
-    void classPropertyChanged(quint32 value);
 
-    QWeakPointer<Device> q;
-    BluezDevice *m_bluezDevice;
+    QWeakPointer<MediaPlayer> q;
+    BluezMediaPlayer *m_bluezMediaPlayer;
     DBusProperties *m_dbusProperties;
 
-    QString m_address;
     QString m_name;
-    QString m_alias;
-    quint32 m_deviceClass;
-    quint16 m_appearance;
-    QString m_icon;
-    bool m_paired;
-    bool m_trusted;
-    bool m_blocked;
-    bool m_legacyPairing;
-    qint16 m_rssi;
-    bool m_connected;
-    QStringList m_uuids;
-    QString m_modalias;
-    AdapterPtr m_adapter;
-    MediaPlayerPtr m_mediaPlayer;
+    MediaPlayer::Equalizer m_equalizer;
+    MediaPlayer::Repeat m_repeat;
+    MediaPlayer::Shuffle m_shuffle;
+    MediaPlayer::Status m_status;
+    MediaPlayer::Track m_track;
+    quint32 m_position;
 };
 
 } // namespace BluezQt
 
-#endif // BLUEZQT_DEVICE_P_H
+#endif // BLUEZQT_MEDIAPLAYER_P_H

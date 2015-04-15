@@ -39,6 +39,7 @@ public:
     QString orgBluez;
     QString orgBluezAdapter1;
     QString orgBluezDevice1;
+    QString orgBluezMediaPlayer1;
     QString orgBluezAgentManager1;
     QString orgBluezProfileManager1;
     QString orgBluezObex;
@@ -55,6 +56,7 @@ GlobalData::GlobalData()
     orgBluez = QStringLiteral("org.bluez");
     orgBluezAdapter1 = QStringLiteral("org.bluez.Adapter1");
     orgBluezDevice1 = QStringLiteral("org.bluez.Device1");
+    orgBluezMediaPlayer1 = QStringLiteral("org.bluez.MediaPlayer1");
     orgBluezAgentManager1 = QStringLiteral("org.bluez.AgentManager1");
     orgBluezProfileManager1 = QStringLiteral("org.bluez.ProfileManager1");
     orgBluezObex = QStringLiteral("org.bluez.obex");
@@ -92,6 +94,11 @@ QString Strings::orgBluezAdapter1()
 QString Strings::orgBluezDevice1()
 {
     return globalData->orgBluezDevice1;
+}
+
+QString Strings::orgBluezMediaPlayer1()
+{
+    return globalData->orgBluezMediaPlayer1;
 }
 
 QString Strings::orgBluezAgentManager1()
