@@ -246,9 +246,9 @@ void DeviceTest::deviceRemovedTest()
     }
 
     Q_FOREACH (const DeviceUnit &unit, m_units) {
-        QSignalSpy managerSpy(m_manager, SIGNAL(deviceRemoved(BluezQt::DevicePtr)));
-        QSignalSpy adapterSpy(unit.device->adapter().data(), SIGNAL(deviceRemoved(BluezQt::DevicePtr)));
-        QSignalSpy deviceSpy(unit.device.data(), SIGNAL(deviceRemoved(BluezQt::DevicePtr)));
+        QSignalSpy managerSpy(m_manager, SIGNAL(deviceRemoved(DevicePtr)));
+        QSignalSpy adapterSpy(unit.device->adapter().data(), SIGNAL(deviceRemoved(DevicePtr)));
+        QSignalSpy deviceSpy(unit.device.data(), SIGNAL(deviceRemoved(DevicePtr)));
 
         QVariantMap properties;
         properties[QStringLiteral("Path")] = QVariant::fromValue(QDBusObjectPath(unit.device->ubi()));
