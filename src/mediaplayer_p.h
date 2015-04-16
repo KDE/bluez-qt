@@ -38,6 +38,8 @@ typedef org::freedesktop::DBus::Properties DBusProperties;
 
 class MediaPlayerPrivate : public QObject
 {
+    Q_OBJECT
+
 public:
     explicit MediaPlayerPrivate(const QString &path, const QVariantMap &properties);
 

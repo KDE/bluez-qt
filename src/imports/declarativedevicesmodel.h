@@ -41,7 +41,7 @@ public:
         MediaPlayerRole = BluezQt::DevicesModel::LastRole + 3
     };
 
-    DeclarativeDevicesModel(QObject *parent = Q_NULLPTR);
+    explicit DeclarativeDevicesModel(QObject *parent = Q_NULLPTR);
 
     DeclarativeManager *manager() const;
     void setManager(DeclarativeManager *manager);

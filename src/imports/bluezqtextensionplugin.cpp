@@ -32,11 +32,6 @@
 
 #include <QtQml>
 
-BluezQtExtensionPlugin::BluezQtExtensionPlugin(QObject *parent)
-    : QQmlExtensionPlugin(parent)
-{
-}
-
 static QJSValue services_singleton(QQmlEngine *engine, QJSEngine *scriptEngine)
 {
     Q_UNUSED(engine)

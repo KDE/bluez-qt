@@ -31,8 +31,6 @@ class BluezQtExtensionPlugin: public QQmlExtensionPlugin
     Q_PLUGIN_METADATA(IID "org.kde.bluezqt")
 
 public:
-    BluezQtExtensionPlugin(QObject *parent = Q_NULLPTR);
-
     void registerTypes(const char *uri) Q_DECL_OVERRIDE;
 
 };

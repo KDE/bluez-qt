@@ -7,6 +7,8 @@ class ObjectManager;
 
 class DeviceManager : public QObject
 {
+    Q_OBJECT
+
 public:
     explicit DeviceManager(ObjectManager *parent = Q_NULLPTR);
 
