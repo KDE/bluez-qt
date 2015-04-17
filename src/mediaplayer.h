@@ -39,6 +39,8 @@ class PendingCall;
  * Media player.
  *
  * This class represents a media player interface.
+ *
+ * @since 5.4
  */
 class BLUEZQT_EXPORT MediaPlayer : public QObject
 {
