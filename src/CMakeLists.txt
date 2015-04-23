@@ -8,6 +8,7 @@ set(bluezqt_SRCS
     device_p.cpp
     mediaplayer.cpp
     mediaplayer_p.cpp
+    mediaplayertrack.cpp
     devicesmodel.cpp
     job.cpp
     initmanagerjob.cpp

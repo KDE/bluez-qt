@@ -73,21 +73,6 @@ static MediaPlayer::Status stringToStatus(const QString &status)
     return MediaPlayer::Error;
 }
 
-static MediaPlayer::Track variantToTrack(const QVariant &variant)
-{
-    const QVariantMap &map = qdbus_cast<QVariantMap>(variant);
-
-    MediaPlayer::Track track;
-    track.title = map.value(QStringLiteral("Title")).toString();
-    track.artist = map.value(QStringLiteral("Artist")).toString();
-    track.album = map.value(QStringLiteral("Album")).toString();
-    track.genre = map.value(QStringLiteral("Genre")).toString();
-    track.numberOfTracks = map.value(QStringLiteral("NumberOfTracks")).toUInt();
-    track.trackNumber = map.value(QStringLiteral("TrackNumber")).toUInt();
-    track.duration = map.value(QStringLiteral("Duration")).toUInt();
-    return track;
-}
-
 MediaPlayerPrivate::MediaPlayerPrivate(const QString &path, const QVariantMap &properties)
     : QObject()
     , m_dbusProperties(0)
@@ -127,7 +112,9 @@ QDBusPendingReply<> MediaPlayerPrivate::setDBusProperty(const QString &name, con
 
 void MediaPlayerPrivate::propertiesChanged(const QString &interface, const QVariantMap &changed, const QStringList &invalidated)
 {
-    Q_UNUSED(interface)
+    if (interface != Strings::orgBluezMediaPlayer1()) {
+        return;
+    }
 
     QVariantMap::const_iterator i;
     for (i = changed.constBegin(); i != changed.constEnd(); ++i) {
@@ -170,6 +157,17 @@ void MediaPlayerPrivate::propertiesChanged(const QString &interface, const QVari
             Q_EMIT q.data()->trackChanged(m_track);
         }
     }
+}
+
+MediaPlayerTrackPtr MediaPlayerPrivate::variantToTrack(const QVariant &variant) const
+{
+    const QVariantMap &properties = qdbus_cast<QVariantMap>(variant);
+
+    if (properties.isEmpty()) {
+        return MediaPlayerTrackPtr();
+    }
+
+    return MediaPlayerTrackPtr(new MediaPlayerTrack(properties));
 }
 
 } // namespace BluezQt

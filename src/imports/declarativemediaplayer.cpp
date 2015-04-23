@@ -128,13 +128,13 @@ BluezQt::PendingCall *DeclarativeMediaPlayer::rewind()
 
 void DeclarativeMediaPlayer::updateTrack()
 {
-    const BluezQt::MediaPlayer::Track &t = m_mediaPlayer->track();
+    BluezQt::MediaPlayerTrackPtr t = m_mediaPlayer->track();
 
-    m_track[QStringLiteral("title")] = t.title;
-    m_track[QStringLiteral("artist")] = t.artist;
-    m_track[QStringLiteral("album")] = t.album;
-    m_track[QStringLiteral("genre")] = t.genre;
-    m_track[QStringLiteral("numberOfTracks")] = qint64(t.numberOfTracks);
-    m_track[QStringLiteral("trackNumber")] = qint64(t.trackNumber);
-    m_track[QStringLiteral("duration")] = qint64(t.duration);
+    m_track[QStringLiteral("title")] = t ? t->title() : QString();
+    m_track[QStringLiteral("artist")] = t ? t->artist() : QString();
+    m_track[QStringLiteral("album")] = t ? t->album() : QString();
+    m_track[QStringLiteral("genre")] = t ? t->genre() : QString();
+    m_track[QStringLiteral("numberOfTracks")] = qint64(t ? t->numberOfTracks() : 0);
+    m_track[QStringLiteral("trackNumber")] = qint64(t ? t->trackNumber() : 0);
+    m_track[QStringLiteral("duration")] = qint64(t ? t->duration() : 0);
 }

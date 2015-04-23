@@ -26,9 +26,8 @@
 #include <QObject>
 
 #include "types.h"
+#include "mediaplayertrack.h"
 #include "bluezqt_export.h"
-
-class QDBusObjectPath;
 
 namespace BluezQt
 {
@@ -51,28 +50,10 @@ class BLUEZQT_EXPORT MediaPlayer : public QObject
     Q_PROPERTY(Repeat repeat READ repeat WRITE setRepeat NOTIFY repeatChanged)
     Q_PROPERTY(Shuffle shuffle READ shuffle WRITE setShuffle NOTIFY shuffleChanged)
     Q_PROPERTY(Status status READ status NOTIFY statusChanged)
-    Q_PROPERTY(Track track READ track NOTIFY trackChanged)
+    Q_PROPERTY(MediaPlayerTrackPtr track READ track NOTIFY trackChanged)
     Q_PROPERTY(quint32 position READ position NOTIFY positionChanged)
 
 public:
-    /** Track returned from MediaPlayer::track(). */
-    struct Track {
-        /** Track title. */
-        QString title;
-        /** Track artist. */
-        QString artist;
-        /** Track album. */
-        QString album;
-        /** Track genre. */
-        QString genre;
-        /** Number of tracks in total. */
-        quint32 numberOfTracks;
-        /** Track number. */
-        quint32 trackNumber;
-        /** Duration of the track in miliseconds. */
-        quint32 duration;
-    };
-
     /** Equalizer state. */
     enum Equalizer {
         /** Equalizer on. */
@@ -193,12 +174,11 @@ public:
     /**
      * Returns the current track.
      *
-     * Current track can be empty. In that case Track
-     * members will be empty (or 0).
+     * Current track can be null.
      *
-     * @return current track
+     * @return current track if any
      */
-    Track track() const;
+    MediaPlayerTrackPtr track() const;
 
     /**
      * Returns the playback position in miliseconds.
@@ -300,7 +280,7 @@ Q_SIGNALS:
     /**
      * Indicates that player's current track have changed.
      */
-    void trackChanged(const Track &track);
+    void trackChanged(MediaPlayerTrackPtr track);
 
     /**
      * Indicates that player's playback position have changed.

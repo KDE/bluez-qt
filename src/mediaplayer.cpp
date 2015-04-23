@@ -122,7 +122,7 @@ MediaPlayer::Status MediaPlayer::status() const
     return d->m_status;
 }
 
-MediaPlayer::Track MediaPlayer::track() const
+MediaPlayerTrackPtr MediaPlayer::track() const
 {
     return d->m_track;
 }
