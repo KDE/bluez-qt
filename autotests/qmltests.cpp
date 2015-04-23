@@ -106,15 +106,10 @@ int main(int argc, char *argv[])
     qmlRegisterSingletonType<QObject>("org.kde.bluezqt.fakebluez", 1, 0, "FakeBluez", fakebluez_singleton);
     qmlRegisterSingletonType<QObject>("org.kde.bluezqt.testcontroller", 1, 0, "TestController", testcontroller_singleton);
 
-    QDir sourceDir(QStringLiteral(__FILE__));
-    sourceDir.cdUp();
-    const QString &testsDir = sourceDir.absoluteFilePath(QStringLiteral("qml"));
-
-    sourceDir.cdUp();
-    sourceDir.cd(QStringLiteral("build/src/imports"));
-    qputenv("QML2_IMPORT_PATH", sourceDir.absolutePath().toUtf8());
-
     BluezQt::bluezqt_initFakeBluezTestRun();
+
+    qputenv("QML2_IMPORT_PATH", QByteArrayLiteral(BLUEZQT_QML_IMPORT_PATH));
+    const QString &testsDir = QFileInfo(QFINDTESTDATA("qml/TestUtils.qml")).absolutePath();
 
     return quick_test_main(argc, argv, "qmltests", testsDir.toUtf8().constData());
 }

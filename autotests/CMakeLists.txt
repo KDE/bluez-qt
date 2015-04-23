@@ -29,8 +29,7 @@ bluezqt_tests(
 )
 
 if(Qt5Qml_FOUND AND Qt5QuickTest_FOUND)
-    add_executable(qmltests qmltests.cpp ${bluezqt_autotests_SRCS})
-    target_link_libraries(qmltests Qt5::DBus Qt5::Test Qt5::Qml Qt5::QuickTest KF5BluezQt)
-    add_test(bluezqt-qmltests qmltests)
-    ecm_mark_as_test(qmltests)
+    bluezqt_tests(qmltests)
+    target_link_libraries(qmltests Qt5::Qml Qt5::QuickTest)
+    add_definitions(-DBLUEZQT_QML_IMPORT_PATH="${CMAKE_CURRENT_BINARY_DIR}/../src/imports")
 endif()
