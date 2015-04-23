@@ -80,7 +80,9 @@ QDBusPendingReply<> DevicePrivate::setDBusProperty(const QString &name, const QV
 
 void DevicePrivate::propertiesChanged(const QString &interface, const QVariantMap &changed, const QStringList &invalidated)
 {
-    Q_UNUSED(interface)
+    if (interface != Strings::orgBluezDevice1()) {
+        return;
+    }
 
     QVariantMap::const_iterator i;
     for (i = changed.constBegin(); i != changed.constEnd(); ++i) {
