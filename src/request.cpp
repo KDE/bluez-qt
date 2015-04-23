@@ -135,15 +135,16 @@ Request<T>::Request(const Request &other)
 
 template<typename T>
 Request<T>::Request(Request &&other)
-    : d(std::move(other.d))
+    : d(other.d)
 {
+    other.d = Q_NULLPTR;
 }
 
 template<typename T>
 Request<T> &Request<T>::operator=(const Request<T> &other)
 {
     if (d != other.d) {
-        *this = Request<T>(other);
+        *d = *other.d;
     }
     return *this;
 }
@@ -198,14 +199,15 @@ Request<void>::Request(const Request &other)
 }
 
 Request<void>::Request(Request &&other)
-    : d(std::move(other.d))
+    : d(other.d)
 {
+    other.d = Q_NULLPTR;
 }
 
 Request<void> &Request<void>::operator=(const Request<void> &other)
 {
     if (d != other.d) {
-        *this = Request<void>(other);
+        *d = *other.d;
     }
     return *this;
 }
