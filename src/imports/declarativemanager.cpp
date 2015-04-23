@@ -83,6 +83,12 @@ DeclarativeManager::DeclarativeManager(QObject *parent)
     });
 }
 
+DeclarativeManager::~DeclarativeManager()
+{
+    // Workaround crash in QML engine when emiting signals for devices/adapters being removed in destructor
+    disconnect(this);
+}
+
 DeclarativeAdapter *DeclarativeManager::usableAdapter() const
 {
     return declarativeAdapterFromPtr(BluezQt::Manager::usableAdapter());

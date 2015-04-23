@@ -61,6 +61,8 @@ void ManagerTest::bluezNotRunningTest()
     QVERIFY(manager->isInitialized());
     QVERIFY(!manager->isOperational());
     QVERIFY(!manager->isBluetoothOperational());
+
+    delete manager;
 }
 
 void ManagerTest::bluezNotExportingInterfacesTest()
@@ -78,6 +80,8 @@ void ManagerTest::bluezNotExportingInterfacesTest()
     QVERIFY(!manager->isInitialized());
     QVERIFY(!manager->isOperational());
     QVERIFY(!manager->isBluetoothOperational());
+
+    delete manager;
 }
 
 void ManagerTest::bluezEmptyManagedObjectsTest()
@@ -95,6 +99,8 @@ void ManagerTest::bluezEmptyManagedObjectsTest()
     QVERIFY(!manager->isInitialized());
     QVERIFY(!manager->isOperational());
     QVERIFY(!manager->isBluetoothOperational());
+
+    delete manager;
 }
 
 void ManagerTest::bluezNoAdaptersTest()
@@ -112,6 +118,8 @@ void ManagerTest::bluezNoAdaptersTest()
     QVERIFY(manager->isInitialized());
     QVERIFY(manager->isOperational());
     QVERIFY(!manager->isBluetoothOperational());
+
+    delete manager;
 }
 
 void ManagerTest::bluezShutdownTest()
@@ -194,6 +202,8 @@ void ManagerTest::bluezShutdownTest()
 
     QCOMPARE(btOperationalChangedSpy.count(), 1);
     QCOMPARE(btOperationalChangedSpy.first().first().toBool(), false);
+
+    delete manager;
 }
 
 void ManagerTest::usableAdapterTest()
@@ -257,6 +267,8 @@ void ManagerTest::usableAdapterTest()
 
     QTRY_COMPARE(usableAdapterChangedSpy.count(), 1);
     QCOMPARE(manager->usableAdapter()->ubi(), adapter2path.path());
+
+    delete manager;
 }
 
 void ManagerTest::deviceForAddressTest()
@@ -335,6 +347,8 @@ void ManagerTest::deviceForAddressTest()
     QTRY_COMPARE(adapter1Spy.count(), 2);
 
     QVERIFY(manager->deviceForAddress(address));
+
+    delete manager;
 }
 
 QTEST_MAIN(ManagerTest)

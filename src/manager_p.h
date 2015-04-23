@@ -50,6 +50,7 @@ class ManagerPrivate : public QObject
 
 public:
     explicit ManagerPrivate(Manager *parent);
+    ~ManagerPrivate();
 
     void init();
     void nameHasOwnerFinished(QDBusPendingCallWatcher *watcher);
