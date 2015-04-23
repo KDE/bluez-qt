@@ -43,9 +43,8 @@ QString ObexAgentAdaptor::AuthorizePush(const QDBusObjectPath &transfer, const Q
     msg.setDelayedReply(true);
     m_transferRequest = Request<QString>(OrgBluezObexAgent, msg);
 
-    m_transfer = ObexTransferPtr(new ObexTransfer(transfer.path()));
+    m_transfer = ObexTransferPtr(new ObexTransfer(transfer.path(), QVariantMap()));
     m_transfer->d->q = m_transfer.toWeakRef();
-    m_transfer->d->init();
     connect(m_transfer->d, &ObexTransferPrivate::initFinished, this, &ObexAgentAdaptor::transferInitFinished);
     connect(m_transfer->d, &ObexTransferPrivate::initError, this, &ObexAgentAdaptor::transferInitError);
 

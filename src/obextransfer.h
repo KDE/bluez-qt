@@ -206,7 +206,7 @@ Q_SIGNALS:
     void fileNameChanged(const QString &fileName);
 
 private:
-    explicit ObexTransfer(const QString &path, QObject *parent = Q_NULLPTR);
+    explicit ObexTransfer(const QString &path, const QVariantMap &properties, QObject *parent = Q_NULLPTR);
 
     class ObexTransferPrivate *const d;
 

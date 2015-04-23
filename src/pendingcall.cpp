@@ -171,7 +171,7 @@ bool PendingCallPrivate::processUint32Reply(const QDBusPendingReply<quint32> &re
 {
     processError(reply.error());
     if (!reply.isError()) {
-        m_value.append(reply.argumentAt(0));
+        m_value.append(reply.value());
     }
     return true;
 }
@@ -180,7 +180,7 @@ bool PendingCallPrivate::processStringReply(const QDBusPendingReply<QString> &re
 {
     processError(reply.error());
     if (!reply.isError()) {
-        m_value.append(reply.argumentAt(0));
+        m_value.append(reply.value());
     }
     return true;
 }
@@ -189,7 +189,7 @@ bool PendingCallPrivate::processObjectPathReply(const QDBusPendingReply<QDBusObj
 {
     processError(reply.error());
     if (!reply.isError()) {
-        m_value.append(reply.argumentAt(0));
+        m_value.append(QVariant::fromValue(reply.value()));
     }
     return true;
 }
@@ -209,11 +209,11 @@ bool PendingCallPrivate::processTransferWithPropertiesReply(const QDBusPendingRe
     if (reply.isError()) {
         return true;
     }
-    ObexTransferPtr transfer = ObexTransferPtr(new ObexTransfer(reply.argumentAt(0).value<QDBusObjectPath>().path()));
+
+    ObexTransferPtr transfer = ObexTransferPtr(new ObexTransfer(reply.argumentAt<0>().path(), reply.argumentAt<1>()));
     transfer->d->q = transfer.toWeakRef();
     m_value.append(QVariant::fromValue(transfer));
 
-    transfer->d->init();
     connect(transfer->d, &ObexTransferPrivate::initFinished, this, &PendingCallPrivate::emitFinished);
     connect(transfer->d, &ObexTransferPrivate::initError, this, &PendingCallPrivate::emitInternalError);
     return false;
