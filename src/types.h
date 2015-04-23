@@ -32,12 +32,14 @@ class Adapter;
 class Device;
 class MediaPlayer;
 class MediaPlayerTrack;
+class ObexSession;
 class ObexTransfer;
 
 typedef QSharedPointer<BluezQt::Adapter> AdapterPtr;
 typedef QSharedPointer<BluezQt::Device> DevicePtr;
 typedef QSharedPointer<BluezQt::MediaPlayer> MediaPlayerPtr;
 typedef QSharedPointer<BluezQt::MediaPlayerTrack> MediaPlayerTrackPtr;
+typedef QSharedPointer<BluezQt::ObexSession> ObexSessionPtr;
 typedef QSharedPointer<BluezQt::ObexTransfer> ObexTransferPtr;
 
 }

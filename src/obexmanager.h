@@ -25,6 +25,7 @@
 
 #include <QObject>
 
+#include "types.h"
 #include "bluezqt_export.h"
 
 class QDBusObjectPath;
@@ -52,6 +53,7 @@ class BLUEZQT_EXPORT ObexManager : public QObject
 
     Q_PROPERTY(bool initialized READ isInitialized)
     Q_PROPERTY(bool operational READ isOperational NOTIFY operationalChanged)
+    Q_PROPERTY(QList<ObexSessionPtr> sessions READ sessions)
 
 public:
     /**
@@ -89,6 +91,25 @@ public:
      * @return true if manager is operational
      */
     bool isOperational() const;
+
+    /**
+     * Returns a list of all sessions.
+     *
+     * @return list of sessions
+     */
+    QList<ObexSessionPtr> sessions() const;
+
+    /**
+     * Returns a session for specified path.
+     *
+     * The @p path does not need to be equal to ObexSession path, startsWith
+     * test is performed in the search. That means you can use this method
+     * to get ObexSession from path returned by createSession().
+     *
+     * @param path path of session
+     * @return null if there is no session with specified path
+     */
+    ObexSessionPtr sessionForPath(const QDBusObjectPath &path) const;
 
     /**
      * Attempts to start org.bluez.obex service by D-Bus activation.
@@ -170,9 +191,14 @@ Q_SIGNALS:
     void operationalChanged(bool operational);
 
     /**
+     * Indicates that the session was added.
+     */
+    void sessionAdded(ObexSessionPtr session);
+
+    /**
      * Indicates that the session was removed.
      */
-    void sessionRemoved(const QDBusObjectPath &session);
+    void sessionRemoved(ObexSessionPtr session);
 
 private:
     class ObexManagerPrivate *const d;

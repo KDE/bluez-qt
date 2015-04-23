@@ -27,6 +27,7 @@
 #include "pendingcall.h"
 #include "obexagent.h"
 #include "obexagentadaptor.h"
+#include "obexsession.h"
 #include "utils.h"
 
 #include <QDBusServiceWatcher>
@@ -58,6 +59,22 @@ bool ObexManager::isInitialized() const
 bool ObexManager::isOperational() const
 {
     return d->m_initialized && d->m_obexRunning && d->m_loaded;
+}
+
+QList<ObexSessionPtr> ObexManager::sessions() const
+{
+    return d->m_sessions.values();
+}
+
+ObexSessionPtr ObexManager::sessionForPath(const QDBusObjectPath &path) const
+{
+    Q_FOREACH (ObexSessionPtr session, d->m_sessions) {
+        if (path.path().startsWith(session->objectPath().path())) {
+            return session;
+        }
+    }
+
+    return ObexSessionPtr();
 }
 
 PendingCall *ObexManager::startService()

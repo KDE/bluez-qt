@@ -34,7 +34,6 @@ namespace BluezQt
 {
 
 class PendingCall;
-class ObexSession;
 
 /**
  * OBEX transfer.
@@ -47,7 +46,6 @@ class BLUEZQT_EXPORT ObexTransfer : public QObject
 
     Q_ENUMS(Status)
     Q_PROPERTY(Status status READ status NOTIFY statusChanged)
-    Q_PROPERTY(ObexSession* session READ session)
     Q_PROPERTY(QString name READ name)
     Q_PROPERTY(QString type READ type)
     Q_PROPERTY(quint64 time READ time)
@@ -100,13 +98,6 @@ public:
      * @return status of transfer
      */
     Status status() const;
-
-    /**
-     * Returns the session of the transfer.
-     *
-     * @return session of transfer
-     */
-    ObexSession *session() const;
 
     /**
      * Returns the name of the transferred object.
@@ -206,7 +197,7 @@ Q_SIGNALS:
     void fileNameChanged(const QString &fileName);
 
 private:
-    explicit ObexTransfer(const QString &path, const QVariantMap &properties, QObject *parent = Q_NULLPTR);
+    explicit ObexTransfer(const QString &path, const QVariantMap &properties);
 
     class ObexTransferPrivate *const d;
 

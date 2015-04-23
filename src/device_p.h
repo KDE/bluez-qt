@@ -36,9 +36,6 @@ namespace BluezQt
 typedef org::bluez::Device1 BluezDevice;
 typedef org::freedesktop::DBus::Properties DBusProperties;
 
-class Device;
-class Adapter;
-
 class DevicePrivate : public QObject
 {
     Q_OBJECT

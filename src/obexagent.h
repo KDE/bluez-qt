@@ -82,10 +82,14 @@ public:
      * The ObexTransfer::fileName() contains the default location
      * and name that can be returned.
      *
+     * You can use @p session to get device and adapter this transfer
+     * belongs to.
+     *
      * @param transfer transfer object
+     * @param session transfer session
      * @param request request to be used for sending reply
      */
-    virtual void authorizePush(ObexTransferPtr transfer, const Request<QString> &request);
+    virtual void authorizePush(ObexTransferPtr transfer, ObexSessionPtr session, const Request<QString> &request);
 
     /**
      * Indicate that the agent request failed before receiving reply.

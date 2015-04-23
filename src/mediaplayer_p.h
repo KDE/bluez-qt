@@ -25,7 +25,6 @@
 
 #include <QObject>
 
-#include "types.h"
 #include "mediaplayer.h"
 #include "bluezmediaplayer1.h"
 #include "dbusproperties.h"

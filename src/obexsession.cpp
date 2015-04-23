@@ -28,54 +28,43 @@
 namespace BluezQt
 {
 
-ObexSessionPrivate::ObexSessionPrivate(ObexSession *q, const QString &path)
-    : QObject(q)
-    , q(q)
+ObexSessionPrivate::ObexSessionPrivate(const QString &path, const QVariantMap &properties)
+    : QObject()
 {
     m_bluezSession = new BluezSession(Strings::orgBluezObex(),
                                       path, DBusConnection::orgBluezObex(), this);
+
+    init(properties);
 }
 
-void ObexSessionPrivate::init()
+void ObexSessionPrivate::init(const QVariantMap &properties)
 {
-    DBusProperties dbusProperties(Strings::orgBluezObex(), m_bluezSession->path(),
-                                  DBusConnection::orgBluezObex(), this);
-
-    const QDBusPendingReply<QVariantMap> &call = dbusProperties.GetAll(Strings::orgBluezObexSession1());
-    QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, this);
-    connect(watcher, &QDBusPendingCallWatcher::finished, this, &ObexSessionPrivate::getPropertiesFinished);
-}
-
-void ObexSessionPrivate::getPropertiesFinished(QDBusPendingCallWatcher *watcher)
-{
-    const QDBusPendingReply<QVariantMap> &reply = *watcher;
-    watcher->deleteLater();
-
-    if (reply.isError()) {
-        Q_EMIT initError(reply.error().message());
-        return;
-    }
-
-    const QVariantMap &properties = reply.value();
-
     m_source = properties.value(QStringLiteral("Source")).toString();
     m_destination = properties.value(QStringLiteral("Destination")).toString();
     m_channel = properties.value(QStringLiteral("Channel")).toUInt();
     m_target = properties.value(QStringLiteral("Target")).toString().toUpper();
     m_root = properties.value(QStringLiteral("Root")).toString();
-
-    Q_EMIT initFinished();
 }
 
-ObexSession::ObexSession(const QString &path, QObject *parent)
-    : QObject(parent)
-    , d(new ObexSessionPrivate(this, path))
+ObexSession::ObexSession(const QString &path, const QVariantMap &properties)
+    : QObject()
+    , d(new ObexSessionPrivate(path, properties))
 {
 }
 
 ObexSession::~ObexSession()
 {
     delete d;
+}
+
+ObexSessionPtr ObexSession::toSharedPtr() const
+{
+    return d->q.toStrongRef();
+}
+
+QDBusObjectPath ObexSession::objectPath() const
+{
+    return QDBusObjectPath(d->m_bluezSession->path());
 }
 
 QString ObexSession::source() const

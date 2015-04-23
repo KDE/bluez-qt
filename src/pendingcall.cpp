@@ -101,13 +101,13 @@ class PendingCallPrivate : public QObject
 public:
     explicit PendingCallPrivate(PendingCall *parent);
 
-    bool processReply(QDBusPendingCallWatcher *call);
-    bool processVoidReply(const QDBusPendingReply<> &reply);
-    bool processUint32Reply(const QDBusPendingReply<quint32> &reply);
-    bool processStringReply(const QDBusPendingReply<QString> &reply);
-    bool processObjectPathReply(const QDBusPendingReply<QDBusObjectPath> &reply);
-    bool processFileTransferListReply(const QDBusPendingReply<QVariantMapList> &reply);
-    bool processTransferWithPropertiesReply(const QDBusPendingReply<QDBusObjectPath, QVariantMap> &reply);
+    void processReply(QDBusPendingCallWatcher *call);
+    void processVoidReply(const QDBusPendingReply<> &reply);
+    void processUint32Reply(const QDBusPendingReply<quint32> &reply);
+    void processStringReply(const QDBusPendingReply<QString> &reply);
+    void processObjectPathReply(const QDBusPendingReply<QDBusObjectPath> &reply);
+    void processFileTransferListReply(const QDBusPendingReply<QVariantMapList> &reply);
+    void processTransferWithPropertiesReply(const QDBusPendingReply<QDBusObjectPath, QVariantMap> &reply);
     void processError(const QDBusError &m_error);
 
     void emitFinished();
@@ -133,90 +133,85 @@ PendingCallPrivate::PendingCallPrivate(PendingCall *parent)
 {
 }
 
-bool PendingCallPrivate::processReply(QDBusPendingCallWatcher *call)
+void PendingCallPrivate::processReply(QDBusPendingCallWatcher *call)
 {
     switch (m_type) {
     case PendingCall::ReturnVoid:
-        return processVoidReply(*call);
+        processVoidReply(*call);
+        break;
 
     case PendingCall::ReturnUint32:
-        return processUint32Reply(*call);
+        processUint32Reply(*call);
+        break;
 
     case PendingCall::ReturnString:
-        return processStringReply(*call);
+        processStringReply(*call);
+        break;
 
     case PendingCall::ReturnObjectPath:
-        return processObjectPathReply(*call);
+        processObjectPathReply(*call);
+        break;
 
     case PendingCall::ReturnFileTransferList:
-        return processFileTransferListReply(*call);
+        processFileTransferListReply(*call);
+        break;
 
     case PendingCall::ReturnTransferWithProperties:
-        return processTransferWithPropertiesReply(*call);
+        processTransferWithPropertiesReply(*call);
+        break;
 
     default:
         break;
     }
-
-    return true;
 }
 
-bool PendingCallPrivate::processVoidReply(const QDBusPendingReply<> &reply)
+void PendingCallPrivate::processVoidReply(const QDBusPendingReply<> &reply)
 {
     processError(reply.error());
-    return true;
 }
 
-bool PendingCallPrivate::processUint32Reply(const QDBusPendingReply<quint32> &reply)
+void PendingCallPrivate::processUint32Reply(const QDBusPendingReply<quint32> &reply)
 {
     processError(reply.error());
     if (!reply.isError()) {
         m_value.append(reply.value());
     }
-    return true;
 }
 
-bool PendingCallPrivate::processStringReply(const QDBusPendingReply<QString> &reply)
+void PendingCallPrivate::processStringReply(const QDBusPendingReply<QString> &reply)
 {
     processError(reply.error());
     if (!reply.isError()) {
         m_value.append(reply.value());
     }
-    return true;
 }
 
-bool PendingCallPrivate::processObjectPathReply(const QDBusPendingReply<QDBusObjectPath> &reply)
+void PendingCallPrivate::processObjectPathReply(const QDBusPendingReply<QDBusObjectPath> &reply)
 {
     processError(reply.error());
     if (!reply.isError()) {
         m_value.append(QVariant::fromValue(reply.value()));
     }
-    return true;
 }
 
-bool PendingCallPrivate::processFileTransferListReply(const QDBusPendingReply<QVariantMapList> &reply)
+void PendingCallPrivate::processFileTransferListReply(const QDBusPendingReply<QVariantMapList> &reply)
 {
     processError(reply.error());
     if (!reply.isError()) {
         m_value.append(QVariant::fromValue(toFileTransferList(reply.value())));
     }
-    return true;
 }
 
-bool PendingCallPrivate::processTransferWithPropertiesReply(const QDBusPendingReply<QDBusObjectPath, QVariantMap> &reply)
+void PendingCallPrivate::processTransferWithPropertiesReply(const QDBusPendingReply<QDBusObjectPath, QVariantMap> &reply)
 {
     processError(reply.error());
     if (reply.isError()) {
-        return true;
+        return;
     }
 
     ObexTransferPtr transfer = ObexTransferPtr(new ObexTransfer(reply.argumentAt<0>().path(), reply.argumentAt<1>()));
     transfer->d->q = transfer.toWeakRef();
     m_value.append(QVariant::fromValue(transfer));
-
-    connect(transfer->d, &ObexTransferPrivate::initFinished, this, &PendingCallPrivate::emitFinished);
-    connect(transfer->d, &ObexTransferPrivate::initError, this, &PendingCallPrivate::emitInternalError);
-    return false;
 }
 
 void PendingCallPrivate::processError(const QDBusError &error)
@@ -254,9 +249,8 @@ void PendingCallPrivate::emitInternalError(const QString &errorText)
 
 void PendingCallPrivate::pendingCallFinished(QDBusPendingCallWatcher *watcher)
 {
-    if (processReply(watcher)) {
-        emitFinished();
-    }
+    processReply(watcher);
+    emitFinished();
 }
 
 PendingCall::PendingCall(const QDBusPendingCall &call, ReturnType type, QObject *parent)

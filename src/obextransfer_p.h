@@ -42,8 +42,6 @@ public:
     explicit ObexTransferPrivate(const QString &path, const QVariantMap &properties);
 
     void init(const QVariantMap &properties);
-    void initProperties(const QVariantMap &properties);
-    void getPropertiesFinished(QDBusPendingCallWatcher *watcher);
 
     void propertiesChanged(const QString &interface, const QVariantMap &changed, const QStringList &invalidated);
 
@@ -52,17 +50,12 @@ public:
     DBusProperties *m_dbusProperties;
 
     ObexTransfer::Status m_status;
-    ObexSession *m_session;
     QString m_name;
     QString m_type;
     quint64 m_time;
     quint64 m_size;
     quint64 m_transferred;
     QString m_fileName;
-
-Q_SIGNALS:
-    void initError(const QString &errorText);
-    void initFinished();
 };
 
 } // namespace BluezQt

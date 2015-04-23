@@ -24,25 +24,24 @@
 #define BLUEZQT_OBEXSESSION_P_H
 
 #include "obexsession1.h"
-#include "dbusproperties.h"
 
 namespace BluezQt
 {
 
+class ObexSession;
+
 typedef org::bluez::obex::Session1 BluezSession;
-typedef org::freedesktop::DBus::Properties DBusProperties;
 
 class ObexSessionPrivate : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit ObexSessionPrivate(ObexSession *q, const QString &path);
+    explicit ObexSessionPrivate(const QString &path, const QVariantMap &properties);
 
-    void init();
-    void getPropertiesFinished(QDBusPendingCallWatcher *watcher);
+    void init(const QVariantMap &properties);
 
-    ObexSession *q;
+    QWeakPointer<ObexSession> q;
     BluezSession *m_bluezSession;
 
     QString m_source;
@@ -50,10 +49,6 @@ public:
     quint8 m_channel;
     QString m_target;
     QString m_root;
-
-Q_SIGNALS:
-    void initError(const QString &errorText);
-    void initFinished();
 };
 
 } // namespace BluezQt

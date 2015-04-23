@@ -25,7 +25,10 @@
 
 #include <QObject>
 
+#include "types.h"
 #include "bluezqt_export.h"
+
+class QDBusObjectPath;
 
 namespace BluezQt
 {
@@ -54,6 +57,20 @@ public:
     ~ObexSession();
 
     /**
+     * Returns a shared pointer from this.
+     *
+     * @return ObexSessionPtr
+     */
+    ObexSessionPtr toSharedPtr() const;
+
+    /**
+     * D-Bus object path of the session.
+     *
+     * @return object path of session
+     */
+    QDBusObjectPath objectPath() const;
+
+    /**
      * Returns address of the Bluetooth adapter.
      *
      * @see Manager::adapterForAddress()
@@ -65,7 +82,7 @@ public:
     /**
      * Returns address of the Bluetooth device.
      *
-     * @see Manager::deviceForAddress(), Adapter::deviceForAddress()
+     * @see Manager::deviceForAddress()
      *
      * @return address of device
      */
@@ -102,12 +119,12 @@ public:
     PendingCall *getCapabilities();
 
 private:
-    explicit ObexSession(const QString &path, QObject *parent = Q_NULLPTR);
+    explicit ObexSession(const QString &path, const QVariantMap &properties);
 
     class ObexSessionPrivate *const d;
 
     friend class ObexSessionPrivate;
-    friend class ObexTransferPrivate;
+    friend class ObexManagerPrivate;
 };
 
 } // namespace BluezQt

@@ -92,13 +92,13 @@ class BLUEZQT_EXPORT Manager : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(AdapterPtr usableAdapter READ usableAdapter NOTIFY usableAdapterChanged)
-    Q_PROPERTY(QList<AdapterPtr> adapters READ adapters)
-    Q_PROPERTY(QList<DevicePtr> devices READ devices)
     Q_PROPERTY(bool initialized READ isInitialized)
     Q_PROPERTY(bool operational READ isOperational NOTIFY operationalChanged)
     Q_PROPERTY(bool bluetoothOperational READ isBluetoothOperational NOTIFY bluetoothOperationalChanged)
     Q_PROPERTY(bool bluetoothBlocked READ isBluetoothBlocked WRITE setBluetoothBlocked NOTIFY bluetoothBlockedChanged)
+    Q_PROPERTY(AdapterPtr usableAdapter READ usableAdapter NOTIFY usableAdapterChanged)
+    Q_PROPERTY(QList<AdapterPtr> adapters READ adapters)
+    Q_PROPERTY(QList<DevicePtr> devices READ devices)
 
 public:
     /**

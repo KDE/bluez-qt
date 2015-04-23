@@ -1,7 +1,7 @@
 /*
  * BluezQt - Asynchronous Bluez wrapper library
  *
- * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
+ * Copyright (C) 2014-2015 David Rosca <nowrep@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,21 +23,19 @@
 #ifndef BLUEZQT_OBEXAGENTADAPTOR_H
 #define BLUEZQT_OBEXAGENTADAPTOR_H
 
-#include <QObject>
 #include <QDBusAbstractAdaptor>
 
 #include "types.h"
 #include "request.h"
 
-class QDBusMessage;
 class QDBusObjectPath;
+class QDBusPendingCallWatcher;
 
 namespace BluezQt
 {
 
-class ObexTransfer;
-class ObexManager;
 class ObexAgent;
+class ObexManager;
 
 class ObexAgentAdaptor : public QDBusAbstractAdaptor
 {
@@ -54,13 +52,12 @@ public Q_SLOTS:
     Q_NOREPLY void Release();
 
 private Q_SLOTS:
-    void transferInitFinished();
-    void transferInitError();
+    void getPropertiesFinished(QDBusPendingCallWatcher *watcher);
 
 private:
     ObexAgent *m_agent;
     ObexManager *m_manager;
-    ObexTransferPtr m_transfer;
+    QString m_transferPath;
     Request<QString> m_transferRequest;
 };
 

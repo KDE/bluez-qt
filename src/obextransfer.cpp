@@ -22,14 +22,9 @@
 
 #include "obextransfer.h"
 #include "obextransfer_p.h"
-#include "obexsession.h"
-#include "obexsession_p.h"
 #include "pendingcall.h"
 #include "utils.h"
 #include "macros.h"
-
-#include "obextransfer1.h"
-#include "dbusproperties.h"
 
 namespace BluezQt
 {
@@ -54,7 +49,6 @@ ObexTransferPrivate::ObexTransferPrivate(const QString &path, const QVariantMap 
     : QObject()
     , m_dbusProperties(0)
     , m_status(ObexTransfer::Error)
-    , m_session(0)
     , m_time(0)
     , m_size(0)
     , m_transferred(0)
@@ -72,43 +66,14 @@ void ObexTransferPrivate::init(const QVariantMap &properties)
     connect(m_dbusProperties, &DBusProperties::PropertiesChanged,
             this, &ObexTransferPrivate::propertiesChanged, Qt::QueuedConnection);
 
-    if (!properties.isEmpty()) {
-        initProperties(properties);
-        return;
-    }
-
-    const QDBusPendingReply<QVariantMap> &call = m_dbusProperties->GetAll(Strings::orgBluezObexTransfer1());
-    QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, this);
-    connect(watcher, &QDBusPendingCallWatcher::finished, this, &ObexTransferPrivate::getPropertiesFinished);
-}
-
-void ObexTransferPrivate::initProperties(const QVariantMap &properties)
-{
+    // Init properties
     m_status = stringToStatus(properties.value(QStringLiteral("Status")).toString());
-    m_session = new ObexSession(properties.value(QStringLiteral("Session")).value<QDBusObjectPath>().path());
     m_name = properties.value(QStringLiteral("Name")).toString();
     m_type = properties.value(QStringLiteral("Type")).toString();
     m_time = properties.value(QStringLiteral("Time")).toUInt();
     m_size = properties.value(QStringLiteral("Size")).toUInt();
     m_transferred = properties.value(QStringLiteral("Transferred")).toUInt();
     m_fileName = properties.value(QStringLiteral("Filename")).toString();
-
-    m_session->d->init();
-    connect(m_session->d, &ObexSessionPrivate::initFinished, this, &ObexTransferPrivate::initFinished);
-    connect(m_session->d, &ObexSessionPrivate::initError, this, &ObexTransferPrivate::initError);
-}
-
-void ObexTransferPrivate::getPropertiesFinished(QDBusPendingCallWatcher *watcher)
-{
-    const QDBusPendingReply<QVariantMap> &reply = *watcher;
-    watcher->deleteLater();
-
-    if (reply.isError()) {
-        Q_EMIT initError(reply.error().message());
-        return;
-    }
-
-    initProperties(reply.value());
 }
 
 void ObexTransferPrivate::propertiesChanged(const QString &interface, const QVariantMap &changed, const QStringList &invalidated)
@@ -134,8 +99,8 @@ void ObexTransferPrivate::propertiesChanged(const QString &interface, const QVar
     }
 }
 
-ObexTransfer::ObexTransfer(const QString &path, const QVariantMap &properties, QObject *parent)
-    : QObject(parent)
+ObexTransfer::ObexTransfer(const QString &path, const QVariantMap &properties)
+    : QObject()
     , d(new ObexTransferPrivate(path, properties))
 {
 }
@@ -158,11 +123,6 @@ QDBusObjectPath ObexTransfer::objectPath() const
 ObexTransfer::Status ObexTransfer::status() const
 {
     return d->m_status;
-}
-
-ObexSession *ObexTransfer::session() const
-{
-    return d->m_session;
 }
 
 QString ObexTransfer::name() const

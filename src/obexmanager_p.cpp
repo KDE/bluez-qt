@@ -22,6 +22,8 @@
 
 #include "obexmanager_p.h"
 #include "obexmanager.h"
+#include "obexsession.h"
+#include "obexsession_p.h"
 #include "debug.h"
 #include "utils.h"
 
@@ -47,10 +49,8 @@ ObexManagerPrivate::ObexManagerPrivate(ObexManager *q)
     qDBusRegisterMetaType<DBusManagerStruct>();
     qDBusRegisterMetaType<QVariantMapMap>();
 
-    m_timer = new QTimer(this);
-    m_timer->setSingleShot(true);
-    m_timer->setInterval(500);
-    connect(m_timer, &QTimer::timeout, this, &ObexManagerPrivate::load);
+    m_timer.setSingleShot(true);
+    connect(&m_timer, &QTimer::timeout, this, &ObexManagerPrivate::load);
 }
 
 ObexManagerPrivate::~ObexManagerPrivate()
@@ -121,6 +121,8 @@ void ObexManagerPrivate::load()
     m_dbusObjectManager = new DBusObjectManager(Strings::orgBluezObex(), QStringLiteral("/"),
             DBusConnection::orgBluezObex(), this);
 
+    connect(m_dbusObjectManager, &DBusObjectManager::InterfacesAdded,
+            this, &ObexManagerPrivate::interfacesAdded);
     connect(m_dbusObjectManager, &DBusObjectManager::InterfacesRemoved,
             this, &ObexManagerPrivate::interfacesRemoved);
 
@@ -145,21 +147,16 @@ void ObexManagerPrivate::getManagedObjectsFinished(QDBusPendingCallWatcher *watc
         const QString &path = it.key().path();
         const QVariantMapMap &interfaces = it.value();
 
-        if (interfaces.contains(Strings::orgBluezObexClient1())) {
+        if (interfaces.contains(Strings::orgBluezObexSession1())) {
+            addSession(path, interfaces.value(Strings::orgBluezObexSession1()));
+        } else if (interfaces.contains(Strings::orgBluezObexClient1()) && interfaces.contains(Strings::orgBluezObexAgentManager1())) {
             m_obexClient = new ObexClient(Strings::orgBluezObex(), path, DBusConnection::orgBluezObex(), this);
-        }
-        if (interfaces.contains(Strings::orgBluezObexAgentManager1())) {
             m_obexAgentManager = new ObexAgentManager(Strings::orgBluezObex(), path, DBusConnection::orgBluezObex(), this);
         }
     }
 
-    if (!m_obexClient) {
-        Q_EMIT initError(QStringLiteral("Cannot find org.bluez.obex.Client1 object!"));
-        return;
-    }
-
-    if (!m_obexAgentManager) {
-        Q_EMIT initError(QStringLiteral("Cannot find org.bluez.obex.AgentManager1 object!"));
+    if (!m_obexClient || !m_obexAgentManager) {
+        Q_EMIT initError(QStringLiteral("Cannot find org.bluez.obex.Client1 and org.bluez.obex.AgentManager1 objects!"));
         return;
     }
 
@@ -198,7 +195,7 @@ void ObexManagerPrivate::serviceRegistered()
     // Client1 and AgentManager1 objects are not ready by the time org.bluez.obex is registered
     // nor will the ObjectManager emits interfacesAdded for adding them...
     // So we delay the call to load() by 0.5s
-    m_timer->start();
+    m_timer.start(500);
 }
 
 void ObexManagerPrivate::serviceUnregistered()
@@ -210,11 +207,46 @@ void ObexManagerPrivate::serviceUnregistered()
     Q_EMIT q->operationalChanged(false);
 }
 
+void ObexManagerPrivate::interfacesAdded(const QDBusObjectPath &objectPath, const QVariantMapMap &interfaces)
+{
+    const QString &path = objectPath.path();
+    QVariantMapMap::const_iterator it;
+
+    for (it = interfaces.constBegin(); it != interfaces.constEnd(); ++it) {
+        if (it.key() == Strings::orgBluezObexSession1()) {
+            addSession(path, it.value());
+        }
+    }
+}
+
 void ObexManagerPrivate::interfacesRemoved(const QDBusObjectPath &objectPath, const QStringList &interfaces)
 {
-    if (interfaces.contains(Strings::orgBluezObexSession1())) {
-        Q_EMIT q->sessionRemoved(objectPath);
+    const QString &path = objectPath.path();
+
+    Q_FOREACH (const QString &interface, interfaces) {
+        if (interface == Strings::orgBluezObexSession1()) {
+            removeSession(path);
+        }
     }
+}
+
+void ObexManagerPrivate::addSession(const QString &sessionPath, const QVariantMap &properties)
+{
+    ObexSessionPtr session = ObexSessionPtr(new ObexSession(sessionPath, properties));
+    session->d->q = session.toWeakRef();
+    m_sessions.insert(sessionPath, session);
+
+    Q_EMIT q->sessionAdded(session);
+}
+
+void ObexManagerPrivate::removeSession(const QString &sessionPath)
+{
+    ObexSessionPtr session = m_sessions.take(sessionPath);
+    if (!session) {
+        return;
+    }
+
+    Q_EMIT q->sessionRemoved(session);
 }
 
 void ObexManagerPrivate::dummy()

@@ -26,6 +26,7 @@
 #include <QObject>
 #include <QTimer>
 
+#include "types.h"
 #include "dbusobjectmanager.h"
 #include "obexclient1.h"
 #include "obexagentmanager1.h"
@@ -55,13 +56,19 @@ public:
 
     void serviceRegistered();
     void serviceUnregistered();
+    void interfacesAdded(const QDBusObjectPath &objectPath, const QVariantMapMap &interfaces);
     void interfacesRemoved(const QDBusObjectPath &objectPath, const QStringList &interfaces);
+
+    void addSession(const QString &sessionPath, const QVariantMap &properties);
+    void removeSession(const QString &sessionPath);
 
     ObexManager *q;
     ObexClient *m_obexClient;
     ObexAgentManager *m_obexAgentManager;
     DBusObjectManager *m_dbusObjectManager;
-    QTimer *m_timer;
+
+    QTimer m_timer;
+    QHash<QString, ObexSessionPtr> m_sessions;
 
     bool m_initialized;
     bool m_obexRunning;
