@@ -356,7 +356,7 @@ Q_SIGNALS:
     void deviceChanged(DevicePtr device);
 
 private:
-    explicit Adapter(const QString &address, const QVariantMap &properties);
+    explicit Adapter(const QString &path, const QVariantMap &properties);
 
     class AdapterPrivate *const d;
 

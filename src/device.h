@@ -465,7 +465,7 @@ Q_SIGNALS:
     void mediaPlayerChanged(MediaPlayerPtr mediaPlayer);
 
 private:
-    explicit Device(const QString &address, const QVariantMap &properties, AdapterPtr adapter);
+    explicit Device(const QString &path, const QVariantMap &properties, AdapterPtr adapter);
 
     class DevicePrivate *const d;
 

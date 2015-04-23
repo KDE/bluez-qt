@@ -61,7 +61,7 @@ void ObexSessionPrivate::getPropertiesFinished(QDBusPendingCallWatcher *watcher)
     m_source = properties.value(QStringLiteral("Source")).toString();
     m_destination = properties.value(QStringLiteral("Destination")).toString();
     m_channel = properties.value(QStringLiteral("Channel")).toUInt();
-    m_target = properties.value(QStringLiteral("Target")).toString();
+    m_target = properties.value(QStringLiteral("Target")).toString().toUpper();
     m_root = properties.value(QStringLiteral("Root")).toString();
 
     Q_EMIT initFinished();

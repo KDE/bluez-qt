@@ -129,7 +129,7 @@ void AgentAdaptor::AuthorizeService(const QDBusObjectPath &device, const QString
         return;
     }
 
-    m_agent->authorizeService(dev, uuid, req);
+    m_agent->authorizeService(dev, uuid.toUpper(), req);
 }
 
 void AgentAdaptor::Cancel()
