@@ -93,7 +93,9 @@ QDBusPendingReply<> AdapterPrivate::setDBusProperty(const QString &name, const Q
 
 void AdapterPrivate::propertiesChanged(const QString &interface, const QVariantMap &changed, const QStringList &invalidated)
 {
-    Q_UNUSED(interface)
+    if (interface != Strings::orgBluezAdapter1()) {
+        return;
+    }
 
     QVariantMap::const_iterator i;
     for (i = changed.constBegin(); i != changed.constEnd(); ++i) {
