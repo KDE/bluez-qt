@@ -52,6 +52,7 @@ ObexTransferPrivate::ObexTransferPrivate(const QString &path, const QVariantMap 
     , m_time(0)
     , m_size(0)
     , m_transferred(0)
+    , m_suspendable(false)
 {
     m_bluezTransfer = new BluezTransfer(Strings::orgBluezObex(), path, DBusConnection::orgBluezObex(), this);
 
@@ -157,7 +158,7 @@ QString ObexTransfer::fileName() const
 
 bool ObexTransfer::isSuspendable() const
 {
-    return false;
+    return d->m_suspendable;
 }
 
 PendingCall *ObexTransfer::cancel()

@@ -56,6 +56,7 @@ public:
     quint64 m_size;
     quint64 m_transferred;
     QString m_fileName;
+    bool m_suspendable;
 };
 
 } // namespace BluezQt

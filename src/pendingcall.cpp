@@ -211,6 +211,7 @@ void PendingCallPrivate::processTransferWithPropertiesReply(const QDBusPendingRe
 
     ObexTransferPtr transfer = ObexTransferPtr(new ObexTransfer(reply.argumentAt<0>().path(), reply.argumentAt<1>()));
     transfer->d->q = transfer.toWeakRef();
+    transfer->d->m_suspendable = true;
     m_value.append(QVariant::fromValue(transfer));
 }
 
