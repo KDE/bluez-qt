@@ -225,12 +225,12 @@ public:
     /**
      * Returns a device for specified address.
      *
-     * @param address address of device (eg. "40:79:6A:0C:39:75")
-     * @return null if there is no device with specified address
-     *
      * @note There may be more devices with the same address (same device
      *       in multiple adapters). In this case, the first found device will
      *       be returned while preferring powered adapters in search.
+     *
+     * @param address address of device (eg. "40:79:6A:0C:39:75")
+     * @return null if there is no device with specified address
      */
     DevicePtr deviceForAddress(const QString &address) const;
 

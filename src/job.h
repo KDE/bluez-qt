@@ -30,7 +30,9 @@
 
 namespace BluezQt
 {
+
 class JobPrivate;
+
 /**
  * This class represents an asynchronous job performed by BluezQt,
  * it is usually not used directly but instead it is inherit by some
@@ -43,9 +45,8 @@ class JobPrivate;
  * Please, think twice before using exec(), it should be used only in either
  * unittest or cli apps.
  *
- * @note Job and its subclasses are meant to be used
- * in a fire-and-forget way. Jobs will delete themselves
- * when they finish using deleteLater()
+ * @note Job and its subclasses are meant to be used in a fire-and-forget way.
+ * Jobs will delete themselves when they finish using deleteLater().
  *
  * @note Even given their asynchronous nature, Jobs are still executed in the
  * main thread, so any blocking code executed in it will block the app calling it.
@@ -102,6 +103,8 @@ public:
      * your user interface will effectivly be blocked. Other events like paint or network events are
      * still being processed. The advantage of not processing user input events is that the chance of
      * accidental reentrancy is greatly reduced. Still you should avoid calling this function.
+     *
+     * @warning This method blocks until the call finishes!
      *
      * @return true if the job has been executed without error, false otherwise
      */
@@ -215,6 +218,7 @@ protected:
 
     /**
      * Utility function to emit the result signal, and suicide this job.
+     *
      * @note Deletes this job using deleteLater().
      * @see result()
      */
@@ -230,7 +234,6 @@ protected:
 
 private:
     JobPrivate *const d_ptr;
-    Job(JobPrivate &dd, QObject *parent);
 
     Q_DECLARE_PRIVATE(Job)
 };

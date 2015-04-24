@@ -21,9 +21,10 @@
 #include "autotests.h"
 
 #include <QDir>
-#include <QtQml>
-#include <QtQuickTest>
 #include <QDBusObjectPath>
+
+#include <QtQml> // krazy:exclude=includes
+#include <QtQuickTest> // krazy:exclude=includes
 
 class FakeBluezObject : public QObject
 {

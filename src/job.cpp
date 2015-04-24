@@ -38,7 +38,9 @@ JobPrivate::JobPrivate()
     killed = false;
 }
 
-Job::Job(QObject *parent) : QObject(parent), d_ptr(new JobPrivate)
+Job::Job(QObject *parent)
+    : QObject(parent)
+    , d_ptr(new JobPrivate)
 {
     d_ptr->q_ptr = this;
 }
@@ -127,12 +129,7 @@ bool Job::exec()
     d->running = false;
     d->finished = true;
 
-    return (d->error == NoError);
-}
-
-Job::Job(JobPrivate &dd, QObject *parent) : QObject(parent), d_ptr(&dd)
-{
-
+    return d->error == NoError;
 }
 
 } // namespace BluezQt

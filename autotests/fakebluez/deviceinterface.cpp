@@ -144,22 +144,24 @@ void DeviceInterface::Disconnect()
 
 void DeviceInterface::ConnectProfile(const QString &uuid)
 {
-    // TODO
     Q_UNUSED(uuid)
+
+    Q_UNIMPLEMENTED();
 }
 
 void DeviceInterface::DisconnectProfile(const QString &uuid)
 {
-    // TODO
     Q_UNUSED(uuid)
+
+    Q_UNIMPLEMENTED();
 }
 
 void DeviceInterface::Pair()
 {
-    // TODO
+    Q_UNIMPLEMENTED();
 }
 
 void DeviceInterface::CancelPairing()
 {
-    // TODO
+    Q_UNIMPLEMENTED();
 }

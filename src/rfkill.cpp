@@ -223,7 +223,7 @@ void Rfkill::updateRfkillDevices()
     // Update global state
     m_state = Unknown;
 
-    Q_FOREACH (State state, m_devices) {
+    Q_FOREACH (State state, m_devices) { // krazy:exclude=foreach
         if (state < m_state) {
             m_state = state;
         }

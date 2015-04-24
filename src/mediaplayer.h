@@ -174,9 +174,7 @@ public:
     /**
      * Returns the current track.
      *
-     * Current track can be null.
-     *
-     * @return current track if any
+     * @return null if there is no current track
      */
     MediaPlayerTrackPtr track() const;
 

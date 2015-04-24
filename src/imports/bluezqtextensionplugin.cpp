@@ -30,7 +30,7 @@
 #include "pendingcall.h"
 #include "services.h"
 
-#include <QtQml>
+#include <QtQml> // krazy:exclude=includes
 
 static QJSValue services_singleton(QQmlEngine *engine, QJSEngine *scriptEngine)
 {

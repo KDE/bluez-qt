@@ -27,6 +27,7 @@ class QEventLoop;
 
 namespace BluezQt
 {
+
 class JobPrivate
 {
 public:
@@ -39,7 +40,10 @@ public:
     bool finished;
     bool killed;
     QEventLoop *eventLoop;
+
     Q_DECLARE_PUBLIC(Job)
 };
-}
+
+} // namespace BluezQt
+
 #endif // BLUEZQT_JOB_PRIVATE

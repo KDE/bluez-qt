@@ -145,7 +145,7 @@ public:
     /**
      * Waits for the call to finish.
      *
-     * @note This method blocks until the call finishes!
+     * @warning This method blocks until the call finishes!
      */
     void waitForFinished();
 
