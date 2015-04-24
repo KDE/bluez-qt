@@ -104,7 +104,7 @@ public:
      * still being processed. The advantage of not processing user input events is that the chance of
      * accidental reentrancy is greatly reduced. Still you should avoid calling this function.
      *
-     * @warning This method blocks until the call finishes!
+     * @warning This method blocks until the job finishes!
      *
      * @return true if the job has been executed without error, false otherwise
      */

@@ -120,11 +120,6 @@ DeclarativeDevice *DeclarativeManager::declarativeDeviceFromPtr(BluezQt::DeviceP
     return m_devices.value(ptr->ubi());
 }
 
-DeclarativeAdapter *DeclarativeManager::adapterForDevice(DeclarativeDevice *device) const
-{
-    return device->adapter();
-}
-
 DeclarativeAdapter *DeclarativeManager::adapterForAddress(const QString &address) const
 {
     return declarativeAdapterFromPtr(BluezQt::Manager::adapterForAddress(address));

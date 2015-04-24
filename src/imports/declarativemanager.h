@@ -53,7 +53,6 @@ public:
     QHash<QString, DeclarativeDevice*> m_devices;
 
 public Q_SLOTS:
-    DeclarativeAdapter *adapterForDevice(DeclarativeDevice *device) const; // TODO: Remove
     DeclarativeAdapter *adapterForAddress(const QString &address) const;
     DeclarativeAdapter *adapterForUbi(const QString &ubi) const;
     DeclarativeDevice *deviceForAddress(const QString &address) const;
