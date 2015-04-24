@@ -220,7 +220,7 @@ public:
      *
      * To create socket from fd, you can use:
      * @code
-     *  QLocalSocket *socket = createSocket(fd);
+     *  QSharedPointer<QLocalSocket> socket = createSocket(fd);
      *  if (!socket->isValid()) {
      *      delete socket;
      *      request.cancel();

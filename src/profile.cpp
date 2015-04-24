@@ -125,7 +125,7 @@ void Profile::setFeatures(quint16 features)
 QSharedPointer<QLocalSocket> Profile::createSocket(const QDBusUnixFileDescriptor &fd)
 {
     int newfd = ::dup(fd.fileDescriptor());
-    QSharedPointer<QLocalSocket> socket(new QLocalSocket(this));
+    QSharedPointer<QLocalSocket> socket(new QLocalSocket);
     socket->setSocketDescriptor(newfd);
     return socket;
 }
