@@ -1,7 +1,7 @@
 /*
  * BluezQt - Asynchronous Bluez wrapper library
  *
- * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
+ * Copyright (C) 2014-2015 David Rosca <nowrep@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -188,10 +188,11 @@ void ManagerPrivate::clear()
     m_loaded = false;
 
     // Delete all devices first
-    Q_FOREACH (DevicePtr device, m_devices.values()) {
+    while (!m_devices.isEmpty()) {
+        DevicePtr device = m_devices.begin().value();
+        m_devices.remove(m_devices.begin().key());
         device->adapter()->d->removeDevice(device);
     }
-    m_devices.clear();
 
     // Delete all adapters
     while (!m_adapters.isEmpty()) {

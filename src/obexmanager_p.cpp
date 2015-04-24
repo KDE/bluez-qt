@@ -1,7 +1,7 @@
 /*
  * BluezQt - Asynchronous Bluez wrapper library
  *
- * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
+ * Copyright (C) 2014-2015 David Rosca <nowrep@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -171,6 +171,14 @@ void ObexManagerPrivate::clear()
 {
     m_loaded = false;
 
+    // Delete all sessions
+    while (!m_sessions.isEmpty()) {
+        ObexSessionPtr session = m_sessions.begin().value();
+        m_sessions.remove(m_sessions.begin().key());
+        Q_EMIT q->sessionRemoved(session);
+    }
+
+    // Delete all other objects
     if (m_obexClient) {
         m_obexClient->deleteLater();
         m_obexClient = Q_NULLPTR;
