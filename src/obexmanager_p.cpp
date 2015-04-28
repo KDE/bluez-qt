@@ -53,11 +53,6 @@ ObexManagerPrivate::ObexManagerPrivate(ObexManager *q)
     connect(&m_timer, &QTimer::timeout, this, &ObexManagerPrivate::load);
 }
 
-ObexManagerPrivate::~ObexManagerPrivate()
-{
-    clear();
-}
-
 void ObexManagerPrivate::init()
 {
     // Keep an eye on org.bluez.obex service
