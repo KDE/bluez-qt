@@ -128,8 +128,7 @@ TestCase {
         compare(device.legacyPairing, props.LegacyPairing, "legacyPairing");
         compare(device.rssi, props.RSSI, "rssi");
         compare(device.modalias, props.Modalias, "modalias");
-
-        compare(manager.adapterForDevice(device).ubi, props.Adapter, "adapter");
+        compare(device.adapter.ubi, props.Adapter, "adapter");
 
         for (var i = 0; i < device.uuids.length; ++i) {
             compare(device.uuids[i], props.UUIDs[i].toUpperCase(), "uuids" + i);
@@ -216,7 +215,7 @@ TestCase {
             managerDeviceRemovedSpy.clear();
             managerDeviceRemovedSpy.target = manager;
             adapterDeviceRemovedSpy.clear();
-            adapterDeviceRemovedSpy.target = manager.adapterForDevice(device);
+            adapterDeviceRemovedSpy.target = device.adapter;
             deviceDeviceRemovedSpy.clear();
             deviceDeviceRemovedSpy.target = device;
 
