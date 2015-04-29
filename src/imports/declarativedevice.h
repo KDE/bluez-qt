@@ -38,7 +38,7 @@ class DeclarativeDevice : public QObject
     Q_PROPERTY(QString friendlyName READ friendlyName NOTIFY friendlyNameChanged)
     Q_PROPERTY(QString remoteName READ remoteName NOTIFY remoteNameChanged)
     Q_PROPERTY(quint32 deviceClass READ deviceClass NOTIFY deviceClassChanged)
-    Q_PROPERTY(BluezQt::Device::DeviceType deviceType READ deviceType NOTIFY deviceTypeChanged)
+    Q_PROPERTY(BluezQt::Device::Type deviceType READ deviceType NOTIFY deviceTypeChanged)
     Q_PROPERTY(quint16 appearance READ appearance NOTIFY appearanceChanged)
     Q_PROPERTY(QString icon READ icon NOTIFY iconChanged)
     Q_PROPERTY(bool paired READ isPaired NOTIFY pairedChanged)
@@ -68,7 +68,7 @@ public:
 
     quint32 deviceClass() const;
 
-    BluezQt::Device::DeviceType deviceType() const;
+    BluezQt::Device::Type deviceType() const;
 
     quint16 appearance() const;
 
@@ -111,7 +111,7 @@ Q_SIGNALS:
     void friendlyNameChanged(const QString &friendlyName);
     void remoteNameChanged(const QString &remoteName);
     void deviceClassChanged(quint32 deviceClass);
-    void deviceTypeChanged(BluezQt::Device::DeviceType deviceType);
+    void deviceTypeChanged(BluezQt::Device::Type deviceType);
     void appearanceChanged(quint16 appearance);
     void iconChanged(const QString &icon);
     void pairedChanged(bool paired);

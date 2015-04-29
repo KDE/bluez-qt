@@ -97,7 +97,7 @@ quint32 DeclarativeDevice::deviceClass() const
     return m_device->deviceClass();
 }
 
-BluezQt::Device::DeviceType DeclarativeDevice::deviceType() const
+BluezQt::Device::Type DeclarativeDevice::deviceType() const
 {
     return m_device->deviceType();
 }

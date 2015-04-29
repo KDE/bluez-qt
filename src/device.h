@@ -43,14 +43,14 @@ class BLUEZQT_EXPORT Device : public QObject
 {
     Q_OBJECT
 
-    Q_ENUMS(DeviceType)
+    Q_ENUMS(Type)
     Q_PROPERTY(QString ubi READ ubi)
     Q_PROPERTY(QString address READ address)
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
     Q_PROPERTY(QString friendlyName READ friendlyName NOTIFY friendlyNameChanged)
     Q_PROPERTY(QString remoteName READ remoteName NOTIFY remoteNameChanged)
     Q_PROPERTY(quint32 deviceClass READ deviceClass NOTIFY deviceClassChanged)
-    Q_PROPERTY(DeviceType deviceType READ deviceType NOTIFY deviceTypeChanged)
+    Q_PROPERTY(Type deviceType READ deviceType NOTIFY deviceTypeChanged)
     Q_PROPERTY(quint16 appearance READ appearance NOTIFY appearanceChanged)
     Q_PROPERTY(QString icon READ icon NOTIFY iconChanged)
     Q_PROPERTY(bool paired READ isPaired NOTIFY pairedChanged)
@@ -68,7 +68,7 @@ public:
     /**
      * Device types.
      */
-    enum DeviceType {
+    enum Type {
         /** Indicates that the device is not of any of the following types. */
         Any,
         /** Indicates that the device is a phone. */
@@ -176,7 +176,7 @@ public:
      *
      * @return type of device
      */
-    Device::DeviceType deviceType() const;
+    Device::Type deviceType() const;
 
     /**
      * Returns an appearance of the device.
@@ -292,7 +292,7 @@ public:
      * @param type device type
      * @return device type string
      */
-    static QString typeToString(Device::DeviceType type);
+    static QString typeToString(Device::Type type);
 
     /**
      * Returns a device type for string.
@@ -300,7 +300,7 @@ public:
      * @param typeString type string
      * @return device type
      */
-    static Device::DeviceType stringToType(const QString &typeString);
+    static Device::Type stringToType(const QString &typeString);
 
 public Q_SLOTS:
     /**
@@ -405,7 +405,7 @@ Q_SIGNALS:
     /**
      * Indicates that device's type have changed.
      */
-    void deviceTypeChanged(DeviceType deviceType);
+    void deviceTypeChanged(Type deviceType);
 
     /**
      * Indicates that device's appearance have changed.

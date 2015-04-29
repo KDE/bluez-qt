@@ -59,7 +59,7 @@ QDBusConnection orgBluezObex();
 }
 
 QStringList stringListToUpper(const QStringList &list);
-Device::DeviceType classToType(quint32 classNum);
+Device::Type classToType(quint32 classNum);
 
 } // namespace BluezQt
 

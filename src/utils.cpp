@@ -158,7 +158,7 @@ QStringList stringListToUpper(const QStringList &list)
     return converted;
 }
 
-Device::DeviceType classToType(quint32 classNum)
+Device::Type classToType(quint32 classNum)
 {
     switch ((classNum & 0x1f00) >> 8) {
     case 0x01:

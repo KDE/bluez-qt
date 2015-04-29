@@ -86,7 +86,7 @@ quint32 Device::deviceClass() const
     return d->m_deviceClass;
 }
 
-Device::DeviceType Device::deviceType() const
+Device::Type Device::deviceType() const
 {
     return classToType(d->m_deviceClass);
 }
@@ -170,7 +170,7 @@ AdapterPtr Device::adapter() const
     return d->m_adapter;
 }
 
-QString Device::typeToString(Device::DeviceType type)
+QString Device::typeToString(Device::Type type)
 {
     switch (type) {
     case Device::Any:
@@ -206,7 +206,7 @@ QString Device::typeToString(Device::DeviceType type)
     }
 }
 
-Device::DeviceType Device::stringToType(const QString &typeString)
+Device::Type Device::stringToType(const QString &typeString)
 {
     if (typeString == QLatin1String("any")) {
         return Device::Any;
