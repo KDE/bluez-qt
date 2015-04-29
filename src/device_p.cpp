@@ -29,6 +29,8 @@
 namespace BluezQt
 {
 
+static const qint16 INVALID_RSSI = -32768; // qint16 minimum
+
 DevicePrivate::DevicePrivate(const QString &path, const QVariantMap &properties, AdapterPtr adapter)
     : QObject()
     , m_dbusProperties(0)
@@ -38,7 +40,7 @@ DevicePrivate::DevicePrivate(const QString &path, const QVariantMap &properties,
     , m_trusted(false)
     , m_blocked(false)
     , m_legacyPairing(false)
-    , m_rssi(0)
+    , m_rssi(INVALID_RSSI)
     , m_connected(false)
     , m_adapter(adapter)
 {
@@ -71,6 +73,10 @@ void DevicePrivate::init(const QVariantMap &properties)
     m_connected = properties.value(QStringLiteral("Connected")).toBool();
     m_uuids = stringListToUpper(properties.value(QStringLiteral("UUIDs")).toStringList());
     m_modalias = properties.value(QStringLiteral("Modalias")).toString();
+
+    if (!m_rssi) {
+        m_rssi = INVALID_RSSI;
+    }
 }
 
 void DevicePrivate::addMediaPlayer(MediaPlayerPtr player)
@@ -142,7 +148,7 @@ void DevicePrivate::propertiesChanged(const QString &interface, const QVariantMa
         } else if (property == QLatin1String("Icon")) {
             PROPERTY_INVALIDATED(m_icon, QString(), iconChanged);
         } else if (property == QLatin1String("RSSI")) {
-            PROPERTY_INVALIDATED(m_rssi, 0, rssiChanged);
+            PROPERTY_INVALIDATED(m_rssi, INVALID_RSSI, rssiChanged);
         } else if (property == QLatin1String("Modalias")) {
             PROPERTY_INVALIDATED(m_modalias, QString(), modaliasChanged);
         } else if (property == QLatin1String("UUIDs")) {

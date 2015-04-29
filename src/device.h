@@ -241,6 +241,10 @@ public:
     /**
      * Returns Received Signal Strength Indicator of the device.
      *
+     * The bigger value indicates better signal strength.
+     *
+     * @note RSSI is only updated during discovery.
+     *
      * @return RSSI of device
      */
     qint16 rssi() const;
