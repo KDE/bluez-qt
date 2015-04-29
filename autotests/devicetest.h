@@ -57,6 +57,9 @@ private:
         org::freedesktop::DBus::Properties *dbusProperties;
     };
 
+    QString deviceIcon(org::bluez::Device1 *device) const;
+    qint16 deviceRssi(org::bluez::Device1 *device) const;
+
     BluezQt::Manager *m_manager;
     QList<DeviceUnit> m_units;
     bool m_fakeBluezRun;

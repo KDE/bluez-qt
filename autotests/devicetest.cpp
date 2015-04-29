@@ -176,12 +176,12 @@ void DeviceTest::getPropertiesTest()
         QCOMPARE(unit.device->remoteName(), unit.dbusDevice->name());
         QCOMPARE(unit.device->deviceClass(), unit.dbusDevice->deviceClass());
         QCOMPARE(unit.device->appearance(), unit.dbusDevice->appearance());
-        QCOMPARE(unit.device->icon(), unit.dbusDevice->icon());
+        QCOMPARE(unit.device->icon(), deviceIcon(unit.dbusDevice));
         QCOMPARE(unit.device->isPaired(), unit.dbusDevice->paired());
         QCOMPARE(unit.device->isTrusted(), unit.dbusDevice->trusted());
         QCOMPARE(unit.device->isBlocked(), unit.dbusDevice->blocked());
         QCOMPARE(unit.device->hasLegacyPairing(), unit.dbusDevice->legacyPairing());
-        QCOMPARE(unit.device->rssi(), unit.dbusDevice->rSSI());
+        QCOMPARE(unit.device->rssi(), deviceRssi(unit.dbusDevice));
         QCOMPARE(unit.device->isConnected(), unit.dbusDevice->connected());
         QCOMPARE(unit.device->modalias(), unit.dbusDevice->modalias());
         QCOMPARE(unit.device->adapter()->ubi(), unit.dbusDevice->adapter().path());
@@ -282,6 +282,31 @@ void DeviceTest::deviceRemovedTest()
         QCOMPARE(adapterSpy.at(0).at(0).value<DevicePtr>(), unit.device);
         QCOMPARE(deviceSpy.at(0).at(0).value<DevicePtr>(), unit.device);
     }
+}
+
+QString DeviceTest::deviceIcon(org::bluez::Device1 *device) const
+{
+    quint32 classNum = device->deviceClass();
+    switch ((classNum & 0x1f00) >> 8) {
+    case 0x04:
+        switch ((classNum & 0xfc) >> 2) {
+        case 0x01:
+        case 0x02:
+            return QStringLiteral("audio-headset");
+        case 0x06:
+            return QStringLiteral("audio-headphones");
+        }
+    }
+    return device->icon();
+}
+
+qint16 DeviceTest::deviceRssi(org::bluez::Device1 *device) const
+{
+    qint16 rssi = device->rSSI();
+    if (!rssi) {
+        rssi = -32768;
+    }
+    return rssi;
 }
 
 int main(int argc, char *argv[])
