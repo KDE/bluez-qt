@@ -36,7 +36,7 @@ DeclarativeDevice::DeclarativeDevice(BluezQt::DevicePtr device, DeclarativeAdapt
     connect(m_device.data(), &BluezQt::Device::friendlyNameChanged, this, &DeclarativeDevice::friendlyNameChanged);
     connect(m_device.data(), &BluezQt::Device::remoteNameChanged, this, &DeclarativeDevice::remoteNameChanged);
     connect(m_device.data(), &BluezQt::Device::deviceClassChanged, this, &DeclarativeDevice::deviceClassChanged);
-    connect(m_device.data(), &BluezQt::Device::deviceTypeChanged, this, &DeclarativeDevice::deviceTypeChanged);
+    connect(m_device.data(), &BluezQt::Device::typeChanged, this, &DeclarativeDevice::typeChanged);
     connect(m_device.data(), &BluezQt::Device::appearanceChanged, this, &DeclarativeDevice::appearanceChanged);
     connect(m_device.data(), &BluezQt::Device::iconChanged, this, &DeclarativeDevice::iconChanged);
     connect(m_device.data(), &BluezQt::Device::pairedChanged, this, &DeclarativeDevice::pairedChanged);
@@ -97,9 +97,9 @@ quint32 DeclarativeDevice::deviceClass() const
     return m_device->deviceClass();
 }
 
-BluezQt::Device::Type DeclarativeDevice::deviceType() const
+BluezQt::Device::Type DeclarativeDevice::type() const
 {
-    return m_device->deviceType();
+    return m_device->type();
 }
 
 quint16 DeclarativeDevice::appearance() const
@@ -172,14 +172,14 @@ DeclarativeAdapter *DeclarativeDevice::adapter() const
     return m_adapter;
 }
 
-BluezQt::PendingCall *DeclarativeDevice::connectDevice()
+BluezQt::PendingCall *DeclarativeDevice::connectToDevice()
 {
-    return m_device->connectDevice();
+    return m_device->connectToDevice();
 }
 
-BluezQt::PendingCall *DeclarativeDevice::disconnectDevice()
+BluezQt::PendingCall *DeclarativeDevice::disconnectFromDevice()
 {
-    return m_device->disconnectDevice();
+    return m_device->disconnectFromDevice();
 }
 
 BluezQt::PendingCall *DeclarativeDevice::connectProfile(const QString &uuid)

@@ -182,7 +182,7 @@ void DevicePrivate::classPropertyChanged(quint32 value)
     if (m_deviceClass != value) {
         m_deviceClass = value;
         Q_EMIT q.data()->deviceClassChanged(m_deviceClass);
-        Q_EMIT q.data()->deviceTypeChanged(q.data()->deviceType());
+        Q_EMIT q.data()->typeChanged(q.data()->type());
     }
 }
 

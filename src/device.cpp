@@ -86,7 +86,7 @@ quint32 Device::deviceClass() const
     return d->m_deviceClass;
 }
 
-Device::Type Device::deviceType() const
+Device::Type Device::type() const
 {
     return classToType(d->m_deviceClass);
 }
@@ -98,7 +98,7 @@ quint16 Device::appearance() const
 
 QString Device::icon() const
 {
-    switch (deviceType()) {
+    switch (type()) {
     case Headset:
         return QStringLiteral("audio-headset");
     case Headphones:
@@ -240,12 +240,12 @@ Device::Type Device::stringToType(const QString &typeString)
     return Device::Any;
 }
 
-PendingCall *Device::connectDevice()
+PendingCall *Device::connectToDevice()
 {
     return new PendingCall(d->m_bluezDevice->Connect(), PendingCall::ReturnVoid, this);
 }
 
-PendingCall *Device::disconnectDevice()
+PendingCall *Device::disconnectFromDevice()
 {
     return new PendingCall(d->m_bluezDevice->Disconnect(), PendingCall::ReturnVoid, this);
 }

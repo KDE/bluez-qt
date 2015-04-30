@@ -50,7 +50,7 @@ class BLUEZQT_EXPORT Device : public QObject
     Q_PROPERTY(QString friendlyName READ friendlyName NOTIFY friendlyNameChanged)
     Q_PROPERTY(QString remoteName READ remoteName NOTIFY remoteNameChanged)
     Q_PROPERTY(quint32 deviceClass READ deviceClass NOTIFY deviceClassChanged)
-    Q_PROPERTY(Type deviceType READ deviceType NOTIFY deviceTypeChanged)
+    Q_PROPERTY(Type type READ type NOTIFY typeChanged)
     Q_PROPERTY(quint16 appearance READ appearance NOTIFY appearanceChanged)
     Q_PROPERTY(QString icon READ icon NOTIFY iconChanged)
     Q_PROPERTY(bool paired READ isPaired NOTIFY pairedChanged)
@@ -176,7 +176,7 @@ public:
      *
      * @return type of device
      */
-    Device::Type deviceType() const;
+    Device::Type type() const;
 
     /**
      * Returns an appearance of the device.
@@ -317,7 +317,7 @@ public Q_SLOTS:
      *
      * @return void pending call
      */
-    PendingCall *connectDevice();
+    PendingCall *connectToDevice();
 
     /**
      * Disconnects all connected profiles of the device.
@@ -328,7 +328,7 @@ public Q_SLOTS:
      *
      * @return void pending call
      */
-    PendingCall *disconnectDevice();
+    PendingCall *disconnectFromDevice();
 
     /**
      * Connects a specific profile of the device.
@@ -409,7 +409,7 @@ Q_SIGNALS:
     /**
      * Indicates that device's type have changed.
      */
-    void deviceTypeChanged(Type deviceType);
+    void typeChanged(Type type);
 
     /**
      * Indicates that device's appearance have changed.

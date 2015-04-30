@@ -171,7 +171,7 @@ QVariant DevicesModel::data(const QModelIndex &index, int role) const
     case DeviceClassRole:
         return dev->deviceClass();
     case DeviceTypeRole:
-        return dev->deviceType();
+        return dev->type();
     case AppearanceRole:
         return dev->appearance();
     case IconRole:
