@@ -43,7 +43,6 @@ public:
 namespace Autotests
 {
 
-bool isBluez5Running();
 void registerMetatypes();
 void verifyPropertiesChangedSignal(const QSignalSpy &spy, const QString &propertyName, const QVariant &propertyValue);
 

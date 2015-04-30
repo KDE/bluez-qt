@@ -78,7 +78,6 @@ public Q_SLOTS:
     {
         QLoggingCategory::setFilterRules(QStringLiteral("BluezQt=false"));
     }
-
 };
 
 static QObject *fakebluez_singleton(QQmlEngine *engine, QJSEngine *scriptEngine)

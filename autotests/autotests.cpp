@@ -68,9 +68,9 @@ void StartJob::exec()
                                 QDBusConnection::sessionBus(),
                                 QDBusServiceWatcher::WatchForRegistration);
 
-    QObject::connect(&watcher, &QDBusServiceWatcher::serviceRegistered, &m_eventLoop, &QEventLoop::quit);
-    QObject::connect(FakeBluez::s_process, SIGNAL(error(QProcess::ProcessError)), this, SLOT(processError(QProcess::ProcessError)));
-    QObject::connect(FakeBluez::s_process, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(processFinished(int,QProcess::ExitStatus)));
+    connect(&watcher, &QDBusServiceWatcher::serviceRegistered, &m_eventLoop, &QEventLoop::quit);
+    connect(FakeBluez::s_process, SIGNAL(error(QProcess::ProcessError)), this, SLOT(processError(QProcess::ProcessError)));
+    connect(FakeBluez::s_process, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(processFinished(int,QProcess::ExitStatus)));
 
     FakeBluez::s_process->start(m_fakebluezPath);
 
@@ -177,41 +177,6 @@ void FakeBluez::runAction(const QString &object, const QString &actionName, cons
 
     QDBusConnection::sessionBus().asyncCall(call);
     eventLoop.exec();
-}
-
-bool Autotests::isBluez5Running()
-{
-    // Check if org.bluez is registered
-    if (!QDBusConnection::systemBus().interface()->isServiceRegistered(QStringLiteral("org.bluez"))) {
-        return false;
-    }
-
-    QDBusInterface introspection(QStringLiteral("org.bluez"),
-                                 QStringLiteral("/"),
-                                 QStringLiteral("org.freedesktop.DBus.Introspectable"),
-                                 QDBusConnection::systemBus());
-
-    // Check if this is Bluez 4
-    QDBusReply<QString> reply = introspection.call(QStringLiteral("Introspect"));
-    if (reply.value().contains(QLatin1String("<interface name=\"org.bluez.Manager\">"))) {
-        return false;
-    }
-
-    QDBusInterface objectManager(QStringLiteral("org.bluez"),
-                                 QStringLiteral("/"),
-                                 QStringLiteral("org.freedesktop.DBus.ObjectManager"),
-                                 QDBusConnection::systemBus());
-
-    qDBusRegisterMetaType<QVariantMapMap>();
-    qDBusRegisterMetaType<DBusManagerStruct>();
-
-    // Check managed objects of Bluez 5
-    QDBusReply<DBusManagerStruct> reply2 = objectManager.call(QStringLiteral("GetManagedObjects"));
-    if (reply2.value().isEmpty()) {
-        return false;
-    }
-
-    return true;
 }
 
 void Autotests::registerMetatypes()
