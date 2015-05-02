@@ -19,9 +19,14 @@
  */
 
 #include "deviceinterface.h"
+#include "objectmanager.h"
+#include "mediaplayerinterface.h"
 
-#include <QTimer>
+#include <QDBusMessage>
+#include <QDBusArgument>
 #include <QDBusConnection>
+
+static const QString MediaPlayerUuid = QLatin1String("0000110E-0000-1000-8000-00805F9B34FB");
 
 // DeviceObject
 DeviceObject::DeviceObject(const QDBusObjectPath &path, QObject *parent)
@@ -33,8 +38,10 @@ DeviceObject::DeviceObject(const QDBusObjectPath &path, QObject *parent)
 // DeviceInterface
 DeviceInterface::DeviceInterface(const QDBusObjectPath &path, const QVariantMap &properties, QObject *parent)
     : QDBusAbstractAdaptor(parent)
+    , m_mediaPlayer(0)
 {
     setPath(path);
+    setObjectParent(parent);
     setProperties(properties);
     setName(QStringLiteral("org.bluez.Device1"));
 
@@ -134,26 +141,66 @@ QString DeviceInterface::modalias() const
 
 void DeviceInterface::Connect()
 {
+    if (uuids().contains(MediaPlayerUuid)) {
+        connectMediaPlayer();
+    }
+
     Object::changeProperty(QStringLiteral("Connected"), true);
 }
 
 void DeviceInterface::Disconnect()
 {
+    if (uuids().contains(MediaPlayerUuid)) {
+        disconnectMediaPlayer();
+    }
+
     Object::changeProperty(QStringLiteral("Connected"), false);
 }
 
-void DeviceInterface::ConnectProfile(const QString &uuid)
+void DeviceInterface::ConnectProfile(const QString &uuid, const QDBusMessage &msg)
 {
-    Q_UNUSED(uuid)
+    if (!uuids().contains(uuid)) {
+        QDBusMessage error = msg.createErrorReply(QStringLiteral("org.bluez.Error.DoesNotExist"), QStringLiteral("Profile UUID not supported"));
+        QDBusConnection::sessionBus().send(error);
+        return;
+    }
 
-    Q_UNIMPLEMENTED();
+    if (m_connectedUuids.contains(uuid)) {
+        QDBusMessage error = msg.createErrorReply(QStringLiteral("org.bluez.Error.AlreadyConnected"), QStringLiteral("Profile already connected"));
+        QDBusConnection::sessionBus().send(error);
+        return;
+    }
+
+    if (uuid == MediaPlayerUuid) {
+        connectMediaPlayer();
+    } else {
+        Q_UNIMPLEMENTED();
+    }
+
+    Object::changeProperty(QStringLiteral("Connected"), true);
 }
 
-void DeviceInterface::DisconnectProfile(const QString &uuid)
+void DeviceInterface::DisconnectProfile(const QString &uuid, const QDBusMessage &msg)
 {
-    Q_UNUSED(uuid)
+    if (!uuids().contains(uuid)) {
+        QDBusMessage error = msg.createErrorReply(QStringLiteral("org.bluez.Error.DoesNotExist"), QStringLiteral("Profile UUID not supported"));
+        QDBusConnection::sessionBus().send(error);
+        return;
+    }
 
-    Q_UNIMPLEMENTED();
+    if (!m_connectedUuids.contains(uuid)) {
+        QDBusMessage error = msg.createErrorReply(QStringLiteral("org.bluez.Error.NotConnected"), QStringLiteral("Profile not connected"));
+        QDBusConnection::sessionBus().send(error);
+        return;
+    }
+
+    if (uuid == MediaPlayerUuid) {
+        disconnectMediaPlayer();
+    } else {
+        Q_UNIMPLEMENTED();
+    }
+
+    Object::changeProperty(QStringLiteral("Connected"), false);
 }
 
 void DeviceInterface::Pair()
@@ -164,4 +211,30 @@ void DeviceInterface::Pair()
 void DeviceInterface::CancelPairing()
 {
     Q_UNIMPLEMENTED();
+}
+
+void DeviceInterface::connectMediaPlayer()
+{
+    const QVariantMap &properties = qdbus_cast<QVariantMap>(Object::property(QStringLiteral("MediaPlayer")));
+    const QDBusObjectPath &path = properties.value(QStringLiteral("Path")).value<QDBusObjectPath>();
+    QVariantMap props = properties;
+    props.remove(QStringLiteral("Path"));
+
+    MediaPlayerObject *mediaPlayerObj = new MediaPlayerObject(path);
+    m_mediaPlayer = new MediaPlayerInterface(path, props, mediaPlayerObj);
+
+    ObjectManager *manager = ObjectManager::self();
+    manager->addObject(m_mediaPlayer);
+    manager->addAutoDeleteObject(mediaPlayerObj);
+
+    m_connectedUuids.append(MediaPlayerUuid);
+}
+
+void DeviceInterface::disconnectMediaPlayer()
+{
+    ObjectManager *manager = ObjectManager::self();
+    manager->removeObject(m_mediaPlayer);
+    m_connectedUuids.removeOne(MediaPlayerUuid);
+
+    m_mediaPlayer = 0;
 }

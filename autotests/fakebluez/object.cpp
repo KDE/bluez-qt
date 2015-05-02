@@ -25,7 +25,18 @@
 #include <QDBusAbstractAdaptor>
 
 Object::Object()
+    : m_parent(0)
 {
+}
+
+QObject *Object::objectParent() const
+{
+    return m_parent;
+}
+
+void Object::setObjectParent(QObject *parent)
+{
+    m_parent = parent;
 }
 
 QDBusObjectPath Object::path() const

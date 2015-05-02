@@ -36,6 +36,7 @@ AdapterInterface::AdapterInterface(const QDBusObjectPath &path, const QVariantMa
     : QDBusAbstractAdaptor(parent)
 {
     setPath(path);
+    setObjectParent(parent);
     setProperties(properties);
     setName(QStringLiteral("org.bluez.Adapter1"));
 

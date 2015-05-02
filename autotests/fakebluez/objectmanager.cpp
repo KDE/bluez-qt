@@ -55,8 +55,11 @@ void ObjectManager::addObject(Object *object)
 void ObjectManager::removeObject(Object *object)
 {
     m_objects.remove(object->path().path());
+    m_autoDeleteObjects.removeOne(object->objectParent());
 
     Q_EMIT InterfacesRemoved(object->path(), QStringList(object->name()));
+
+    delete object->objectParent();
 }
 
 void ObjectManager::addAutoDeleteObject(QObject *object)

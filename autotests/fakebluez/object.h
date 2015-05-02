@@ -29,6 +29,9 @@ class Object
 public:
     explicit Object();
 
+    QObject *objectParent() const;
+    void setObjectParent(QObject *parent);
+
     QDBusObjectPath path() const;
     void setPath(const QDBusObjectPath &path);
 
@@ -44,6 +47,7 @@ public:
     void changeProperty(const QString &name, const QVariant &value);
 
 private:
+    QObject *m_parent;
     QDBusObjectPath m_path;
     QString m_name;
     QVariantMap m_properties;

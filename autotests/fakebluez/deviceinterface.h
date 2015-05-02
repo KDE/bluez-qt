@@ -23,8 +23,10 @@
 
 #include "object.h"
 
+#include <QStringList>
 #include <QDBusAbstractAdaptor>
 
+class QDBusMessage;
 class QDBusObjectPath;
 
 class DeviceObject : public QObject
@@ -92,10 +94,17 @@ public:
 public Q_SLOTS:
     void Connect();
     void Disconnect();
-    void ConnectProfile(const QString &uuid);
-    void DisconnectProfile(const QString &uuid);
+    void ConnectProfile(const QString &uuid, const QDBusMessage &msg);
+    void DisconnectProfile(const QString &uuid, const QDBusMessage &msg);
     void Pair();
     void CancelPairing();
+
+private:
+    void connectMediaPlayer();
+    void disconnectMediaPlayer();
+
+    QStringList m_connectedUuids;
+    Object *m_mediaPlayer;
 };
 
 #endif // DEVICEINTERFACE_H
