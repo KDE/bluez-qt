@@ -145,8 +145,7 @@ TestCase {
     {
         for (var i = 0; i < manager.adapters.length; ++i) {
             var adapter = manager.adapters[i];
-            var originalValue = adapter.name;
-            var value = originalValue + "tst_name";
+            var value = adapter.name + "tst_name";
 
             nameChangedSpy.clear();
             nameChangedSpy.target = adapter;
@@ -155,8 +154,6 @@ TestCase {
 
             tryCompare(nameChangedSpy, "count", 1);
             compare(adapter.name, value);
-
-            adapter.name = originalValue;
         }
     }
 
@@ -169,8 +166,7 @@ TestCase {
     {
         for (var i = 0; i < manager.adapters.length; ++i) {
             var adapter = manager.adapters[i];
-            var originalValue = adapter.powered;
-            var value = !originalValue;
+            var value = !adapter.powered;
 
             poweredChangedSpy.clear();
             poweredChangedSpy.target = adapter;
@@ -179,8 +175,6 @@ TestCase {
 
             tryCompare(poweredChangedSpy, "count", 1);
             compare(adapter.powered, value);
-
-            adapter.powered = originalValue;
         }
     }
 

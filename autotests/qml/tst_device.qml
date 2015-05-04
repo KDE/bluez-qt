@@ -152,8 +152,7 @@ TestCase {
     {
         for (var i = 0; i < manager.devices.length; ++i) {
             var device = manager.devices[i];
-            var originalValue = device.name;
-            var value = originalValue + "tst_name";
+            var value = device.name + "tst_name";
 
             nameChangedSpy.clear();
             nameChangedSpy.target = device;
@@ -162,8 +161,6 @@ TestCase {
 
             tryCompare(nameChangedSpy, "count", 1);
             compare(device.name, value);
-
-            device.name = originalValue;
         }
     }
 
@@ -176,8 +173,7 @@ TestCase {
     {
         for (var i = 0; i < manager.devices.length; ++i) {
             var device = manager.devices[i];
-            var originalValue = device.trusted;
-            var value = !originalValue;
+            var value = !device.trusted;
 
             trustedChangedSpy.clear();
             trustedChangedSpy.target = device;
@@ -186,8 +182,6 @@ TestCase {
 
             tryCompare(trustedChangedSpy, "count", 1);
             compare(device.trusted, value);
-
-            device.trusted = originalValue;
         }
     }
 

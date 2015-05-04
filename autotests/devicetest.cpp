@@ -181,8 +181,7 @@ void DeviceTest::setAliasTest()
         QSignalSpy deviceSpy(unit.device.data(), SIGNAL(nameChanged(QString)));
         QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString,QVariantMap,QStringList)));
 
-        QString originalValue = unit.device->name();
-        QString value = originalValue + QLatin1String("_tst_alias");
+        QString value = unit.device->name() + QLatin1String("_tst_alias");
 
         unit.device->setName(value);
         QTRY_COMPARE(deviceSpy.count(), 1);
@@ -193,8 +192,6 @@ void DeviceTest::setAliasTest()
 
         QCOMPARE(unit.device->name(), value);
         QCOMPARE(unit.dbusDevice->alias(), value);
-
-        unit.device->setName(originalValue)->waitForFinished();
     }
 }
 
@@ -204,8 +201,7 @@ void DeviceTest::setTrustedTest()
         QSignalSpy deviceSpy(unit.device.data(), SIGNAL(trustedChanged(bool)));
         QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString,QVariantMap,QStringList)));
 
-        bool originalValue = unit.device->isTrusted();
-        bool value = !originalValue;
+        bool value = !unit.device->isTrusted();
 
         unit.device->setTrusted(value);
         QTRY_COMPARE(deviceSpy.count(), 1);
@@ -216,8 +212,6 @@ void DeviceTest::setTrustedTest()
 
         QCOMPARE(unit.device->isTrusted(), value);
         QCOMPARE(unit.dbusDevice->trusted(), value);
-
-        unit.device->setTrusted(originalValue)->waitForFinished();
     }
 }
 
@@ -227,8 +221,7 @@ void DeviceTest::setBlockedTest()
         QSignalSpy deviceSpy(unit.device.data(), SIGNAL(blockedChanged(bool)));
         QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString,QVariantMap,QStringList)));
 
-        bool originalValue = unit.device->isBlocked();
-        bool value = !originalValue;
+        bool value = !unit.device->isBlocked();
 
         unit.device->setBlocked(value);
         QTRY_COMPARE(deviceSpy.count(), 1);
@@ -239,8 +232,6 @@ void DeviceTest::setBlockedTest()
 
         QCOMPARE(unit.device->isBlocked(), value);
         QCOMPARE(unit.dbusDevice->blocked(), value);
-
-        unit.device->setBlocked(originalValue)->waitForFinished();
     }
 }
 
