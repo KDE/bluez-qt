@@ -51,7 +51,7 @@ public Q_SLOTS:
         FakeBluez::runTest(testName);
     }
 
-    void runAction(const QString &object, const QString &actionName, QVariantMap properties = QVariantMap())
+    static void processProperties(QVariantMap &properties)
     {
         const QStringList &toDBusObjectPath = properties.value(QStringLiteral("_toDBusObjectPath")).toStringList();
         Q_FOREACH (const QString &name, toDBusObjectPath) {
@@ -60,6 +60,22 @@ public Q_SLOTS:
         }
         properties.remove(QStringLiteral("_toDBusObjectPath"));
 
+        QMapIterator<QString, QVariant> it(properties);
+        while (it.hasNext()) {
+            it.next();
+            if (it.key() == QLatin1String("UUIDs")) {
+                properties[it.key()] = it.value().toStringList();
+            } else if (it.value().type() == QVariant::Map) {
+                QVariantMap props = it.value().toMap();
+                processProperties(props);
+                properties[it.key()] = props;
+            }
+        }
+    }
+
+    void runAction(const QString &object, const QString &actionName, QVariantMap properties = QVariantMap())
+    {
+        processProperties(properties);
         FakeBluez::runAction(object, actionName, properties);
     }
 };
