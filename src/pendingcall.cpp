@@ -23,7 +23,7 @@
 #include "pendingcall.h"
 #include "obextransfer.h"
 #include "obextransfer_p.h"
-#include "obexfiletransfer.h"
+#include "obexfiletransferentry.h"
 #include "bluezqt_dbustypes.h"
 #include "debug.h"
 
@@ -66,34 +66,6 @@ static PendingCall::Error nameToError(const QString &name)
 #undef FROM_BLUEZ_ERROR
 
     return PendingCall::UnknownError;
-}
-
-static QDateTime dateTimeFromTransfer(const QString &value)
-{
-    return QDateTime::fromString(value, QStringLiteral("yyyyMMddThhmmssZ"));
-}
-
-static QList<ObexFileTransfer::Item> toFileTransferList(const QVariantMapList &list)
-{
-    QList<ObexFileTransfer::Item> items;
-
-    Q_FOREACH (const QVariantMap &map, list) {
-        ObexFileTransfer::Item item;
-        if (map.value(QStringLiteral("Type")).toString() == QLatin1String("folder")) {
-            item.type = ObexFileTransfer::Item::Folder;
-        } else {
-            item.type = ObexFileTransfer::Item::File;
-        }
-        item.name = map.value(QStringLiteral("Name")).toString();
-        item.label = map.value(QStringLiteral("Label")).toString();
-        item.size = map.value(QStringLiteral("Size")).toUInt();
-        item.permissions = map.value(QStringLiteral("User-perm")).toString();
-        item.memoryType = map.value(QStringLiteral("Mem-type")).toString();
-        item.modified = dateTimeFromTransfer(map.value(QStringLiteral("Modified")).toString());
-        items.append(item);
-    }
-
-    return items;
 }
 
 class PendingCallPrivate : public QObject
@@ -198,7 +170,11 @@ void PendingCallPrivate::processFileTransferListReply(const QDBusPendingReply<QV
 {
     processError(reply.error());
     if (!reply.isError()) {
-        m_value.append(QVariant::fromValue(toFileTransferList(reply.value())));
+        QList<ObexFileTransferEntry> items;
+        Q_FOREACH (const QVariantMap &map, reply.value()) {
+            items.append(ObexFileTransferEntry(map));
+        }
+        m_value.append(QVariant::fromValue(items));
     }
 }
 

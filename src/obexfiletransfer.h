@@ -24,8 +24,8 @@
 #define BLUEZQT_OBEXFILETRANSFER_H
 
 #include <QObject>
-#include <QDateTime>
 
+#include "obexfiletransferentry.h"
 #include "bluezqt_export.h"
 
 class QDBusObjectPath;
@@ -45,33 +45,6 @@ class BLUEZQT_EXPORT ObexFileTransfer : public QObject
     Q_OBJECT
 
 public:
-    /** Item returned from ObexFileTransfer::listFolder(). */
-    struct Item
-    {
-        /** Type of item. */
-        enum Type {
-            /** Indicates that the item is a file. */
-            File,
-            /** Indicates that the item is a folder. */
-            Folder
-        };
-
-        /** Name of the file/folder. */
-        QString name;
-        /** Label of the file/folder. */
-        QString label;
-        /** Type of the item. */
-        Type type;
-        /** Size of file in bytes or number of items in folder. */
-        quint64 size;
-        /** Permissions of the item. */
-        QString permissions;
-        /** Memory type where the item is stored. */
-        QString memoryType;
-        /** Modification time of the item. */
-        QDateTime modified;
-    };
-
     /**
      * Creates a new ObexFileTransfer object.
      *
@@ -120,7 +93,7 @@ public:
      *
      * Possible errors: PendingCall::Failed
      *
-     * @return QList<ObexFileTransfer::Item> pending call
+     * @return QList<ObexFileTransferEntry> pending call
      */
     PendingCall *listFolder();
 
@@ -191,7 +164,5 @@ private:
 };
 
 } // namespace BluezQt
-
-Q_DECLARE_METATYPE(QList<BluezQt::ObexFileTransfer::Item>)
 
 #endif // BLUEZQT_OBEXFILETRANSFER_H

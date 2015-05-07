@@ -29,6 +29,7 @@ set(bluezqt_SRCS
     obexsession.cpp
     obexobjectpush.cpp
     obexfiletransfer.cpp
+    obexfiletransferentry.cpp
 )
 
 set(dbusobjectmanager_xml ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.freedesktop.DBus.ObjectManager.xml)
@@ -92,6 +93,7 @@ ecm_generate_headers(BluezQt_CamelCase_HEADERS
         ObexSession
         ObexObjectPush
         ObexFileTransfer
+        ObexFileTransferEntry
 
     REQUIRED_HEADERS BluezQt_HEADERS
     PREFIX BluezQt

@@ -24,7 +24,6 @@
 #define BLUEZQT_MEDIAPLAYERTRACK_H
 
 #include <QString>
-#include <QVariant>
 
 #include "types.h"
 #include "bluezqt_export.h"

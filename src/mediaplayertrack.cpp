@@ -22,6 +22,8 @@
 
 #include "mediaplayertrack.h"
 
+#include <QVariant>
+
 namespace BluezQt
 {
 
