@@ -36,6 +36,10 @@ namespace BluezQt
 
 static PendingCall::Error nameToError(const QString &name)
 {
+    if (name.startsWith(QLatin1String("org.freedesktop.DBus.Error"))) {
+        return PendingCall::DBusError;
+    }
+
     if (!name.startsWith(QLatin1String("org.bluez.Error"))) {
         return PendingCall::UnknownError;
     }

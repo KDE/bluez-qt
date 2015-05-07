@@ -95,6 +95,8 @@ public:
         AuthenticationTimeout = 18,
         /** Indicates that the connection attempt have failed. */
         ConnectionAttemptFailed = 19,
+        /** Indicates an error with D-Bus. */
+        DBusError = 98,
         /** Indicates an internal error. */
         InternalError = 99,
         /** Indicates an unknown error. */
