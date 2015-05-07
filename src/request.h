@@ -23,6 +23,8 @@
 #ifndef BLUEZQT_REQUEST_H
 #define BLUEZQT_REQUEST_H
 
+#include <QSharedPointer>
+
 #include "bluezqt_export.h"
 
 class QDBusMessage;
@@ -51,7 +53,7 @@ public:
     /**
      * Creates a new Request object.
      */
-    Request();
+    explicit Request();
 
     /**
      * Destroys a Request object.
@@ -66,25 +68,11 @@ public:
     Request(const Request &other);
 
     /**
-     * Move constructor.
-     *
-     * @param other
-     */
-    Request(Request &&other);
-
-    /**
      * Copy assignment operator.
      *
      * @param other
      */
     Request &operator=(const Request &other);
-
-    /**
-     * Move assignment operator.
-     *
-     * @param other
-     */
-    Request &operator=(Request &&other);
 
     /**
      * Accepts the request.
@@ -118,7 +106,7 @@ public:
 private:
     explicit Request(RequestOriginatingType type, const QDBusMessage &message);
 
-    class RequestPrivate *d;
+    QSharedPointer<class RequestPrivate> d;
 
     friend class AgentAdaptor;
     friend class ObexAgentAdaptor;
@@ -130,14 +118,11 @@ template<>
 class BLUEZQT_EXPORT Request<void>
 {
 public:
-    Request();
+    explicit Request();
     virtual ~Request();
 
     Request(const Request &other);
-    Request(Request &&other);
-
     Request &operator=(const Request &other);
-    Request &operator=(Request &&other);
 
     void accept() const;
     void reject() const;
@@ -146,7 +131,7 @@ public:
 private:
     explicit Request(RequestOriginatingType type, const QDBusMessage &message);
 
-    class RequestPrivate *d;
+    QSharedPointer<class RequestPrivate> d;
 
     friend class AgentAdaptor;
     friend class ObexAgentAdaptor;

@@ -123,36 +123,20 @@ Request<T>::Request(RequestOriginatingType type, const QDBusMessage &message)
 template<typename T>
 Request<T>::~Request()
 {
-    delete d;
 }
 
 template<typename T>
 Request<T>::Request(const Request &other)
-    : d(new RequestPrivate)
-{
-    *d = *other.d;
-}
-
-template<typename T>
-Request<T>::Request(Request &&other)
     : d(other.d)
 {
-    other.d = Q_NULLPTR;
 }
 
 template<typename T>
 Request<T> &Request<T>::operator=(const Request<T> &other)
 {
     if (d != other.d) {
-        *d = *other.d;
+        d = other.d;
     }
-    return *this;
-}
-
-template<typename T>
-Request<T> &Request<T>::operator=(Request<T> &&other)
-{
-    std::swap(d, other.d);
     return *this;
 }
 
@@ -189,32 +173,18 @@ Request<void>::Request(RequestOriginatingType type, const QDBusMessage &message)
 
 Request<void>::~Request()
 {
-    delete d;
 }
 
 Request<void>::Request(const Request &other)
-    : d(new RequestPrivate)
-{
-    *d = *other.d;
-}
-
-Request<void>::Request(Request &&other)
     : d(other.d)
 {
-    other.d = Q_NULLPTR;
 }
 
 Request<void> &Request<void>::operator=(const Request<void> &other)
 {
     if (d != other.d) {
-        *d = *other.d;
+        d = other.d;
     }
-    return *this;
-}
-
-Request<void> &Request<void>::operator=(Request<void> &&other)
-{
-    std::swap(d, other.d);
     return *this;
 }
 
@@ -235,7 +205,7 @@ void Request<void>::cancel() const
 
 // Generate classes
 template class Request<void>;
-template class Request<unsigned>;
+template class Request<quint32>;
 template class Request<QString>;
 
 } // namespace BluezQt
