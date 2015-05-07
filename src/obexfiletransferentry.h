@@ -76,6 +76,15 @@ public:
     ObexFileTransferEntry &operator=(const ObexFileTransferEntry &other);
 
     /**
+     * Returns whether the entry is valid.
+     *
+     * This only checks if type() != Invalid.
+     *
+     * @return true if entry is valid
+     */
+    bool isValid() const;
+
+    /**
      * Returns a name of the entry.
      *
      * @return name of entry

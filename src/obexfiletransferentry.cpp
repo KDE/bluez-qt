@@ -49,6 +49,7 @@ ObexFileTransferEntry::ObexFileTransferEntry()
     : d(new ObexFileTransferEntryPrivate)
 {
     d->m_type = Invalid;
+    d->m_size = 0;
 }
 
 ObexFileTransferEntry::ObexFileTransferEntry(const QVariantMap &properties)
@@ -86,6 +87,11 @@ ObexFileTransferEntry &ObexFileTransferEntry::operator=(const ObexFileTransferEn
         d = other.d;
     }
     return *this;
+}
+
+bool ObexFileTransferEntry::isValid() const
+{
+    return d->m_type != Invalid;
 }
 
 QString ObexFileTransferEntry::name() const
