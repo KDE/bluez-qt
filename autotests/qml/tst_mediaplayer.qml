@@ -238,11 +238,35 @@ TestCase {
     }
 
     SignalSpy {
+        id: trackChangedSpy
+        signalName: "trackChanged"
+    }
+
+    function test_za_changeTrack()
+    {
+        for (var i = 0; i < manager.devices.length; ++i) {
+            var mediaPlayer = manager.devices[i].mediaPlayer;
+
+            trackChangedSpy.target = mediaPlayer;
+
+            trackChangedSpy.clear();
+            mediaPlayer.next();
+            tryCompare(trackChangedSpy, "count", 1);
+            compare(mediaPlayer.track.valid, true);
+
+            trackChangedSpy.clear();
+            mediaPlayer.previous();
+            tryCompare(trackChangedSpy, "count", 1);
+            compare(mediaPlayer.track.valid, true);
+        }
+    }
+
+    SignalSpy {
         id: statusChangedSpy
         signalName: "statusChanged"
     }
 
-    function test_za_changeStatus()
+    function test_zb_changeStatus()
     {
         for (var i = 0; i < manager.devices.length; ++i) {
             var mediaPlayer = manager.devices[i].mediaPlayer;
@@ -283,7 +307,7 @@ TestCase {
         }
     }
 
-    function test_zb_disconnect()
+    function test_zz_disconnect()
     {
         for (var i = 0; i < manager.devices.length; ++i) {
             var device = manager.devices[i];

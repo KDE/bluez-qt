@@ -47,7 +47,7 @@ public:
     QDBusPendingReply<> setDBusProperty(const QString &name, const QVariant &value);
     void propertiesChanged(const QString &interface, const QVariantMap &changed, const QStringList &invalidated);
 
-    MediaPlayerTrackPtr variantToTrack(const QVariant &variant) const;
+    MediaPlayerTrack variantToTrack(const QVariant &variant) const;
 
     QWeakPointer<MediaPlayer> q;
     BluezMediaPlayer *m_bluezMediaPlayer;
@@ -58,7 +58,7 @@ public:
     MediaPlayer::Repeat m_repeat;
     MediaPlayer::Shuffle m_shuffle;
     MediaPlayer::Status m_status;
-    MediaPlayerTrackPtr m_track;
+    MediaPlayerTrack m_track;
     quint32 m_position;
 };
 

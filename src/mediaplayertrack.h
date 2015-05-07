@@ -24,8 +24,8 @@
 #define BLUEZQT_MEDIAPLAYERTRACK_H
 
 #include <QString>
+#include <QSharedPointer>
 
-#include "types.h"
 #include "bluezqt_export.h"
 
 namespace BluezQt
@@ -42,9 +42,35 @@ class BLUEZQT_EXPORT MediaPlayerTrack
 {
 public:
     /**
+     * Creates a new invalid MediaPlayerTrack object.
+     */
+    explicit MediaPlayerTrack();
+
+    /**
      * Destroys a MediaPlayerTrack object.
      */
     virtual ~MediaPlayerTrack();
+
+    /**
+     * Copy constructor.
+     *
+     * @param other
+     */
+    MediaPlayerTrack(const MediaPlayerTrack &other);
+
+    /**
+     * Copy assignment operator.
+     *
+     * @param other
+     */
+    MediaPlayerTrack &operator=(const MediaPlayerTrack &other);
+
+    /**
+     * Returns whether the track is valid.
+     *
+     * @return true if track is valid
+     */
+    bool isValid() const;
 
     /**
      * Returns a title of the track.
@@ -98,11 +124,13 @@ public:
 private:
     explicit MediaPlayerTrack(const QVariantMap &properties);
 
-    class MediaPlayerTrackPrivate *const d;
+    QSharedPointer<class MediaPlayerTrackPrivate> d;
 
     friend class MediaPlayerPrivate;
 };
 
 } // namespace BluezQt
+
+Q_DECLARE_METATYPE(BluezQt::MediaPlayerTrack)
 
 #endif // BLUEZQT_MEDIAPLAYERTRACK_H

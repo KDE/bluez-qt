@@ -159,15 +159,10 @@ void MediaPlayerPrivate::propertiesChanged(const QString &interface, const QVari
     }
 }
 
-MediaPlayerTrackPtr MediaPlayerPrivate::variantToTrack(const QVariant &variant) const
+MediaPlayerTrack MediaPlayerPrivate::variantToTrack(const QVariant &variant) const
 {
     const QVariantMap &properties = qdbus_cast<QVariantMap>(variant);
-
-    if (properties.isEmpty()) {
-        return MediaPlayerTrackPtr();
-    }
-
-    return MediaPlayerTrackPtr(new MediaPlayerTrack(properties));
+    return MediaPlayerTrack(properties);
 }
 
 } // namespace BluezQt

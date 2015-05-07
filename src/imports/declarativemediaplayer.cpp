@@ -128,13 +128,12 @@ BluezQt::PendingCall *DeclarativeMediaPlayer::rewind()
 
 void DeclarativeMediaPlayer::updateTrack()
 {
-    BluezQt::MediaPlayerTrackPtr t = m_mediaPlayer->track();
-
-    m_track[QStringLiteral("title")] = t ? t->title() : QString();
-    m_track[QStringLiteral("artist")] = t ? t->artist() : QString();
-    m_track[QStringLiteral("album")] = t ? t->album() : QString();
-    m_track[QStringLiteral("genre")] = t ? t->genre() : QString();
-    m_track[QStringLiteral("numberOfTracks")] = qint64(t ? t->numberOfTracks() : 0);
-    m_track[QStringLiteral("trackNumber")] = qint64(t ? t->trackNumber() : 0);
-    m_track[QStringLiteral("duration")] = qint64(t ? t->duration() : 0);
+    m_track[QStringLiteral("valid")] = m_mediaPlayer->track().isValid();
+    m_track[QStringLiteral("title")] = m_mediaPlayer->track().title();
+    m_track[QStringLiteral("artist")] = m_mediaPlayer->track().artist();
+    m_track[QStringLiteral("album")] = m_mediaPlayer->track().album();
+    m_track[QStringLiteral("genre")] = m_mediaPlayer->track().genre();
+    m_track[QStringLiteral("numberOfTracks")] = qint64(m_mediaPlayer->track().numberOfTracks());
+    m_track[QStringLiteral("trackNumber")] = qint64(m_mediaPlayer->track().trackNumber());
+    m_track[QStringLiteral("duration")] = qint64(m_mediaPlayer->track().duration());
 }

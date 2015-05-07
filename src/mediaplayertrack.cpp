@@ -30,6 +30,7 @@ namespace BluezQt
 class MediaPlayerTrackPrivate
 {
 public:
+    bool m_valid;
     QString m_title;
     QString m_artist;
     QString m_album;
@@ -39,9 +40,19 @@ public:
     quint32 m_duration;
 };
 
+MediaPlayerTrack::MediaPlayerTrack()
+    : d(new MediaPlayerTrackPrivate)
+{
+    d->m_valid = false;
+    d->m_numberOfTracks = 0;
+    d->m_trackNumber = 0;
+    d->m_duration = 0;
+}
+
 MediaPlayerTrack::MediaPlayerTrack(const QVariantMap &properties)
     : d(new MediaPlayerTrackPrivate)
 {
+    d->m_valid = !properties.isEmpty();
     d->m_title = properties.value(QStringLiteral("Title")).toString();
     d->m_artist = properties.value(QStringLiteral("Artist")).toString();
     d->m_album = properties.value(QStringLiteral("Album")).toString();
@@ -53,7 +64,24 @@ MediaPlayerTrack::MediaPlayerTrack(const QVariantMap &properties)
 
 MediaPlayerTrack::~MediaPlayerTrack()
 {
-    delete d;
+}
+
+MediaPlayerTrack::MediaPlayerTrack(const MediaPlayerTrack &other)
+    : d(other.d)
+{
+}
+
+MediaPlayerTrack &MediaPlayerTrack::operator=(const MediaPlayerTrack &other)
+{
+    if (d != other.d) {
+        d = other.d;
+    }
+    return *this;
+}
+
+bool MediaPlayerTrack::isValid() const
+{
+    return d->m_valid;
 }
 
 QString MediaPlayerTrack::title() const

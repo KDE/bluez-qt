@@ -186,7 +186,6 @@ void Autotests::registerMetatypes()
     qRegisterMetaType<BluezQt::DevicePtr>("DevicePtr");
     qRegisterMetaType<BluezQt::AdapterPtr>("AdapterPtr");
     qRegisterMetaType<BluezQt::MediaPlayerPtr>("MediaPlayerPtr");
-    qRegisterMetaType<BluezQt::MediaPlayerTrackPtr>("MediaPlayerTrackPtr");
 }
 
 void Autotests::verifyPropertiesChangedSignal(const QSignalSpy &spy, const QString &propertyName, const QVariant &propertyValue)

@@ -48,6 +48,7 @@ MediaPlayerTest::MediaPlayerTest()
     qRegisterMetaType<MediaPlayer::Repeat>("Repeat");
     qRegisterMetaType<MediaPlayer::Shuffle>("Shuffle");
     qRegisterMetaType<MediaPlayer::Status>("Status");
+    qRegisterMetaType<MediaPlayerTrack>("MediaPlayerTrack");
 }
 
 void MediaPlayerTest::initTestCase()
@@ -305,15 +306,17 @@ void MediaPlayerTest::changeTrackTest()
     Q_FOREACH (const MediaPlayerUnit &unit, m_units) {
         MediaPlayerPtr mediaPlayer = unit.device->mediaPlayer();
 
-        QSignalSpy trackSpy(mediaPlayer.data(), SIGNAL(trackChanged(MediaPlayerTrackPtr)));
+        QSignalSpy trackSpy(mediaPlayer.data(), SIGNAL(trackChanged(MediaPlayerTrack)));
 
         trackSpy.clear();
         mediaPlayer->next();
         QTRY_COMPARE(trackSpy.count(), 1);
+        QCOMPARE(mediaPlayer->track().isValid(), true);
 
         trackSpy.clear();
         mediaPlayer->previous();
         QTRY_COMPARE(trackSpy.count(), 1);
+        QCOMPARE(mediaPlayer->track().isValid(), true);
     }
 }
 
@@ -388,17 +391,17 @@ QVariantMap MediaPlayerTest::trackMap(MediaPlayerPtr mediaPlayer) const
 {
     QVariantMap out;
 
-    if (!mediaPlayer->track()) {
+    if (!mediaPlayer->track().isValid()) {
         return out;
     }
 
-    out[QStringLiteral("Title")] = mediaPlayer->track()->title();
-    out[QStringLiteral("Artist")] = mediaPlayer->track()->artist();
-    out[QStringLiteral("Album")] = mediaPlayer->track()->album();
-    out[QStringLiteral("Genre")] = mediaPlayer->track()->genre();
-    out[QStringLiteral("NumberOfTracks")] = mediaPlayer->track()->numberOfTracks();
-    out[QStringLiteral("TrackNumber")] = mediaPlayer->track()->trackNumber();
-    out[QStringLiteral("Duration")] = mediaPlayer->track()->duration();
+    out[QStringLiteral("Title")] = mediaPlayer->track().title();
+    out[QStringLiteral("Artist")] = mediaPlayer->track().artist();
+    out[QStringLiteral("Album")] = mediaPlayer->track().album();
+    out[QStringLiteral("Genre")] = mediaPlayer->track().genre();
+    out[QStringLiteral("NumberOfTracks")] = mediaPlayer->track().numberOfTracks();
+    out[QStringLiteral("TrackNumber")] = mediaPlayer->track().trackNumber();
+    out[QStringLiteral("Duration")] = mediaPlayer->track().duration();
 
     return out;
 }

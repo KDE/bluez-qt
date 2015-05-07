@@ -78,6 +78,8 @@ ecm_generate_headers(BluezQt_CamelCase_HEADERS
         Manager
         Adapter
         Device
+        MediaPlayer
+        MediaPlayerTrack
         DevicesModel
         Job
         InitManagerJob

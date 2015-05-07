@@ -50,7 +50,7 @@ class BLUEZQT_EXPORT MediaPlayer : public QObject
     Q_PROPERTY(Repeat repeat READ repeat WRITE setRepeat NOTIFY repeatChanged)
     Q_PROPERTY(Shuffle shuffle READ shuffle WRITE setShuffle NOTIFY shuffleChanged)
     Q_PROPERTY(Status status READ status NOTIFY statusChanged)
-    Q_PROPERTY(MediaPlayerTrackPtr track READ track NOTIFY trackChanged)
+    Q_PROPERTY(MediaPlayerTrack track READ track NOTIFY trackChanged)
     Q_PROPERTY(quint32 position READ position NOTIFY positionChanged)
 
 public:
@@ -174,9 +174,9 @@ public:
     /**
      * Returns the current track.
      *
-     * @return null if there is no current track
+     * @return current track
      */
-    MediaPlayerTrackPtr track() const;
+    MediaPlayerTrack track() const;
 
     /**
      * Returns the playback position in miliseconds.
@@ -278,7 +278,7 @@ Q_SIGNALS:
     /**
      * Indicates that player's current track have changed.
      */
-    void trackChanged(MediaPlayerTrackPtr track);
+    void trackChanged(MediaPlayerTrack track);
 
     /**
      * Indicates that player's playback position have changed.
