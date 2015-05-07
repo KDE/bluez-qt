@@ -117,8 +117,8 @@ QHash<int, QByteArray> DevicesModel::roleNames() const
     roles[NameRole] = QByteArrayLiteral("Name");
     roles[FriendlyNameRole] = QByteArrayLiteral("FriendlyName");
     roles[RemoteNameRole] = QByteArrayLiteral("RemoteName");
-    roles[DeviceClassRole] = QByteArrayLiteral("DeviceClass");
-    roles[DeviceTypeRole] = QByteArrayLiteral("DeviceType");
+    roles[ClassRole] = QByteArrayLiteral("Class");
+    roles[TypeRole] = QByteArrayLiteral("Type");
     roles[AppearanceRole] = QByteArrayLiteral("Appearance");
     roles[IconRole] = QByteArrayLiteral("Icon");
     roles[PairedRole] = QByteArrayLiteral("Paired");
@@ -168,9 +168,9 @@ QVariant DevicesModel::data(const QModelIndex &index, int role) const
         return dev->friendlyName();
     case RemoteNameRole:
         return dev->remoteName();
-    case DeviceClassRole:
+    case ClassRole:
         return dev->deviceClass();
-    case DeviceTypeRole:
+    case TypeRole:
         return dev->type();
     case AppearanceRole:
         return dev->appearance();

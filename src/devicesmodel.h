@@ -72,9 +72,9 @@ public:
         /** Remote name of the device (QString) */
         RemoteNameRole = Qt::UserRole + 104,
         /** Class of the device (quint32) */
-        DeviceClassRole = Qt::UserRole + 105,
+        ClassRole = Qt::UserRole + 105,
         /** Type of the device (DeviceType) */
-        DeviceTypeRole = Qt::UserRole + 106,
+        TypeRole = Qt::UserRole + 106,
         /** Appearance of the device (quint16) */
         AppearanceRole = Qt::UserRole + 107,
         /** Icon name of the device (QString) */
