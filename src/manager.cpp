@@ -151,6 +151,8 @@ DevicePtr Manager::deviceForUbi(const QString &ubi) const
 
 PendingCall *Manager::registerAgent(Agent *agent)
 {
+    Q_ASSERT(agent);
+
     if (!d->m_bluezAgentManager) {
         return new PendingCall(PendingCall::InternalError, QStringLiteral("Manager not operational!"));
     }
@@ -187,6 +189,8 @@ PendingCall *Manager::registerAgent(Agent *agent)
 
 PendingCall *Manager::unregisterAgent(Agent *agent)
 {
+    Q_ASSERT(agent);
+
     if (!d->m_bluezAgentManager) {
         return new PendingCall(PendingCall::InternalError, QStringLiteral("Manager not operational!"));
     }
@@ -199,6 +203,8 @@ PendingCall *Manager::unregisterAgent(Agent *agent)
 
 PendingCall *Manager::requestDefaultAgent(Agent *agent)
 {
+    Q_ASSERT(agent);
+
     if (!d->m_bluezAgentManager) {
         return new PendingCall(PendingCall::InternalError, QStringLiteral("Manager not operational!"));
     }
@@ -209,6 +215,8 @@ PendingCall *Manager::requestDefaultAgent(Agent *agent)
 
 PendingCall *Manager::registerProfile(Profile *profile)
 {
+    Q_ASSERT(profile);
+
     if (!d->m_bluezProfileManager) {
         return new PendingCall(PendingCall::InternalError, QStringLiteral("Manager not operational!"));
     }
@@ -225,6 +233,8 @@ PendingCall *Manager::registerProfile(Profile *profile)
 
 PendingCall *Manager::unregisterProfile(Profile *profile)
 {
+    Q_ASSERT(profile);
+
     if (!d->m_bluezProfileManager) {
         return new PendingCall(PendingCall::InternalError, QStringLiteral("Manager not operational!"));
     }

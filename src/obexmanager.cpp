@@ -91,6 +91,8 @@ PendingCall *ObexManager::startService()
 
 PendingCall *ObexManager::registerAgent(ObexAgent *agent)
 {
+    Q_ASSERT(agent);
+
     if (!d->m_obexAgentManager) {
         return new PendingCall(PendingCall::InternalError, QStringLiteral("ObexManager not operational!"));
     }
@@ -107,6 +109,8 @@ PendingCall *ObexManager::registerAgent(ObexAgent *agent)
 
 PendingCall *ObexManager::unregisterAgent(ObexAgent *agent)
 {
+    Q_ASSERT(agent);
+
     if (!d->m_obexAgentManager) {
         return new PendingCall(PendingCall::InternalError, QStringLiteral("ObexManager not operational!"));
     }
