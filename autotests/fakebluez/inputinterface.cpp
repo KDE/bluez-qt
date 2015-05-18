@@ -1,6 +1,4 @@
 /*
- * BluezQt - Asynchronous Bluez wrapper library
- *
  * Copyright (C) 2015 David Rosca <nowrep@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
@@ -20,32 +18,30 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BLUEZQT_TYPES_H
-#define BLUEZQT_TYPES_H
+#include "inputinterface.h"
 
-#include <QSharedPointer>
+#include <QDBusMessage>
+#include <QDBusArgument>
+#include <QDBusConnection>
 
-namespace BluezQt
+// InputObject
+InputObject::InputObject(const QDBusObjectPath &path, QObject *parent)
+    : QObject(parent)
 {
+    QDBusConnection::sessionBus().registerObject(path.path(), this);
+}
 
-class Manager;
-class Adapter;
-class Device;
-class Input;
-class MediaPlayer;
-class ObexManager;
-class ObexSession;
-class ObexTransfer;
+// InputInterface
+InputInterface::InputInterface(const QDBusObjectPath &path, const QVariantMap &properties, QObject *parent)
+    : QDBusAbstractAdaptor(parent)
+{
+    setPath(path);
+    setObjectParent(parent);
+    setProperties(properties);
+    setName(QStringLiteral("org.bluez.Input1"));
+}
 
-typedef QSharedPointer<BluezQt::Manager> ManagerPtr;
-typedef QSharedPointer<BluezQt::Adapter> AdapterPtr;
-typedef QSharedPointer<BluezQt::Device> DevicePtr;
-typedef QSharedPointer<BluezQt::Input> InputPtr;
-typedef QSharedPointer<BluezQt::MediaPlayer> MediaPlayerPtr;
-typedef QSharedPointer<BluezQt::ObexManager> ObexManagerPtr;
-typedef QSharedPointer<BluezQt::ObexSession> ObexSessionPtr;
-typedef QSharedPointer<BluezQt::ObexTransfer> ObexTransferPtr;
-
-} // namespace BluezQt
-
-#endif // BLUEZQT_TYPES_H
+QString InputInterface::reconnectMode() const
+{
+    return Object::property(QStringLiteral("ReconnectMode")).toString();
+}

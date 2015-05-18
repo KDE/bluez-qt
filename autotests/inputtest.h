@@ -1,6 +1,4 @@
 /*
- * BluezQt - Asynchronous Bluez wrapper library
- *
  * Copyright (C) 2015 David Rosca <nowrep@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
@@ -20,32 +18,41 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BLUEZQT_TYPES_H
-#define BLUEZQT_TYPES_H
+#ifndef INPUTTEST_H
+#define INPUTTEST_H
 
-#include <QSharedPointer>
+#include <QObject>
 
-namespace BluezQt
+#include "bluezinput1_tst.h"
+
+#include "manager.h"
+#include "device.h"
+#include "input.h"
+
+class InputTest : public QObject
 {
+    Q_OBJECT
 
-class Manager;
-class Adapter;
-class Device;
-class Input;
-class MediaPlayer;
-class ObexManager;
-class ObexSession;
-class ObexTransfer;
+public:
+    explicit InputTest();
 
-typedef QSharedPointer<BluezQt::Manager> ManagerPtr;
-typedef QSharedPointer<BluezQt::Adapter> AdapterPtr;
-typedef QSharedPointer<BluezQt::Device> DevicePtr;
-typedef QSharedPointer<BluezQt::Input> InputPtr;
-typedef QSharedPointer<BluezQt::MediaPlayer> MediaPlayerPtr;
-typedef QSharedPointer<BluezQt::ObexManager> ObexManagerPtr;
-typedef QSharedPointer<BluezQt::ObexSession> ObexSessionPtr;
-typedef QSharedPointer<BluezQt::ObexTransfer> ObexTransferPtr;
+private Q_SLOTS:
+    void initTestCase();
+    void cleanupTestCase();
 
-} // namespace BluezQt
+    void getPropertiesTest();
 
-#endif // BLUEZQT_TYPES_H
+private:
+    QString reconnectModeString(BluezQt::InputPtr input) const;
+
+    struct InputUnit
+    {
+        BluezQt::DevicePtr device;
+        org::bluez::Input1 *dbusInput;
+    };
+
+    BluezQt::Manager *m_manager;
+    QList<InputUnit> m_units;
+};
+
+#endif // INPUTTEST_H

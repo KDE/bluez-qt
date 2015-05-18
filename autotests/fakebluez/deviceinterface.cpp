@@ -21,6 +21,7 @@
 #include "deviceinterface.h"
 #include "objectmanager.h"
 #include "mediaplayerinterface.h"
+#include "inputinterface.h"
 
 #include <QDBusMessage>
 #include <QDBusArgument>
@@ -47,6 +48,19 @@ DeviceInterface::DeviceInterface(const QDBusObjectPath &path, const QVariantMap 
 
     // Alias needs special handling
     setAlias(properties.value(QStringLiteral("Alias")).toString());
+
+    // Create Input1
+    if (properties.contains(QStringLiteral("Input"))) {
+        const QVariantMap &inputProps = qdbus_cast<QVariantMap>(properties.value(QStringLiteral("Input")));
+        InputInterface *input = new InputInterface(path, inputProps, parent);
+
+        ObjectManager *manager = ObjectManager::self();
+        manager->addObject(input);
+
+        QVariantMap props = properties;
+        props.remove(QStringLiteral("Input"));
+        setProperties(props);
+    }
 }
 
 QString DeviceInterface::address() const

@@ -24,6 +24,8 @@
 #include "manager.h"
 #include "device.h"
 #include "device_p.h"
+#include "input.h"
+#include "input_p.h"
 #include "adapter.h"
 #include "adapter_p.h"
 #include "mediaplayer.h"
@@ -148,6 +150,9 @@ void ManagerPrivate::getManagedObjectsFinished(QDBusPendingCallWatcher *watcher)
             addAdapter(path, interfaces.value(Strings::orgBluezAdapter1()));
         } else if (interfaces.contains(Strings::orgBluezDevice1())) {
             addDevice(path, interfaces.value(Strings::orgBluezDevice1()));
+            if (interfaces.contains(Strings::orgBluezInput1())) {
+                addInput(path, interfaces.value(Strings::orgBluezInput1()));
+            }
         } else if (interfaces.contains(Strings::orgBluezMediaPlayer1())) {
             addMediaPlayer(path, interfaces.value(Strings::orgBluezMediaPlayer1()));
         } else if (interfaces.contains(Strings::orgBluezAgentManager1()) && interfaces.contains(Strings::orgBluezProfileManager1())) {
@@ -257,6 +262,8 @@ void ManagerPrivate::interfacesAdded(const QDBusObjectPath &objectPath, const QV
             addAdapter(path, it.value());
         } else if (it.key() == Strings::orgBluezDevice1()) {
             addDevice(path, it.value());
+        } else if (it.key() == Strings::orgBluezInput1()) {
+            addInput(path, it.value());
         } else if (it.key() == Strings::orgBluezMediaPlayer1()) {
             addMediaPlayer(path, it.value());
         }
@@ -272,6 +279,8 @@ void ManagerPrivate::interfacesRemoved(const QDBusObjectPath &objectPath, const 
             removeAdapter(path);
         } else if (interface == Strings::orgBluezDevice1()) {
             removeDevice(path);
+        } else if (interface == Strings::orgBluezInput1()) {
+            removeInput(path);
         } else if (interface == Strings::orgBluezMediaPlayer1()) {
             removeMediaPlayer(path);
         }
@@ -348,6 +357,15 @@ void ManagerPrivate::addDevice(const QString &devicePath, const QVariantMap &pro
     connect(device.data(), &Device::deviceChanged, q, &Manager::deviceChanged);
 }
 
+void ManagerPrivate::addInput(const QString &inputPath, const QVariantMap &properties)
+{
+    DevicePtr device = m_devices.value(inputPath);
+    Q_ASSERT(device);
+    InputPtr input = InputPtr(new Input(inputPath, properties));
+    input->d->q = input.toWeakRef();
+    device->d->addInput(input);
+}
+
 void ManagerPrivate::addMediaPlayer(const QString &playerPath, const QVariantMap &properties)
 {
     DevicePtr device = m_devices.value(properties.value(QStringLiteral("Device")).value<QDBusObjectPath>().path());
@@ -384,6 +402,16 @@ void ManagerPrivate::removeDevice(const QString &devicePath)
     device->adapter()->d->removeDevice(device);
 }
 
+void ManagerPrivate::removeInput(const QString &inputPath)
+{
+    DevicePtr device = m_devices.value(inputPath);
+    if (!device) {
+        return;
+    }
+
+    device->d->removeInput();
+}
+
 void ManagerPrivate::removeMediaPlayer(const QString &playerPath)
 {
     int index = playerPath.lastIndexOf(QLatin1Char('/'));
@@ -397,6 +425,11 @@ void ManagerPrivate::removeMediaPlayer(const QString &playerPath)
     }
 
     device->d->removeMediaPlayer();
+}
+
+bool ManagerPrivate::rfkillBlocked() const
+{
+    return m_rfkill->state() == Rfkill::SoftBlocked || m_rfkill->state() == Rfkill::HardBlocked;
 }
 
 void ManagerPrivate::setUsableAdapter(AdapterPtr adapter)
@@ -413,11 +446,6 @@ void ManagerPrivate::setUsableAdapter(AdapterPtr adapter)
     if (wasBtOperational != q->isBluetoothOperational()) {
         Q_EMIT q->bluetoothOperationalChanged(q->isBluetoothOperational());
     }
-}
-
-bool ManagerPrivate::rfkillBlocked() const
-{
-    return m_rfkill->state() == Rfkill::SoftBlocked || m_rfkill->state() == Rfkill::HardBlocked;
 }
 
 void ManagerPrivate::dummy()

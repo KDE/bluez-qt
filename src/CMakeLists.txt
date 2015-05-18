@@ -6,6 +6,7 @@ set(bluezqt_SRCS
     adapter_p.cpp
     device.cpp
     device_p.cpp
+    input.cpp
     mediaplayer.cpp
     mediaplayer_p.cpp
     mediaplayertrack.cpp
@@ -78,6 +79,7 @@ ecm_generate_headers(BluezQt_CamelCase_HEADERS
         Manager
         Adapter
         Device
+        Input
         MediaPlayer
         MediaPlayerTrack
         DevicesModel

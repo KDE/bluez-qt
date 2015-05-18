@@ -69,12 +69,15 @@ public:
 
     void addAdapter(const QString &adapterPath, const QVariantMap &properties);
     void addDevice(const QString &devicePath, const QVariantMap &properties);
+    void addInput(const QString &inputPath, const QVariantMap &properties);
     void addMediaPlayer(const QString &playerPath, const QVariantMap &properties);
     void removeAdapter(const QString &adapterPath);
     void removeDevice(const QString &devicePath);
+    void removeInput(const QString &inputPath);
     void removeMediaPlayer(const QString &playerPath);
-    void setUsableAdapter(AdapterPtr adapter);
+
     bool rfkillBlocked() const;
+    void setUsableAdapter(AdapterPtr adapter);
 
     Manager *q;
     Rfkill *m_rfkill;

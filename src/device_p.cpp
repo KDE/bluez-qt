@@ -79,10 +79,24 @@ void DevicePrivate::init(const QVariantMap &properties)
     }
 }
 
+void DevicePrivate::addInput(InputPtr input)
+{
+    m_input = input;
+    Q_EMIT q.data()->inputChanged(m_input);
+    Q_EMIT q.data()->deviceChanged(q.toStrongRef());
+}
+
 void DevicePrivate::addMediaPlayer(MediaPlayerPtr player)
 {
     m_mediaPlayer = player;
     Q_EMIT q.data()->mediaPlayerChanged(m_mediaPlayer);
+    Q_EMIT q.data()->deviceChanged(q.toStrongRef());
+}
+
+void DevicePrivate::removeInput()
+{
+    m_input.clear();
+    Q_EMIT q.data()->inputChanged(m_input);
     Q_EMIT q.data()->deviceChanged(q.toStrongRef());
 }
 

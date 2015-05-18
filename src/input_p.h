@@ -1,7 +1,7 @@
 /*
  * BluezQt - Asynchronous Bluez wrapper library
  *
- * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
+ * Copyright (C) 2015 David Rosca <nowrep@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,65 +20,34 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BLUEZQT_DEVICE_P_H
-#define BLUEZQT_DEVICE_P_H
+#ifndef BLUEZQT_INPUT_P_H
+#define BLUEZQT_INPUT_P_H
 
 #include <QObject>
-#include <QStringList>
 
-#include "types.h"
-#include "bluezdevice1.h"
+#include "input.h"
 #include "dbusproperties.h"
 
 namespace BluezQt
 {
 
-typedef org::bluez::Device1 BluezDevice;
 typedef org::freedesktop::DBus::Properties DBusProperties;
 
-class DevicePrivate : public QObject
+class InputPrivate : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit DevicePrivate(const QString &path, const QVariantMap &properties, AdapterPtr adapter);
+    explicit InputPrivate(const QString &path, const QVariantMap &properties);
 
-    void init(const QVariantMap &properties);
-
-    void addInput(InputPtr input);
-    void addMediaPlayer(MediaPlayerPtr player);
-    void removeInput();
-    void removeMediaPlayer();
-
-    QDBusPendingReply<> setDBusProperty(const QString &name, const QVariant &value);
     void propertiesChanged(const QString &interface, const QVariantMap &changed, const QStringList &invalidated);
-    void namePropertyChanged(const QString &value);
-    void aliasPropertyChanged(const QString &value);
-    void classPropertyChanged(quint32 value);
 
-    QWeakPointer<Device> q;
-    BluezDevice *m_bluezDevice;
+    QWeakPointer<Input> q;
     DBusProperties *m_dbusProperties;
 
-    QString m_address;
-    QString m_name;
-    QString m_alias;
-    quint32 m_deviceClass;
-    quint16 m_appearance;
-    QString m_icon;
-    bool m_paired;
-    bool m_trusted;
-    bool m_blocked;
-    bool m_legacyPairing;
-    qint16 m_rssi;
-    bool m_connected;
-    QStringList m_uuids;
-    QString m_modalias;
-    InputPtr m_input;
-    MediaPlayerPtr m_mediaPlayer;
-    AdapterPtr m_adapter;
+    Input::ReconnectMode m_reconnectMode;
 };
 
 } // namespace BluezQt
 
-#endif // BLUEZQT_DEVICE_P_H
+#endif // BLUEZQT_INPUT_P_H
