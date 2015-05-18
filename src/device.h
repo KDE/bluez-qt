@@ -288,7 +288,6 @@ public:
      * Only devices with connected appropriate profile will
      * have valid media player interface.
      *
-     * @since 5.4
      * @return null if device have no media player
      */
     MediaPlayerPtr mediaPlayer() const;
@@ -478,8 +477,6 @@ Q_SIGNALS:
 
     /**
      * Indicates that device's media player have changed.
-     *
-     * @since 5.4
      */
     void mediaPlayerChanged(MediaPlayerPtr mediaPlayer);
 

@@ -35,8 +35,6 @@ namespace BluezQt
  * Media player track.
  *
  * This class represents a track in media player.
- *
- * @since 5.4
  */
 class BLUEZQT_EXPORT MediaPlayerTrack
 {
