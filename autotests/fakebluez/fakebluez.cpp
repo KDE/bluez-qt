@@ -110,8 +110,6 @@ void FakeBluez::clear()
 void FakeBluez::createObjectManager()
 {
     m_objectManager = new ObjectManager(this);
-    m_obexObject = new ObexObject(this);
-    m_objectManager->addAutoDeleteObject(m_obexObject);
 }
 
 void FakeBluez::createAgentManager()
@@ -129,6 +127,13 @@ void FakeBluez::createProfileManager()
 void FakeBluez::createDeviceManager()
 {
     m_deviceManager = new DeviceManager(m_objectManager);
+}
+
+void FakeBluez::createObexObjectManager()
+{
+    createObjectManager();
+    m_obexObject = new ObexObject(this);
+    m_objectManager->addAutoDeleteObject(m_obexObject);
 }
 
 void FakeBluez::createObexAgentManager()
@@ -179,27 +184,27 @@ void FakeBluez::runObexNotExportingInterfacesTest()
 void FakeBluez::runObexEmptyManagedObjectsTest()
 {
     clear();
-    createObjectManager();
+    createObexObjectManager();
 }
 
 void FakeBluez::runObexNoClientTest()
 {
     clear();
-    createObjectManager();
+    createObexObjectManager();
     createObexAgentManager();
 }
 
 void FakeBluez::runObexNoAgentManagerTest()
 {
     clear();
-    createObjectManager();
+    createObexObjectManager();
     createObexClient();
 }
 
 void FakeBluez::runObexStandardTest()
 {
     clear();
-    createObjectManager();
+    createObexObjectManager();
     createObexClient();
     createObexAgentManager();
 }

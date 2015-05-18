@@ -52,6 +52,7 @@ private:
     void createAgentManager();
     void createProfileManager();
     void createDeviceManager();
+    void createObexObjectManager();
     void createObexAgentManager();
     void createObexClient();
 
