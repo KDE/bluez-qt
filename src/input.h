@@ -86,7 +86,7 @@ private:
     class InputPrivate *const d;
 
     friend class InputPrivate;
-    friend class ManagerPrivate;
+    friend class DevicePrivate;
 };
 
 } // namespace BluezQt

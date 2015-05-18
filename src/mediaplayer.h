@@ -289,7 +289,7 @@ private:
     class MediaPlayerPrivate *const d;
 
     friend class MediaPlayerPrivate;
-    friend class ManagerPrivate;
+    friend class DevicePrivate;
 };
 
 } // namespace BluezQt

@@ -23,6 +23,10 @@
 #include "device_p.h"
 #include "device.h"
 #include "adapter.h"
+#include "input.h"
+#include "input_p.h"
+#include "mediaplayer.h"
+#include "mediaplayer_p.h"
 #include "utils.h"
 #include "macros.h"
 
@@ -79,32 +83,50 @@ void DevicePrivate::init(const QVariantMap &properties)
     }
 }
 
-void DevicePrivate::addInput(InputPtr input)
+void DevicePrivate::interfacesAdded(const QString &path, const QVariantMapMap &interfaces)
 {
-    m_input = input;
-    Q_EMIT q.data()->inputChanged(m_input);
-    Q_EMIT q.data()->deviceChanged(q.toStrongRef());
+    bool changed = false;
+    QVariantMapMap::const_iterator it;
+
+    for (it = interfaces.constBegin(); it != interfaces.constEnd(); ++it) {
+        if (it.key() == Strings::orgBluezInput1()) {
+            m_input = InputPtr(new Input(path, it.value()));
+            m_input->d->q = m_input.toWeakRef();
+            Q_EMIT q.data()->inputChanged(m_input);
+            changed = true;
+        } else if (it.key() == Strings::orgBluezMediaPlayer1()) {
+            m_mediaPlayer = MediaPlayerPtr(new MediaPlayer(path, it.value()));
+            m_mediaPlayer->d->q = m_mediaPlayer.toWeakRef();
+            Q_EMIT q.data()->mediaPlayerChanged(m_mediaPlayer);
+            changed = true;
+        }
+    }
+
+    if (changed) {
+        Q_EMIT q.data()->deviceChanged(q.toStrongRef());
+    }
 }
 
-void DevicePrivate::addMediaPlayer(MediaPlayerPtr player)
+void DevicePrivate::interfacesRemoved(const QString &path, const QStringList &interfaces)
 {
-    m_mediaPlayer = player;
-    Q_EMIT q.data()->mediaPlayerChanged(m_mediaPlayer);
-    Q_EMIT q.data()->deviceChanged(q.toStrongRef());
-}
+    Q_UNUSED(path)
+    bool changed = false;
 
-void DevicePrivate::removeInput()
-{
-    m_input.clear();
-    Q_EMIT q.data()->inputChanged(m_input);
-    Q_EMIT q.data()->deviceChanged(q.toStrongRef());
-}
+    Q_FOREACH (const QString &interface, interfaces) {
+        if (interface == Strings::orgBluezInput1()) {
+            m_input.clear();
+            Q_EMIT q.data()->inputChanged(m_input);
+            changed = true;
+        } else if (interface == Strings::orgBluezMediaPlayer1()) {
+            m_mediaPlayer.clear();
+            Q_EMIT q.data()->mediaPlayerChanged(m_mediaPlayer);
+            changed = true;
+        }
+    }
 
-void DevicePrivate::removeMediaPlayer()
-{
-    m_mediaPlayer.clear();
-    Q_EMIT q.data()->mediaPlayerChanged(m_mediaPlayer);
-    Q_EMIT q.data()->deviceChanged(q.toStrongRef());
+    if (changed) {
+        Q_EMIT q.data()->deviceChanged(q.toStrongRef());
+    }
 }
 
 QDBusPendingReply<> DevicePrivate::setDBusProperty(const QString &name, const QVariant &value)

@@ -29,6 +29,7 @@
 #include "types.h"
 #include "bluezdevice1.h"
 #include "dbusproperties.h"
+#include "bluezqt_dbustypes.h"
 
 namespace BluezQt
 {
@@ -44,6 +45,9 @@ public:
     explicit DevicePrivate(const QString &path, const QVariantMap &properties, AdapterPtr adapter);
 
     void init(const QVariantMap &properties);
+
+    void interfacesAdded(const QString &path, const QVariantMapMap &interfaces);
+    void interfacesRemoved(const QString &path, const QStringList &interfaces);
 
     void addInput(InputPtr input);
     void addMediaPlayer(MediaPlayerPtr player);
