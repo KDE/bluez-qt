@@ -172,15 +172,11 @@ Device::Type classToType(quint32 classNum)
         return Device::Computer;
     case 0x02:
         switch ((classNum & 0xfc) >> 2) {
-        case 0x01:
-        case 0x02:
-        case 0x03:
-        case 0x05:
-            return Device::Phone;
         case 0x04:
             return Device::Modem;
+        default:
+            return Device::Phone;
         }
-        break;
     case 0x03:
         return Device::Network;
     case 0x04:
@@ -193,7 +189,6 @@ Device::Type classToType(quint32 classNum)
         default:
             return Device::OtherAudio;
         }
-        break;
     case 0x05:
         switch ((classNum & 0xc0) >> 6) {
         case 0x00:
@@ -213,18 +208,23 @@ Device::Type classToType(quint32 classNum)
                 return Device::Mouse;
             }
         }
-        break;
+        return Device::Peripheral;
     case 0x06:
         if (classNum & 0x80) {
             return Device::Printer;
-        }
-        if (classNum & 0x20) {
+        } else if (classNum & 0x20) {
             return Device::Camera;
         }
-        break;
+        return Device::Imaging;
+    case 0x07:
+        return Device::Wearable;
+    case 0x08:
+        return Device::Toy;
+    case 0x09:
+        return Device::Health;
+    default:
+        return Device::Uncategorized;
     }
-
-    return Device::Any;
 }
 
 } // namespace BluezQt

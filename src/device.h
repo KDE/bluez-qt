@@ -70,34 +70,44 @@ public:
      * Device types.
      */
     enum Type {
-        /** Indicates that the device is not of any of the following types. */
-        Any,
-        /** Indicates that the device is a phone. */
+        /** The device is a phone. */
         Phone,
-        /** Indicates that the device is a modem. */
+        /** The device is a modem. */
         Modem,
-        /** Indicates that the device is a computer. */
+        /** The device is a computer. */
         Computer,
-        /** Indicates that the device is a network. */
+        /** The device is a network. */
         Network,
-        /** Indicates that the device is a headset. */
+        /** The device is a headset. */
         Headset,
-        /** Indicates that the device is a headphones. */
+        /** The device is a headphones. */
         Headphones,
-        /** Indicates that the device is an unspecified audio device. */
+        /** The device is an uncategorized audio video device. */
         OtherAudio,
-        /** Indicates that the device is a keyboard. */
+        /** The device is a keyboard. */
         Keyboard,
-        /** Indicates that the device is a mouse. */
+        /** The device is a mouse. */
         Mouse,
-        /** Indicates that the device is a camera. */
-        Camera,
-        /** Indicates that the device is a printer. */
-        Printer,
-        /** Indicates that the device is a joypad. */
+        /** The deivce is an uncategorized peripheral device. */
         Joypad,
-        /** Indicates that the device is a graphics tablet (input device). */
-        Tablet
+        /** The device is a graphics tablet (input device). */
+        Tablet,
+        /** The device is a wearable device. */
+        Peripheral,
+        /** The device is a camera. */
+        Camera,
+        /** The device is a printer. */
+        Printer,
+        /** The device is an uncategorized imaging device. */
+        Imaging,
+        /** The device is a joypad. */
+        Wearable,
+        /** The device is a toy. */
+        Toy,
+        /** The device is a health device. */
+        Health,
+        /** The device is not of any of the known types. */
+        Uncategorized
     };
 
     /**

@@ -178,8 +178,6 @@ AdapterPtr Device::adapter() const
 QString Device::typeToString(Device::Type type)
 {
     switch (type) {
-    case Device::Any:
-        return QStringLiteral("any");
     case Device::Phone:
         return QStringLiteral("phone");
     case Device::Modem:
@@ -198,24 +196,32 @@ QString Device::typeToString(Device::Type type)
         return QStringLiteral("keyboard");
     case Device::Mouse:
         return QStringLiteral("mouse");
-    case Device::Camera:
-        return QStringLiteral("camera");
-    case Device::Printer:
-        return QStringLiteral("printer");
     case Device::Joypad:
         return QStringLiteral("joypad");
     case Device::Tablet:
         return QStringLiteral("tablet");
+    case Device::Peripheral:
+        return QStringLiteral("peripheral");
+    case Device::Camera:
+        return QStringLiteral("camera");
+    case Device::Printer:
+        return QStringLiteral("printer");
+    case Device::Imaging:
+        return QStringLiteral("imaging");
+    case Device::Wearable:
+        return QStringLiteral("wearable");
+    case Device::Toy:
+        return QStringLiteral("toy");
+    case Device::Health:
+        return QStringLiteral("health");
     default:
-        return QStringLiteral("any");
+        return QStringLiteral("uncategorized");
     }
 }
 
 Device::Type Device::stringToType(const QString &typeString)
 {
-    if (typeString == QLatin1String("any")) {
-        return Device::Any;
-    } else if (typeString == QLatin1String("phone")) {
+    if (typeString == QLatin1String("phone")) {
         return Device::Phone;
     } else if (typeString == QLatin1String("modem")) {
         return Device::Modem;
@@ -233,16 +239,26 @@ Device::Type Device::stringToType(const QString &typeString)
         return Device::Keyboard;
     } else if (typeString == QLatin1String("mouse")) {
         return Device::Mouse;
-    } else if (typeString == QLatin1String("camera")) {
-        return Device::Camera;
-    } else if (typeString == QLatin1String("printer")) {
-        return Device::Printer;
     } else if (typeString == QLatin1String("joypad")) {
         return Device::Joypad;
     } else if (typeString == QLatin1String("tablet")) {
         return Device::Tablet;
+    } else if (typeString == QLatin1String("peripheral")) {
+        return Device::Peripheral;
+    } else if (typeString == QLatin1String("camera")) {
+        return Device::Camera;
+    } else if (typeString == QLatin1String("printer")) {
+        return Device::Printer;
+    } else if (typeString == QLatin1String("imaging")) {
+        return Device::Imaging;
+    } else if (typeString == QLatin1String("wearable")) {
+        return Device::Wearable;
+    } else if (typeString == QLatin1String("toy")) {
+        return Device::Toy;
+    } else if (typeString == QLatin1String("health")) {
+        return Device::Health;
     }
-    return Device::Any;
+    return Device::Uncategorized;
 }
 
 PendingCall *Device::connectToDevice()
