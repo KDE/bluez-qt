@@ -83,7 +83,7 @@ public:
         /** The device is a headphones. */
         Headphones,
         /** The device is an uncategorized audio video device. */
-        OtherAudio,
+        AudioVideo,
         /** The device is a keyboard. */
         Keyboard,
         /** The device is a mouse. */

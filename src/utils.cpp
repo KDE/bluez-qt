@@ -187,7 +187,7 @@ Device::Type classToType(quint32 classNum)
         case 0x06:
             return Device::Headphones;
         default:
-            return Device::OtherAudio;
+            return Device::AudioVideo;
         }
     case 0x05:
         switch ((classNum & 0xc0) >> 6) {

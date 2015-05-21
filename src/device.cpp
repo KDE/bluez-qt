@@ -190,8 +190,8 @@ QString Device::typeToString(Device::Type type)
         return QStringLiteral("headset");
     case Device::Headphones:
         return QStringLiteral("headphones");
-    case Device::OtherAudio:
-        return QStringLiteral("audio");
+    case Device::AudioVideo:
+        return QStringLiteral("audiovideo");
     case Device::Keyboard:
         return QStringLiteral("keyboard");
     case Device::Mouse:
@@ -234,7 +234,7 @@ Device::Type Device::stringToType(const QString &typeString)
     } else if (typeString == QLatin1String("headphones")) {
         return Device::Headphones;
     } else if (typeString == QLatin1String("audio")) {
-        return Device::OtherAudio;
+        return Device::AudioVideo;
     } else if (typeString == QLatin1String("keyboard")) {
         return Device::Keyboard;
     } else if (typeString == QLatin1String("mouse")) {
