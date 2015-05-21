@@ -48,8 +48,8 @@ class InitManagerJob;
  *
  * You must call init() before other functions can be used.
  *
- * The only functions that can be used before initialization are rfkill-related functions:
- * isBluetoothBlocked(), setBluetoothBlocked() and bluetoothBlockedChanged() signal.
+ * The only functions that can be used before initialization are two rfkill-related
+ * functions: isBluetoothBlocked() and setBluetoothBlocked().
  *
  * Example use in C++ code:
  * @code
@@ -59,23 +59,20 @@ class InitManagerJob;
  * connect(job, &BluezQt::InitManagerJob::result, ...);
  * @endcode
  *
- * In QML, manager is automatically starting initialization when instantiated.
+ * In QML, manager is a singleton and initialization is started when first using
+ * the manager. You don't need to track initialized state, just use property binding.
  *
- * There are 2 new signals: initFinished() and initError(string errorText).
-
  * Example use in QML code:
  * @code
  * import org.kde.bluezqt 1.0 as BluezQt
  *
- * BluezQt.Manager {
- *     id: btManager;
+ * Item {
+ *     property var manager : BluezQt.Manager
+ *     property devicesCount : manager.devices.length
+ *     property adaptersCount : manager.adapters.length
  *
- *     onInitFinished: {
- *         console.log("Initialized");
- *     }
- *
- *     onInitError: {
- *         console.log("Error: ", errorText);
+ *     Component.onCompleted: {
+ *         console.log("Manager operational:", manager.operational)
  *     }
  * }
  * @endcode
@@ -83,8 +80,8 @@ class InitManagerJob;
  * @note All communication with Bluez daemon happens asynchronously. Almost all methods
  *       returns PendingCall to help track the call progress and to check for any errors.
  *
- * @note If manager is not operational, all methods that returns a PendingCall
- *       will fail with PendingCall::InternalError.
+ * @note If manager is not operational, all methods that returns a PendingCall will fail
+ *       with PendingCall::InternalError.
  *
  * @see InitManagerJob
  */
