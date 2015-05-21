@@ -28,6 +28,7 @@
 #include "obexclient.h"
 
 #include <QTimer>
+#include <QDebug>
 #include <QDBusConnection>
 
 // ObexObject
@@ -79,6 +80,10 @@ void FakeBluez::runTest(const QString &testName)
     } else if (testName == QLatin1String("obex-standard")) {
         runObexStandardTest();
     }
+
+    if (!QDBusConnection::sessionBus().registerService(QStringLiteral("org.kde.bluezqt.fakebluez"))) {
+        qWarning() << "Cannot register org.kde.bluezqt.fakebluez service!";
+    }
 }
 
 void FakeBluez::runAction(const QString &object, const QString &actionName, const QVariantMap &properties)
@@ -98,7 +103,7 @@ void FakeBluez::doRunAction()
         m_deviceManager->runAction(m_actionName, m_actionProperties);
     }
 
-    m_testInterface->emitActionFinished();
+    QTimer::singleShot(0, m_testInterface, SLOT(emitActionFinished()));
 }
 
 void FakeBluez::clear()

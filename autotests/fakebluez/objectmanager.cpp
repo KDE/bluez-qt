@@ -21,7 +21,6 @@
 #include "objectmanager.h"
 #include "object.h"
 
-#include <QDebug>
 #include <QDBusMetaType>
 #include <QDBusConnection>
 

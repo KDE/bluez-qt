@@ -80,36 +80,12 @@ public Q_SLOTS:
     }
 };
 
-class TestController : public QObject
-{
-    Q_OBJECT
-
-public Q_SLOTS:
-    void enableDebugOutput()
-    {
-        QLoggingCategory::setFilterRules(QStringLiteral("BluezQt=true"));
-    }
-
-    void disableDebugOutput()
-    {
-        QLoggingCategory::setFilterRules(QStringLiteral("BluezQt=false"));
-    }
-};
-
 static QObject *fakebluez_singleton(QQmlEngine *engine, QJSEngine *scriptEngine)
 {
     Q_UNUSED(engine)
     Q_UNUSED(scriptEngine)
 
     return new FakeBluezObject;
-}
-
-static QObject *testcontroller_singleton(QQmlEngine *engine, QJSEngine *scriptEngine)
-{
-    Q_UNUSED(engine)
-    Q_UNUSED(scriptEngine)
-
-    return new TestController;
 }
 
 namespace BluezQt
@@ -120,12 +96,12 @@ extern void bluezqt_initFakeBluezTestRun();
 int main(int argc, char *argv[])
 {
     qmlRegisterSingletonType<QObject>("org.kde.bluezqt.fakebluez", 1, 0, "FakeBluez", fakebluez_singleton);
-    qmlRegisterSingletonType<QObject>("org.kde.bluezqt.testcontroller", 1, 0, "TestController", testcontroller_singleton);
 
     BluezQt::bluezqt_initFakeBluezTestRun();
+    QLoggingCategory::setFilterRules(QStringLiteral("BluezQt=false"));
 
     qputenv("QML2_IMPORT_PATH", QByteArrayLiteral(BLUEZQT_QML_IMPORT_PATH));
-    const QString &testsDir = QFileInfo(QFINDTESTDATA("qml/TestUtils.qml")).absolutePath();
+    const QString &testsDir = QFileInfo(QFINDTESTDATA("qml/tst_device.qml")).absolutePath();
 
     return quick_test_main(argc, argv, "qmltests", testsDir.toUtf8().constData());
 }

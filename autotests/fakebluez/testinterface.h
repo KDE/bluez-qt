@@ -21,6 +21,7 @@
 #ifndef TESTINTERFACE_H
 #define TESTINTERFACE_H
 
+#include <QDBusMessage>
 #include <QDBusAbstractAdaptor>
 
 class FakeBluez;
@@ -33,17 +34,15 @@ class TestInterface : public QDBusAbstractAdaptor
 public:
     explicit TestInterface(FakeBluez *parent);
 
-    void emitActionFinished();
-
 public Q_SLOTS:
     void runTest(const QString &testName);
-    void runAction(const QString &object, const QString &actionName, const QVariantMap &properties);
+    void runAction(const QString &object, const QString &actionName, const QVariantMap &properties, const QDBusMessage &msg);
 
-Q_SIGNALS:
-    void actionFinished();
+    void emitActionFinished();
 
 private:
     FakeBluez *m_fakeBluez;
+    QDBusMessage m_msg;
 };
 
 #endif // TESTINTERFACE_H

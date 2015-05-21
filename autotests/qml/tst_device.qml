@@ -20,16 +20,13 @@
 
 import QtTest 1.0
 import org.kde.bluezqt.fakebluez 1.0
+import org.kde.bluezqt 1.0 as BluezQt
 
 TestCase {
     name: "Device"
-    property var manager;
+    property var manager : BluezQt.Manager;
     property var device1props;
     property var device2props;
-
-    TestUtils {
-        id: utils
-    }
 
     function initTestCase()
     {
@@ -98,10 +95,7 @@ TestCase {
         }
         FakeBluez.runAction("devicemanager", "create-device", device2props);
 
-        manager = utils.createManager(this);
-
-        var initResult = utils.initManager(manager);
-        verify(initResult, "initFinished", "init-manager");
+        tryCompare(manager, "operational", true);
         compare(manager.adapters.length, 2, "adapters-length");
         compare(manager.devices.length, 2, "devices-length");
     }
@@ -109,7 +103,6 @@ TestCase {
     function cleanupTestCase()
     {
         FakeBluez.stop();
-        manager.destroy();
     }
 
     function compareProperties(device, props)

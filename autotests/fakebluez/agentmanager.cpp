@@ -23,6 +23,7 @@
 #include <QDebug>
 #include <QDBusMessage>
 #include <QDBusConnection>
+#include <QDBusPendingCall>
 
 AgentManager::AgentManager(QObject *parent)
     : QDBusAbstractAdaptor(parent)
@@ -83,7 +84,7 @@ void AgentManager::runRequestPinCodeAction(const QVariantMap &properties)
                         QStringLiteral("RequestPinCode"));
 
     call << QVariant::fromValue(properties.value(QStringLiteral("Device")).value<QDBusObjectPath>());
-    QDBusConnection::sessionBus().call(call);
+    QDBusConnection::sessionBus().asyncCall(call);
 }
 
 void AgentManager::runDisplayPinCodeAction(const QVariantMap &properties)
@@ -95,7 +96,7 @@ void AgentManager::runDisplayPinCodeAction(const QVariantMap &properties)
 
     call << QVariant::fromValue(properties.value(QStringLiteral("Device")).value<QDBusObjectPath>());
     call << properties.value(QStringLiteral("PinCode"));
-    QDBusConnection::sessionBus().call(call);
+    QDBusConnection::sessionBus().asyncCall(call);
 }
 
 void AgentManager::runRequestPasskeyAction(const QVariantMap &properties)
@@ -106,7 +107,7 @@ void AgentManager::runRequestPasskeyAction(const QVariantMap &properties)
                         QStringLiteral("RequestPasskey"));
 
     call << QVariant::fromValue(properties.value(QStringLiteral("Device")).value<QDBusObjectPath>());
-    QDBusConnection::sessionBus().call(call);
+    QDBusConnection::sessionBus().asyncCall(call);
 }
 
 void AgentManager::runDisplayPasskeyAction(const QVariantMap &properties)
@@ -119,7 +120,7 @@ void AgentManager::runDisplayPasskeyAction(const QVariantMap &properties)
     call << QVariant::fromValue(properties.value(QStringLiteral("Device")).value<QDBusObjectPath>());
     call << properties.value(QStringLiteral("Passkey"));
     call << properties.value(QStringLiteral("EnteredPasskey"));
-    QDBusConnection::sessionBus().call(call);
+    QDBusConnection::sessionBus().asyncCall(call);
 }
 
 void AgentManager::runRequestConfirmationAction(const QVariantMap &properties)
@@ -131,7 +132,7 @@ void AgentManager::runRequestConfirmationAction(const QVariantMap &properties)
 
     call << QVariant::fromValue(properties.value(QStringLiteral("Device")).value<QDBusObjectPath>());
     call << properties.value(QStringLiteral("Passkey"));
-    QDBusConnection::sessionBus().call(call);
+    QDBusConnection::sessionBus().asyncCall(call);
 }
 
 void AgentManager::runRequestAuthorizationAction(const QVariantMap &properties)
@@ -142,7 +143,7 @@ void AgentManager::runRequestAuthorizationAction(const QVariantMap &properties)
                         QStringLiteral("RequestAuthorization"));
 
     call << QVariant::fromValue(properties.value(QStringLiteral("Device")).value<QDBusObjectPath>());
-    QDBusConnection::sessionBus().call(call);
+    QDBusConnection::sessionBus().asyncCall(call);
 }
 
 void AgentManager::runAuthorizeServiceAction(const QVariantMap &properties)
@@ -154,7 +155,7 @@ void AgentManager::runAuthorizeServiceAction(const QVariantMap &properties)
 
     call << QVariant::fromValue(properties.value(QStringLiteral("Device")).value<QDBusObjectPath>());
     call << properties.value(QStringLiteral("UUID"));
-    QDBusConnection::sessionBus().call(call);
+    QDBusConnection::sessionBus().asyncCall(call);
 }
 
 void AgentManager::runCancelAction()
@@ -163,7 +164,7 @@ void AgentManager::runCancelAction()
                         m_agent.path(),
                         QStringLiteral("org.bluez.Agent1"),
                         QStringLiteral("Cancel"));
-    QDBusConnection::sessionBus().call(call);
+    QDBusConnection::sessionBus().asyncCall(call);
 }
 
 void AgentManager::runReleaseAction()
@@ -172,5 +173,5 @@ void AgentManager::runReleaseAction()
                         m_agent.path(),
                         QStringLiteral("org.bluez.Agent1"),
                         QStringLiteral("Release"));
-    QDBusConnection::sessionBus().call(call);
+    QDBusConnection::sessionBus().asyncCall(call);
 }

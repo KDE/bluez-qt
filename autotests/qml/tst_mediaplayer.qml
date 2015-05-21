@@ -24,13 +24,9 @@ import org.kde.bluezqt 1.0 as BluezQt
 
 TestCase {
     name: "MediaPlayer"
-    property var manager;
+    property var manager : BluezQt.Manager;
     property var mediaPlayer1props;
     property var mediaPlayer2props;
-
-    TestUtils {
-        id: utils
-    }
 
     function initTestCase()
     {
@@ -110,10 +106,7 @@ TestCase {
         }
         FakeBluez.runAction("devicemanager", "create-device", device2props);
 
-        manager = utils.createManager(this);
-
-        var initResult = utils.initManager(manager);
-        verify(initResult, "initFinished", "init-manager");
+        tryCompare(manager, "operational", true);
         compare(manager.adapters.length, 1, "adapters-length");
         compare(manager.devices.length, 2, "devices-length");
     }
@@ -121,7 +114,6 @@ TestCase {
     function cleanupTestCase()
     {
         FakeBluez.stop();
-        manager.destroy();
     }
 
     SignalSpy {

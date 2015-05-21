@@ -28,11 +28,12 @@ int main(int argc, char **argv)
 {
     QCoreApplication app(argc, argv);
 
-    if (!QDBusConnection::sessionBus().registerService(QStringLiteral("org.kde.bluezqt.fakebluez"))) {
-        qWarning() << "Cannot register org.kde.bluezqt.fakebluez service!";
+    new FakeBluez(&app);
+
+    if (!QDBusConnection::sessionBus().registerService(QStringLiteral("org.kde.bluezqt.test"))) {
+        qWarning() << "Cannot register org.kde.bluezqt.test service!";
         return 1;
     }
 
-    new FakeBluez(&app);
     return app.exec();
 }

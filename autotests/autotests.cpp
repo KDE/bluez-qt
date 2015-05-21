@@ -66,7 +66,7 @@ StartJob::StartJob()
 
 void StartJob::exec()
 {
-    QDBusServiceWatcher watcher(QStringLiteral("org.kde.bluezqt.fakebluez"),
+    QDBusServiceWatcher watcher(QStringLiteral("org.kde.bluezqt.test"),
                                 QDBusConnection::sessionBus(),
                                 QDBusServiceWatcher::WatchForRegistration);
 
@@ -74,6 +74,7 @@ void StartJob::exec()
     connect(FakeBluez::s_process, SIGNAL(error(QProcess::ProcessError)), this, SLOT(processError(QProcess::ProcessError)));
     connect(FakeBluez::s_process, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(processFinished(int,QProcess::ExitStatus)));
 
+    FakeBluez::s_process->setStandardErrorFile(QStringLiteral("/tmp/fakebluez.out"));
     FakeBluez::s_process->start(m_fakebluezPath);
 
     m_eventLoop.exec();
@@ -146,7 +147,7 @@ void FakeBluez::runTest(const QString &testName)
         return;
     }
 
-    QDBusMessage call = QDBusMessage::createMethodCall(QStringLiteral("org.kde.bluezqt.fakebluez"),
+    QDBusMessage call = QDBusMessage::createMethodCall(QStringLiteral("org.kde.bluezqt.test"),
                         QStringLiteral("/"),
                         QStringLiteral("org.kde.bluezqt.fakebluez.Test"),
                         QStringLiteral("runTest"));
@@ -161,7 +162,7 @@ void FakeBluez::runAction(const QString &object, const QString &actionName, cons
         return;
     }
 
-    QDBusMessage call = QDBusMessage::createMethodCall(QStringLiteral("org.kde.bluezqt.fakebluez"),
+    QDBusMessage call = QDBusMessage::createMethodCall(QStringLiteral("org.kde.bluezqt.test"),
                         QStringLiteral("/"),
                         QStringLiteral("org.kde.bluezqt.fakebluez.Test"),
                         QStringLiteral("runAction"));
@@ -170,15 +171,7 @@ void FakeBluez::runAction(const QString &object, const QString &actionName, cons
     call << actionName;
     call << properties;
 
-    QEventLoop eventLoop;
-    QDBusConnection::sessionBus().connect(QStringLiteral("org.kde.bluezqt.fakebluez"),
-                                          QStringLiteral("/"),
-                                          QStringLiteral("org.kde.bluezqt.fakebluez.Test"),
-                                          QStringLiteral("actionFinished"),
-                                          &eventLoop, SLOT(quit()));
-
-    QDBusConnection::sessionBus().asyncCall(call);
-    eventLoop.exec();
+    QDBusConnection::sessionBus().call(call);
 }
 
 void Autotests::registerMetatypes()

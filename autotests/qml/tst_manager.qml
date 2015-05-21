@@ -20,23 +20,10 @@
 
 import QtTest 1.0
 import org.kde.bluezqt.fakebluez 1.0
+import org.kde.bluezqt 1.0 as BluezQt
 
 TestCase {
     name: "Manager"
-
-    TestUtils {
-        id: utils
-    }
-
-    function initTestCase()
-    {
-        utils.disableDebugOutput();
-    }
-
-    function cleanupTestCase()
-    {
-        utils.enableDebugOutput();
-    }
 
     function cleanup()
     {
@@ -45,15 +32,11 @@ TestCase {
 
     function test_bluezNotRunning()
     {
-        var manager = utils.createManager(this);
-        var initResult = utils.initManager(manager);
+        var manager = BluezQt.Manager;
+        tryCompare(manager, "operational", false);
 
-        compare(initResult, "initFinished", "init-manager");
-        verify(manager.initialized, "initialized");
         verify(!manager.operational, "operational");
         verify(!manager.bluetoothOperational, "btOperational");
-
-        manager.destroy();
     }
 
     function test_bluezNotExportingInterfaces()
@@ -61,15 +44,11 @@ TestCase {
         FakeBluez.start();
         FakeBluez.runTest("bluez-not-exporting-interfaces");
 
-        var manager = utils.createManager(this);
-        var initResult = utils.initManager(manager);
+        var manager = BluezQt.Manager;
+        tryCompare(manager, "operational", false);
 
-        compare(initResult, "initError", "init-manager");
-        verify(!manager.initialized, "initialized");
         verify(!manager.operational, "operational");
         verify(!manager.bluetoothOperational, "btOperational");
-
-        manager.destroy();
     }
 
     function test_bluezNoAdapters()
@@ -77,15 +56,11 @@ TestCase {
         FakeBluez.start();
         FakeBluez.runTest("bluez-no-adapters");
 
-        var manager = utils.createManager(this);
-        var initResult = utils.initManager(manager);
+        var manager = BluezQt.Manager;
+        tryCompare(manager, "operational", true);
 
-        compare(initResult, "initFinished", "init-manager");
-        verify(manager.initialized, "initialized");
         verify(manager.operational, "operational");
         verify(!manager.bluetoothOperational, "btOperational");
-
-        manager.destroy();
     }
 
     SignalSpy {
@@ -119,12 +94,9 @@ TestCase {
         FakeBluez.runAction("devicemanager", "create-adapter", adapter2props);
 
 
-        var manager = utils.createManager(this);
-        var initResult = utils.initManager(manager);
+        var manager = BluezQt.Manager;
 
-        compare(initResult, "initFinished", "init-manager");
-        verify(manager.initialized, "initialized");
-        verify(manager.operational, "operational");
+        tryCompare(manager, "operational", true);
         verify(!manager.bluetoothOperational, "btOperational");
 
         usableAdapterChangedSpy.target = manager;
@@ -156,8 +128,6 @@ TestCase {
 
         tryCompare(usableAdapterChangedSpy, "count", 1);
         compare(manager.usableAdapter.ubi, adapter2path);
-
-        manager.destroy();
     }
 }
 
