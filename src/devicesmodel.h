@@ -43,12 +43,11 @@ class Device;
  * @code
  * import org.kde.bluezqt 1.0 as BluezQt
  *
- * BluezQt.Manager {
- *     id: btManager;
- * }
- *
- * BluezQt.DevicesModel {
- *     manager: btManager
+ * ListView {
+ *     model: BluezQt.DevicesModel { }
+ *     delegate: Text {
+ *         text: "%1 (%2)".arg(Name).arg(Address)
+ *     }
  * }
  * @endcode
  */

@@ -20,4 +20,5 @@ target_link_libraries(bluezqtextensionplugin
 )
 
 install(TARGETS bluezqtextensionplugin DESTINATION ${QML_INSTALL_DIR}/org/kde/bluezqt)
+install(FILES DevicesModel.qml DESTINATION ${QML_INSTALL_DIR}/org/kde/bluezqt)
 install(FILES qmldir DESTINATION ${QML_INSTALL_DIR}/org/kde/bluezqt)

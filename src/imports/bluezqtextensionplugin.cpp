@@ -75,7 +75,7 @@ void BluezQtExtensionPlugin::registerTypes(const char *uri)
     Q_ASSERT(QLatin1String(uri) == QLatin1String("org.kde.bluezqt"));
 
     qmlRegisterSingletonType<DeclarativeManager>(uri, 1, 0, "Manager", manager_singleton);
-    qmlRegisterType<DeclarativeDevicesModel>(uri, 1, 0, "DevicesModel");
+    qmlRegisterType<DeclarativeDevicesModel>(uri, 1, 0, "DevicesModelPrivate");
     qmlRegisterUncreatableType<DeclarativeAdapter>(uri, 1, 0, "Adapter", QStringLiteral("Adapter cannot be created"));
     qmlRegisterUncreatableType<DeclarativeDevice>(uri, 1, 0, "Device", QStringLiteral("Device cannot be created"));
     qmlRegisterUncreatableType<DeclarativeMediaPlayer>(uri, 1, 0, "MediaPlayer", QStringLiteral("MediaPlayer cannot be created"));
