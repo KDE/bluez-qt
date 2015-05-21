@@ -64,10 +64,11 @@ class InitManagerJob;
  *
  * Example use in QML code:
  * @code
+ * import QtQuick 2.2
  * import org.kde.bluezqt 1.0 as BluezQt
  *
  * Item {
- *     property var manager : BluezQt.Manager
+ *     property QtObject manager : BluezQt.Manager
  *     property devicesCount : manager.devices.length
  *     property adaptersCount : manager.adapters.length
  *

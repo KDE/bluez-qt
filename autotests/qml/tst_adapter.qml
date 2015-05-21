@@ -19,12 +19,13 @@
  */
 
 import QtTest 1.0
+import QtQuick 2.2
 import org.kde.bluezqt.fakebluez 1.0
 import org.kde.bluezqt 1.0 as BluezQt
 
 TestCase {
     name: "Adapter"
-    property var manager : BluezQt.Manager;
+    property QtObject manager : BluezQt.Manager;
     property var adapter1props;
     property var adapter2props;
 
