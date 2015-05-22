@@ -1,5 +1,5 @@
 /*
- * BluezQt - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous BlueZ wrapper library
  *
  * Copyright (C) 2015 David Rosca <nowrep@gmail.com>
  *
@@ -26,6 +26,7 @@
 #include "device.h"
 
 class DeclarativeAdapter;
+class DeclarativeInput;
 class DeclarativeMediaPlayer;
 
 class DeclarativeDevice : public QObject
@@ -49,6 +50,7 @@ class DeclarativeDevice : public QObject
     Q_PROPERTY(bool connected READ isConnected NOTIFY connectedChanged)
     Q_PROPERTY(QStringList uuids READ uuids NOTIFY uuidsChanged)
     Q_PROPERTY(QString modalias READ modalias NOTIFY modaliasChanged)
+    Q_PROPERTY(DeclarativeInput* input READ input NOTIFY inputChanged)
     Q_PROPERTY(DeclarativeMediaPlayer* mediaPlayer READ mediaPlayer NOTIFY mediaPlayerChanged)
     Q_PROPERTY(DeclarativeAdapter* adapter READ adapter)
 
@@ -92,6 +94,8 @@ public:
 
     QString modalias() const;
 
+    DeclarativeInput *input() const;
+
     DeclarativeMediaPlayer *mediaPlayer() const;
 
     DeclarativeAdapter *adapter() const;
@@ -122,13 +126,16 @@ Q_SIGNALS:
     void connectedChanged(bool connected);
     void uuidsChanged(const QStringList &uuids);
     void modaliasChanged(const QString &modalias);
+    void inputChanged(DeclarativeInput *input);
     void mediaPlayerChanged(DeclarativeMediaPlayer *mediaPlayer);
 
 private:
+    void updateInput();
     void updateMediaPlayer();
 
     BluezQt::DevicePtr m_device;
     DeclarativeAdapter *m_adapter;
+    DeclarativeInput *m_input;
     DeclarativeMediaPlayer *m_mediaPlayer;
 };
 

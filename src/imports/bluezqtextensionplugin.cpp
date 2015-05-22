@@ -1,5 +1,5 @@
 /*
- * BluezQt - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous BlueZ wrapper library
  *
  * Copyright (C) 2014 David Rosca <nowrep@gmail.com>
  *
@@ -24,6 +24,7 @@
 #include "declarativemanager.h"
 #include "declarativeadapter.h"
 #include "declarativedevice.h"
+#include "declarativeinput.h"
 #include "declarativemediaplayer.h"
 #include "declarativedevicesmodel.h"
 #include "device.h"
@@ -78,6 +79,7 @@ void BluezQtExtensionPlugin::registerTypes(const char *uri)
     qmlRegisterType<DeclarativeDevicesModel>(uri, 1, 0, "DevicesModelPrivate");
     qmlRegisterUncreatableType<DeclarativeAdapter>(uri, 1, 0, "Adapter", QStringLiteral("Adapter cannot be created"));
     qmlRegisterUncreatableType<DeclarativeDevice>(uri, 1, 0, "Device", QStringLiteral("Device cannot be created"));
+    qmlRegisterUncreatableType<DeclarativeInput>(uri, 1, 0, "Input", QStringLiteral("Input cannot be created"));
     qmlRegisterUncreatableType<DeclarativeMediaPlayer>(uri, 1, 0, "MediaPlayer", QStringLiteral("MediaPlayer cannot be created"));
     qmlRegisterUncreatableType<PendingCall>(uri, 1, 0, "PendingCall", QStringLiteral("PendingCall cannot be created"));
     qmlRegisterSingletonType(uri, 1, 0, "Services", services_singleton);

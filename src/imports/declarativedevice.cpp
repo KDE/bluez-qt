@@ -1,5 +1,5 @@
 /*
- * BluezQt - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous BlueZ wrapper library
  *
  * Copyright (C) 2015 David Rosca <nowrep@gmail.com>
  *
@@ -22,6 +22,7 @@
 
 #include "declarativedevice.h"
 #include "declarativeadapter.h"
+#include "declarativeinput.h"
 #include "declarativemediaplayer.h"
 
 #include <QStringList>
@@ -30,6 +31,7 @@ DeclarativeDevice::DeclarativeDevice(BluezQt::DevicePtr device, DeclarativeAdapt
     : QObject(adapter)
     , m_device(device)
     , m_adapter(adapter)
+    , m_input(0)
     , m_mediaPlayer(0)
 {
     connect(m_device.data(), &BluezQt::Device::nameChanged, this, &DeclarativeDevice::nameChanged);
@@ -47,6 +49,8 @@ DeclarativeDevice::DeclarativeDevice(BluezQt::DevicePtr device, DeclarativeAdapt
     connect(m_device.data(), &BluezQt::Device::connectedChanged, this, &DeclarativeDevice::connectedChanged);
     connect(m_device.data(), &BluezQt::Device::uuidsChanged, this, &DeclarativeDevice::uuidsChanged);
     connect(m_device.data(), &BluezQt::Device::modaliasChanged, this, &DeclarativeDevice::modaliasChanged);
+    connect(m_device.data(), &BluezQt::Device::mediaPlayerChanged, this, &DeclarativeDevice::updateMediaPlayer);
+    connect(m_device.data(), &BluezQt::Device::inputChanged, this, &DeclarativeDevice::updateInput);
 
     connect(m_device.data(), &BluezQt::Device::deviceRemoved, this, [this]() {
         Q_EMIT deviceRemoved(this);
@@ -56,10 +60,8 @@ DeclarativeDevice::DeclarativeDevice(BluezQt::DevicePtr device, DeclarativeAdapt
         Q_EMIT deviceChanged(this);
     });
 
-    connect(m_device.data(), &BluezQt::Device::mediaPlayerChanged, this, [this]() {
-        updateMediaPlayer();
-        Q_EMIT mediaPlayerChanged(m_mediaPlayer);
-    });
+    updateInput();
+    updateMediaPlayer();
 }
 
 QString DeclarativeDevice::ubi() const
@@ -162,6 +164,11 @@ QString DeclarativeDevice::modalias() const
     return m_device->modalias();
 }
 
+DeclarativeInput *DeclarativeDevice::input() const
+{
+    return m_input;
+}
+
 DeclarativeMediaPlayer *DeclarativeDevice::mediaPlayer() const
 {
     return m_mediaPlayer;
@@ -202,12 +209,30 @@ BluezQt::PendingCall *DeclarativeDevice::cancelPairing()
     return m_device->cancelPairing();
 }
 
+void DeclarativeDevice::updateInput()
+{
+    if (m_input) {
+        m_input->deleteLater();
+        m_input = Q_NULLPTR;
+    }
+
+    if (m_device->input()) {
+        m_input = new DeclarativeInput(m_device->input(), this);
+    }
+
+    Q_EMIT inputChanged(m_input);
+}
+
 void DeclarativeDevice::updateMediaPlayer()
 {
-    if (m_device->mediaPlayer()) {
-        m_mediaPlayer = new DeclarativeMediaPlayer(m_device->mediaPlayer(), this);
-    } else {
+    if (m_mediaPlayer) {
         m_mediaPlayer->deleteLater();
         m_mediaPlayer = Q_NULLPTR;
     }
+
+    if (m_device->mediaPlayer()) {
+        m_mediaPlayer = new DeclarativeMediaPlayer(m_device->mediaPlayer(), this);
+    }
+
+    Q_EMIT mediaPlayerChanged(m_mediaPlayer);
 }

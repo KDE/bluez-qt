@@ -2,6 +2,7 @@ set(bluezqtextensionplugin_SRCS
     declarativemanager.cpp
     declarativeadapter.cpp
     declarativedevice.cpp
+    declarativeinput.cpp
     declarativemediaplayer.cpp
     declarativedevicesmodel.cpp
     bluezqtextensionplugin.cpp
