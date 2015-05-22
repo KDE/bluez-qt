@@ -1,10 +1,10 @@
 # BluezQt
 
-Qt wrapper for Bluez 5 DBus API
+Qt wrapper for BlueZ 5 DBus API
 
 ## Introduction
 
-BluezQt is a library for communication with Bluez system and session daemons.
+BluezQt is a library for communication with BlueZ system and session daemons.
 
 <ul>
   <li>Manager class is used to communicate with system daemon - org.bluez</li>

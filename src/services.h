@@ -1,5 +1,5 @@
 /*
- * BluezQt - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous BlueZ wrapper library
  *
  * Copyright (C) 2014-2015 David Rosca <nowrep@gmail.com>
  *

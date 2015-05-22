@@ -227,7 +227,7 @@ AdapterPtr ManagerPrivate::findUsableAdapter() const
 
 void ManagerPrivate::serviceRegistered()
 {
-    qCDebug(BLUEZQT) << "Bluez service registered";
+    qCDebug(BLUEZQT) << "BlueZ service registered";
     m_bluezRunning = true;
 
     load();
@@ -235,7 +235,7 @@ void ManagerPrivate::serviceRegistered()
 
 void ManagerPrivate::serviceUnregistered()
 {
-    qCDebug(BLUEZQT) << "Bluez service unregistered";
+    qCDebug(BLUEZQT) << "BlueZ service unregistered";
 
     bool wasBtOperational = q->isBluetoothOperational();
     m_bluezRunning = false;

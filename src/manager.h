@@ -1,5 +1,5 @@
 /*
- * BluezQt - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous BlueZ wrapper library
  *
  * Copyright (C) 2014-2015 David Rosca <nowrep@gmail.com>
  *
@@ -41,7 +41,7 @@ class InitManagerJob;
 /**
  * Bluetooth manager.
  *
- * The entry point to communicate with system Bluez daemon.
+ * The entry point to communicate with system BlueZ daemon.
  *
  * The typical usecase is to work with usableAdapter() (any powered adapter),
  * but it is also possible to use specific adapter.
@@ -78,7 +78,7 @@ class InitManagerJob;
  * }
  * @endcode
  *
- * @note All communication with Bluez daemon happens asynchronously. Almost all methods
+ * @note All communication with BlueZ daemon happens asynchronously. Almost all methods
  *       returns PendingCall to help track the call progress and to check for any errors.
  *
  * @note If manager is not operational, all methods that returns a PendingCall will fail
@@ -129,7 +129,7 @@ public:
      * Returns whether the manager is operational.
      *
      * The manager is operational when initialization was successful and
-     * Bluez system daemon is running.
+     * BlueZ system daemon is running.
      *
      * @return true if manager is operational
      */

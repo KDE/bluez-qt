@@ -1,5 +1,5 @@
 maintainer: drosca
-description: Qt wrapper for Bluez 5 DBus API
+description: Qt wrapper for BlueZ 5 DBus API
 tier: 1
 type: integration
 portingAid: false
@@ -7,7 +7,7 @@ deprecated: false
 release: false
 platforms:
     - name: Linux
-      note: Functional only with running Bluez 5
+      note: Functional only with running BlueZ 5
 libraries:
     - qmake: BluezQt
       cmake: KF5::BluezQt

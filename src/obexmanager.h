@@ -1,5 +1,5 @@
 /*
- * BluezQt - Asynchronous Bluez wrapper library
+ * BluezQt - Asynchronous BlueZ wrapper library
  *
  * Copyright (C) 2014-2015 David Rosca <nowrep@gmail.com>
  *
@@ -40,7 +40,7 @@ class InitObexManagerJob;
 /**
  * OBEX manager.
  *
- * The entry point to communicate with session Bluez obex daemon.
+ * The entry point to communicate with session BlueZ obex daemon.
  *
  * You must call init() before other functions can be used.
  *
@@ -86,7 +86,7 @@ public:
      * Returns whether the manager is operational.
      *
      * The manager is operational when initialization was successful
-     * and Bluez session daemon is running.
+     * and BlueZ session daemon is running.
      *
      * @return true if manager is operational
      */
