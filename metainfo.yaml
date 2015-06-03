@@ -4,7 +4,7 @@ tier: 1
 type: integration
 portingAid: false
 deprecated: false
-release: false
+release: true
 platforms:
     - name: Linux
       note: Functional only with running BlueZ 5
