@@ -24,6 +24,8 @@ ecm_setup_version(${KF5_VERSION}
     VARIABLE_PREFIX BLUEZQT
     VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/bluezqt_version.h"
     PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5BluezQtConfigVersion.cmake"
+    SOVERSION 6
+
 )
 
 # Dependencies
