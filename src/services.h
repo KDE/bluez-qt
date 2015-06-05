@@ -52,6 +52,14 @@ const QString PhonebookAccessServer = QLatin1String("0000112F-0000-1000-8000-008
 const QString MessageAccessServer = QLatin1String("00001132-0000-1000-8000-00805F9B34FB");
 const QString PnpInformation = QLatin1String("00001200-0000-1000-8000-00805F9B34FB");
 
+// Bluetooth Low Energy
+const QString GenericAcces = QLatin1String("00001800-0000-1000-8000-00805f9b34fb");
+const QString GenericAttribute = QLatin1String("00001801-0000-1000-8000-00805f9b34fb");
+const QString ImmediateAlert = QLatin1String("00001802-0000-1000-8000-00805f9b34fb");
+const QString LinkLoss = QLatin1String("00001803-0000-1000-8000-00805f9b34fb");
+const QString TxPower = QLatin1String("00001804-0000-1000-8000-00805f9b34fb");
+const QString HeartRate = QLatin1String("0000180d-0000-1000-8000-00805f9b34fb");
+
 }
 
 } // namespace BluezQt
