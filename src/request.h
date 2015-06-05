@@ -39,7 +39,7 @@ enum RequestOriginatingType {
 };
 
 /**
- * Request.
+ * D-Bus request.
  *
  * This class represents a request from a Bluetooth daemon. It is a convenient
  * wrapper around QDBusMessage and easily allows sending replies and handling errors.

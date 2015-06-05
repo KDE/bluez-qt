@@ -73,7 +73,7 @@ public:
     /**
      * Returns address of the Bluetooth adapter.
      *
-     * @see Manager::adapterForAddress()
+     * @see Manager::adapterForAddress() const
      *
      * @return address of adapter
      */
@@ -82,7 +82,7 @@ public:
     /**
      * Returns address of the Bluetooth device.
      *
-     * @see Manager::deviceForAddress()
+     * @see Manager::deviceForAddress() const
      *
      * @return address of device
      */

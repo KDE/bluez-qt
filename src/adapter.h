@@ -249,7 +249,7 @@ public:
      * Possible errors: PendingCall::NotReady, PendingCall::Failed
      *
      * @return void pending call
-     * @see discoverableTimeout()
+     * @see discoverableTimeout() const
      */
     PendingCall *startDiscovery();
 
@@ -265,7 +265,7 @@ public:
     /**
      * Removes the specified device.
      *
-     * It will also remove the pairint information.
+     * It will also remove the pairing information.
      *
      * Possible errors: PendingCall::InvalidArguments, PendingCall::Failed
      *

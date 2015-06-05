@@ -165,7 +165,7 @@ public:
      *
      * Possible errors: PendingCall::NotAuthorized, PendingCall::NotInProgress
      *
-     * @see isSuspendable()
+     * @see isSuspendable() const
      *
      * @return void pending call
      */

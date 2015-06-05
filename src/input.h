@@ -32,7 +32,7 @@ namespace BluezQt
 {
 
 /**
- * Input.
+ * %Device input.
  *
  * This class represents an input interface.
  */

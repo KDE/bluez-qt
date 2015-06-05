@@ -67,7 +67,7 @@ class BLUEZQT_EXPORT Device : public QObject
 
 public:
     /**
-     * Device types.
+     * %Device types.
      */
     enum Type {
         /** The device is a phone. */
@@ -381,7 +381,7 @@ public Q_SLOTS:
     PendingCall *disconnectProfile(const QString &uuid);
 
     /**
-     * Initiates a pairing of the device.
+     * Initiates a pairing with the device.
      *
      * Possible errors: PendingCall::InvalidArguments, PendingCall::Failed,
      *                  PendingCall::AlreadyExists, PendingCall::AuthenticationCanceled,
@@ -393,7 +393,7 @@ public Q_SLOTS:
     PendingCall *pair();
 
     /**
-     * Cancels a pairing of the device.
+     * Cancels a pairing with the device.
      *
      * This method can be used to cancel pairing operation inititated with pair().
      *

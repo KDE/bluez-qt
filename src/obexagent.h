@@ -64,7 +64,7 @@ public:
      *
      * The path where the agent will be registered.
      *
-     * You must provide valid object path!
+     * @note You must provide valid object path!
      *
      * @return object path of agent
      */

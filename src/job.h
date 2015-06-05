@@ -79,7 +79,7 @@ public:
     /**
      * Error type
      *
-     * @see error()
+     * @see error() const
      */
     enum Error {
         /** Indicates there is no error */
@@ -220,7 +220,7 @@ protected:
      * Utility function to emit the result signal, and suicide this job.
      *
      * @note Deletes this job using deleteLater().
-     * @see result()
+     * @see result() const
      */
     void emitResult();
 

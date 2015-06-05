@@ -28,6 +28,7 @@
 namespace BluezQt
 {
 
+/** Service UUIDs. */
 namespace Services
 {
 
