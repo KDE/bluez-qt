@@ -178,12 +178,21 @@ public:
     /**
      * Returns a class of the device.
      *
+     * In case of Bluetooth Low Energy only devices,
+     * device class is invalid (0).
+     *
+     * @see type() const
+     *
      * @return class of device
      */
     quint32 deviceClass() const;
 
     /**
      * Returns a type of the device.
+     *
+     * Type of device is deduced from its class.
+     *
+     * @see deviceClass() const
      *
      * @return type of device
      */
