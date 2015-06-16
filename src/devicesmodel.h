@@ -72,7 +72,7 @@ public:
         RemoteNameRole = Qt::UserRole + 104,
         /** Class of the device (quint32) */
         ClassRole = Qt::UserRole + 105,
-        /** Type of the device (DeviceType) */
+        /** Type of the device (Device::Type) */
         TypeRole = Qt::UserRole + 106,
         /** Appearance of the device (quint16) */
         AppearanceRole = Qt::UserRole + 107,

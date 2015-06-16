@@ -16,6 +16,7 @@ the call progress and handle errors.
 
 ## Links
 
-- Mailing list: <https://mail.kde.org/mailman/listinfo/kde-hardware-devel>
-- IRC channel: \#solid on Freenode
-- Git repository: <https://projects.kde.org/projects/kde/workspace/bluez-qt/repository>
+- Home page: <https://projects.kde.org/projects/frameworks/bluez-qt>
+- Mailing list: <https://mail.kde.org/mailman/listinfo/kde-frameworks-devel>
+- IRC channel: \#kde-devel and \#solid on Freenode
+- Git repository: <https://projects.kde.org/projects/frameworks/bluez-qt/repository>
