@@ -49,11 +49,6 @@ public:
     void interfacesAdded(const QString &path, const QVariantMapMap &interfaces);
     void interfacesRemoved(const QString &path, const QStringList &interfaces);
 
-    void addInput(InputPtr input);
-    void addMediaPlayer(MediaPlayerPtr player);
-    void removeInput();
-    void removeMediaPlayer();
-
     QDBusPendingReply<> setDBusProperty(const QString &name, const QVariant &value);
     void propertiesChanged(const QString &interface, const QVariantMap &changed, const QStringList &invalidated);
     void namePropertyChanged(const QString &value);
