@@ -44,7 +44,7 @@ void ManagerTest::initTestCase()
     Autotests::registerMetatypes();
 }
 
-void ManagerTest::cleanupTestCase()
+void ManagerTest::cleanup()
 {
     FakeBluez::stop();
 }
@@ -345,8 +345,68 @@ void ManagerTest::deviceForAddressTest()
     FakeBluez::runAction(QStringLiteral("devicemanager"), QStringLiteral("change-adapter-property"), properties);
 
     QTRY_COMPARE(adapter1Spy.count(), 2);
-
     QVERIFY(manager->deviceForAddress(address));
+
+    delete manager;
+}
+
+void ManagerTest::adapterWithDevicesRemovedTest()
+{
+    // tests whether the devices are always removed from the adapter before removing adapter
+
+    FakeBluez::start();
+    FakeBluez::runTest(QStringLiteral("bluez-standard"));
+
+    // Create adapters
+    QDBusObjectPath adapter1path = QDBusObjectPath(QStringLiteral("/org/bluez/hci0"));
+    QVariantMap adapterProps;
+    adapterProps[QStringLiteral("Path")] = QVariant::fromValue(adapter1path);
+    adapterProps[QStringLiteral("Address")] = QStringLiteral("1C:E5:C3:BC:94:7E");
+    adapterProps[QStringLiteral("Name")] = QStringLiteral("TestAdapter");
+    adapterProps[QStringLiteral("Powered")] = false;
+    FakeBluez::runAction(QStringLiteral("devicemanager"), QStringLiteral("create-adapter"), adapterProps);
+
+    // Create devices
+    QVariantMap deviceProps;
+    deviceProps[QStringLiteral("Path")] = QVariant::fromValue(QDBusObjectPath("/org/bluez/hci0/dev_40_79_6A_0C_39_75"));
+    deviceProps[QStringLiteral("Adapter")] = QVariant::fromValue(adapter1path);
+    deviceProps[QStringLiteral("Address")] = QStringLiteral("40:79:6A:0C:39:75");
+    deviceProps[QStringLiteral("Name")] = QStringLiteral("TestDevice");
+    FakeBluez::runAction(QStringLiteral("devicemanager"), QStringLiteral("create-device"), deviceProps);
+
+    deviceProps[QStringLiteral("Path")] = QVariant::fromValue(QDBusObjectPath("/org/bluez/hci0/dev_50_79_6A_0C_39_75"));
+    deviceProps[QStringLiteral("Adapter")] = QVariant::fromValue(adapter1path);
+    deviceProps[QStringLiteral("Address")] = QStringLiteral("50:79:6A:0C:39:75");
+    deviceProps[QStringLiteral("Name")] = QStringLiteral("TestDevice2");
+    FakeBluez::runAction(QStringLiteral("devicemanager"), QStringLiteral("create-device"), deviceProps);
+
+    Manager *manager = new Manager;
+
+    InitManagerJob *job = manager->init();
+    job->exec();
+
+    QVERIFY(!job->error());
+
+    AdapterPtr adapter = manager->adapterForAddress(QStringLiteral("1C:E5:C3:BC:94:7E"));
+    DevicePtr device1 = manager->deviceForAddress(QStringLiteral("40:79:6A:0C:39:75"));
+    DevicePtr device2 = manager->deviceForAddress(QStringLiteral("50:79:6A:0C:39:75"));
+
+    QVERIFY(adapter);
+    QVERIFY(device1);
+    QVERIFY(device2);
+
+    QSignalSpy adapterRemovedSpy(manager, SIGNAL(adapterRemoved(AdapterPtr)));
+    QSignalSpy deviceRemovedSpy(manager, SIGNAL(deviceRemoved(DevicePtr)));
+
+    QVariantMap properties;
+    properties[QStringLiteral("Path")] = QVariant::fromValue(adapter1path);
+    FakeBluez::runAction(QStringLiteral("devicemanager"), QStringLiteral("remove-adapter"), properties);
+
+    QTRY_COMPARE(adapterRemovedSpy.count(), 1);
+    QTRY_COMPARE(deviceRemovedSpy.count(), 2);
+    QCOMPARE(manager->adapters().count(), 0);
+    QCOMPARE(manager->devices().count(), 0);
+    QCOMPARE(adapter->devices().count(), 0);
 
     delete manager;
 }

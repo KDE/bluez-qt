@@ -361,11 +361,17 @@ void ManagerPrivate::addDevice(const QString &devicePath, const QVariantMap &pro
 
 void ManagerPrivate::removeAdapter(const QString &adapterPath)
 {
-    AdapterPtr adapter = m_adapters.take(adapterPath);
+    AdapterPtr adapter = m_adapters.value(adapterPath);
     if (!adapter) {
         return;
     }
 
+    // Make sure we always remove all devices before removing the adapter
+    Q_FOREACH (DevicePtr device, adapter->devices()) {
+        removeDevice(device->ubi());
+    }
+
+    m_adapters.remove(adapterPath);
     Q_EMIT adapter->adapterRemoved(adapter);
 
     if (m_adapters.isEmpty()) {

@@ -29,7 +29,7 @@ class ManagerTest : public QObject
 
 private Q_SLOTS:
     void initTestCase();
-    void cleanupTestCase();
+    void cleanup();
 
     void bluezNotRunningTest();
     void bluezNotExportingInterfacesTest();
@@ -39,6 +39,7 @@ private Q_SLOTS:
 
     void usableAdapterTest();
     void deviceForAddressTest();
+    void adapterWithDevicesRemovedTest();
 
 };
 

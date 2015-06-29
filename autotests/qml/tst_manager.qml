@@ -130,5 +130,75 @@ TestCase {
         tryCompare(usableAdapterChangedSpy, "count", 1);
         compare(manager.usableAdapter.ubi, adapter2path);
     }
+
+    SignalSpy {
+        id: managerAdapterRemovedSpy
+        signalName: "adapterRemoved"
+    }
+
+    SignalSpy {
+        id: managerDeviceRemovedSpy
+        signalName: "deviceRemoved"
+    }
+
+    function test_adapterWithDevicesRemoved()
+    {
+        FakeBluez.start();
+        FakeBluez.runTest("bluez-standard");
+
+        var adapter1path = "/org/bluez/hci0";
+        var adapterProps = {
+            Path: adapter1path,
+            Address: "1C:E5:C3:BC:94:7E",
+            Name: "TestAdapter",
+            Powered: false,
+            _toDBusObjectPath: [ "Path" ]
+        }
+        FakeBluez.runAction("devicemanager", "create-adapter", adapterProps);
+
+        var device1props = {
+            Path: "/org/bluez/hci0/dev_40_79_6A_0C_39_75",
+            Adapter: adapter1path,
+            Address: "40:79:6A:0C:39:75",
+            Name: "TestDevice",
+            _toDBusObjectPath: [ "Path", "Adapter" ]
+        }
+        FakeBluez.runAction("devicemanager", "create-device", device1props);
+
+        var device2props = {
+            Path: "/org/bluez/hci0/dev_50_79_6A_0C_39_75",
+            Adapter: adapter1path,
+            Address: "50:79:6A:0C:39:75",
+            Name: "TestDevice2",
+            _toDBusObjectPath: [ "Path", "Adapter" ]
+        }
+        FakeBluez.runAction("devicemanager", "create-device", device2props);
+
+        var manager = BluezQt.Manager;
+
+        tryCompare(manager, "operational", true);
+
+        var adapter = manager.adapterForAddress("1C:E5:C3:BC:94:7E");
+        var device1 = manager.deviceForAddress("40:79:6A:0C:39:75");
+        var device2 = manager.deviceForAddress("50:79:6A:0C:39:75");
+
+        verify(adapter);
+        verify(device1);
+        verify(device2);
+
+        managerAdapterRemovedSpy.target = manager;
+        managerDeviceRemovedSpy.target = manager;
+
+        var properties = {
+            Path: adapter1path,
+            _toDBusObjectPath: [ "Path" ]
+        }
+        FakeBluez.runAction("devicemanager", "remove-adapter", properties);
+
+        tryCompare(managerAdapterRemovedSpy, "count", 1);
+        tryCompare(managerDeviceRemovedSpy, "count", 2);
+        compare(manager.adapters.length, 0);
+        compare(manager.devices.length, 0);
+    }
 }
 
