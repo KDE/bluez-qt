@@ -81,7 +81,7 @@ install(FILES
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     set(INSTALL_UDEV_RULE ON CACHE BOOL "Whether to install udev rule")
-    set(UDEV_RULES_INSTALL_DIR ${CMAKECONFIG_INSTALL_DIR}/lib/udev/rules.d CACHE PATH "The location of udev rules")
+    set(UDEV_RULES_INSTALL_DIR /lib/udev/rules.d CACHE PATH "The location of udev rules")
 
     if(${INSTALL_UDEV_RULE})
         install(FILES 61-kde-bluetooth-rfkill.rules DESTINATION ${UDEV_RULES_INSTALL_DIR})
