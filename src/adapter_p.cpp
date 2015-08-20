@@ -84,6 +84,8 @@ void AdapterPrivate::removeDevice(DevicePtr device)
     m_devices.removeOne(device);
     Q_EMIT device->deviceRemoved(device);
     Q_EMIT q.data()->deviceRemoved(device);
+
+    disconnect(device.data(), &Device::deviceChanged, q.data(), &Adapter::deviceChanged);
 }
 
 QDBusPendingReply<> AdapterPrivate::setDBusProperty(const QString &name, const QVariant &value)

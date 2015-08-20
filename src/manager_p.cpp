@@ -377,6 +377,9 @@ void ManagerPrivate::removeAdapter(const QString &adapterPath)
     if (m_adapters.isEmpty()) {
         Q_EMIT q->allAdaptersRemoved();
     }
+
+    disconnect(adapter.data(), &Adapter::adapterChanged, q, &Manager::adapterChanged);
+    disconnect(adapter.data(), &Adapter::poweredChanged, this, &ManagerPrivate::adapterPoweredChanged);
 }
 
 void ManagerPrivate::removeDevice(const QString &devicePath)
@@ -387,6 +390,8 @@ void ManagerPrivate::removeDevice(const QString &devicePath)
     }
 
     device->adapter()->d->removeDevice(device);
+
+    disconnect(device.data(), &Device::deviceChanged, q, &Manager::deviceChanged);
 }
 
 bool ManagerPrivate::rfkillBlocked() const
