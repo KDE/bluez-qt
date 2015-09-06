@@ -28,7 +28,7 @@
 #include <QDBusObjectPath>
 
 typedef QList<QVariantMap> QVariantMapList;
-Q_DECLARE_METATYPE(QVariantMapList);
+Q_DECLARE_METATYPE(QVariantMapList)
 
 typedef QMap<QString, QVariantMap> QVariantMapMap;
 Q_DECLARE_METATYPE(QVariantMapMap)
