@@ -44,6 +44,7 @@ public:
     void init(const QVariantMap &properties);
 
     void propertiesChanged(const QString &interface, const QVariantMap &changed, const QStringList &invalidated);
+    void orgBluezObexUnregistered();
 
     QWeakPointer<ObexTransfer> q;
     BluezTransfer *m_bluezTransfer;

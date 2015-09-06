@@ -26,6 +26,8 @@
 #include "utils.h"
 #include "macros.h"
 
+#include <QDBusServiceWatcher>
+
 namespace BluezQt
 {
 
@@ -55,6 +57,11 @@ ObexTransferPrivate::ObexTransferPrivate(const QString &path, const QVariantMap 
     , m_suspendable(false)
 {
     m_bluezTransfer = new BluezTransfer(Strings::orgBluezObex(), path, DBusConnection::orgBluezObex(), this);
+
+    QDBusServiceWatcher *serviceWatcher = new QDBusServiceWatcher(Strings::orgBluezObex(), DBusConnection::orgBluezObex(),
+            QDBusServiceWatcher::WatchForUnregistration, this);
+
+    connect(serviceWatcher, &QDBusServiceWatcher::serviceUnregistered, this, &ObexTransferPrivate::orgBluezObexUnregistered);
 
     init(properties);
 }
@@ -97,6 +104,15 @@ void ObexTransferPrivate::propertiesChanged(const QString &interface, const QVar
         } else if (property == QLatin1String("Filename")) {
             PROPERTY_CHANGED(m_fileName, toString, fileNameChanged);
         }
+    }
+}
+
+void ObexTransferPrivate::orgBluezObexUnregistered()
+{
+    // Change status to Error if org.bluez.obex crashes
+    if (m_status != ObexTransfer::Complete && m_status != ObexTransfer::Error) {
+        m_status = ObexTransfer::Error;
+        Q_EMIT q.data()->statusChanged(m_status);
     }
 }
 
