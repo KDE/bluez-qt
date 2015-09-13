@@ -40,6 +40,7 @@ Manager::Manager(QObject *parent)
     : QObject(parent)
     , d(new ManagerPrivate(this))
 {
+    Instance::setManager(this);
 }
 
 Manager::~Manager()

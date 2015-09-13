@@ -39,6 +39,7 @@ ObexManager::ObexManager(QObject *parent)
     : QObject(parent)
     , d(new ObexManagerPrivate(this))
 {
+    Instance::setObexManager(this);
 }
 
 ObexManager::~ObexManager()

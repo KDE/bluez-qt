@@ -21,8 +21,11 @@
  */
 
 #include "utils.h"
+#include "manager.h"
+#include "obexmanager.h"
 #include "bluezqt_export.h"
 
+#include <QPointer>
 #include <QStringList>
 #include <QDBusConnection>
 
@@ -48,6 +51,8 @@ public:
     QString orgBluezObexAgentManager1;
     QString orgBluezObexSession1;
     QString orgBluezObexTransfer1;
+    QPointer<Manager> manager;
+    QPointer<ObexManager> obexManager;
 };
 
 GlobalData::GlobalData()
@@ -154,6 +159,26 @@ QDBusConnection DBusConnection::orgBluez()
 QDBusConnection DBusConnection::orgBluezObex()
 {
     return QDBusConnection::sessionBus();
+}
+
+Manager *Instance::manager()
+{
+    return globalData->manager;
+}
+
+void Instance::setManager(Manager *manager)
+{
+    globalData->manager = manager;
+}
+
+ObexManager *Instance::obexManager()
+{
+    return globalData->obexManager;
+}
+
+void Instance::setObexManager(ObexManager *obexManager)
+{
+    globalData->obexManager = obexManager;
 }
 
 QStringList stringListToUpper(const QStringList &list)

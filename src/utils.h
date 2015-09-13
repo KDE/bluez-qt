@@ -59,6 +59,17 @@ QDBusConnection orgBluezObex();
 
 }
 
+namespace Instance
+{
+
+Manager *manager();
+void setManager(Manager *manager);
+
+ObexManager *obexManager();
+void setObexManager(ObexManager *obexManager);
+
+}
+
 QStringList stringListToUpper(const QStringList &list);
 Device::Type classToType(quint32 classNum);
 
