@@ -23,10 +23,10 @@
 #include "obextransfer.h"
 #include "obextransfer_p.h"
 #include "pendingcall.h"
+#include "obexmanager.h"
+#include "obexsession.h"
 #include "utils.h"
 #include "macros.h"
-
-#include <QDBusServiceWatcher>
 
 namespace BluezQt
 {
@@ -58,10 +58,9 @@ ObexTransferPrivate::ObexTransferPrivate(const QString &path, const QVariantMap 
 {
     m_bluezTransfer = new BluezTransfer(Strings::orgBluezObex(), path, DBusConnection::orgBluezObex(), this);
 
-    QDBusServiceWatcher *serviceWatcher = new QDBusServiceWatcher(Strings::orgBluezObex(), DBusConnection::orgBluezObex(),
-            QDBusServiceWatcher::WatchForUnregistration, this);
-
-    connect(serviceWatcher, &QDBusServiceWatcher::serviceUnregistered, this, &ObexTransferPrivate::orgBluezObexUnregistered);
+    if (Instance::obexManager()) {
+        connect(Instance::obexManager(), &ObexManager::sessionRemoved, this, &ObexTransferPrivate::sessionRemoved);
+    }
 
     init(properties);
 }
@@ -107,8 +106,12 @@ void ObexTransferPrivate::propertiesChanged(const QString &interface, const QVar
     }
 }
 
-void ObexTransferPrivate::orgBluezObexUnregistered()
+void ObexTransferPrivate::sessionRemoved(ObexSessionPtr session)
 {
+    if (!m_bluezTransfer->path().startsWith(session->objectPath().path())) {
+        return;
+    }
+
     // Change status to Error if org.bluez.obex crashes
     if (m_status != ObexTransfer::Complete && m_status != ObexTransfer::Error) {
         m_status = ObexTransfer::Error;
