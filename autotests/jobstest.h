@@ -28,8 +28,6 @@ class JobsTest : public QObject
     Q_OBJECT
 
 private Q_SLOTS:
-    void initTestCase();
-
     void deleteManagerTest();
     void deleteInitManagerJobTest();
     void deleteObexManagerTest();

@@ -27,7 +27,6 @@
 
 #include <QtTest/QTest>
 #include <QtTest/QSignalSpy>
-#include <QLoggingCategory>
 #include <QDBusObjectPath>
 
 namespace BluezQt
@@ -40,7 +39,6 @@ using namespace BluezQt;
 void ManagerTest::initTestCase()
 {
     bluezqt_initFakeBluezTestRun();
-    QLoggingCategory::setFilterRules(QStringLiteral("BluezQt=false"));
     Autotests::registerMetatypes();
 }
 

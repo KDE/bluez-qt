@@ -98,7 +98,6 @@ int main(int argc, char *argv[])
     qmlRegisterSingletonType<QObject>("org.kde.bluezqt.fakebluez", 1, 0, "FakeBluez", fakebluez_singleton);
 
     BluezQt::bluezqt_initFakeBluezTestRun();
-    QLoggingCategory::setFilterRules(QStringLiteral("BluezQt=false"));
 
     qputenv("QML2_IMPORT_PATH", QByteArrayLiteral(BLUEZQT_QML_IMPORT_PATH));
     const QString &testsDir = QFileInfo(QFINDTESTDATA("qml/tst_device.qml")).absolutePath();

@@ -27,14 +27,8 @@
 
 #include <QtTest/QTest>
 #include <QtTest/QSignalSpy>
-#include <QLoggingCategory>
 
 using namespace BluezQt;
-
-void JobsTest::initTestCase()
-{
-    QLoggingCategory::setFilterRules(QStringLiteral("BluezQt=false"));
-}
 
 void JobsTest::deleteManagerTest()
 {

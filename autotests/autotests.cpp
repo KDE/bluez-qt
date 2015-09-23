@@ -74,7 +74,6 @@ void StartJob::exec()
     connect(FakeBluez::s_process, SIGNAL(error(QProcess::ProcessError)), this, SLOT(processError(QProcess::ProcessError)));
     connect(FakeBluez::s_process, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(processFinished(int,QProcess::ExitStatus)));
 
-    FakeBluez::s_process->setStandardErrorFile(QStringLiteral("/tmp/fakebluez.out"));
     FakeBluez::s_process->start(m_fakebluezPath);
 
     m_eventLoop.exec();

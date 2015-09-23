@@ -25,7 +25,6 @@
 
 #include <QtTest/QTest>
 #include <QtTest/QSignalSpy>
-#include <QLoggingCategory>
 
 namespace BluezQt
 {
@@ -37,7 +36,6 @@ using namespace BluezQt;
 void ObexManagerTest::initTestCase()
 {
     bluezqt_initFakeBluezTestRun();
-    QLoggingCategory::setFilterRules(QStringLiteral("BluezQt=false"));
 }
 
 void ObexManagerTest::cleanupTestCase()

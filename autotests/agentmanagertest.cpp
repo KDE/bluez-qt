@@ -27,7 +27,6 @@
 
 #include <QtTest/QTest>
 #include <QtTest/QSignalSpy>
-#include <QLoggingCategory>
 #include <QDBusObjectPath>
 
 namespace BluezQt
@@ -122,7 +121,6 @@ void TestAgent::release()
 void AgentManagerTest::initTestCase()
 {
     bluezqt_initFakeBluezTestRun();
-    QLoggingCategory::setFilterRules(QStringLiteral("BluezQt=false"));
 
     FakeBluez::start();
     FakeBluez::runTest(QStringLiteral("bluez-standard"));

@@ -26,7 +26,6 @@
 
 #include <QtTest/QTest>
 #include <QtTest/QSignalSpy>
-#include <QDebug>
 
 namespace BluezQt
 {
