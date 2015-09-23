@@ -29,7 +29,7 @@ class ObexManagerTest : public QObject
 
 private Q_SLOTS:
     void initTestCase();
-    void cleanupTestCase();
+    void cleanup();
 
     void obexNotRunningTest();
     void obexNotExportingInterfacesTest();

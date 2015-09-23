@@ -110,6 +110,7 @@ void FakeBluez::clear()
 {
     // Everything is parented to ObjectManager
     delete m_objectManager;
+    m_objectManager = Q_NULLPTR;
 }
 
 void FakeBluez::createObjectManager()

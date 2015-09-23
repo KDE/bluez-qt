@@ -39,6 +39,7 @@ ObjectManager::ObjectManager(QObject *parent)
 
 ObjectManager::~ObjectManager()
 {
+    s_instance = Q_NULLPTR;
     qDeleteAll(m_autoDeleteObjects);
 }
 

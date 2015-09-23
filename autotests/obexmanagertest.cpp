@@ -38,7 +38,7 @@ void ObexManagerTest::initTestCase()
     bluezqt_initFakeBluezTestRun();
 }
 
-void ObexManagerTest::cleanupTestCase()
+void ObexManagerTest::cleanup()
 {
     FakeBluez::stop();
 }
@@ -54,6 +54,8 @@ void ObexManagerTest::obexNotRunningTest()
     QVERIFY(!job->error());
     QVERIFY(manager->isInitialized());
     QVERIFY(!manager->isOperational());
+
+    delete manager;
 }
 
 void ObexManagerTest::obexNotExportingInterfacesTest()
@@ -70,6 +72,8 @@ void ObexManagerTest::obexNotExportingInterfacesTest()
     QVERIFY(job->error());
     QVERIFY(!manager->isInitialized());
     QVERIFY(!manager->isOperational());
+
+    delete manager;
 }
 
 void ObexManagerTest::obexEmptyManagedObjectsTest()
@@ -86,6 +90,8 @@ void ObexManagerTest::obexEmptyManagedObjectsTest()
     QVERIFY(job->error());
     QVERIFY(!manager->isInitialized());
     QVERIFY(!manager->isOperational());
+
+    delete manager;
 }
 
 void ObexManagerTest::obexNoClientTest()
@@ -102,6 +108,8 @@ void ObexManagerTest::obexNoClientTest()
     QVERIFY(job->error());
     QVERIFY(!manager->isInitialized());
     QVERIFY(!manager->isOperational());
+
+    delete manager;
 }
 
 void ObexManagerTest::obexNoAgentManagerTest()
@@ -118,6 +126,8 @@ void ObexManagerTest::obexNoAgentManagerTest()
     QVERIFY(job->error());
     QVERIFY(!manager->isInitialized());
     QVERIFY(!manager->isOperational());
+
+    delete manager;
 }
 
 void ObexManagerTest::obexServiceOkTest()
@@ -134,6 +144,8 @@ void ObexManagerTest::obexServiceOkTest()
     QVERIFY(!job->error());
     QVERIFY(manager->isInitialized());
     QVERIFY(manager->isOperational());
+
+    delete manager;
 }
 
 QTEST_MAIN(ObexManagerTest)
