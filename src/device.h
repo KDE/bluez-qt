@@ -88,11 +88,11 @@ public:
         Keyboard,
         /** The device is a mouse. */
         Mouse,
-        /** The deivce is an uncategorized peripheral device. */
+        /** The device is a joypad. */
         Joypad,
         /** The device is a graphics tablet (input device). */
         Tablet,
-        /** The device is a wearable device. */
+        /** The deivce is an uncategorized peripheral device. */
         Peripheral,
         /** The device is a camera. */
         Camera,
@@ -100,7 +100,7 @@ public:
         Printer,
         /** The device is an uncategorized imaging device. */
         Imaging,
-        /** The device is a joypad. */
+        /** The device is a wearable device. */
         Wearable,
         /** The device is a toy. */
         Toy,
