@@ -33,8 +33,8 @@ class DeclarativeDevice : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString ubi READ ubi)
-    Q_PROPERTY(QString address READ address)
+    Q_PROPERTY(QString ubi READ ubi CONSTANT)
+    Q_PROPERTY(QString address READ address CONSTANT)
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
     Q_PROPERTY(QString friendlyName READ friendlyName NOTIFY friendlyNameChanged)
     Q_PROPERTY(QString remoteName READ remoteName NOTIFY remoteNameChanged)
@@ -52,7 +52,7 @@ class DeclarativeDevice : public QObject
     Q_PROPERTY(QString modalias READ modalias NOTIFY modaliasChanged)
     Q_PROPERTY(DeclarativeInput* input READ input NOTIFY inputChanged)
     Q_PROPERTY(DeclarativeMediaPlayer* mediaPlayer READ mediaPlayer NOTIFY mediaPlayerChanged)
-    Q_PROPERTY(DeclarativeAdapter* adapter READ adapter)
+    Q_PROPERTY(DeclarativeAdapter* adapter READ adapter CONSTANT)
 
 public:
     explicit DeclarativeDevice(BluezQt::DevicePtr device, DeclarativeAdapter *adapter);

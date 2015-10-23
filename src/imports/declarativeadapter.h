@@ -33,8 +33,8 @@ class DeclarativeAdapter : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString ubi READ ubi)
-    Q_PROPERTY(QString address READ address)
+    Q_PROPERTY(QString ubi READ ubi CONSTANT)
+    Q_PROPERTY(QString address READ address CONSTANT)
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
     Q_PROPERTY(QString systemName READ systemName NOTIFY systemNameChanged)
     Q_PROPERTY(quint32 adapterClass READ adapterClass NOTIFY adapterClassChanged)
