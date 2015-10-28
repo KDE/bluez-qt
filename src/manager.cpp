@@ -65,7 +65,7 @@ bool Manager::isOperational() const
 
 bool Manager::isBluetoothOperational() const
 {
-    return d->m_bluezRunning && d->m_loaded && d->m_usableAdapter;
+    return !d->m_bluetoothBlocked && d->m_bluezRunning && d->m_loaded && d->m_usableAdapter;
 }
 
 bool Manager::isBluetoothBlocked() const

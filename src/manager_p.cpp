@@ -320,10 +320,14 @@ void ManagerPrivate::rfkillStateChanged(Rfkill::State state)
     Q_UNUSED(state)
 
     bool blocked = rfkillBlocked();
+    bool wasBtOperational = q->isBluetoothOperational();
 
     if (m_bluetoothBlocked != blocked) {
         m_bluetoothBlocked = blocked;
         Q_EMIT q->bluetoothBlockedChanged(m_bluetoothBlocked);
+        if (wasBtOperational != q->isBluetoothOperational()) {
+            Q_EMIT q->bluetoothOperationalChanged(q->isBluetoothOperational());
+        }
     }
 }
 
