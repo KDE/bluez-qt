@@ -224,7 +224,11 @@ void Rfkill::updateRfkillDevices()
     m_state = Unknown;
 
     Q_FOREACH (State state, m_devices) { // krazy:exclude=foreach
-        if (state < m_state) {
+        Q_ASSERT(state != Unknown);
+
+        if (m_state == Unknown) {
+            m_state = state;
+        } else if (state > m_state) {
             m_state = state;
         }
     }

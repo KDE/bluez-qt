@@ -166,7 +166,7 @@ public:
      *
      * @note This requires write access to /dev/rfkill.
      *
-     * @return true if Bluetooth blocked state was changed
+     * @return true if unblocking rfkill devices succeeded
      */
     bool setBluetoothBlocked(bool blocked);
 
