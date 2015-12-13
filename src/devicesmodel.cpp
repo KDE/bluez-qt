@@ -90,7 +90,7 @@ void DevicesModelPrivate::deviceChanged(DevicePtr device)
 
 void DevicesModelPrivate::adapterChanged(AdapterPtr adapter)
 {
-    Q_FOREACH (DevicePtr device, adapter->devices()) {
+    Q_FOREACH (const DevicePtr &device, adapter->devices()) {
         deviceChanged(device);
     }
 }

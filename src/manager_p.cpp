@@ -371,7 +371,7 @@ void ManagerPrivate::removeAdapter(const QString &adapterPath)
     }
 
     // Make sure we always remove all devices before removing the adapter
-    Q_FOREACH (DevicePtr device, adapter->devices()) {
+    Q_FOREACH (const DevicePtr &device, adapter->devices()) {
         removeDevice(device->ubi());
     }
 

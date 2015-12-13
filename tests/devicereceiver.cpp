@@ -48,7 +48,7 @@ void DeviceReceiver::scanDevices()
         connect(g_manager, &Manager::adapterAdded, this, &DeviceReceiver::adapterAdded);
         return;
     } else if (!usableAdapter) {
-        usableAdapter = g_manager->adapters().first();
+        usableAdapter = g_manager->adapters().at(0);
         PendingCall *powerOnCall = usableAdapter->setPowered(true);
         powerOnCall->waitForFinished();
     }
@@ -94,7 +94,7 @@ void DeviceReceiver::adapterAdded(BluezQt::AdapterPtr adapter)
 static void stopDiscovering()
 {
     if (g_manager) {
-        Q_FOREACH (AdapterPtr adapter, g_manager->adapters()) {
+        Q_FOREACH (const AdapterPtr &adapter, g_manager->adapters()) {
             adapter->stopDiscovery();
         }
     }

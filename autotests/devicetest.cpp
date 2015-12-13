@@ -106,10 +106,10 @@ void DeviceTest::initTestCase()
     initJob->exec();
     QVERIFY(!initJob->error());
 
-    Q_FOREACH (AdapterPtr adapter, m_manager->adapters()) {
+    Q_FOREACH (const AdapterPtr &adapter, m_manager->adapters()) {
         QVERIFY(!adapter->ubi().isEmpty());
 
-        Q_FOREACH (DevicePtr device, adapter->devices()) {
+        Q_FOREACH (const DevicePtr &device, adapter->devices()) {
             QVERIFY(!device->ubi().isEmpty());
 
             DeviceUnit u;
