@@ -42,19 +42,19 @@ AdaptersReceiver::AdaptersReceiver(Manager *manager, QObject *parent)
     connect(manager, &Manager::bluetoothBlockedChanged, this, &AdaptersReceiver::bluetoothBlockedChanged);
 }
 
-void AdaptersReceiver::adapterAdded(BluezQt::AdapterPtr adapter)
+void AdaptersReceiver::adapterAdded(const BluezQt::AdapterPtr &adapter)
 {
     qDebug() << "Adapter added: " << adapter->name();
     printStatus();
 }
 
-void AdaptersReceiver::adapterRemoved(BluezQt::AdapterPtr adapter)
+void AdaptersReceiver::adapterRemoved(const BluezQt::AdapterPtr &adapter)
 {
     qDebug() << "Adapter removed: " << adapter->name();
     printStatus();
 }
 
-void AdaptersReceiver::usableAdapterChanged(BluezQt::AdapterPtr adapter)
+void AdaptersReceiver::usableAdapterChanged(const BluezQt::AdapterPtr &adapter)
 {
     qDebug() << "Usable adapter changed: " << adapter;
     printStatus();

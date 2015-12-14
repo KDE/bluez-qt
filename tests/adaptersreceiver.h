@@ -35,9 +35,9 @@ public:
     explicit AdaptersReceiver(BluezQt::Manager *manager, QObject *parent = Q_NULLPTR);
 
 public Q_SLOTS:
-    void adapterAdded(BluezQt::AdapterPtr adapter);
-    void adapterRemoved(BluezQt::AdapterPtr adapter);
-    void usableAdapterChanged(BluezQt::AdapterPtr adapter);
+    void adapterAdded(const BluezQt::AdapterPtr &adapter);
+    void adapterRemoved(const BluezQt::AdapterPtr &adapter);
+    void usableAdapterChanged(const BluezQt::AdapterPtr &adapter);
     void allAdaptersRemoved();
     void bluetoothOperationalChanged(bool operational);
     void bluetoothBlockedChanged(bool blocked);

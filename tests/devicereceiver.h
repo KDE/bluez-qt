@@ -37,9 +37,9 @@ public:
     void scanDevices();
 
 public Q_SLOTS:
-    void deviceFound(BluezQt::DevicePtr device);
-    void devicePropertyChanged(BluezQt::DevicePtr device);
-    void adapterAdded(BluezQt::AdapterPtr adapter);
+    void deviceFound(const BluezQt::DevicePtr &device);
+    void devicePropertyChanged(const BluezQt::DevicePtr &device);
+    void adapterAdded(const BluezQt::AdapterPtr &adapter);
 
 };
 

@@ -71,7 +71,7 @@ void AdapterPrivate::init(const QVariantMap &properties)
     m_modalias = properties.value(QStringLiteral("Modalias")).toString();
 }
 
-void AdapterPrivate::addDevice(DevicePtr device)
+void AdapterPrivate::addDevice(const DevicePtr &device)
 {
     m_devices.append(device);
     Q_EMIT q.data()->deviceAdded(device);
@@ -79,7 +79,7 @@ void AdapterPrivate::addDevice(DevicePtr device)
     connect(device.data(), &Device::deviceChanged, q.data(), &Adapter::deviceChanged);
 }
 
-void AdapterPrivate::removeDevice(DevicePtr device)
+void AdapterPrivate::removeDevice(const DevicePtr &device)
 {
     m_devices.removeOne(device);
     Q_EMIT device->deviceRemoved(device);

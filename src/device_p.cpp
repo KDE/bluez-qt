@@ -35,7 +35,7 @@ namespace BluezQt
 
 static const qint16 INVALID_RSSI = -32768; // qint16 minimum
 
-DevicePrivate::DevicePrivate(const QString &path, const QVariantMap &properties, AdapterPtr adapter)
+DevicePrivate::DevicePrivate(const QString &path, const QVariantMap &properties, const AdapterPtr &adapter)
     : QObject()
     , m_dbusProperties(0)
     , m_deviceClass(0)

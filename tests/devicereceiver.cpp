@@ -62,13 +62,13 @@ void DeviceReceiver::scanDevices()
     usableAdapter->startDiscovery();
 }
 
-void DeviceReceiver::deviceFound(BluezQt::DevicePtr device)
+void DeviceReceiver::deviceFound(const BluezQt::DevicePtr &device)
 {
     qDebug() << "*** Remote device found:" << device->name() << "(" << device->address() << ")";
     qDebug();
 }
 
-void DeviceReceiver::devicePropertyChanged(BluezQt::DevicePtr device)
+void DeviceReceiver::devicePropertyChanged(const BluezQt::DevicePtr &device)
 {
     qDebug() << "*** Device with address" << device->address() << "changed some property";
     qDebug() << "\tAddress:\t" << device->address();
@@ -82,7 +82,7 @@ void DeviceReceiver::devicePropertyChanged(BluezQt::DevicePtr device)
     qDebug();
 }
 
-void DeviceReceiver::adapterAdded(BluezQt::AdapterPtr adapter)
+void DeviceReceiver::adapterAdded(const BluezQt::AdapterPtr &adapter)
 {
     Q_UNUSED(adapter)
 

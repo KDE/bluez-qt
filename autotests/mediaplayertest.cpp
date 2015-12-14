@@ -333,7 +333,7 @@ void MediaPlayerTest::disconnectProfileTest()
     }
 }
 
-QString MediaPlayerTest::equalizerString(MediaPlayerPtr mediaPlayer) const
+QString MediaPlayerTest::equalizerString(const MediaPlayerPtr &mediaPlayer) const
 {
     switch (mediaPlayer->equalizer()) {
     case MediaPlayer::EqualizerOn:
@@ -343,7 +343,7 @@ QString MediaPlayerTest::equalizerString(MediaPlayerPtr mediaPlayer) const
     }
 }
 
-QString MediaPlayerTest::repeatString(MediaPlayerPtr mediaPlayer) const
+QString MediaPlayerTest::repeatString(const MediaPlayerPtr &mediaPlayer) const
 {
     switch (mediaPlayer->repeat()) {
     case MediaPlayer::RepeatSingleTrack:
@@ -357,7 +357,7 @@ QString MediaPlayerTest::repeatString(MediaPlayerPtr mediaPlayer) const
     }
 }
 
-QString MediaPlayerTest::shuffleString(MediaPlayerPtr mediaPlayer) const
+QString MediaPlayerTest::shuffleString(const MediaPlayerPtr &mediaPlayer) const
 {
     switch (mediaPlayer->shuffle()) {
     case MediaPlayer::ShuffleAllTracks:
@@ -369,7 +369,7 @@ QString MediaPlayerTest::shuffleString(MediaPlayerPtr mediaPlayer) const
     }
 }
 
-QString MediaPlayerTest::statusString(MediaPlayerPtr mediaPlayer) const
+QString MediaPlayerTest::statusString(const MediaPlayerPtr &mediaPlayer) const
 {
     switch (mediaPlayer->status()) {
     case MediaPlayer::Playing:
@@ -387,7 +387,7 @@ QString MediaPlayerTest::statusString(MediaPlayerPtr mediaPlayer) const
     }
 }
 
-QVariantMap MediaPlayerTest::trackMap(MediaPlayerPtr mediaPlayer) const
+QVariantMap MediaPlayerTest::trackMap(const MediaPlayerPtr &mediaPlayer) const
 {
     QVariantMap out;
 

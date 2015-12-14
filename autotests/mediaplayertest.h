@@ -57,11 +57,11 @@ private Q_SLOTS:
     void disconnectProfileTest();
 
 private:
-    QString equalizerString(BluezQt::MediaPlayerPtr mediaPlayer) const;
-    QString repeatString(BluezQt::MediaPlayerPtr mediaPlayer) const;
-    QString shuffleString(BluezQt::MediaPlayerPtr mediaPlayer) const;
-    QString statusString(BluezQt::MediaPlayerPtr mediaPlayer) const;
-    QVariantMap trackMap(BluezQt::MediaPlayerPtr mediaPlayer) const;
+    QString equalizerString(const BluezQt::MediaPlayerPtr &mediaPlayer) const;
+    QString repeatString(const BluezQt::MediaPlayerPtr &mediaPlayer) const;
+    QString shuffleString(const BluezQt::MediaPlayerPtr &mediaPlayer) const;
+    QString statusString(const BluezQt::MediaPlayerPtr &mediaPlayer) const;
+    QVariantMap trackMap(const BluezQt::MediaPlayerPtr &mediaPlayer) const;
 
     struct MediaPlayerUnit
     {

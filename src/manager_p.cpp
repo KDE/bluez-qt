@@ -289,7 +289,7 @@ void ManagerPrivate::interfacesRemoved(const QDBusObjectPath &objectPath, const 
     }
 }
 
-void ManagerPrivate::adapterRemoved(AdapterPtr adapter)
+void ManagerPrivate::adapterRemoved(const AdapterPtr &adapter)
 {
     disconnect(adapter.data(), &Adapter::poweredChanged, this, &ManagerPrivate::adapterPoweredChanged);
 
@@ -403,7 +403,7 @@ bool ManagerPrivate::rfkillBlocked() const
     return m_rfkill->state() == Rfkill::SoftBlocked || m_rfkill->state() == Rfkill::HardBlocked;
 }
 
-void ManagerPrivate::setUsableAdapter(AdapterPtr adapter)
+void ManagerPrivate::setUsableAdapter(const AdapterPtr &adapter)
 {
     if (m_usableAdapter == adapter) {
         return;

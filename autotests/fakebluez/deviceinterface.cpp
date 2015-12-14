@@ -27,7 +27,7 @@
 #include <QDBusArgument>
 #include <QDBusConnection>
 
-static const QString MediaPlayerUuid = QLatin1String("0000110E-0000-1000-8000-00805F9B34FB");
+static const QLatin1String MediaPlayerUuid ("0000110E-0000-1000-8000-00805F9B34FB");
 
 // DeviceObject
 DeviceObject::DeviceObject(const QDBusObjectPath &path, QObject *parent)

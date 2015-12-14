@@ -106,7 +106,7 @@ void ObexTransferPrivate::propertiesChanged(const QString &interface, const QVar
     }
 }
 
-void ObexTransferPrivate::sessionRemoved(ObexSessionPtr session)
+void ObexTransferPrivate::sessionRemoved(const ObexSessionPtr &session)
 {
     if (!m_bluezTransfer->path().startsWith(session->objectPath().path())) {
         return;

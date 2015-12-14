@@ -43,7 +43,7 @@ private Q_SLOTS:
     void getPropertiesTest();
 
 private:
-    QString reconnectModeString(BluezQt::InputPtr input) const;
+    QString reconnectModeString(const BluezQt::InputPtr &input) const;
 
     struct InputUnit
     {

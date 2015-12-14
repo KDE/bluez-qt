@@ -66,7 +66,7 @@ DeclarativeAdapter::DeclarativeAdapter(BluezQt::AdapterPtr adapter, QObject *par
         Q_EMIT adapterChanged(this);
     });
 
-    connect(m_adapter.data(), &BluezQt::Adapter::deviceChanged, this, [this](BluezQt::DevicePtr device) {
+    connect(m_adapter.data(), &BluezQt::Adapter::deviceChanged, this, [this](const BluezQt::DevicePtr &device) {
         Q_EMIT deviceChanged(declarativeDeviceFromPtr(device));
     });
 }

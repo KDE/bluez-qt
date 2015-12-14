@@ -144,7 +144,7 @@ void InputTest::getPropertiesTest()
     }
 }
 
-QString InputTest::reconnectModeString(InputPtr input) const
+QString InputTest::reconnectModeString(const InputPtr &input) const
 {
     switch (input->reconnectMode()) {
     case Input::NoReconnect:

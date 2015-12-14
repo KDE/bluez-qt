@@ -42,7 +42,7 @@ class DevicePrivate : public QObject
     Q_OBJECT
 
 public:
-    explicit DevicePrivate(const QString &path, const QVariantMap &properties, AdapterPtr adapter);
+    explicit DevicePrivate(const QString &path, const QVariantMap &properties, const AdapterPtr &adapter);
 
     void init(const QVariantMap &properties);
 

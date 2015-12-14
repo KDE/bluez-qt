@@ -175,6 +175,7 @@ void PendingCallPrivate::processFileTransferListReply(const QDBusPendingReply<QV
     processError(reply.error());
     if (!reply.isError()) {
         QList<ObexFileTransferEntry> items;
+        items.reserve(reply.value().size());
         Q_FOREACH (const QVariantMap &map, reply.value()) {
             items.append(ObexFileTransferEntry(map));
         }

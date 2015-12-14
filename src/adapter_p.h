@@ -45,8 +45,8 @@ public:
 
     void init(const QVariantMap &properties);
 
-    void addDevice(DevicePtr device);
-    void removeDevice(DevicePtr device);
+    void addDevice(const DevicePtr &device);
+    void removeDevice(const DevicePtr &device);
 
     QDBusPendingReply<> setDBusProperty(const QString &name, const QVariant &value);
     void propertiesChanged(const QString &interface, const QVariantMap &changed, const QStringList &invalidated);

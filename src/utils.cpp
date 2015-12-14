@@ -184,6 +184,7 @@ void Instance::setObexManager(ObexManager *obexManager)
 QStringList stringListToUpper(const QStringList &list)
 {
     QStringList converted;
+    converted.reserve(list.size());
     Q_FOREACH (const QString &str, list) {
         converted.append(str.toUpper());
     }

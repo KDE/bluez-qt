@@ -63,7 +63,7 @@ public:
     void serviceUnregistered();
     void interfacesAdded(const QDBusObjectPath &objectPath, const QVariantMapMap &interfaces);
     void interfacesRemoved(const QDBusObjectPath &objectPath, const QStringList &interfaces);
-    void adapterRemoved(AdapterPtr adapter);
+    void adapterRemoved(const AdapterPtr &adapter);
     void adapterPoweredChanged(bool powered);
     void rfkillStateChanged(Rfkill::State state);
 
@@ -73,7 +73,7 @@ public:
     void removeDevice(const QString &devicePath);
 
     bool rfkillBlocked() const;
-    void setUsableAdapter(AdapterPtr adapter);
+    void setUsableAdapter(const AdapterPtr &adapter);
 
     Manager *q;
     Rfkill *m_rfkill;
