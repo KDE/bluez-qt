@@ -15,7 +15,7 @@ include(ECMSetupVersion)
 include(ECMGenerateHeaders)
 include(ECMPackageConfigHelpers)
 include(KDEInstallDirs)
-include(KDEFrameworkCompilerSettings)
+include(KDEFrameworkCompilerSettings NO_POLICY_SCOPE)
 include(KDECMakeSettings)
 
 set(KF5_VERSION "5.19.0") # handled by release scripts
@@ -25,7 +25,6 @@ ecm_setup_version(${KF5_VERSION}
     VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/bluezqt_version.h"
     PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5BluezQtConfigVersion.cmake"
     SOVERSION 6
-
 )
 
 # Dependencies
