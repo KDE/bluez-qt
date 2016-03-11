@@ -150,8 +150,13 @@ void ObexManagerPrivate::getManagedObjectsFinished(QDBusPendingCallWatcher *watc
         }
     }
 
-    if (!m_obexClient || !m_obexAgentManager) {
-        Q_EMIT initError(QStringLiteral("Cannot find org.bluez.obex.Client1 and org.bluez.obex.AgentManager1 objects!"));
+    if (!m_obexClient) {
+        Q_EMIT initError(QStringLiteral("Cannot find org.bluez.obex.Client1 object!"));
+        return;
+    }
+
+    if (!m_obexAgentManager) {
+        Q_EMIT initError(QStringLiteral("Cannot find org.bluez.obex.AgentManager1 object!"));
         return;
     }
 
