@@ -223,7 +223,7 @@ void PendingCallPrivate::emitDelayedFinished()
 
 void PendingCallPrivate::emitInternalError(const QString &errorText)
 {
-    qCWarning(BLUEZQT) << "PendingCall Error:" << errorText;
+    qCWarning(BLUEZQT) << "PendingCall Internal error:" << errorText;
     m_error = PendingCall::InternalError;
     m_errorText = errorText;
     emitFinished();

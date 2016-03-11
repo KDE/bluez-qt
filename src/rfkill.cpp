@@ -131,7 +131,7 @@ void Rfkill::init()
     m_readFd = ::open("/dev/rfkill", O_RDONLY);
 
     if (m_readFd == -1) {
-        qCDebug(BLUEZQT) << "Cannot open /dev/rfkill for reading!";
+        qCWarning(BLUEZQT) << "Cannot open /dev/rfkill for reading!";
         return;
     }
 
@@ -160,7 +160,7 @@ bool Rfkill::openForWriting()
     m_writeFd = ::open("/dev/rfkill", O_WRONLY);
 
     if (m_writeFd == -1) {
-        qCDebug(BLUEZQT) << "Cannot open /dev/rfkill for writing!";
+        qCWarning(BLUEZQT) << "Cannot open /dev/rfkill for writing!";
         return false;
     }
 
@@ -232,6 +232,8 @@ void Rfkill::updateRfkillDevices()
             m_state = state;
         }
     }
+
+    qCDebug(BLUEZQT) << "Rfkill global state changed:" << m_state;
 #endif
 }
 
@@ -251,7 +253,9 @@ bool Rfkill::setSoftBlock(quint8 soft)
     event.type = RFKILL_TYPE_BLUETOOTH;
     event.soft = soft;
 
-    return ::write(m_writeFd, &event, sizeof(event)) == sizeof(event);
+    bool ret = ::write(m_writeFd, &event, sizeof(event)) == sizeof(event);
+    qCDebug(BLUEZQT) << "Setting Rfkill soft block succeeded:" << ret;
+    return ret;
 #endif
 }
 

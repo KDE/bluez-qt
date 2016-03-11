@@ -409,6 +409,8 @@ void ManagerPrivate::setUsableAdapter(const AdapterPtr &adapter)
         return;
     }
 
+    qCDebug(BLUEZQT) << "Setting usable adapter" << adapter;
+
     bool wasBtOperational = q->isBluetoothOperational();
 
     m_usableAdapter = adapter;
