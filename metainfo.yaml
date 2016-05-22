@@ -12,3 +12,7 @@ libraries:
     - qmake: BluezQt
       cmake: KF5::BluezQt
 cmakename: KF5BluezQt
+
+public_lib: true
+group: Frameworks
+subgroup: Tier 1
