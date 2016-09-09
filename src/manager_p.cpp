@@ -353,7 +353,10 @@ void ManagerPrivate::addAdapter(const QString &adapterPath, const QVariantMap &p
 void ManagerPrivate::addDevice(const QString &devicePath, const QVariantMap &properties)
 {
     AdapterPtr adapter = m_adapters.value(properties.value(QStringLiteral("Adapter")).value<QDBusObjectPath>().path());
-    Q_ASSERT(adapter);
+    if (!adapter) {
+        return;
+    }
+
     DevicePtr device = DevicePtr(new Device(devicePath, properties, adapter));
     device->d->q = device.toWeakRef();
     m_devices.insert(devicePath, device);
