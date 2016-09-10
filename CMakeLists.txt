@@ -18,7 +18,7 @@ include(KDEInstallDirs)
 include(KDEFrameworkCompilerSettings NO_POLICY_SCOPE)
 include(KDECMakeSettings)
 
-set(KF5_VERSION "5.26.0") # handled by release scripts
+set(KF5_VERSION "5.27.0") # handled by release scripts
 
 ecm_setup_version(${KF5_VERSION}
     VARIABLE_PREFIX BLUEZQT
