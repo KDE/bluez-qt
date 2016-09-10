@@ -409,4 +409,32 @@ void ManagerTest::adapterWithDevicesRemovedTest()
     delete manager;
 }
 
+void ManagerTest::bug364416()
+{
+    // Bug 364416: Crash when device is added with adapter that is unknown to Manager
+
+    FakeBluez::start();
+    FakeBluez::runTest(QStringLiteral("bluez-standard"));
+
+    Manager *manager = new Manager;
+
+    InitManagerJob *job = manager->init();
+    job->exec();
+
+    QVERIFY(!job->error());
+
+    // Add device to invalid adapter
+    QVariantMap deviceProps;
+    deviceProps[QStringLiteral("Path")] = QVariant::fromValue(QDBusObjectPath("/org/bluez/hci0/dev_40_79_6A_0C_39_75"));
+    deviceProps[QStringLiteral("Adapter")] = QVariant::fromValue(QDBusObjectPath(QStringLiteral("/org/bluez/hci0")));
+    deviceProps[QStringLiteral("Address")] = QStringLiteral("40:79:6A:0C:39:75");
+    deviceProps[QStringLiteral("Name")] = QStringLiteral("TestDevice");
+    FakeBluez::runAction(QStringLiteral("devicemanager"), QStringLiteral("create-device"), deviceProps);
+
+    // Wait for Manager to receive the interfacesAdded signal
+    QTest::qWait(100);
+
+    delete manager;
+}
+
 QTEST_MAIN(ManagerTest)
