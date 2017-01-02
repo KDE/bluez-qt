@@ -42,7 +42,6 @@ class PendingCall;
 class BLUEZQT_EXPORT MediaPlayer : public QObject
 {
     Q_OBJECT
-    Q_ENUMS(Equalizer Repeat Shuffle Status)
     Q_PROPERTY(QString name READ name NOTIFY nameChanged)
     Q_PROPERTY(Equalizer equalizer READ equalizer WRITE setEqualizer NOTIFY equalizerChanged)
     Q_PROPERTY(Repeat repeat READ repeat WRITE setRepeat NOTIFY repeatChanged)
@@ -59,6 +58,7 @@ public:
         /** Equalizer off. */
         EqualizerOff
     };
+    Q_ENUM(Equalizer)
 
     /** Repeat state. */
     enum Repeat {
@@ -71,6 +71,7 @@ public:
         /** Repeat group. */
         RepeatGroup
     };
+    Q_ENUM(Repeat)
 
     /** Shuffle state. */
     enum Shuffle {
@@ -81,6 +82,7 @@ public:
         /** Shuffle group. */
         ShuffleGroup
     };
+    Q_ENUM(Shuffle)
 
     /** Player status. */
     enum Status {
@@ -97,6 +99,7 @@ public:
         /** Error */
         Error
     };
+    Q_ENUM(Status)
 
     /**
      * Destroys a MediaPlayer object.

@@ -43,7 +43,6 @@ class BLUEZQT_EXPORT Device : public QObject
 {
     Q_OBJECT
 
-    Q_ENUMS(Type)
     Q_PROPERTY(QString ubi READ ubi)
     Q_PROPERTY(QString address READ address)
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
@@ -109,6 +108,7 @@ public:
         /** The device is not of any of the known types. */
         Uncategorized
     };
+    Q_ENUM(Type)
 
     /**
      * Destroys a Device object.

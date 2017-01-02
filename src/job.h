@@ -57,7 +57,6 @@ class JobPrivate;
 class BLUEZQT_EXPORT Job : public QObject
 {
     Q_OBJECT
-    Q_ENUMS(Error)
     Q_PROPERTY(int error READ error)
     Q_PROPERTY(QString errorText READ errorText)
     Q_PROPERTY(bool running READ isRunning)
@@ -87,6 +86,7 @@ public:
         /** Subclasses should define error codes starting at this value */
         UserDefinedError = 100
     };
+    Q_ENUM(Error)
 
     /**
      * Executes the job synchronously.

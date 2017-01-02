@@ -42,7 +42,6 @@ class BLUEZQT_EXPORT PendingCall : public QObject
 {
     Q_OBJECT
 
-    Q_ENUMS(Error)
     Q_PROPERTY(QVariant value READ value)
     Q_PROPERTY(QVariantList values READ values)
     Q_PROPERTY(int error READ error)
@@ -102,6 +101,7 @@ public:
         /** Indicates an unknown error. */
         UnknownError = 100
     };
+    Q_ENUM(Error)
 
     /**
      * Destroys a PendingCall object.

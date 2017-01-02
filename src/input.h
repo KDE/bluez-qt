@@ -39,7 +39,6 @@ namespace BluezQt
 class BLUEZQT_EXPORT Input : public QObject
 {
     Q_OBJECT
-    Q_ENUMS(ReconnectMode)
     Q_PROPERTY(ReconnectMode reconnectMode READ reconnectMode NOTIFY reconnectModeChanged)
 
 public:
@@ -54,6 +53,7 @@ public:
         /** Device shall attempt to restore the lost connection, but host may also restore the connection. */
         AnyReconnect
     };
+    Q_ENUM(ReconnectMode)
 
     /**
      * Destroys an Input object.

@@ -44,7 +44,6 @@ class BLUEZQT_EXPORT ObexTransfer : public QObject
 {
     Q_OBJECT
 
-    Q_ENUMS(Status)
     Q_PROPERTY(Status status READ status NOTIFY statusChanged)
     Q_PROPERTY(QString name READ name)
     Q_PROPERTY(QString type READ type)
@@ -72,6 +71,7 @@ public:
         /** Indicates that the transfer status is unknown. */
         Unknown
     };
+    Q_ENUM(Status)
 
     /**
      * Destroys an ObexTransfer object.

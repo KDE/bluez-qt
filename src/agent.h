@@ -50,7 +50,6 @@ class BLUEZQT_EXPORT Agent : public QObject
 {
     Q_OBJECT
 
-    Q_ENUMS(Capability)
     Q_PROPERTY(Capability capability READ capability)
 
 public:
@@ -63,6 +62,7 @@ public:
         KeyboardOnly = 2,
         NoInputNoOutput = 3
     };
+    Q_ENUM(Capability)
 
     /**
      * Creates a new Agent object.
