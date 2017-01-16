@@ -57,7 +57,7 @@ public:
      *
      * @param parent
      */
-    explicit ObexAgent(QObject *parent = Q_NULLPTR);
+    explicit ObexAgent(QObject *parent = nullptr);
 
     /**
      * D-Bus object path of the agent.

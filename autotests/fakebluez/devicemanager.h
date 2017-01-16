@@ -30,7 +30,7 @@ class DeviceManager : public QObject
     Q_OBJECT
 
 public:
-    explicit DeviceManager(ObjectManager *parent = Q_NULLPTR);
+    explicit DeviceManager(ObjectManager *parent = nullptr);
 
     void runAction(const QString &actionName, const QVariantMap &properties);
 

@@ -118,7 +118,7 @@ public:
      * @param manager manager to be used
      * @param parent
      */
-    explicit DevicesModel(Manager *manager, QObject *parent = Q_NULLPTR);
+    explicit DevicesModel(Manager *manager, QObject *parent = nullptr);
 
     /**
       * Destroys a DevicesModel object.

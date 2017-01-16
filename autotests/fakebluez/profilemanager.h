@@ -33,7 +33,7 @@ class ProfileManager : public QDBusAbstractAdaptor, public Object
     Q_CLASSINFO("D-Bus Interface", "org.bluez.ProfileManager1")
 
 public:
-    explicit ProfileManager(QObject *parent = Q_NULLPTR);
+    explicit ProfileManager(QObject *parent = nullptr);
 
 public Q_SLOTS:
     void RegisterProfile(const QDBusObjectPath &path, const QString &uuid, const QVariantMap &options, const QDBusMessage &msg);

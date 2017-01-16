@@ -32,7 +32,7 @@ class DeviceReceiver : public QObject
     Q_OBJECT
 
 public:
-    explicit DeviceReceiver(QObject *parent = Q_NULLPTR);
+    explicit DeviceReceiver(QObject *parent = nullptr);
 
     void scanDevices();
 

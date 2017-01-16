@@ -31,7 +31,7 @@ class DeclarativeInput : public QObject
     Q_PROPERTY(BluezQt::Input::ReconnectMode reconnectMode READ reconnectMode NOTIFY reconnectModeChanged)
 
 public:
-    explicit DeclarativeInput(BluezQt::InputPtr input, QObject *parent = Q_NULLPTR);
+    explicit DeclarativeInput(BluezQt::InputPtr input, QObject *parent = nullptr);
 
     BluezQt::Input::ReconnectMode reconnectMode() const;
 

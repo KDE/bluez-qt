@@ -208,7 +208,7 @@ void PendingCallPrivate::processError(const QDBusError &error)
 void PendingCallPrivate::emitFinished()
 {
     m_watcher->deleteLater();
-    m_watcher = Q_NULLPTR;
+    m_watcher = nullptr;
     Q_EMIT q->finished(q);
     q->deleteLater();
 }

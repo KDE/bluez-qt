@@ -206,12 +206,12 @@ void ManagerPrivate::clear()
 
     if (m_dbusObjectManager) {
         m_dbusObjectManager->deleteLater();
-        m_dbusObjectManager = Q_NULLPTR;
+        m_dbusObjectManager = nullptr;
     }
 
     if (m_bluezAgentManager) {
         m_bluezAgentManager->deleteLater();
-        m_bluezAgentManager = Q_NULLPTR;
+        m_bluezAgentManager = nullptr;
     }
 }
 

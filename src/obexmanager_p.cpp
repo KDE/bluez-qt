@@ -181,17 +181,17 @@ void ObexManagerPrivate::clear()
     // Delete all other objects
     if (m_obexClient) {
         m_obexClient->deleteLater();
-        m_obexClient = Q_NULLPTR;
+        m_obexClient = nullptr;
     }
 
     if (m_obexAgentManager) {
         m_obexAgentManager->deleteLater();
-        m_obexAgentManager = Q_NULLPTR;
+        m_obexAgentManager = nullptr;
     }
 
     if (m_dbusObjectManager) {
         m_dbusObjectManager->deleteLater();
-        m_dbusObjectManager = Q_NULLPTR;
+        m_dbusObjectManager = nullptr;
     }
 }
 

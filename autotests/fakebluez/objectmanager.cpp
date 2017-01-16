@@ -24,7 +24,7 @@
 #include <QDBusMetaType>
 #include <QDBusConnection>
 
-ObjectManager *s_instance = Q_NULLPTR;
+ObjectManager *s_instance = nullptr;
 
 ObjectManager::ObjectManager(QObject *parent)
     : QDBusAbstractAdaptor(parent)
@@ -39,7 +39,7 @@ ObjectManager::ObjectManager(QObject *parent)
 
 ObjectManager::~ObjectManager()
 {
-    s_instance = Q_NULLPTR;
+    s_instance = nullptr;
     qDeleteAll(m_autoDeleteObjects);
 }
 

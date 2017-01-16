@@ -101,7 +101,7 @@ QQmlListProperty<DeclarativeDevice> DeclarativeManager::declarativeDevices()
 DeclarativeAdapter *DeclarativeManager::declarativeAdapterFromPtr(BluezQt::AdapterPtr ptr) const
 {
     if (!ptr) {
-        return Q_NULLPTR;
+        return nullptr;
     }
     return m_adapters.value(ptr->ubi());
 }
@@ -109,7 +109,7 @@ DeclarativeAdapter *DeclarativeManager::declarativeAdapterFromPtr(BluezQt::Adapt
 DeclarativeDevice *DeclarativeManager::declarativeDeviceFromPtr(BluezQt::DevicePtr ptr) const
 {
     if (!ptr) {
-        return Q_NULLPTR;
+        return nullptr;
     }
     return m_devices.value(ptr->ubi());
 }

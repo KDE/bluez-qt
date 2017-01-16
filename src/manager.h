@@ -104,7 +104,7 @@ public:
      *
      * @param parent
      */
-    explicit Manager(QObject *parent = Q_NULLPTR);
+    explicit Manager(QObject *parent = nullptr);
 
     /**
      * Destroys a Manager object.

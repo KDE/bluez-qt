@@ -31,7 +31,7 @@ class QDBusObjectPath;
 class MediaPlayerObject : public QObject
 {
 public:
-    explicit MediaPlayerObject(const QDBusObjectPath &path, QObject *parent = Q_NULLPTR);
+    explicit MediaPlayerObject(const QDBusObjectPath &path, QObject *parent = nullptr);
 };
 
 class MediaPlayerInterface : public QDBusAbstractAdaptor, public Object
@@ -48,7 +48,7 @@ class MediaPlayerInterface : public QDBusAbstractAdaptor, public Object
     Q_PROPERTY(QDBusObjectPath Device READ device)
 
 public:
-    explicit MediaPlayerInterface(const QDBusObjectPath &path, const QVariantMap &properties, QObject *parent = Q_NULLPTR);
+    explicit MediaPlayerInterface(const QDBusObjectPath &path, const QVariantMap &properties, QObject *parent = nullptr);
 
     QString name() const;
 

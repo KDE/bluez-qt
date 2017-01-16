@@ -35,7 +35,7 @@
 class ObexObject : public QObject
 {
 public:
-    explicit ObexObject(QObject *parent = Q_NULLPTR)
+    explicit ObexObject(QObject *parent = nullptr)
         : QObject(parent)
     {
         QDBusConnection::sessionBus().registerObject(QStringLiteral("/org/bluez/obex"), this);
@@ -110,7 +110,7 @@ void FakeBluez::clear()
 {
     // Everything is parented to ObjectManager
     delete m_objectManager;
-    m_objectManager = Q_NULLPTR;
+    m_objectManager = nullptr;
 }
 
 void FakeBluez::createObjectManager()

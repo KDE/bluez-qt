@@ -68,7 +68,7 @@ public:
      *
      * @param parent
      */
-    explicit Job(QObject *parent = Q_NULLPTR);
+    explicit Job(QObject *parent = nullptr);
 
     /**
      * Destroys a Job object.

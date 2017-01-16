@@ -41,7 +41,7 @@ public:
         Unknown = 3
     };
 
-    explicit Rfkill(QObject *parent = Q_NULLPTR);
+    explicit Rfkill(QObject *parent = nullptr);
     ~Rfkill();
 
     State state() const;

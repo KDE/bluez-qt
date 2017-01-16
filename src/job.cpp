@@ -31,7 +31,7 @@ namespace BluezQt
 
 JobPrivate::JobPrivate()
 {
-    eventLoop = Q_NULLPTR;
+    eventLoop = nullptr;
     error = Job::NoError;
     running = false;
     finished = false;

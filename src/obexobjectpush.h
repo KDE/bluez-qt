@@ -53,7 +53,7 @@ public:
      * @param path path of session
      * @param parent
      */
-    explicit ObexObjectPush(const QDBusObjectPath &path, QObject *parent = Q_NULLPTR);
+    explicit ObexObjectPush(const QDBusObjectPath &path, QObject *parent = nullptr);
 
     /**
      * Destroys an ObexObjectPush object.

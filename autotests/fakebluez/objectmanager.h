@@ -39,7 +39,7 @@ class ObjectManager : public QDBusAbstractAdaptor
     Q_CLASSINFO("D-Bus Interface", "org.freedesktop.DBus.ObjectManager")
 
 public:
-    explicit ObjectManager(QObject *parent = Q_NULLPTR);
+    explicit ObjectManager(QObject *parent = nullptr);
     ~ObjectManager();
 
     void addObject(Object *object);

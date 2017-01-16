@@ -39,7 +39,7 @@ class DeclarativeMediaPlayer : public QObject
     Q_PROPERTY(quint32 position READ position NOTIFY positionChanged)
 
 public:
-    explicit DeclarativeMediaPlayer(BluezQt::MediaPlayerPtr mediaPlayer, QObject *parent = Q_NULLPTR);
+    explicit DeclarativeMediaPlayer(BluezQt::MediaPlayerPtr mediaPlayer, QObject *parent = nullptr);
 
     QString name() const;
 

@@ -31,7 +31,7 @@ class QDBusObjectPath;
 class InputObject : public QObject
 {
 public:
-    explicit InputObject(const QDBusObjectPath &path, QObject *parent = Q_NULLPTR);
+    explicit InputObject(const QDBusObjectPath &path, QObject *parent = nullptr);
 };
 
 class InputInterface : public QDBusAbstractAdaptor, public Object
@@ -41,7 +41,7 @@ class InputInterface : public QDBusAbstractAdaptor, public Object
     Q_PROPERTY(QString ReconnectMode READ reconnectMode)
 
 public:
-    explicit InputInterface(const QDBusObjectPath &path, const QVariantMap &properties, QObject *parent = Q_NULLPTR);
+    explicit InputInterface(const QDBusObjectPath &path, const QVariantMap &properties, QObject *parent = nullptr);
 
     QString reconnectMode() const;
 };

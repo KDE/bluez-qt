@@ -206,7 +206,7 @@ void DeclarativeAdapter::slotDeviceRemoved(BluezQt::DevicePtr device)
 DeclarativeDevice *DeclarativeAdapter::declarativeDeviceFromPtr(BluezQt::DevicePtr ptr) const
 {
     if (!ptr) {
-        return Q_NULLPTR;
+        return nullptr;
     }
     return m_devices.value(ptr->ubi());
 }

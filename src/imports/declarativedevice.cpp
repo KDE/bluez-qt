@@ -213,7 +213,7 @@ void DeclarativeDevice::updateInput()
 {
     if (m_input) {
         m_input->deleteLater();
-        m_input = Q_NULLPTR;
+        m_input = nullptr;
     }
 
     if (m_device->input()) {
@@ -227,7 +227,7 @@ void DeclarativeDevice::updateMediaPlayer()
 {
     if (m_mediaPlayer) {
         m_mediaPlayer->deleteLater();
-        m_mediaPlayer = Q_NULLPTR;
+        m_mediaPlayer = nullptr;
     }
 
     if (m_device->mediaPlayer()) {
