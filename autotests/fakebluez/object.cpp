@@ -25,7 +25,7 @@
 #include <QDBusAbstractAdaptor>
 
 Object::Object()
-    : m_parent(0)
+    : m_parent(nullptr)
 {
 }
 

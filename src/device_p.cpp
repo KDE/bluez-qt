@@ -37,7 +37,7 @@ static const qint16 INVALID_RSSI = -32768; // qint16 minimum
 
 DevicePrivate::DevicePrivate(const QString &path, const QVariantMap &properties, const AdapterPtr &adapter)
     : QObject()
-    , m_dbusProperties(0)
+    , m_dbusProperties(nullptr)
     , m_deviceClass(0)
     , m_appearance(0)
     , m_paired(false)

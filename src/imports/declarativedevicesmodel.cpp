@@ -28,8 +28,8 @@
 
 DeclarativeDevicesModel::DeclarativeDevicesModel(QObject *parent)
     : QSortFilterProxyModel(parent)
-    , m_manager(0)
-    , m_model(0)
+    , m_manager(nullptr)
+    , m_model(nullptr)
 {
 }
 

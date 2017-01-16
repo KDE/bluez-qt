@@ -49,7 +49,7 @@ static ObexTransfer::Status stringToStatus(const QString &status)
 
 ObexTransferPrivate::ObexTransferPrivate(const QString &path, const QVariantMap &properties)
     : QObject()
-    , m_dbusProperties(0)
+    , m_dbusProperties(nullptr)
     , m_status(ObexTransfer::Error)
     , m_time(0)
     , m_size(0)

@@ -34,7 +34,7 @@ extern void bluezqt_initFakeBluezTestRun();
 using namespace BluezQt;
 
 DeviceTest::DeviceTest()
-    : m_manager(0)
+    : m_manager(nullptr)
 {
     Autotests::registerMetatypes();
 }

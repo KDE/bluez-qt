@@ -40,7 +40,7 @@ Q_DECLARE_METATYPE(MediaPlayer::Shuffle)
 Q_DECLARE_METATYPE(MediaPlayer::Status)
 
 MediaPlayerTest::MediaPlayerTest()
-    : m_manager(0)
+    : m_manager(nullptr)
 {
     Autotests::registerMetatypes();
 

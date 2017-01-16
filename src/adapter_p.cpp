@@ -30,7 +30,7 @@ namespace BluezQt
 
 AdapterPrivate::AdapterPrivate(const QString &path, const QVariantMap &properties)
     : QObject()
-    , m_dbusProperties(0)
+    , m_dbusProperties(nullptr)
     , m_adapterClass(0)
     , m_powered(0)
     , m_discoverable(false)

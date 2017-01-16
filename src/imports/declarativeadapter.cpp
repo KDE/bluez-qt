@@ -168,7 +168,7 @@ QString DeclarativeAdapter::modalias() const
 
 QQmlListProperty<DeclarativeDevice> DeclarativeAdapter::devices()
 {
-    return QQmlListProperty<DeclarativeDevice>(this, 0, devicesCountFunction, devicesAtFunction);
+    return QQmlListProperty<DeclarativeDevice>(this, nullptr, devicesCountFunction, devicesAtFunction);
 }
 
 DeclarativeDevice *DeclarativeAdapter::deviceForAddress(const QString &address) const

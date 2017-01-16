@@ -39,7 +39,7 @@ DeviceObject::DeviceObject(const QDBusObjectPath &path, QObject *parent)
 // DeviceInterface
 DeviceInterface::DeviceInterface(const QDBusObjectPath &path, const QVariantMap &properties, QObject *parent)
     : QDBusAbstractAdaptor(parent)
-    , m_mediaPlayer(0)
+    , m_mediaPlayer(nullptr)
 {
     setPath(path);
     setObjectParent(parent);
@@ -250,5 +250,5 @@ void DeviceInterface::disconnectMediaPlayer()
     manager->removeObject(m_mediaPlayer);
     m_connectedUuids.removeOne(MediaPlayerUuid);
 
-    m_mediaPlayer = 0;
+    m_mediaPlayer = nullptr;
 }

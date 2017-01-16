@@ -59,7 +59,7 @@ private:
 };
 
 StartJob::StartJob()
-    : QObject(0)
+    : QObject(nullptr)
     , m_fakebluezPath(QFINDTESTDATA("fakebluez/fakebluez"))
 {
 }

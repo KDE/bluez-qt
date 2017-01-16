@@ -75,7 +75,7 @@ static MediaPlayer::Status stringToStatus(const QString &status)
 
 MediaPlayerPrivate::MediaPlayerPrivate(const QString &path, const QVariantMap &properties)
     : QObject()
-    , m_dbusProperties(0)
+    , m_dbusProperties(nullptr)
     , m_equalizer(MediaPlayer::EqualizerOff)
     , m_repeat(MediaPlayer::RepeatOff)
     , m_shuffle(MediaPlayer::ShuffleOff)

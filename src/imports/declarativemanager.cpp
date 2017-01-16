@@ -90,12 +90,12 @@ DeclarativeAdapter *DeclarativeManager::usableAdapter() const
 
 QQmlListProperty<DeclarativeAdapter> DeclarativeManager::declarativeAdapters()
 {
-    return QQmlListProperty<DeclarativeAdapter>(this, 0, adaptersCountFunction, adaptersAtFunction);
+    return QQmlListProperty<DeclarativeAdapter>(this, nullptr, adaptersCountFunction, adaptersAtFunction);
 }
 
 QQmlListProperty<DeclarativeDevice> DeclarativeManager::declarativeDevices()
 {
-    return QQmlListProperty<DeclarativeDevice>(this, 0, devicesCountFunction, devicesAtFunction);
+    return QQmlListProperty<DeclarativeDevice>(this, nullptr, devicesCountFunction, devicesAtFunction);
 }
 
 DeclarativeAdapter *DeclarativeManager::declarativeAdapterFromPtr(BluezQt::AdapterPtr ptr) const

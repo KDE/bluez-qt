@@ -36,7 +36,7 @@ using namespace BluezQt;
 Q_DECLARE_METATYPE(Input::ReconnectMode)
 
 InputTest::InputTest()
-    : m_manager(0)
+    : m_manager(nullptr)
 {
     Autotests::registerMetatypes();
 

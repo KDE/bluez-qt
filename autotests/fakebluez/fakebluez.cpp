@@ -46,13 +46,13 @@ public:
 FakeBluez::FakeBluez(QObject *parent)
     : QObject(parent)
     , m_testInterface(new TestInterface(this))
-    , m_objectManager(0)
-    , m_agentManager(0)
-    , m_profileManager(0)
-    , m_deviceManager(0)
-    , m_obexObject(0)
-    , m_obexAgentManager(0)
-    , m_obexClient(0)
+    , m_objectManager(nullptr)
+    , m_agentManager(nullptr)
+    , m_profileManager(nullptr)
+    , m_deviceManager(nullptr)
+    , m_obexObject(nullptr)
+    , m_obexAgentManager(nullptr)
+    , m_obexClient(nullptr)
 {
     QDBusConnection::sessionBus().registerObject(QStringLiteral("/"), this);
 }

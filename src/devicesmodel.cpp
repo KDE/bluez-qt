@@ -48,7 +48,7 @@ public:
 DevicesModelPrivate::DevicesModelPrivate(DevicesModel *q)
     : QObject(q)
     , q(q)
-    , m_manager(0)
+    , m_manager(nullptr)
 {
 }
 

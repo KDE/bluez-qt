@@ -105,7 +105,7 @@ PendingCallPrivate::PendingCallPrivate(PendingCall *parent)
     , q(parent)
     , m_error(PendingCall::NoError)
     , m_type(PendingCall::ReturnVoid)
-    , m_watcher(0)
+    , m_watcher(nullptr)
 {
 }
 

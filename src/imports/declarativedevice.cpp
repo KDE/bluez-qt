@@ -31,8 +31,8 @@ DeclarativeDevice::DeclarativeDevice(BluezQt::DevicePtr device, DeclarativeAdapt
     : QObject(adapter)
     , m_device(device)
     , m_adapter(adapter)
-    , m_input(0)
-    , m_mediaPlayer(0)
+    , m_input(nullptr)
+    , m_mediaPlayer(nullptr)
 {
     connect(m_device.data(), &BluezQt::Device::nameChanged, this, &DeclarativeDevice::nameChanged);
     connect(m_device.data(), &BluezQt::Device::friendlyNameChanged, this, &DeclarativeDevice::friendlyNameChanged);
