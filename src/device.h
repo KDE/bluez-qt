@@ -190,9 +190,11 @@ public:
     /**
      * Returns a type of the device.
      *
-     * Type of device is deduced from its class.
+     * Type of device is deduced from its class (for Bluetooth Classic devices)
+     * or its appearance (for Bluetooth Low Energy devices).
      *
      * @see deviceClass() const
+     * @see appearance() const
      *
      * @return type of device
      */

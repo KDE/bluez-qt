@@ -253,4 +253,38 @@ Device::Type classToType(quint32 classNum)
     }
 }
 
+Device::Type appearanceToType(quint16 appearance)
+{
+    switch ((appearance & 0xffc0) >> 6) {
+    case 0x00:
+        return Device::Uncategorized;
+    case 0x01:  // Generic Phone
+        return Device::Phone;
+    case 0x02:  // Generic Computer
+        return Device::Computer;
+    case 0x05:  // Generic Display
+        return Device::AudioVideo;
+    case 0x0a:  // Generic Media Player
+        return Device::AudioVideo;
+    case 0x0b:  // Generic Barcode Scanner
+        return Device::Peripheral;
+    case 0x0f: // Generic HID
+        switch (appearance & 0x3f) {
+        case 0x01:  // Keyboard
+            return Device::Keyboard;
+        case 0x02:  // Mouse
+            return Device::Mouse;
+        case 0x03:  // Joystick
+        case 0x04:  // Gamepad
+            return Device::Joypad;
+        case 0x05:  // Digitizer Tablet
+            return Device::Tablet;
+        case 0x08:  // Barcode Scanner
+            return Device::Peripheral;
+        }
+    default:
+        return Device::Uncategorized;
+    }
+}
+
 } // namespace BluezQt

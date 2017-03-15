@@ -88,6 +88,10 @@ quint32 Device::deviceClass() const
 
 Device::Type Device::type() const
 {
+    if (deviceClass() == 0) {
+        return appearanceToType(appearance());
+    }
+
     return classToType(d->m_deviceClass);
 }
 

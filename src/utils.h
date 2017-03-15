@@ -72,6 +72,7 @@ void setObexManager(ObexManager *obexManager);
 
 QStringList stringListToUpper(const QStringList &list);
 Device::Type classToType(quint32 classNum);
+Device::Type appearanceToType(quint16 appearance);
 
 } // namespace BluezQt
 
