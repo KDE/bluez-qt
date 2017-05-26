@@ -36,6 +36,7 @@ namespace Strings
 {
 
 QString orgFreedesktopDBus();
+QString orgFreedesktopDBusProperties();
 QString orgBluez();
 QString orgBluezAdapter1();
 QString orgBluezDevice1();

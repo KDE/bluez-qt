@@ -58,10 +58,6 @@ void DevicePrivate::init(const QVariantMap &properties)
     m_dbusProperties = new DBusProperties(Strings::orgBluez(), m_bluezDevice->path(),
                                           DBusConnection::orgBluez(), this);
 
-    // QueuedConnection is important here - see AdapterPrivate::initProperties
-    connect(m_dbusProperties, &DBusProperties::PropertiesChanged,
-            this, &DevicePrivate::propertiesChanged, Qt::QueuedConnection);
-
     // Init properties
     m_address = properties.value(QStringLiteral("Address")).toString();
     m_name = properties.value(QStringLiteral("Name")).toString();
@@ -136,7 +132,11 @@ QDBusPendingReply<> DevicePrivate::setDBusProperty(const QString &name, const QV
 
 void DevicePrivate::propertiesChanged(const QString &interface, const QVariantMap &changed, const QStringList &invalidated)
 {
-    if (interface != Strings::orgBluezDevice1()) {
+    if (interface == Strings::orgBluezInput1() && m_input) {
+        m_input->d->propertiesChanged(interface, changed, invalidated);
+    } else if (interface == Strings::orgBluezMediaPlayer1() && m_mediaPlayer) {
+        m_mediaPlayer->d->propertiesChanged(interface, changed, invalidated);
+    } else if (interface != Strings::orgBluezDevice1()) {
         return;
     }
 

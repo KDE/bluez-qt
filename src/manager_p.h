@@ -25,6 +25,7 @@
 
 #include <QObject>
 #include <QHash>
+#include <QDBusContext>
 
 #include "types.h"
 #include "rfkill.h"
@@ -44,7 +45,7 @@ class Adapter;
 class Device;
 class AdapterPrivate;
 
-class ManagerPrivate : public QObject
+class ManagerPrivate : public QObject, protected QDBusContext
 {
     Q_OBJECT
 
@@ -96,6 +97,7 @@ Q_SIGNALS:
     void initFinished();
 
 private Q_SLOTS:
+    void propertiesChanged(const QString &interface, const QVariantMap &changed, const QStringList &invalidated);
     void dummy();
 
 };

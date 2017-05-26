@@ -43,6 +43,8 @@ void DeviceManager::runAction(const QString &actionName, const QVariantMap &prop
         runChangeAdapterProperty(properties);
     } else if (actionName == QLatin1String("change-device-property")) {
         runChangeDeviceProperty(properties);
+    } else if (actionName == QLatin1String("bug377405")) {
+        runBug377405();
     }
 }
 
@@ -102,4 +104,21 @@ void DeviceManager::runChangeDeviceProperty(const QVariantMap &properties)
     }
 
     device->changeProperty(properties.value(QStringLiteral("Name")).toString(), properties.value(QStringLiteral("Value")));
+}
+
+void DeviceManager::runBug377405()
+{
+    QDBusObjectPath adapter1path = QDBusObjectPath(QStringLiteral("/org/bluez/hci0"));
+    QVariantMap adapterProps;
+    adapterProps[QStringLiteral("Path")] = QVariant::fromValue(adapter1path);
+    adapterProps[QStringLiteral("Powered")] = false;
+
+    runCreateAdapterAction(adapterProps);
+
+    QVariantMap properties;
+    properties[QStringLiteral("Path")] = QVariant::fromValue(adapter1path);
+    properties[QStringLiteral("Name")] = QStringLiteral("Powered");
+    properties[QStringLiteral("Value")] = true;
+
+    runChangeAdapterProperty(properties);
 }

@@ -48,14 +48,6 @@ void AdapterPrivate::init(const QVariantMap &properties)
     m_dbusProperties = new DBusProperties(Strings::orgBluez(), m_bluezAdapter->path(),
                                           DBusConnection::orgBluez(), this);
 
-    // QueuedConnection is important here to be able to perform actions, that depend on
-    // a previously set property, directly from slot connected to propertyChanged signal.
-    // Eg. Powering on adapter and then starting discovery.
-    //  * with DirectConnection the StartDiscovery would fail because the adapter is still
-    //    powered off when the PropertiesChanged signal is emitted ...
-    connect(m_dbusProperties, &DBusProperties::PropertiesChanged,
-            this, &AdapterPrivate::propertiesChanged, Qt::QueuedConnection);
-
     // Init properties
     m_address = properties.value(QStringLiteral("Address")).toString();
     m_name = properties.value(QStringLiteral("Name")).toString();

@@ -25,10 +25,10 @@
 #include "utils.h"
 #include "macros.h"
 
+#include <QVariantMap>
+
 namespace BluezQt
 {
-
-typedef org::freedesktop::DBus::Properties DBusProperties;
 
 static Input::ReconnectMode stringToReconnectMode(const QString &mode)
 {
@@ -45,11 +45,7 @@ static Input::ReconnectMode stringToReconnectMode(const QString &mode)
 InputPrivate::InputPrivate(const QString &path, const QVariantMap &properties)
     : QObject()
 {
-    m_dbusProperties = new DBusProperties(Strings::orgBluez(), path,
-                                          DBusConnection::orgBluez(), this);
-
-    connect(m_dbusProperties, &DBusProperties::PropertiesChanged,
-            this, &InputPrivate::propertiesChanged, Qt::QueuedConnection);
+    Q_UNUSED(path);
 
     // Init properties
     m_reconnectMode = stringToReconnectMode(properties.value(QStringLiteral("ReconnectMode")).toString());

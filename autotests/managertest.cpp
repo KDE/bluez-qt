@@ -437,4 +437,24 @@ void ManagerTest::bug364416()
     delete manager;
 }
 
+void ManagerTest::bug377405()
+{
+    // Bug 377405: Property changes immediately after adapter is added are lost
+
+    FakeBluez::start();
+    FakeBluez::runTest(QStringLiteral("bluez-standard"));
+
+    Manager *manager = new Manager;
+
+    InitManagerJob *job = manager->init();
+    job->exec();
+
+    QVERIFY(!job->error());
+
+    FakeBluez::runAction(QStringLiteral("devicemanager"), QStringLiteral("bug377405"));
+
+    // Adapter property Powered is changed to true immediately after being added
+    QTRY_COMPARE(manager->isBluetoothOperational(), true);
+}
+
 QTEST_MAIN(ManagerTest)

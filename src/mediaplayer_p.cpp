@@ -92,9 +92,6 @@ void MediaPlayerPrivate::init(const QVariantMap &properties)
     m_dbusProperties = new DBusProperties(Strings::orgBluez(), m_bluezMediaPlayer->path(),
                                           DBusConnection::orgBluez(), this);
 
-    connect(m_dbusProperties, &DBusProperties::PropertiesChanged,
-            this, &MediaPlayerPrivate::propertiesChanged, Qt::QueuedConnection);
-
     // Init properties
     m_name = properties.value(QStringLiteral("Name")).toString();
     m_equalizer = stringToEqualizer(properties.value(QStringLiteral("Equalizer")).toString());

@@ -26,12 +26,9 @@
 #include <QObject>
 
 #include "input.h"
-#include "dbusproperties.h"
 
 namespace BluezQt
 {
-
-typedef org::freedesktop::DBus::Properties DBusProperties;
 
 class InputPrivate : public QObject
 {
@@ -43,7 +40,6 @@ public:
     void propertiesChanged(const QString &interface, const QVariantMap &changed, const QStringList &invalidated);
 
     QWeakPointer<Input> q;
-    DBusProperties *m_dbusProperties;
 
     Input::ReconnectMode m_reconnectMode;
 };

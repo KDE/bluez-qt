@@ -39,6 +39,7 @@ public:
 
     bool testRun;
     QString orgFreedesktopDBus;
+    QString orgFreedesktopDBusProperties;
     QString orgBluez;
     QString orgBluezAdapter1;
     QString orgBluezDevice1;
@@ -59,6 +60,7 @@ GlobalData::GlobalData()
 {
     testRun = false;
     orgFreedesktopDBus = QStringLiteral("org.freedesktop.DBus");
+    orgFreedesktopDBusProperties = QStringLiteral("org.freedesktop.DBus.Properties");
     orgBluez = QStringLiteral("org.bluez");
     orgBluezAdapter1 = QStringLiteral("org.bluez.Adapter1");
     orgBluezDevice1 = QStringLiteral("org.bluez.Device1");
@@ -86,6 +88,11 @@ BLUEZQT_EXPORT void bluezqt_initFakeBluezTestRun()
 QString Strings::orgFreedesktopDBus()
 {
     return globalData->orgFreedesktopDBus;
+}
+
+QString Strings::orgFreedesktopDBusProperties()
+{
+    return globalData->orgFreedesktopDBusProperties;
 }
 
 QString Strings::orgBluez()

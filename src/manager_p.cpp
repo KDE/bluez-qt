@@ -82,6 +82,13 @@ void ManagerPrivate::init()
 
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(DBusConnection::orgBluez().asyncCall(call));
     connect(watcher, &QDBusPendingCallWatcher::finished, this, &ManagerPrivate::nameHasOwnerFinished);
+
+    DBusConnection::orgBluez().connect(Strings::orgBluez(),
+                                       QString(),
+                                       Strings::orgFreedesktopDBusProperties(),
+                                       QStringLiteral("PropertiesChanged"),
+                                       this,
+                                       SLOT(propertiesChanged(QString,QVariantMap,QStringList)));
 }
 
 void ManagerPrivate::nameHasOwnerFinished(QDBusPendingCallWatcher *watcher)
@@ -422,6 +429,26 @@ void ManagerPrivate::setUsableAdapter(const AdapterPtr &adapter)
     if (wasBtOperational != q->isBluetoothOperational()) {
         Q_EMIT q->bluetoothOperationalChanged(q->isBluetoothOperational());
     }
+}
+
+void ManagerPrivate::propertiesChanged(const QString &interface, const QVariantMap &changed, const QStringList &invalidated)
+{
+    // Cut anything after device path to forward it to Device to handle
+    const QString path = message().path().section(QLatin1Char('/'), 0, 4);
+
+    QTimer::singleShot(0, this, [=]() {
+        AdapterPtr adapter = m_adapters.value(path);
+        if (adapter) {
+            adapter->d->propertiesChanged(interface, changed, invalidated);
+            return;
+        }
+        DevicePtr device = m_devices.value(path);
+        if (device) {
+            device->d->propertiesChanged(interface, changed, invalidated);
+            return;
+        }
+        qCDebug(BLUEZQT) << "Unhandled property change" << interface << changed << invalidated;
+    });
 }
 
 void ManagerPrivate::dummy()

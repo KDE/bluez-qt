@@ -41,6 +41,7 @@ private Q_SLOTS:
     void deviceForAddressTest();
     void adapterWithDevicesRemovedTest();
     void bug364416();
+    void bug377405();
 
 };
 
