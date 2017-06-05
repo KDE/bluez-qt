@@ -36,6 +36,8 @@ namespace BluezQt
 class PendingCall;
 
 /**
+ * @class BluezQt::ObexSession obexsession.h <BluezQt/ObexSession>
+ *
  * OBEX session.
  *
  * This class represents an OBEX session.

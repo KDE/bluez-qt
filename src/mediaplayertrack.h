@@ -32,6 +32,8 @@ namespace BluezQt
 {
 
 /**
+ * @class BluezQt::MediaPlayerTrack mediaplayertrack.h <BluezQt/MediaPlayerTrack>
+ *
  * Media player track.
  *
  * This class represents a track in media player.

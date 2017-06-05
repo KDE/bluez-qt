@@ -33,6 +33,8 @@ namespace BluezQt
 {
 
 /**
+ * @class BluezQt::PendingCall pendingcall.h <BluezQt/PendingCall>
+ *
  * Pending method call.
  *
  * This class represents a pending method call. It is a convenient wrapper

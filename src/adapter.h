@@ -37,6 +37,8 @@ class Device;
 class PendingCall;
 
 /**
+ * @class BluezQt::Adapter adapter.h <BluezQt/Adapter>
+ *
  * Bluetooth adapter.
  *
  * This class represents a Bluetooth adapter.

@@ -35,6 +35,8 @@ namespace BluezQt
 class PendingCall;
 
 /**
+ * @class BluezQt::MediaPlayer mediaplayer.h <BluezQt/MediaPlayer>
+ *
  * Media player.
  *
  * This class represents a media player interface.

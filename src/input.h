@@ -32,6 +32,8 @@ namespace BluezQt
 {
 
 /**
+ * @class BluezQt::Input input.h <BluezQt/Input>
+ *
  * %Device input.
  *
  * This class represents an input interface.

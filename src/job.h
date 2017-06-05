@@ -34,6 +34,8 @@ namespace BluezQt
 class JobPrivate;
 
 /**
+ * @class BluezQt::Job job.h <BluezQt/Job>
+ *
  * This class represents an asynchronous job performed by BluezQt,
  * it is usually not used directly but instead it is inherit by some
  * other class.

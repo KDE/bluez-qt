@@ -39,6 +39,8 @@ class PendingCall;
 class InitManagerJob;
 
 /**
+ * @class BluezQt::Manager manager.h <BluezQt/Manager>
+ *
  * Bluetooth manager.
  *
  * The entry point to communicate with system BlueZ daemon.

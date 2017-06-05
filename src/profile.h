@@ -39,6 +39,8 @@ namespace BluezQt
 class Device;
 
 /**
+ * @class BluezQt::Profile profile.h <BluezQt/Profile>
+ *
  * Bluetooth profile.
  *
  * This class represents a Bluetooth profile.

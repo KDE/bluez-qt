@@ -38,6 +38,8 @@ class PendingCall;
 class InitObexManagerJob;
 
 /**
+ * @class BluezQt::ObexManager obexmanager.h <BluezQt/ObexManager>
+ *
  * OBEX manager.
  *
  * The entry point to communicate with session BlueZ obex daemon.

@@ -36,6 +36,8 @@ namespace BluezQt
 class PendingCall;
 
 /**
+ * @class BluezQt::ObexTransfer obextransfer.h <BluezQt/ObexTransfer>
+ *
  * OBEX transfer.
  *
  * This class represents transfer of one file.

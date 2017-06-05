@@ -34,6 +34,8 @@ namespace BluezQt
 class ObexManager;
 
 /**
+ * @class BluezQt::InitObexManagerJob initobexmanagerjob.h <BluezQt/InitObexManagerJob>
+ *
  * Init obex manager job.
  *
  * This class represents a job that initializes ObexManager.

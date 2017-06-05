@@ -39,6 +39,8 @@ enum RequestOriginatingType {
 };
 
 /**
+ * @class BluezQt::Request request.h <BluezQt/Request>
+ *
  * D-Bus request.
  *
  * This class represents a request from a Bluetooth daemon. It is a convenient

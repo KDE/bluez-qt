@@ -38,6 +38,8 @@ class Device;
 class ObexTransfer;
 
 /**
+ * @class BluezQt::ObexAgent obexagent.h <BluezQt/ObexAgent>
+ *
  * Bluetooth OBEX agent.
  *
  * This class represents a Bluetooth OBEX agent.

@@ -34,6 +34,8 @@ namespace BluezQt
 class Manager;
 
 /**
+ * @class BluezQt::InitManagerJob initmanagerjob.h <BluezQt/InitManagerJob>
+ *
  * Init manager job.
  *
  * This class represents a job that initializes Manager.

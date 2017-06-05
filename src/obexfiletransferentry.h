@@ -32,6 +32,8 @@ namespace BluezQt
 {
 
 /**
+ * @class BluezQt::ObexFileTransferEntry obexfiletransferentry.h <BluezQt/ObexFileTransferEntry>
+ *
  * OBEX file transfer entry.
  *
  * This class represents an entry in remote file system.

@@ -35,6 +35,8 @@ namespace BluezQt
 class PendingCall;
 
 /**
+ * @class BluezQt::ObexObjectPush obexobjectpush.h <BluezQt/ObexObjectPush>
+ *
  * OBEX object push.
  *
  * This class represents an OBEX object push interface.

@@ -37,6 +37,8 @@ namespace BluezQt
 class Device;
 
 /**
+ * @class BluezQt::Agent agent.h <BluezQt/Agent>
+ *
  * Bluetooth agent.
  *
  * This class represents a Bluetooth agent.

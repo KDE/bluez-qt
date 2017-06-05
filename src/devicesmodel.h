@@ -35,6 +35,8 @@ class Manager;
 class Device;
 
 /**
+ * @class BluezQt::DevicesModel devicesmodel.h <BluezQt/DevicesModel>
+ *
  * Model of all devices.
  *
  * This class represents a model of all devices.
