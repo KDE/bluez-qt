@@ -119,6 +119,28 @@ install(FILES
     DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}/BluezQt/bluezqt
     COMPONENT Devel)
 
+if(BUILD_QCH)
+    ecm_add_qch(
+        KF5BluezQt_QCH
+        NAME BluezQt
+        BASE_NAME KF5BluezQt
+        VERSION ${KF5_VERSION}
+        ORG_DOMAIN org.kde
+        SOURCES # using only public headers, to cover only public API
+            ${BluezQt_HEADERS}
+        MD_MAINPAGE "${CMAKE_SOURCE_DIR}/README.md"
+        LINK_QCHS
+            Qt5Core_QCH
+        BLANK_MACROS
+            BLUEZQT_EXPORT
+            BLUEZQT_DEPRECATED
+            BLUEZQT_DEPRECATED_EXPORT
+        TAGFILE_INSTALL_DESTINATION ${KDE_INSTALL_QTQCHDIR}
+        QCH_INSTALL_DESTINATION ${KDE_INSTALL_QTQCHDIR}
+        COMPONENT Devel
+    )
+endif()
+
 include(ECMGeneratePriFile)
 
 ecm_generate_pri_file(
