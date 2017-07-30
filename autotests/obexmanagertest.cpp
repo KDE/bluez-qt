@@ -36,6 +36,7 @@ using namespace BluezQt;
 void ObexManagerTest::initTestCase()
 {
     bluezqt_initFakeBluezTestRun();
+    FakeBluez::start(); // to check that it works
 }
 
 void ObexManagerTest::cleanup()

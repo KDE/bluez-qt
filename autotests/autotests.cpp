@@ -49,6 +49,8 @@ public:
 
     void exec();
 
+    bool foundFakeBluez() const { return !m_fakebluezPath.isEmpty(); }
+
 private Q_SLOTS:
     void processError(QProcess::ProcessError error);
     void processFinished(int code, QProcess::ExitStatus status);
@@ -60,8 +62,11 @@ private:
 
 StartJob::StartJob()
     : QObject(nullptr)
-    , m_fakebluezPath(QFINDTESTDATA("fakebluez/fakebluez"))
+    , m_fakebluezPath(QCoreApplication::applicationDirPath() + QStringLiteral("/fakebluez"))
 {
+    // Fallback for old layout, can be removed after August 2017
+    if (m_fakebluezPath.isEmpty())
+        m_fakebluezPath = QFINDTESTDATA("fakebluez/fakebluez");
 }
 
 void StartJob::exec()
@@ -124,6 +129,7 @@ void FakeBluez::start()
     }
 
     StartJob job;
+    QVERIFY(job.foundFakeBluez());
     job.exec();
 }
 

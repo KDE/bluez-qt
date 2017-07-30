@@ -39,6 +39,7 @@ using namespace BluezQt;
 void ManagerTest::initTestCase()
 {
     bluezqt_initFakeBluezTestRun();
+    FakeBluez::start(); // to check that it works
     Autotests::registerMetatypes();
 }
 
