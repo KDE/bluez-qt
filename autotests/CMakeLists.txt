@@ -18,6 +18,7 @@ macro(bluezqt_tests)
         target_link_libraries(${_testname} Qt5::DBus Qt5::Test KF5BluezQt)
         add_test(NAME bluezqt-${_testname} COMMAND ${_testname})
         ecm_mark_as_test(${_testname})
+        set_tests_properties(bluezqt-${_testname} PROPERTIES RUN_SERIAL TRUE)
     endforeach(_testname)
 endmacro()
 
