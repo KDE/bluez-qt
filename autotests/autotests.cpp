@@ -65,7 +65,7 @@ StartJob::StartJob()
     , m_fakebluezPath(QCoreApplication::applicationDirPath() + QStringLiteral("/fakebluez"))
 {
     // Fallback for old layout, can be removed after August 2017
-    if (m_fakebluezPath.isEmpty())
+    if (!QFile::exists(m_fakebluezPath))
         m_fakebluezPath = QFINDTESTDATA("fakebluez/fakebluez");
 }
 
