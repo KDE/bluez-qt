@@ -128,7 +128,7 @@ void Rfkill::devReadyRead()
 void Rfkill::init()
 {
 #ifdef Q_OS_LINUX
-    m_readFd = ::open("/dev/rfkill", O_RDONLY);
+    m_readFd = ::open("/dev/rfkill", O_RDONLY | O_CLOEXEC);
 
     if (m_readFd == -1) {
         qCWarning(BLUEZQT) << "Cannot open /dev/rfkill for reading!";
@@ -157,7 +157,7 @@ bool Rfkill::openForWriting()
         return true;
     }
 
-    m_writeFd = ::open("/dev/rfkill", O_WRONLY);
+    m_writeFd = ::open("/dev/rfkill", O_WRONLY | O_CLOEXEC);
 
     if (m_writeFd == -1) {
         qCWarning(BLUEZQT) << "Cannot open /dev/rfkill for writing!";
