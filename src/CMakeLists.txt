@@ -1,5 +1,4 @@
 set(bluezqt_SRCS
-    debug.cpp
     manager.cpp
     manager_p.cpp
     adapter.cpp
@@ -32,6 +31,8 @@ set(bluezqt_SRCS
     obexfiletransfer.cpp
     obexfiletransferentry.cpp
 )
+
+ecm_qt_declare_logging_category(bluezqt_SRCS HEADER debug.h IDENTIFIER BLUEZQT CATEGORY_NAME org.kde.bluez)
 
 set(dbusobjectmanager_xml ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.freedesktop.DBus.ObjectManager.xml)
 set_source_files_properties(${dbusobjectmanager_xml} PROPERTIES INCLUDE "bluezqt_dbustypes.h")
