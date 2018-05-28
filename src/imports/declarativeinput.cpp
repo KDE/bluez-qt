@@ -22,7 +22,7 @@
 
 #include "declarativeinput.h"
 
-DeclarativeInput::DeclarativeInput(BluezQt::InputPtr input, QObject *parent)
+DeclarativeInput::DeclarativeInput(const BluezQt::InputPtr &input, QObject *parent)
     : QObject(parent)
     , m_input(input)
 {

@@ -49,7 +49,7 @@ public:
     /**
       * Destroys an InitObexManagerJob object.
       */
-    ~InitObexManagerJob();
+    ~InitObexManagerJob() override;
 
     /**
      * Returns a manager that is being initialized.

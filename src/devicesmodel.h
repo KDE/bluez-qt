@@ -125,7 +125,7 @@ public:
     /**
       * Destroys a DevicesModel object.
       */
-    ~DevicesModel();
+    ~DevicesModel() override;
 
     /**
       * Reimplemented from QAbstractListModel::roleNames()

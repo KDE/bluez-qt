@@ -77,6 +77,7 @@ QVariant DeclarativeDevicesModel::data(const QModelIndex &index, int role) const
             return QVariant::fromValue(device->mediaPlayer());
         }
         // fallthrough
+        Q_FALLTHROUGH();
     default:
         return QSortFilterProxyModel::data(index, role);
     }

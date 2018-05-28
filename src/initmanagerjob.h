@@ -49,7 +49,7 @@ public:
     /**
       * Destroys an InitManagerJob object.
       */
-    ~InitManagerJob();
+    ~InitManagerJob() override;
 
     /**
      * Returns a manager that is being initialized.
