@@ -67,8 +67,8 @@ Q_SIGNALS:
 private:
     explicit InitManagerJob(Manager *manager);
 
-    void doStart() Q_DECL_OVERRIDE;
-    void doEmitResult() Q_DECL_OVERRIDE;
+    void doStart() override;
+    void doEmitResult() override;
 
     class InitManagerJobPrivate *const d;
 

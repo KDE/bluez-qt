@@ -46,8 +46,8 @@ public:
     DeclarativeManager *manager() const;
     void setManager(DeclarativeManager *manager);
 
-    QHash<int, QByteArray> roleNames() const Q_DECL_OVERRIDE;
-    QVariant data(const QModelIndex &index, int role) const Q_DECL_OVERRIDE;
+    QHash<int, QByteArray> roleNames() const override;
+    QVariant data(const QModelIndex &index, int role) const override;
 
 private:
     DeclarativeManager *m_manager;

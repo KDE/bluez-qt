@@ -67,8 +67,8 @@ Q_SIGNALS:
 private:
     explicit InitObexManagerJob(ObexManager *manager);
 
-    void doStart() Q_DECL_OVERRIDE;
-    void doEmitResult() Q_DECL_OVERRIDE;
+    void doStart() override;
+    void doEmitResult() override;
 
     class InitObexManagerJobPrivate *const d;
 

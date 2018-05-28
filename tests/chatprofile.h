@@ -33,12 +33,12 @@ class ChatProfile : public BluezQt::Profile
 public:
     explicit ChatProfile(QObject *parent);
 
-    QDBusObjectPath objectPath() const Q_DECL_OVERRIDE;
-    QString uuid() const Q_DECL_OVERRIDE;
+    QDBusObjectPath objectPath() const override;
+    QString uuid() const override;
 
-    void newConnection(BluezQt::DevicePtr device, const QDBusUnixFileDescriptor &fd, const QVariantMap &properties, const BluezQt::Request<> &request) Q_DECL_OVERRIDE;
-    void requestDisconnection(BluezQt::DevicePtr device, const BluezQt::Request<> &request) Q_DECL_OVERRIDE;
-    void release() Q_DECL_OVERRIDE;
+    void newConnection(BluezQt::DevicePtr device, const QDBusUnixFileDescriptor &fd, const QVariantMap &properties, const BluezQt::Request<> &request) override;
+    void requestDisconnection(BluezQt::DevicePtr device, const BluezQt::Request<> &request) override;
+    void release() override;
 
 private Q_SLOTS:
     void socketReadyRead();
