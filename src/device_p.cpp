@@ -147,6 +147,8 @@ void DevicePrivate::propertiesChanged(const QString &interface, const QVariantMa
 
         if (property == QLatin1String("Name")) {
             namePropertyChanged(value.toString());
+        } else if (property == QLatin1String("Address")) {
+            addressPropertyChanged(value.toString());
         } else if (property == QLatin1String("Alias")) {
             aliasPropertyChanged(value.toString());
         } else if (property == QLatin1String("Class")) {
@@ -201,6 +203,14 @@ void DevicePrivate::namePropertyChanged(const QString &value)
         m_name = value;
         Q_EMIT q.data()->remoteNameChanged(m_name);
         Q_EMIT q.data()->friendlyNameChanged(q.data()->friendlyName());
+    }
+}
+
+void DevicePrivate::addressPropertyChanged(const QString &value)
+{
+    if (m_address != value) {
+        m_address = value;
+        Q_EMIT q.data()->addressChanged(m_address);
     }
 }
 

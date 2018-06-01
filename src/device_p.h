@@ -53,6 +53,7 @@ public:
     void propertiesChanged(const QString &interface, const QVariantMap &changed, const QStringList &invalidated);
     void namePropertyChanged(const QString &value);
     void aliasPropertyChanged(const QString &value);
+    void addressPropertyChanged(const QString &value);
     void classPropertyChanged(quint32 value);
 
     QWeakPointer<Device> q;

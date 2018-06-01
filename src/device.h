@@ -46,7 +46,7 @@ class BLUEZQT_EXPORT Device : public QObject
     Q_OBJECT
 
     Q_PROPERTY(QString ubi READ ubi)
-    Q_PROPERTY(QString address READ address)
+    Q_PROPERTY(QString address READ address NOTIFY addressChanged)
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
     Q_PROPERTY(QString friendlyName READ friendlyName NOTIFY friendlyNameChanged)
     Q_PROPERTY(QString remoteName READ remoteName NOTIFY remoteNameChanged)
