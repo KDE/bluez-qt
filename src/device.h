@@ -46,7 +46,7 @@ class BLUEZQT_EXPORT Device : public QObject
     Q_OBJECT
 
     Q_PROPERTY(QString ubi READ ubi)
-    Q_PROPERTY(QString address READ address)
+    Q_PROPERTY(QString address READ address NOTIFY addressChanged)
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
     Q_PROPERTY(QString friendlyName READ friendlyName NOTIFY friendlyNameChanged)
     Q_PROPERTY(QString remoteName READ remoteName NOTIFY remoteNameChanged)
@@ -422,6 +422,11 @@ Q_SIGNALS:
      * Indicates that device's name have changed.
      */
     void nameChanged(const QString &name);
+
+    /**
+     * Indicates that device's address have changed.
+     */
+    void addressChanged(const QString &address);
 
     /**
      * Indicates that device's friendly name have changed.
