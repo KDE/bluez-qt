@@ -9,7 +9,7 @@
     <signal name="InterfacesAdded">
       <arg name="object" type="o"/>
       <arg name="interfaces" type="a{sa{sv}}"/>
-      <annotation name="org.qtproject.QtDBus.QtTypeName.In1" value="QVariantMapMap"/>
+      <annotation name="org.qtproject.QtDBus.QtTypeName.Out1" value="QVariantMapMap"/>
     </signal>
     <signal name="InterfacesRemoved">
       <arg name="object" type="o"/>
