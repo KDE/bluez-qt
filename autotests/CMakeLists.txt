@@ -31,6 +31,7 @@ bluezqt_tests(
     inputtest
     mediaplayertest
     jobstest
+    mediatest
 )
 
 if(Qt5Qml_FOUND AND Qt5QuickTest_FOUND)

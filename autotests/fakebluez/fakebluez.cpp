@@ -24,6 +24,7 @@
 #include "agentmanager.h"
 #include "profilemanager.h"
 #include "devicemanager.h"
+#include "media.h"
 #include "obexagentmanager.h"
 #include "obexclient.h"
 
@@ -50,6 +51,7 @@ FakeBluez::FakeBluez(QObject *parent)
     , m_agentManager(nullptr)
     , m_profileManager(nullptr)
     , m_deviceManager(nullptr)
+    , m_media(nullptr)
     , m_obexObject(nullptr)
     , m_obexAgentManager(nullptr)
     , m_obexClient(nullptr)
@@ -101,6 +103,8 @@ void FakeBluez::doRunAction()
         m_agentManager->runAction(m_actionName, m_actionProperties);
     } else if (m_actionObject == QLatin1String("devicemanager")) {
         m_deviceManager->runAction(m_actionName, m_actionProperties);
+    } else if (m_actionObject == QLatin1String("media")) {
+        m_media->runAction(m_actionName, m_actionProperties);
     }
 
     QTimer::singleShot(0, m_testInterface, SLOT(emitActionFinished()));
@@ -133,6 +137,12 @@ void FakeBluez::createProfileManager()
 void FakeBluez::createDeviceManager()
 {
     m_deviceManager = new DeviceManager(m_objectManager);
+}
+
+void FakeBluez::createMedia()
+{
+    m_media = new Media(m_objectManager);
+    m_objectManager->addObject(m_media);
 }
 
 void FakeBluez::createObexObjectManager()
@@ -171,6 +181,7 @@ void FakeBluez::runBluezNoAdaptersTest()
     createObjectManager();
     createAgentManager();
     createProfileManager();
+    createMedia();
 }
 
 void FakeBluez::runBluezStandardTest()
@@ -180,6 +191,7 @@ void FakeBluez::runBluezStandardTest()
     createDeviceManager();
     createAgentManager();
     createProfileManager();
+    createMedia();
 }
 
 void FakeBluez::runObexNotExportingInterfacesTest()

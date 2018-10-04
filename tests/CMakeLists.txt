@@ -12,4 +12,5 @@ bluezqt_executable_tests(
     adaptersreceiver
     devicereceiver
     chatprofile
+    mediaendpointconnector
 )

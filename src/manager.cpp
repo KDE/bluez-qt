@@ -246,4 +246,9 @@ PendingCall *Manager::unregisterProfile(Profile *profile)
                            PendingCall::ReturnVoid, this);
 }
 
+MediaPtr Manager::media() const
+{
+    return d->m_media;
+}
+
 } // namespace BluezQt

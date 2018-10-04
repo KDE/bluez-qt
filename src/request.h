@@ -35,7 +35,8 @@ namespace BluezQt
 enum RequestOriginatingType {
     OrgBluezAgent,
     OrgBluezProfile,
-    OrgBluezObexAgent
+    OrgBluezObexAgent,
+    OrgBluezMediaEndpoint
 };
 
 /**
@@ -113,6 +114,7 @@ private:
     friend class AgentAdaptor;
     friend class ObexAgentAdaptor;
     friend class ProfileAdaptor;
+    friend class MediaEndpointAdaptor;
 };
 
 // void

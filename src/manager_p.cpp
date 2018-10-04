@@ -28,6 +28,7 @@
 #include "adapter_p.h"
 #include "debug.h"
 #include "utils.h"
+#include "media.h"
 
 #include <QDBusReply>
 #include <QDBusConnection>
@@ -156,6 +157,9 @@ void ManagerPrivate::getManagedObjectsFinished(QDBusPendingCallWatcher *watcher)
         if (interfaces.contains(Strings::orgBluezProfileManager1())) {
             m_bluezProfileManager = new BluezProfileManager(Strings::orgBluez(), path, DBusConnection::orgBluez(), this);
         }
+        if (interfaces.contains(Strings::orgBluezMedia1())) {
+            m_media = MediaPtr(new Media(path));
+        }
     }
 
     if (!m_bluezAgentManager) {
@@ -165,6 +169,11 @@ void ManagerPrivate::getManagedObjectsFinished(QDBusPendingCallWatcher *watcher)
 
     if (!m_bluezProfileManager) {
         Q_EMIT initError(QStringLiteral("Cannot find org.bluez.ProfileManager1 object!"));
+        return;
+    }
+
+    if (!m_media) {
+        Q_EMIT initError(QStringLiteral("Cannot find org.bluez.Media1 object!"));
         return;
     }
 

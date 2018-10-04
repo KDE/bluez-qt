@@ -1,4 +1,5 @@
 set(bluezqt_SRCS
+    a2dp-codecs.c
     manager.cpp
     manager_p.cpp
     adapter.cpp
@@ -6,6 +7,10 @@ set(bluezqt_SRCS
     device.cpp
     device_p.cpp
     input.cpp
+    media.cpp
+    mediaendpoint.cpp
+    mediaendpoint_p.cpp
+    mediaendpointadaptor.cpp
     mediaplayer.cpp
     mediaplayer_p.cpp
     mediaplayertrack.cpp
@@ -47,6 +52,8 @@ qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.b
 qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.AgentManager1.xml bluezagentmanager1)
 qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.ProfileManager1.xml bluezprofilemanager1)
 qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.Device1.xml bluezdevice1)
+qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.Media1.xml bluezmedia1)
+qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.MediaEndpoint1.xml bluezmediaendpoint1)
 qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.MediaPlayer1.xml bluezmediaplayer1)
 qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.obex.AgentManager1.xml obexagentmanager1)
 qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.obex.Client1.xml obexclient1)

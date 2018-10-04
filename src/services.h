@@ -39,6 +39,7 @@ const QString ObexObjectPush = QLatin1String("00001105-0000-1000-8000-00805F9B34
 const QString ObexFileTransfer = QLatin1String("00001106-0000-1000-8000-00805F9B34FB");
 const QString Headset = QLatin1String("00001108-0000-1000-8000-00805F9B34FB");
 const QString AudioSource = QLatin1String("0000110A-0000-1000-8000-00805F9B34FB");
+const QString AudioSink = QLatin1String("0000110B-0000-1000-8000-00805F9B34FB");
 const QString AudioVideoRemoteControlTarget = QLatin1String("0000110C-0000-1000-8000-00805F9B34FB");
 const QString AdvancedAudioDistribution = QLatin1String("0000110D-0000-1000-8000-00805F9B34FB");
 const QString AudioVideoRemoteControl = QLatin1String("0000110E-0000-1000-8000-00805F9B34FB");

@@ -297,6 +297,13 @@ public:
      */
     PendingCall *unregisterProfile(Profile *profile);
 
+    /**
+     * Returns the media interface.
+     *
+     * @return media
+     */
+    MediaPtr media() const;
+
 Q_SIGNALS:
     /**
      * Indicates that operational state have changed.

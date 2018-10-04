@@ -207,5 +207,6 @@ void Request<void>::cancel() const
 template class Request<void>;
 template class Request<quint32>;
 template class Request<QString>;
+template class Request<QByteArray>;
 
 } // namespace BluezQt
