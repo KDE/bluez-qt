@@ -47,7 +47,7 @@ find_package(Qt5QuickTest ${REQUIRED_QT_VERSION} CONFIG)
 set_package_properties(Qt5QuickTest PROPERTIES DESCRIPTION "QML autotests for BluezQt" TYPE OPTIONAL)
 add_definitions(-DQT_NO_CAST_FROM_ASCII)
 add_definitions(-DQT_NO_CAST_TO_ASCII)
-add_definitions(-DQT_NO_NARROWING_CONVERSIONS_IN_CONNECT)
+
 add_definitions(-DQT_NO_URL_CAST_FROM_STRING)
 add_definitions(-DQT_USE_QSTRINGBUILDER)
 
