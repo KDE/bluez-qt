@@ -88,6 +88,8 @@ ecm_generate_headers(BluezQt_CamelCase_HEADERS
         Adapter
         Device
         Input
+        Media
+        MediaEndpoint
         MediaPlayer
         MediaPlayerTrack
         DevicesModel

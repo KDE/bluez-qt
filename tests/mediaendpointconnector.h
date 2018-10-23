@@ -68,8 +68,8 @@ public:
 private:
     void onServiceAuthorized(BluezQt::DevicePtr device, const QString &uuid, bool allowed);
     void onConfigurationSelected(const QByteArray &capabilities, const QByteArray &configuration);
-    void onConfigurationSet(const QString& transportObjectPath, const QVariantMap& properties);
-    void onConfigurationCleared(const QString& transportObjectPath);
+    void onConfigurationSet(const QString &transportObjectPath, const QVariantMap &properties);
+    void onConfigurationCleared(const QString &transportObjectPath);
 
     BluezQt::Manager *m_manager;
 };

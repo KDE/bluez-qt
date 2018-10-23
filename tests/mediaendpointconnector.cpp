@@ -103,12 +103,12 @@ void MediaEndpointConnector::onConfigurationSelected(const QByteArray &capabilit
     }
 }
 
-void MediaEndpointConnector::onConfigurationSet(const QString& transportObjectPath, const QVariantMap& properties)
+void MediaEndpointConnector::onConfigurationSet(const QString &transportObjectPath, const QVariantMap &properties)
 {
     qDebug() << "Set configuration for transport:" << transportObjectPath << "to:" << properties;
 }
 
-void MediaEndpointConnector::onConfigurationCleared(const QString& transportObjectPath)
+void MediaEndpointConnector::onConfigurationCleared(const QString &transportObjectPath)
 {
     qDebug() << "Cleared configuration for transport:" << transportObjectPath;
 }
