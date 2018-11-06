@@ -25,8 +25,8 @@
 #include "adapter.h"
 #include "device.h"
 
-#include <QtTest/QTest>
-#include <QtTest/QSignalSpy>
+#include <QTest>
+#include <QSignalSpy>
 #include <QDBusObjectPath>
 
 namespace BluezQt

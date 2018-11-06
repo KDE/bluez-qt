@@ -23,8 +23,8 @@
 #include "obexmanager.h"
 #include "initobexmanagerjob.h"
 
-#include <QtTest/QTest>
-#include <QtTest/QSignalSpy>
+#include <QTest>
+#include <QSignalSpy>
 
 namespace BluezQt
 {

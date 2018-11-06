@@ -21,7 +21,7 @@
 #ifndef AUTOTESTS_H
 #define AUTOTESTS_H
 
-#include <QtTest/QTest>
+#include <QTest>
 #include <QSignalSpy>
 #include <QProcess>
 #include <QDBusMessage>

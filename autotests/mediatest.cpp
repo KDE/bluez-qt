@@ -28,7 +28,7 @@
 #include "pendingcall.h"
 
 #include <QDebug>
-#include <QtTest/QSignalSpy>
+#include <QSignalSpy>
 #include <QDBusObjectPath>
 
 namespace BluezQt

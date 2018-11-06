@@ -25,8 +25,8 @@
 #include "pendingcall.h"
 #include "services.h"
 
-#include <QtTest/QTest>
-#include <QtTest/QSignalSpy>
+#include <QTest>
+#include <QSignalSpy>
 #include <QDBusObjectPath>
 
 namespace BluezQt
