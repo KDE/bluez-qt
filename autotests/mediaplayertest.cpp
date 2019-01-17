@@ -333,6 +333,33 @@ void MediaPlayerTest::disconnectProfileTest()
     }
 }
 
+void MediaPlayerTest::bug403289()
+{
+    // Bug 403289: MediaPlayer interface path is not checked in InterfacesRemoved signal
+
+    QDBusConnection connection = QDBusConnection::sessionBus();
+    QString service = QStringLiteral("org.kde.bluezqt.fakebluez");
+
+    Q_FOREACH (DevicePtr device, m_manager->devices()) {
+        QVERIFY(!device->mediaPlayer());
+
+        QSignalSpy deviceSpy(device.data(), SIGNAL(mediaPlayerChanged(MediaPlayerPtr)));
+
+        const QVariantMap props = {
+            { QStringLiteral("DevicePath"), QVariant::fromValue(QDBusObjectPath(device->ubi())) }
+        };
+        FakeBluez::runAction(QStringLiteral("devicemanager"), QStringLiteral("bug403289"), props);
+
+        QTRY_COMPARE(deviceSpy.count(), 1);
+        QVERIFY(deviceSpy.at(0).at(0).value<MediaPlayerPtr>());
+        QTest::qWait(100);
+        QCOMPARE(deviceSpy.count(), 1);
+        device->disconnectProfile(Services::AudioVideoRemoteControl);
+        QTRY_COMPARE(deviceSpy.count(), 2);
+        QVERIFY(!deviceSpy.at(1).at(0).value<MediaPlayerPtr>());
+    }
+}
+
 QString MediaPlayerTest::equalizerString(const MediaPlayerPtr &mediaPlayer) const
 {
     switch (mediaPlayer->equalizer()) {

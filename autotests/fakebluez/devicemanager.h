@@ -42,6 +42,7 @@ private:
     void runChangeAdapterProperty(const QVariantMap &properties);
     void runChangeDeviceProperty(const QVariantMap &properties);
     void runBug377405();
+    void runBug403289(const QVariantMap &properties);
 
     ObjectManager *m_objectManager;
 

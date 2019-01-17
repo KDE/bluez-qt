@@ -105,6 +105,8 @@ private:
 
     QStringList m_connectedUuids;
     Object *m_mediaPlayer;
+
+    friend class DeviceManager;
 };
 
 #endif // DEVICEINTERFACE_H

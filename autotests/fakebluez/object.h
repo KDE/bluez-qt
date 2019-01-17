@@ -28,6 +28,7 @@ class Object
 {
 public:
     explicit Object();
+    virtual ~Object() = default;
 
     QObject *objectParent() const;
     void setObjectParent(QObject *parent);

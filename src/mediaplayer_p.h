@@ -53,6 +53,7 @@ public:
     BluezMediaPlayer *m_bluezMediaPlayer;
     DBusProperties *m_dbusProperties;
 
+    QString m_path;
     QString m_name;
     MediaPlayer::Equalizer m_equalizer;
     MediaPlayer::Repeat m_repeat;

@@ -41,6 +41,7 @@ public:
 
     QWeakPointer<Input> q;
 
+    QString m_path;
     Input::ReconnectMode m_reconnectMode;
 };
 

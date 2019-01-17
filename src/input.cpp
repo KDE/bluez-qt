@@ -44,9 +44,8 @@ static Input::ReconnectMode stringToReconnectMode(const QString &mode)
 
 InputPrivate::InputPrivate(const QString &path, const QVariantMap &properties)
     : QObject()
+    , m_path(path)
 {
-    Q_UNUSED(path);
-
     // Init properties
     m_reconnectMode = stringToReconnectMode(properties.value(QStringLiteral("ReconnectMode")).toString());
 }

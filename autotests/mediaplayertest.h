@@ -56,6 +56,8 @@ private Q_SLOTS:
 
     void disconnectProfileTest();
 
+    void bug403289();
+
 private:
     QString equalizerString(const BluezQt::MediaPlayerPtr &mediaPlayer) const;
     QString repeatString(const BluezQt::MediaPlayerPtr &mediaPlayer) const;

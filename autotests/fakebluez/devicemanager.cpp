@@ -45,6 +45,8 @@ void DeviceManager::runAction(const QString &actionName, const QVariantMap &prop
         runChangeDeviceProperty(properties);
     } else if (actionName == QLatin1String("bug377405")) {
         runBug377405();
+    } else if (actionName == QLatin1String("bug403289")) {
+        runBug403289(properties);
     }
 }
 
@@ -121,4 +123,15 @@ void DeviceManager::runBug377405()
     properties[QStringLiteral("Value")] = true;
 
     runChangeAdapterProperty(properties);
+}
+
+void DeviceManager::runBug403289(const QVariantMap &properties)
+{
+    const QDBusObjectPath &path = properties.value(QStringLiteral("DevicePath")).value<QDBusObjectPath>();
+    DeviceInterface *device = dynamic_cast<DeviceInterface*>(m_objectManager->objectByPath(path));
+    if (!device) {
+        return;
+    }
+    device->connectMediaPlayer();
+    Q_EMIT m_objectManager->InterfacesRemoved(path, QStringList(QStringLiteral("org.bluez.MediaPlayer1")));
 }
