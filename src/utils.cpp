@@ -296,6 +296,7 @@ Device::Type appearanceToType(quint16 appearance)
         case 0x08:  // Barcode Scanner
             return Device::Peripheral;
         }
+        // fall-through
     default:
         return Device::Uncategorized;
     }
