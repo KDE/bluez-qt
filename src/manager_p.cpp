@@ -172,11 +172,6 @@ void ManagerPrivate::getManagedObjectsFinished(QDBusPendingCallWatcher *watcher)
         return;
     }
 
-    if (!m_media) {
-        Q_EMIT initError(QStringLiteral("Cannot find org.bluez.Media1 object!"));
-        return;
-    }
-
     connect(m_dbusObjectManager, &DBusObjectManager::InterfacesAdded,
             this, &ManagerPrivate::interfacesAdded);
     connect(m_dbusObjectManager, &DBusObjectManager::InterfacesRemoved,
