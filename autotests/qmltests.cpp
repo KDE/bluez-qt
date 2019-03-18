@@ -54,7 +54,7 @@ public Q_SLOTS:
     static void processProperties(QVariantMap &properties)
     {
         const QStringList &toDBusObjectPath = properties.value(QStringLiteral("_toDBusObjectPath")).toStringList();
-        Q_FOREACH (const QString &name, toDBusObjectPath) {
+        for (const QString &name : toDBusObjectPath) {
             const QString &val = properties.value(name).toString();
             properties[name] = QVariant::fromValue(QDBusObjectPath(val));
         }

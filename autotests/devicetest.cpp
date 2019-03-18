@@ -106,10 +106,10 @@ void DeviceTest::initTestCase()
     initJob->exec();
     QVERIFY(!initJob->error());
 
-    Q_FOREACH (const AdapterPtr &adapter, m_manager->adapters()) {
+    for (const AdapterPtr &adapter : m_manager->adapters()) {
         QVERIFY(!adapter->ubi().isEmpty());
 
-        Q_FOREACH (const DevicePtr &device, adapter->devices()) {
+        for (const DevicePtr &device : adapter->devices()) {
             QVERIFY(!device->ubi().isEmpty());
 
             DeviceUnit u;
@@ -132,7 +132,7 @@ void DeviceTest::initTestCase()
 
 void DeviceTest::cleanupTestCase()
 {
-    Q_FOREACH (const DeviceUnit &unit, m_units) {
+    for (const DeviceUnit &unit : m_units) {
         delete unit.dbusDevice;
         delete unit.dbusProperties;
     }
@@ -153,7 +153,7 @@ static void compareUuids(const QStringList &actual, const QStringList &expected)
 
 void DeviceTest::getPropertiesTest()
 {
-    Q_FOREACH (const DeviceUnit &unit, m_units) {
+    for (const DeviceUnit &unit : m_units) {
         QCOMPARE(unit.device->ubi(), unit.dbusDevice->path());
         QCOMPARE(unit.device->address(), unit.dbusDevice->address());
         QCOMPARE(unit.device->name(), unit.dbusDevice->alias());
@@ -176,7 +176,7 @@ void DeviceTest::getPropertiesTest()
 
 void DeviceTest::setAliasTest()
 {
-    Q_FOREACH (const DeviceUnit &unit, m_units) {
+    for (const DeviceUnit &unit : m_units) {
         QSignalSpy deviceSpy(unit.device.data(), SIGNAL(nameChanged(QString)));
         QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString,QVariantMap,QStringList)));
 
@@ -196,7 +196,7 @@ void DeviceTest::setAliasTest()
 
 void DeviceTest::setTrustedTest()
 {
-    Q_FOREACH (const DeviceUnit &unit, m_units) {
+    for (const DeviceUnit &unit : m_units) {
         QSignalSpy deviceSpy(unit.device.data(), SIGNAL(trustedChanged(bool)));
         QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString,QVariantMap,QStringList)));
 
@@ -216,7 +216,7 @@ void DeviceTest::setTrustedTest()
 
 void DeviceTest::setBlockedTest()
 {
-    Q_FOREACH (const DeviceUnit &unit, m_units) {
+    for (const DeviceUnit &unit : m_units) {
         QSignalSpy deviceSpy(unit.device.data(), SIGNAL(blockedChanged(bool)));
         QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString,QVariantMap,QStringList)));
 
@@ -236,7 +236,7 @@ void DeviceTest::setBlockedTest()
 
 void DeviceTest::deviceRemovedTest()
 {
-    Q_FOREACH (const DeviceUnit &unit, m_units) {
+    for (const DeviceUnit &unit : m_units) {
         QSignalSpy managerSpy(m_manager, SIGNAL(deviceRemoved(DevicePtr)));
         QSignalSpy adapterSpy(unit.device->adapter().data(), SIGNAL(deviceRemoved(DevicePtr)));
         QSignalSpy deviceSpy(unit.device.data(), SIGNAL(deviceRemoved(DevicePtr)));

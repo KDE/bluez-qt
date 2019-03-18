@@ -231,7 +231,7 @@ void ObexManagerPrivate::interfacesRemoved(const QDBusObjectPath &objectPath, co
 {
     const QString &path = objectPath.path();
 
-    Q_FOREACH (const QString &interface, interfaces) {
+    for (const QString &interface : interfaces) {
         if (interface == Strings::orgBluezObexSession1()) {
             removeSession(path);
         }

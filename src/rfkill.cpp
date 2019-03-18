@@ -210,8 +210,8 @@ void Rfkill::updateRfkillDevices()
             break;
 
         case RFKILL_OP_CHANGE_ALL:
-            Q_FOREACH (quint32 id, m_devices.keys()) {
-                m_devices[id] = getState(event);
+            for (auto it = m_devices.begin(); it != m_devices.end(); ++it) {
+                it.value() = getState(event);
             }
             break;
 
@@ -223,7 +223,7 @@ void Rfkill::updateRfkillDevices()
     // Update global state
     m_state = Unknown;
 
-    Q_FOREACH (State state, m_devices) { // krazy:exclude=foreach
+    for (State state : qAsConst(m_devices)) {
         Q_ASSERT(state != Unknown);
 
         if (m_state == Unknown) {

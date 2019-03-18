@@ -107,7 +107,7 @@ void DevicePrivate::interfacesRemoved(const QString &path, const QStringList &in
 {
     bool changed = false;
 
-    Q_FOREACH (const QString &interface, interfaces) {
+    for (const QString &interface : interfaces) {
         if (interface == Strings::orgBluezInput1() && m_input && m_input->d->m_path == path) {
             m_input.clear();
             Q_EMIT q.data()->inputChanged(m_input);
@@ -175,7 +175,7 @@ void DevicePrivate::propertiesChanged(const QString &interface, const QVariantMa
         }
     }
 
-    Q_FOREACH (const QString &property, invalidated) {
+    for (const QString &property : invalidated) {
         if (property == QLatin1String("Name")) {
             namePropertyChanged(QString());
         } else if (property == QLatin1String("Class")) {

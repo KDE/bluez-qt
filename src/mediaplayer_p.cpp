@@ -137,7 +137,7 @@ void MediaPlayerPrivate::propertiesChanged(const QString &interface, const QVari
         }
     }
 
-    Q_FOREACH (const QString &property, invalidated) {
+    for (const QString &property : invalidated) {
         if (property == QLatin1String("Name")) {
             PROPERTY_INVALIDATED(m_name, QString(), nameChanged);
         } else if (property == QLatin1String("Equalizer")) {

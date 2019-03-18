@@ -81,7 +81,7 @@ DBusManagerStruct ObjectManager::GetManagedObjects()
 {
     DBusManagerStruct objects;
 
-    Q_FOREACH (Object *object, m_objects.values()) {
+    for (Object *object : m_objects.values()) {
         if (objects.value(object->path()).isEmpty()) {
             objects[object->path()].insert(QStringLiteral("org.freedesktop.DBus.Introspectable"), QVariantMap());
             if (object->haveProperties()) {

@@ -103,7 +103,7 @@ void AdapterTest::initTestCase()
     initJob->exec();
     QVERIFY(!initJob->error());
 
-    Q_FOREACH (AdapterPtr adapter, m_manager->adapters()) {
+    for (AdapterPtr adapter : m_manager->adapters()) {
         QVERIFY(!adapter->ubi().isEmpty());
 
         AdapterUnit u;
@@ -124,7 +124,7 @@ void AdapterTest::initTestCase()
 
 void AdapterTest::cleanupTestCase()
 {
-    Q_FOREACH (const AdapterUnit &unit, m_units) {
+    for (const AdapterUnit &unit : m_units) {
         delete unit.dbusAdapter;
         delete unit.dbusProperties;
     }
@@ -145,7 +145,7 @@ static void compareUuids(const QStringList &actual, const QStringList &expected)
 
 void AdapterTest::getPropertiesTest()
 {
-    Q_FOREACH (const AdapterUnit &unit, m_units) {
+    for (const AdapterUnit &unit : m_units) {
         QCOMPARE(unit.adapter->ubi(), unit.dbusAdapter->path());
         QCOMPARE(unit.adapter->address(), unit.dbusAdapter->address());
         QCOMPARE(unit.adapter->name(), unit.dbusAdapter->alias());
@@ -165,7 +165,7 @@ void AdapterTest::getPropertiesTest()
 
 void AdapterTest::setAliasTest()
 {
-    Q_FOREACH (const AdapterUnit &unit, m_units) {
+    for (const AdapterUnit &unit : m_units) {
         QSignalSpy adapterSpy(unit.adapter.data(), SIGNAL(nameChanged(QString)));
         QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString,QVariantMap,QStringList)));
 
@@ -185,7 +185,7 @@ void AdapterTest::setAliasTest()
 
 void AdapterTest::setPoweredTest()
 {
-    Q_FOREACH (const AdapterUnit &unit, m_units) {
+    for (const AdapterUnit &unit : m_units) {
         QSignalSpy adapterSpy(unit.adapter.data(), SIGNAL(poweredChanged(bool)));
         QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString,QVariantMap,QStringList)));
 
@@ -209,7 +209,7 @@ void AdapterTest::setDiscoverableTest()
 {
     // Discoverable cannot be changed when Adapter is off
 
-    Q_FOREACH (const AdapterUnit &unit, m_units) {
+    for (const AdapterUnit &unit : m_units) {
         unit.adapter->setPowered(true)->waitForFinished();
 
         QSignalSpy adapterSpy(unit.adapter.data(), SIGNAL(discoverableChanged(bool)));
@@ -231,7 +231,7 @@ void AdapterTest::setDiscoverableTest()
 
 void AdapterTest::setDiscoverableTimeoutTest()
 {
-    Q_FOREACH (const AdapterUnit &unit, m_units) {
+    for (const AdapterUnit &unit : m_units) {
         QSignalSpy adapterSpy(unit.adapter.data(), SIGNAL(discoverableTimeoutChanged(quint32)));
         QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString,QVariantMap,QStringList)));
 
@@ -253,7 +253,7 @@ void AdapterTest::setDiscoverableTimeoutTest()
 
 void AdapterTest::setPairableTest()
 {
-    Q_FOREACH (const AdapterUnit &unit, m_units) {
+    for (const AdapterUnit &unit : m_units) {
         QSignalSpy adapterSpy(unit.adapter.data(), SIGNAL(pairableChanged(bool)));
         QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString,QVariantMap,QStringList)));
 
@@ -273,7 +273,7 @@ void AdapterTest::setPairableTest()
 
 void AdapterTest::setPairableTimeoutTest()
 {
-    Q_FOREACH (const AdapterUnit &unit, m_units) {
+    for (const AdapterUnit &unit : m_units) {
         QSignalSpy adapterSpy(unit.adapter.data(), SIGNAL(pairableTimeoutChanged(quint32)));
         QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString,QVariantMap,QStringList)));
 
@@ -297,7 +297,7 @@ void AdapterTest::discoveryTest()
 {
     // Discovery needs Adapter powered on
 
-    Q_FOREACH (const AdapterUnit &unit, m_units) {
+    for (const AdapterUnit &unit : m_units) {
         // Make sure the Adapter is powered on and not discovering
         unit.adapter->setPowered(true)->waitForFinished();
         if (unit.adapter->isDiscovering()) {
@@ -340,7 +340,7 @@ void AdapterTest::discoveryTest()
 
 void AdapterTest::removeDeviceTest()
 {
-    Q_FOREACH (const AdapterUnit &unit, m_units) {
+    for (const AdapterUnit &unit : m_units) {
         while (!unit.adapter->devices().isEmpty()) {
             DevicePtr device = unit.adapter->devices().first();
 
@@ -363,7 +363,7 @@ void AdapterTest::removeDeviceTest()
 
 void AdapterTest::adapterRemovedTest()
 {
-    Q_FOREACH (const AdapterUnit &unit, m_units) {
+    for (const AdapterUnit &unit : m_units) {
         QSignalSpy managerSpy(m_manager, SIGNAL(adapterRemoved(AdapterPtr)));
         QSignalSpy adapterSpy(unit.adapter.data(), SIGNAL(adapterRemoved(AdapterPtr)));
 

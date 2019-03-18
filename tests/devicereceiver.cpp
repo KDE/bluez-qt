@@ -94,7 +94,7 @@ void DeviceReceiver::adapterAdded(const BluezQt::AdapterPtr &adapter)
 static void stopDiscovering()
 {
     if (g_manager) {
-        Q_FOREACH (const AdapterPtr &adapter, g_manager->adapters()) {
+        for (const AdapterPtr &adapter : g_manager->adapters()) {
             adapter->stopDiscovery();
         }
     }

@@ -223,7 +223,7 @@ void ManagerPrivate::clear()
 
 AdapterPtr ManagerPrivate::findUsableAdapter() const
 {
-    Q_FOREACH (AdapterPtr adapter, m_adapters) {
+    for (AdapterPtr adapter : qAsConst(m_adapters)) {
         if (adapter->isPowered()) {
             return adapter;
         }
@@ -286,7 +286,7 @@ void ManagerPrivate::interfacesRemoved(const QDBusObjectPath &objectPath, const 
 {
     const QString &path = objectPath.path();
 
-    Q_FOREACH (const QString &interface, interfaces) {
+    for (const QString &interface : interfaces) {
         if (interface == Strings::orgBluezAdapter1()) {
             removeAdapter(path);
         } else if (interface == Strings::orgBluezDevice1()) {
@@ -394,7 +394,8 @@ void ManagerPrivate::removeAdapter(const QString &adapterPath)
     }
 
     // Make sure we always remove all devices before removing the adapter
-    Q_FOREACH (const DevicePtr &device, adapter->devices()) {
+    const auto devices = adapter->devices();
+    for (const DevicePtr &device : devices) {
         removeDevice(device->ubi());
     }
 
