@@ -22,6 +22,7 @@
 #include "objectmanager.h"
 #include "adapterinterface.h"
 #include "deviceinterface.h"
+#include "mediainterface.h"
 
 DeviceManager::DeviceManager(ObjectManager *parent)
     : QObject(parent)
@@ -43,6 +44,8 @@ void DeviceManager::runAction(const QString &actionName, const QVariantMap &prop
         runChangeAdapterProperty(properties);
     } else if (actionName == QLatin1String("change-device-property")) {
         runChangeDeviceProperty(properties);
+    } else if (actionName.startsWith(QLatin1String("adapter-media:"))) {
+        runAdapterMediaAction(actionName.mid(14), properties);
     } else if (actionName == QLatin1String("bug377405")) {
         runBug377405();
     } else if (actionName == QLatin1String("bug403289")) {
@@ -106,6 +109,16 @@ void DeviceManager::runChangeDeviceProperty(const QVariantMap &properties)
     }
 
     device->changeProperty(properties.value(QStringLiteral("Name")).toString(), properties.value(QStringLiteral("Value")));
+}
+
+void DeviceManager::runAdapterMediaAction(const QString action, const QVariantMap &properties)
+{
+    const QDBusObjectPath &path = properties.value(QStringLiteral("AdapterPath")).value<QDBusObjectPath>();
+    AdapterInterface *adapter = dynamic_cast<AdapterInterface*>(m_objectManager->objectByPath(path));
+    if (!adapter) {
+        return;
+    }
+    adapter->media()->runAction(action, properties);
 }
 
 void DeviceManager::runBug377405()

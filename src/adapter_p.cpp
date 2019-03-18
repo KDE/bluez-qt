@@ -24,6 +24,8 @@
 #include "adapter.h"
 #include "utils.h"
 #include "macros.h"
+#include "media.h"
+#include "media_p.h"
 
 namespace BluezQt
 {
@@ -61,6 +63,40 @@ void AdapterPrivate::init(const QVariantMap &properties)
     m_discovering = properties.value(QStringLiteral("Discovering")).toBool();
     m_uuids = stringListToUpper(properties.value(QStringLiteral("UUIDs")).toStringList());
     m_modalias = properties.value(QStringLiteral("Modalias")).toString();
+}
+
+void AdapterPrivate::interfacesAdded(const QString &path, const QVariantMapMap &interfaces)
+{
+    bool changed = false;
+
+    for (auto it = interfaces.cbegin(); it != interfaces.cend(); ++it) {
+        if (it.key() == Strings::orgBluezMedia1()) {
+            m_media = MediaPtr(new Media(path));
+            Q_EMIT q.data()->mediaChanged(m_media);
+            changed = true;
+        }
+    }
+
+    if (changed) {
+        Q_EMIT q.data()->adapterChanged(q.toStrongRef());
+    }
+}
+
+void AdapterPrivate::interfacesRemoved(const QString &path, const QStringList &interfaces)
+{
+    bool changed = false;
+
+    for (const QString &interface : interfaces) {
+        if (interface == Strings::orgBluezMedia1() && m_media && m_media->d->m_path == path) {
+            m_media.clear();
+            Q_EMIT q.data()->mediaChanged(m_media);
+            changed = true;
+        }
+    }
+
+    if (changed) {
+        Q_EMIT q.data()->adapterChanged(q.toStrongRef());
+    }
 }
 
 void AdapterPrivate::addDevice(const DevicePtr &device)

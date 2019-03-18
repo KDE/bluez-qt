@@ -29,6 +29,7 @@
 #include "media.h"
 #include "mediaendpoint.h"
 #include "services.h"
+#include "adapter.h"
 
 using namespace BluezQt;
 
@@ -85,8 +86,8 @@ MediaEndpointConnector::MediaEndpointConnector(Manager *manager, QObject *parent
     connect(aacSink, &MediaEndpoint::configurationSet, this, &MediaEndpointConnector::onConfigurationSet);
     connect(sbcSink, &MediaEndpoint::configurationCleared, this, &MediaEndpointConnector::onConfigurationCleared);
     connect(aacSink, &MediaEndpoint::configurationCleared, this, &MediaEndpointConnector::onConfigurationCleared);
-    manager->media()->registerEndpoint(sbcSink);
-    manager->media()->registerEndpoint(aacSink);
+    manager->usableAdapter()->media()->registerEndpoint(sbcSink);
+    manager->usableAdapter()->media()->registerEndpoint(aacSink);
 }
 
 void MediaEndpointConnector::onServiceAuthorized(BluezQt::DevicePtr device, const QString &uuid, bool allowed)
@@ -125,6 +126,11 @@ int main(int argc, char **argv)
     if (initJob->error()) {
         qWarning() << "Error initializing manager:" << initJob->errorText();
         return 1;
+    }
+
+    if (!manager->usableAdapter()) {
+        qWarning() << "No usable adapter";
+        return 2;
     }
 
     new MediaEndpointConnector(manager);

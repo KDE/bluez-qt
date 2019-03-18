@@ -18,8 +18,7 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef MEDIA_H
-#define MEDIA_H
+#pragma once
 
 #include "object.h"
 
@@ -27,13 +26,13 @@
 
 class QDBusMessage;
 
-class Media : public QDBusAbstractAdaptor, public Object
+class MediaInterface : public QDBusAbstractAdaptor, public Object
 {
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.bluez.Media1")
 
 public:
-    explicit Media(QObject *parent = nullptr);
+    explicit MediaInterface(const QDBusObjectPath &path, QObject *parent = nullptr);
 
     void runAction(const QString &actionName, const QVariantMap &properties);
 
@@ -51,5 +50,3 @@ private:
     QString m_service;
     QVariantMap m_properties;
 };
-
-#endif // MEDIA_H

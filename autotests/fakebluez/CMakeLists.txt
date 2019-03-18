@@ -13,7 +13,7 @@ set(fakebluez_SRCS
     mediaplayerinterface.cpp
     obexagentmanager.cpp
     obexclient.cpp
-    media.cpp
+    mediainterface.cpp
 )
 
 add_executable(fakebluez ${fakebluez_SRCS})

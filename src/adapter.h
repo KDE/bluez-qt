@@ -60,6 +60,7 @@ class BLUEZQT_EXPORT Adapter : public QObject
     Q_PROPERTY(bool discovering READ isDiscovering NOTIFY discoveringChanged)
     Q_PROPERTY(QStringList uuids READ uuids NOTIFY uuidsChanged)
     Q_PROPERTY(QString modalias READ modalias NOTIFY modaliasChanged)
+    Q_PROPERTY(MediaPtr media READ media NOTIFY mediaChanged)
     Q_PROPERTY(QList<DevicePtr> devices READ devices)
 
 public:
@@ -231,6 +232,13 @@ public:
     QString modalias() const;
 
     /**
+     * Returns the media interface for the adapter.
+     *
+     * @return null if adapter have no media
+     */
+    MediaPtr media() const;
+
+    /**
      * Returns list of devices known by the adapter.
      *
      * @return list of devices
@@ -341,6 +349,11 @@ Q_SIGNALS:
      * Indicates that adapter's modalias have changed.
      */
     void modaliasChanged(const QString &modalias);
+
+    /**
+     * Indicates that adapter's media have changed.
+     */
+    void mediaChanged(MediaPtr media);
 
     /**
      * Indicates that a new device was added (eg. found by discovery).

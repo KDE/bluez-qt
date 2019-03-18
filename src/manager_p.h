@@ -81,7 +81,6 @@ public:
     DBusObjectManager *m_dbusObjectManager;
     BluezAgentManager *m_bluezAgentManager;
     BluezProfileManager *m_bluezProfileManager;
-    MediaPtr m_media;
 
     QHash<QString, AdapterPtr> m_adapters;
     QHash<QString, DevicePtr> m_devices;

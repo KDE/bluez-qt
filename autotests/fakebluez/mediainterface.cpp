@@ -18,21 +18,21 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "media.h"
+#include "mediainterface.h"
 
 #include <QDebug>
 #include <QDBusMessage>
 #include <QDBusConnection>
 #include <QDBusPendingCall>
 
-Media::Media(QObject *parent)
+MediaInterface::MediaInterface(const QDBusObjectPath &path, QObject *parent)
     : QDBusAbstractAdaptor(parent)
 {
     setName(QStringLiteral("org.bluez.Media1"));
-    setPath(QDBusObjectPath(QStringLiteral("/org/bluez")));
+    setPath(path);
 }
 
-void Media::runAction(const QString &actionName, const QVariantMap &properties)
+void MediaInterface::runAction(const QString &actionName, const QVariantMap &properties)
 {
     if (actionName == QLatin1String("set-configuration")) {
         runSetConfigurationAction(properties);
@@ -45,14 +45,14 @@ void Media::runAction(const QString &actionName, const QVariantMap &properties)
     }
 }
 
-void Media::RegisterEndpoint(const QDBusObjectPath &path, const QVariantMap &properties, const QDBusMessage &msg)
+void MediaInterface::RegisterEndpoint(const QDBusObjectPath &path, const QVariantMap &properties, const QDBusMessage &msg)
 {
     m_endpoint = path;
     m_service = msg.service();
     m_properties = properties;
 }
 
-void Media::UnregisterEndpoint(const QDBusObjectPath &path, const QDBusMessage &msg)
+void MediaInterface::UnregisterEndpoint(const QDBusObjectPath &path, const QDBusMessage &msg)
 {
     if (m_endpoint == path && m_service == msg.service()) {
         m_endpoint = QDBusObjectPath();
@@ -61,7 +61,7 @@ void Media::UnregisterEndpoint(const QDBusObjectPath &path, const QDBusMessage &
     }
 }
 
-void Media::runSetConfigurationAction(const QVariantMap &properties)
+void MediaInterface::runSetConfigurationAction(const QVariantMap &properties)
 {
     QDBusMessage call = QDBusMessage::createMethodCall(m_service,
                                                        m_endpoint.path(),
@@ -72,7 +72,7 @@ void Media::runSetConfigurationAction(const QVariantMap &properties)
     QDBusConnection::sessionBus().asyncCall(call);
 }
 
-void Media::runSelectConfigurationAction(const QVariantMap &properties)
+void MediaInterface::runSelectConfigurationAction(const QVariantMap &properties)
 {
     QDBusMessage call = QDBusMessage::createMethodCall(m_service,
                                                        m_endpoint.path(),
@@ -82,7 +82,7 @@ void Media::runSelectConfigurationAction(const QVariantMap &properties)
     QDBusConnection::sessionBus().asyncCall(call);
 }
 
-void Media::runClearConfigurationAction(const QVariantMap &properties)
+void MediaInterface::runClearConfigurationAction(const QVariantMap &properties)
 {
     QDBusMessage call = QDBusMessage::createMethodCall(m_service,
                                                        m_endpoint.path(),
@@ -92,7 +92,7 @@ void Media::runClearConfigurationAction(const QVariantMap &properties)
     QDBusConnection::sessionBus().asyncCall(call);
 }
 
-void Media::runReleaseAction()
+void MediaInterface::runReleaseAction()
 {
     QDBusMessage call = QDBusMessage::createMethodCall(m_service,
                                                        m_endpoint.path(),

@@ -29,7 +29,6 @@ class ObjectManager;
 class AgentManager;
 class ProfileManager;
 class DeviceManager;
-class Media;
 class ObexObject;
 class ObexAgentManager;
 class ObexClient;
@@ -53,7 +52,6 @@ private:
     void createAgentManager();
     void createProfileManager();
     void createDeviceManager();
-    void createMedia();
     void createObexObjectManager();
     void createObexAgentManager();
     void createObexClient();
@@ -74,7 +72,6 @@ private:
     AgentManager *m_agentManager;
     ProfileManager *m_profileManager;
     DeviceManager *m_deviceManager;
-    Media *m_media;
 
     ObexObject *m_obexObject;
     ObexAgentManager *m_obexAgentManager;

@@ -27,6 +27,8 @@
 
 class QDBusObjectPath;
 
+class MediaInterface;
+
 class AdapterObject : public QObject
 {
 public:
@@ -83,6 +85,8 @@ public:
 
     QString modalias() const;
 
+    MediaInterface *media() const;
+
 public Q_SLOTS:
     void StartDiscovery();
     void StopDiscovery();
@@ -91,6 +95,9 @@ public Q_SLOTS:
 private Q_SLOTS:
     void resetPairable();
     void resetDiscoverable();
+
+private:
+    MediaInterface *m_media;
 };
 
 #endif // ADAPTERINTERFACE_H

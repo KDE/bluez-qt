@@ -28,7 +28,6 @@
 #include "adapter_p.h"
 #include "debug.h"
 #include "utils.h"
-#include "media.h"
 
 #include <QDBusReply>
 #include <QDBusConnection>
@@ -157,9 +156,6 @@ void ManagerPrivate::getManagedObjectsFinished(QDBusPendingCallWatcher *watcher)
         if (interfaces.contains(Strings::orgBluezProfileManager1())) {
             m_bluezProfileManager = new BluezProfileManager(Strings::orgBluez(), path, DBusConnection::orgBluez(), this);
         }
-        if (interfaces.contains(Strings::orgBluezMedia1())) {
-            m_media = MediaPtr(new Media(path));
-        }
     }
 
     if (!m_bluezAgentManager) {
@@ -271,9 +267,16 @@ void ManagerPrivate::interfacesAdded(const QDBusObjectPath &objectPath, const QV
         }
     }
 
-    Q_FOREACH (DevicePtr device, m_devices.values()) {
-        if (path.startsWith(device->ubi())) {
-            device->d->interfacesAdded(path, interfaces);
+    for (auto it = m_adapters.cbegin(); it != m_adapters.cend(); ++it) {
+        if (path.startsWith(it.value()->ubi())) {
+            it.value()->d->interfacesAdded(path, interfaces);
+            break;
+        }
+    }
+
+    for (auto it = m_devices.cbegin(); it != m_devices.cend(); ++it) {
+        if (path.startsWith(it.value()->ubi())) {
+            it.value()->d->interfacesAdded(path, interfaces);
             break;
         }
     }
@@ -291,9 +294,16 @@ void ManagerPrivate::interfacesRemoved(const QDBusObjectPath &objectPath, const 
         }
     }
 
-    Q_FOREACH (DevicePtr device, m_devices.values()) {
-        if (path.startsWith(device->ubi())) {
-            device->d->interfacesRemoved(path, interfaces);
+    for (auto it = m_adapters.cbegin(); it != m_adapters.cend(); ++it) {
+        if (path.startsWith(it.value()->ubi())) {
+            it.value()->d->interfacesRemoved(path, interfaces);
+            break;
+        }
+    }
+
+    for (auto it = m_devices.cbegin(); it != m_devices.cend(); ++it) {
+        if (path.startsWith(it.value()->ubi())) {
+            it.value()->d->interfacesRemoved(path, interfaces);
             break;
         }
     }

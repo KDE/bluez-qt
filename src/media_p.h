@@ -33,6 +33,7 @@ typedef org::bluez::Media1 BluezMedia;
 class MediaPrivate
 {
 public:
+    QString m_path;
     BluezMedia *m_bluezMedia = nullptr;
 };
 

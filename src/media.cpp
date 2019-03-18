@@ -35,6 +35,7 @@ Media::Media(const QString &path, QObject *parent)
     : QObject(parent)
     , d(new MediaPrivate())
 {
+    d->m_path = path;
     d->m_bluezMedia = new BluezMedia(Strings::orgBluez(), path, DBusConnection::orgBluez(), this);
 }
 

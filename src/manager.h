@@ -300,9 +300,10 @@ public:
     /**
      * Returns the media interface.
      *
+     * @deprecated since 5.57, use Adapter::media() instead.
      * @return media
      */
-    MediaPtr media() const;
+    BLUEZQT_DEPRECATED MediaPtr media() const; // KF6 TODO: Remove
 
 Q_SIGNALS:
     /**

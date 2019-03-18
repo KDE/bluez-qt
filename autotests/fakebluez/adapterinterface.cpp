@@ -20,6 +20,7 @@
 
 #include "adapterinterface.h"
 #include "objectmanager.h"
+#include "mediainterface.h"
 
 #include <QTimer>
 #include <QDBusConnection>
@@ -42,6 +43,11 @@ AdapterInterface::AdapterInterface(const QDBusObjectPath &path, const QVariantMa
 
     // Alias needs special handling
     setAlias(properties.value(QStringLiteral("Alias")).toString());
+
+    // Media interface
+    m_media = new MediaInterface(path, parent);
+    ObjectManager *manager = ObjectManager::self();
+    manager->addObject(m_media);
 }
 
 QString AdapterInterface::address() const
@@ -140,6 +146,11 @@ QStringList AdapterInterface::uuids() const
 QString AdapterInterface::modalias() const
 {
     return Object::property(QStringLiteral("Modalias")).toString();
+}
+
+MediaInterface *AdapterInterface::media() const
+{
+    return m_media;
 }
 
 void AdapterInterface::StartDiscovery()

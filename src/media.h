@@ -87,7 +87,7 @@ private:
 
     class MediaPrivate *const d;
 
-    friend class ManagerPrivate;
+    friend class AdapterPrivate;
 };
 
 } // namespace BluezQt

@@ -22,6 +22,7 @@
 #define MEDIATEST_H
 
 #include "mediaendpoint.h"
+#include "adapter.h"
 
 class TestEndpoint : public BluezQt::MediaEndpoint
 {
@@ -50,6 +51,7 @@ private Q_SLOTS:
 
 private:
     TestEndpoint* m_endpoint;
+    BluezQt::AdapterPtr m_adapter;
 };
 
 #endif // MEDIATEST_H
