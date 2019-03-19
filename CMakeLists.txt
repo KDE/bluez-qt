@@ -46,6 +46,7 @@ set_package_properties(Qt5Qml PROPERTIES DESCRIPTION "QML support for BluezQt" T
 find_package(Qt5QuickTest ${REQUIRED_QT_VERSION} CONFIG)
 set_package_properties(Qt5QuickTest PROPERTIES DESCRIPTION "QML autotests for BluezQt" TYPE OPTIONAL)
 #add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x060000)
+add_definitions(-DQT_NO_FOREACH)
 # Subdirectories
 add_subdirectory(src)
 
