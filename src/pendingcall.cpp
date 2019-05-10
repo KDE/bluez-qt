@@ -84,6 +84,9 @@ public:
     void processObjectPathReply(const QDBusPendingReply<QDBusObjectPath> &reply);
     void processFileTransferListReply(const QDBusPendingReply<QVariantMapList> &reply);
     void processTransferWithPropertiesReply(const QDBusPendingReply<QDBusObjectPath, QVariantMap> &reply);
+    void processVariantMap(const QDBusPendingReply<QVariantMap> &reply);
+    void processUshort(const QDBusPendingReply<ushort> &reply);
+    void processStringList(const QDBusPendingReply<QStringList> &reply);
     void processError(const QDBusError &m_error);
 
     void emitFinished();
@@ -134,6 +137,18 @@ void PendingCallPrivate::processReply(QDBusPendingCallWatcher *call)
 
     case PendingCall::ReturnTransferWithProperties:
         processTransferWithPropertiesReply(*call);
+        break;
+
+    case PendingCall::ReturnVariantMap:
+        processVariantMap(*call);
+        break;
+
+    case PendingCall::ReturnUShort:
+        processUshort(*call);
+        break;
+
+    case PendingCall::ReturnStringList:
+        processStringList(*call);
         break;
 
     default:
@@ -195,6 +210,32 @@ void PendingCallPrivate::processTransferWithPropertiesReply(const QDBusPendingRe
     transfer->d->q = transfer.toWeakRef();
     transfer->d->m_suspendable = true;
     m_value.append(QVariant::fromValue(transfer));
+}
+
+void PendingCallPrivate::processVariantMap(const QDBusPendingReply<QVariantMap> &reply)
+{
+    processError(reply.error());
+    if (reply.isError()) {
+        return;
+    }
+
+    m_value.append(QVariant::fromValue(reply.value()));
+}
+
+void PendingCallPrivate::processUshort(const QDBusPendingReply<ushort> &reply)
+{
+    processError(reply.error());
+    if (!reply.isError()) {
+        m_value.append(reply.value());
+    }
+}
+
+void PendingCallPrivate::processStringList(const QDBusPendingReply<QStringList> &reply)
+{
+    processError(reply.error());
+    if (!reply.isError()) {
+        m_value.append(reply.value());
+    }
 }
 
 void PendingCallPrivate::processError(const QDBusError &error)

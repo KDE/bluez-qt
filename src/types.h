@@ -48,6 +48,7 @@ class ObexAgent;
 class ObexFileTransfer;
 class ObexFileTransferEntry;
 class ObexObjectPush;
+class ObexPhonebookAccess;
 
 typedef QSharedPointer<BluezQt::Manager> ManagerPtr;
 typedef QSharedPointer<BluezQt::Adapter> AdapterPtr;
@@ -58,6 +59,7 @@ typedef QSharedPointer<BluezQt::MediaPlayer> MediaPlayerPtr;
 typedef QSharedPointer<BluezQt::ObexManager> ObexManagerPtr;
 typedef QSharedPointer<BluezQt::ObexSession> ObexSessionPtr;
 typedef QSharedPointer<BluezQt::ObexTransfer> ObexTransferPtr;
+typedef QSharedPointer<BluezQt::ObexPhonebookAccess> ObexPhonebookAccessPtr;
 
 } // namespace BluezQt
 

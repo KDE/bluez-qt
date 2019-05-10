@@ -180,7 +180,10 @@ private:
         ReturnString,
         ReturnObjectPath,
         ReturnFileTransferList,
-        ReturnTransferWithProperties
+        ReturnTransferWithProperties,
+        ReturnVariantMap,
+        ReturnUShort,
+        ReturnStringList
     };
 
     explicit PendingCall(const QDBusPendingCall &call, ReturnType type, QObject *parent = nullptr);
@@ -199,6 +202,7 @@ private:
     friend class ObexSession;
     friend class ObexObjectPush;
     friend class ObexFileTransfer;
+    friend class ObexPhonebookAccess;
 };
 
 } // namespace BluezQt

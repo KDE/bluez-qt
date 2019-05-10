@@ -35,6 +35,8 @@ set(bluezqt_SRCS
     obexobjectpush.cpp
     obexfiletransfer.cpp
     obexfiletransferentry.cpp
+    obexphonebookaccess.cpp
+    obexphonebookaccess_p.cpp
 )
 
 ecm_qt_declare_logging_category(bluezqt_SRCS HEADER debug.h IDENTIFIER BLUEZQT CATEGORY_NAME org.kde.bluez)
@@ -60,6 +62,7 @@ qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.b
 qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.obex.Transfer1.xml obextransfer1)
 qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.obex.Session1.xml obexsession1)
 qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.obex.ObjectPush1.xml obexobjectpush1)
+qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.obex.PhonebookAccess1.xml obexphonebookaccess1)
 
 add_library(KF5BluezQt ${bluezqt_SRCS})
 generate_export_header(KF5BluezQt BASE_NAME BluezQt)
@@ -108,6 +111,7 @@ ecm_generate_headers(BluezQt_CamelCase_HEADERS
         ObexObjectPush
         ObexFileTransfer
         ObexFileTransferEntry
+        ObexPhonebookAccess
 
     REQUIRED_HEADERS BluezQt_HEADERS
     PREFIX BluezQt
