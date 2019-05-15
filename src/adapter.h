@@ -60,6 +60,7 @@ class BLUEZQT_EXPORT Adapter : public QObject
     Q_PROPERTY(bool discovering READ isDiscovering NOTIFY discoveringChanged)
     Q_PROPERTY(QStringList uuids READ uuids NOTIFY uuidsChanged)
     Q_PROPERTY(QString modalias READ modalias NOTIFY modaliasChanged)
+    Q_PROPERTY(LEAdvertisingManagerPtr leAdvertisingManager READ leAdvertisingManager NOTIFY leAdvertisingManagerChanged)
     Q_PROPERTY(MediaPtr media READ media NOTIFY mediaChanged)
     Q_PROPERTY(QList<DevicePtr> devices READ devices)
 
@@ -232,6 +233,20 @@ public:
     QString modalias() const;
 
     /**
+     * Returns the GATT manager interface for the adapter.
+     *
+     * @return null if adapter have no GATT manager
+     */
+    GattManagerPtr gattManager() const;
+
+    /**
+     * Returns the LE advertising manager interface for the adapter.
+     *
+     * @return null if adapter have no Bluetooth LE
+     */
+    LEAdvertisingManagerPtr leAdvertisingManager() const;
+
+    /**
      * Returns the media interface for the adapter.
      *
      * @return null if adapter have no media
@@ -349,6 +364,16 @@ Q_SIGNALS:
      * Indicates that adapter's modalias have changed.
      */
     void modaliasChanged(const QString &modalias);
+
+    /**
+     * Indicates that adapter's GATT manager have changed.
+     */
+    void gattManagerChanged(GattManagerPtr gattManager);
+
+    /**
+     * Indicates that adapter's LE advertising manager have changed.
+     */
+    void leAdvertisingManagerChanged(LEAdvertisingManagerPtr leAdvertisingManager);
 
     /**
      * Indicates that adapter's media have changed.

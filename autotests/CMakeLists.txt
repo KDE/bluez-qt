@@ -32,6 +32,8 @@ bluezqt_tests(
     mediaplayertest
     jobstest
     mediatest
+    leadvertisingmanagertest
+    gattmanagertest
 )
 
 if(Qt5Qml_FOUND AND Qt5QuickTest_FOUND)

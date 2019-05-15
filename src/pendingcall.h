@@ -96,6 +96,10 @@ public:
         AuthenticationTimeout = 18,
         /** Indicates that the connection attempt have failed. */
         ConnectionAttemptFailed = 19,
+        /** Indicates that the data provided generates a data packet which is too long. */
+        InvalidLength = 20,
+        /** Indicates that the action is not permitted (e.g. maximum reached or socket locked). */
+        NotPermitted = 21,
         /** Indicates an error with D-Bus. */
         DBusError = 98,
         /** Indicates an internal error. */
@@ -192,6 +196,8 @@ private:
     friend class Manager;
     friend class Adapter;
     friend class Device;
+    friend class GattManager;
+    friend class LEAdvertisingManager;
     friend class Media;
     friend class MediaPlayer;
     friend class ObexManager;

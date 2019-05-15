@@ -21,6 +21,8 @@
 #include "adapterinterface.h"
 #include "objectmanager.h"
 #include "mediainterface.h"
+#include "leadvertisingmanagerinterface.h"
+#include "gattmanagerinterface.h"
 
 #include <QTimer>
 #include <QDBusConnection>
@@ -48,6 +50,14 @@ AdapterInterface::AdapterInterface(const QDBusObjectPath &path, const QVariantMa
     m_media = new MediaInterface(path, parent);
     ObjectManager *manager = ObjectManager::self();
     manager->addObject(m_media);
+
+    // LEAdvertisingManager interface
+    m_leAdvertisingManager = new LEAdvertisingManagerInterface(path, parent);
+    manager->addObject(m_leAdvertisingManager);
+
+    // GattManager interface
+    m_gattManager = new GattManagerInterface(path, parent);
+    manager->addObject(m_gattManager);
 }
 
 QString AdapterInterface::address() const
@@ -151,6 +161,16 @@ QString AdapterInterface::modalias() const
 MediaInterface *AdapterInterface::media() const
 {
     return m_media;
+}
+
+LEAdvertisingManagerInterface *AdapterInterface::leAdvertisingManager() const
+{
+    return m_leAdvertisingManager;
+}
+
+GattManagerInterface *AdapterInterface::gattManager() const
+{
+    return m_gattManager;
 }
 
 void AdapterInterface::StartDiscovery()

@@ -27,7 +27,7 @@
 namespace BluezQt
 {
 
-MediaEndpoint::MediaEndpoint(const Configuration& configuration, QObject *parent)
+MediaEndpoint::MediaEndpoint(const Configuration &configuration, QObject *parent)
     : QObject(parent),
       d(new MediaEndpointPrivate(configuration))
 {

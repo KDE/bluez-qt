@@ -42,6 +42,8 @@ private:
     void runChangeAdapterProperty(const QVariantMap &properties);
     void runChangeDeviceProperty(const QVariantMap &properties);
     void runAdapterMediaAction(const QString action, const QVariantMap &properties);
+    void runAdapterLeAdvertisingManagerAction(const QString action, const QVariantMap &properties);
+    void runAdapterGattManagerAction(const QString action, const QVariantMap &properties);
     void runBug377405();
     void runBug403289(const QVariantMap &properties);
 

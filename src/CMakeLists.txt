@@ -6,7 +6,21 @@ set(bluezqt_SRCS
     adapter_p.cpp
     device.cpp
     device_p.cpp
+    gattapplication.cpp
+    gattapplication_p.cpp
+    gattcharacteristic.cpp
+    gattcharacteristic_p.cpp
+    gattcharacteristicadaptor.cpp
+    gattmanager.cpp
+    gattmanager_p.cpp
+    gattservice.cpp
+    gattservice_p.cpp
+    gattserviceadaptor.cpp
     input.cpp
+    leadvertisement.cpp
+    leadvertisement_p.cpp
+    leadvertisementadaptor.cpp
+    leadvertisingmanager.cpp
     media.cpp
     mediaendpoint.cpp
     mediaendpoint_p.cpp
@@ -14,6 +28,7 @@ set(bluezqt_SRCS
     mediaplayer.cpp
     mediaplayer_p.cpp
     mediaplayertrack.cpp
+    objectmanageradaptor.cpp
     devicesmodel.cpp
     job.cpp
     initmanagerjob.cpp
@@ -50,8 +65,12 @@ qt5_add_dbus_interface(bluezqt_SRCS ${obexfiletransfer1_xml} obexfiletransfer1)
 qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.freedesktop.DBus.Properties.xml dbusproperties)
 qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.Adapter1.xml bluezadapter1)
 qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.AgentManager1.xml bluezagentmanager1)
+qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.GattCharacteristic1.xml bluezgattcharacteristic1)
+qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.GattManager1.xml bluezgattmanager1)
 qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.ProfileManager1.xml bluezprofilemanager1)
 qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.Device1.xml bluezdevice1)
+qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.LEAdvertisement1.xml bluezleadvertisement1)
+qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.LEAdvertisingManager1.xml bluezleadvertisingmanager1)
 qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.Media1.xml bluezmedia1)
 qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.MediaEndpoint1.xml bluezmediaendpoint1)
 qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.MediaPlayer1.xml bluezmediaplayer1)
@@ -87,7 +106,13 @@ ecm_generate_headers(BluezQt_CamelCase_HEADERS
         Manager
         Adapter
         Device
+        GattApplication
+        GattCharacteristic
+        GattManager
+        GattService
         Input
+        LEAdvertisement
+        LEAdvertisingManager
         Media
         MediaEndpoint
         MediaPlayer

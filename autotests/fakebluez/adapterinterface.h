@@ -27,6 +27,8 @@
 
 class QDBusObjectPath;
 
+class GattManagerInterface;
+class LEAdvertisingManagerInterface;
 class MediaInterface;
 
 class AdapterObject : public QObject
@@ -87,6 +89,10 @@ public:
 
     MediaInterface *media() const;
 
+    LEAdvertisingManagerInterface *leAdvertisingManager() const;
+
+    GattManagerInterface *gattManager() const;
+
 public Q_SLOTS:
     void StartDiscovery();
     void StopDiscovery();
@@ -98,6 +104,8 @@ private Q_SLOTS:
 
 private:
     MediaInterface *m_media;
+    LEAdvertisingManagerInterface *m_leAdvertisingManager;
+    GattManagerInterface *m_gattManager;
 };
 
 #endif // ADAPTERINTERFACE_H

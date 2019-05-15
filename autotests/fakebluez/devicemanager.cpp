@@ -23,6 +23,8 @@
 #include "adapterinterface.h"
 #include "deviceinterface.h"
 #include "mediainterface.h"
+#include "leadvertisingmanagerinterface.h"
+#include "gattmanagerinterface.h"
 
 DeviceManager::DeviceManager(ObjectManager *parent)
     : QObject(parent)
@@ -46,6 +48,10 @@ void DeviceManager::runAction(const QString &actionName, const QVariantMap &prop
         runChangeDeviceProperty(properties);
     } else if (actionName.startsWith(QLatin1String("adapter-media:"))) {
         runAdapterMediaAction(actionName.mid(14), properties);
+    } else if (actionName.startsWith(QLatin1String("adapter-leadvertisingmanager:"))) {
+        runAdapterLeAdvertisingManagerAction(actionName.mid(29), properties);
+    } else if (actionName.startsWith(QLatin1String("adapter-gattmanager:"))) {
+        runAdapterGattManagerAction(actionName.mid(20), properties);
     } else if (actionName == QLatin1String("bug377405")) {
         runBug377405();
     } else if (actionName == QLatin1String("bug403289")) {
@@ -119,6 +125,26 @@ void DeviceManager::runAdapterMediaAction(const QString action, const QVariantMa
         return;
     }
     adapter->media()->runAction(action, properties);
+}
+
+void DeviceManager::runAdapterLeAdvertisingManagerAction(const QString action, const QVariantMap &properties)
+{
+    const QDBusObjectPath &path = properties.value(QStringLiteral("AdapterPath")).value<QDBusObjectPath>();
+    AdapterInterface *adapter = dynamic_cast<AdapterInterface*>(m_objectManager->objectByPath(path));
+    if (!adapter) {
+        return;
+    }
+    adapter->leAdvertisingManager()->runAction(action, properties);
+}
+
+void DeviceManager::runAdapterGattManagerAction(const QString action, const QVariantMap &properties)
+{
+    const QDBusObjectPath &path = properties.value(QStringLiteral("AdapterPath")).value<QDBusObjectPath>();
+    AdapterInterface *adapter = dynamic_cast<AdapterInterface*>(m_objectManager->objectByPath(path));
+    if (!adapter) {
+        return;
+    }
+    adapter->gattManager()->runAction(action, properties);
 }
 
 void DeviceManager::runBug377405()

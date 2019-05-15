@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+  <interface name="org.bluez.GattCharacteristic1">
+    <method name="ReadValue">
+      <arg name="options" type="a{sv}" direction="in"/>
+      <arg name="value" type="ay" direction="out"/>
+      <annotation name="org.qtproject.QtDBus.QtTypeName.In0" value="QVariantMap"/>
+    </method>
+    <method name="WriteValue">
+      <arg name="value" type="ay" direction="in"/>
+      <arg name="options" type="a{sv}" direction="in"/>
+      <annotation name="org.qtproject.QtDBus.QtTypeName.In1" value="QVariantMap"/>
+    </method>
+    <method name="StartNotify"/>
+    <method name="StopNotify"/>
+  </interface>
+</node>

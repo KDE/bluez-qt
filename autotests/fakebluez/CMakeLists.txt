@@ -14,6 +14,8 @@ set(fakebluez_SRCS
     obexagentmanager.cpp
     obexclient.cpp
     mediainterface.cpp
+    leadvertisingmanagerinterface.cpp
+    gattmanagerinterface.cpp
 )
 
 add_executable(fakebluez ${fakebluez_SRCS})
