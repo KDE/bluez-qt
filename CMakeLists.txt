@@ -49,6 +49,7 @@ set_package_properties(Qt5QuickTest PROPERTIES DESCRIPTION "QML autotests for Bl
 add_definitions(-DQT_NO_FOREACH)
 # Subdirectories
 add_subdirectory(src)
+add_subdirectory(tools/bluezapi2qt)
 
 if (BUILD_TESTING)
     add_subdirectory(tests)
