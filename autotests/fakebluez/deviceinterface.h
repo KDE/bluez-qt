@@ -28,6 +28,7 @@
 
 class QDBusMessage;
 class QDBusObjectPath;
+class MediaTransportInterface;
 
 class DeviceObject : public QObject
 {
@@ -91,6 +92,8 @@ public:
 
     QString modalias() const;
 
+    MediaTransportInterface *mediaTransport() const;
+
 public Q_SLOTS:
     void Connect();
     void Disconnect();
@@ -102,9 +105,12 @@ public Q_SLOTS:
 private:
     void connectMediaPlayer();
     void disconnectMediaPlayer();
+    void connectMediaTransport();
+    void disconnectMediaTransport();
 
     QStringList m_connectedUuids;
-    Object *m_mediaPlayer;
+    Object *m_mediaPlayer = nullptr;
+    MediaTransportInterface *m_mediaTransport = nullptr;
 
     friend class DeviceManager;
 };

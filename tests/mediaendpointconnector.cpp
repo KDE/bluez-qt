@@ -22,12 +22,15 @@
 
 #include <QCoreApplication>
 #include <QDBusObjectPath>
+#include <QDBusUnixFileDescriptor>
 #include <QDebug>
 
 #include "device.h"
 #include "initmanagerjob.h"
 #include "media.h"
 #include "mediaendpoint.h"
+#include "mediatransport.h"
+#include "tpendingcall.h"
 #include "services.h"
 #include "adapter.h"
 
@@ -73,6 +76,10 @@ MediaEndpointConnector::MediaEndpointConnector(Manager *manager, QObject *parent
     : QObject(parent)
     , m_manager(manager)
 {
+    connect(manager, &Manager::deviceChanged, [this](DevicePtr device) {
+        connect(device.data(), &Device::mediaTransportChanged, this, &MediaEndpointConnector::onTransportChanged);
+    });
+
     NoInputNoOutputAgent *agent = new NoInputNoOutputAgent({Services::AdvancedAudioDistribution, Services::AudioVideoRemoteControl});
     connect(agent, &NoInputNoOutputAgent::serviceAuthorized, this, &MediaEndpointConnector::onServiceAuthorized);
     manager->registerAgent(agent);
@@ -88,6 +95,27 @@ MediaEndpointConnector::MediaEndpointConnector(Manager *manager, QObject *parent
     connect(aacSink, &MediaEndpoint::configurationCleared, this, &MediaEndpointConnector::onConfigurationCleared);
     manager->usableAdapter()->media()->registerEndpoint(sbcSink);
     manager->usableAdapter()->media()->registerEndpoint(aacSink);
+}
+
+void MediaEndpointConnector::onTransportChanged(MediaTransportPtr transport)
+{
+    if (!transport) {
+        return;
+    }
+
+    connect(transport.data(), &MediaTransport::stateChanged, [transport](MediaTransport::State state){
+        qDebug() << "Transport state:" << state;
+
+        if (state == MediaTransport::State::Pending) {
+            TPendingCall<QDBusUnixFileDescriptor, uint16_t, uint16_t> *fd = transport->tryAcquire();
+            connect(fd, &PendingCall::finished, [fd]() {
+                qDebug() << "fd: " << fd->valueAt<0>().fileDescriptor() << "mtu read:" << fd->valueAt<1>() << "mtu write:" << fd->valueAt<2>();
+            });
+        }
+    });
+    connect(transport.data(), &MediaTransport::volumeChanged, [](quint16 volume){
+        qDebug() << "Transport volume:" << volume;
+    });
 }
 
 void MediaEndpointConnector::onServiceAuthorized(BluezQt::DevicePtr device, const QString &uuid, bool allowed)
@@ -130,6 +158,11 @@ int main(int argc, char **argv)
 
     if (!manager->usableAdapter()) {
         qWarning() << "No usable adapter";
+        return 2;
+    }
+
+    if (!manager->usableAdapter()->media()) {
+        qWarning() << "No media interface";
         return 2;
     }
 

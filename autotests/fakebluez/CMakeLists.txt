@@ -11,6 +11,7 @@ set(fakebluez_SRCS
     deviceinterface.cpp
     inputinterface.cpp
     mediaplayerinterface.cpp
+    mediatransportinterface.cpp
     obexagentmanager.cpp
     obexclient.cpp
     mediainterface.cpp

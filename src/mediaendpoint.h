@@ -51,6 +51,7 @@ public:
         AudioSink
     };
 
+    // KF6 TODO: use types from mediatypes.h
     /** Codec which this MediaEndpoint supports. */
     enum class Codec {
         Sbc,

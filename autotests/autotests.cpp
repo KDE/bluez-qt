@@ -23,6 +23,7 @@
 #include "adapter.h"
 #include "mediaplayer.h"
 #include "mediaplayertrack.h"
+#include "mediatransport.h"
 #include "bluezqt_dbustypes.h"
 
 #include <QDir>
@@ -181,6 +182,7 @@ void Autotests::registerMetatypes()
     qRegisterMetaType<BluezQt::DevicePtr>("DevicePtr");
     qRegisterMetaType<BluezQt::AdapterPtr>("AdapterPtr");
     qRegisterMetaType<BluezQt::MediaPlayerPtr>("MediaPlayerPtr");
+    qRegisterMetaType<BluezQt::MediaTransportPtr>("MediaTransportPtr");
 }
 
 void Autotests::verifyPropertiesChangedSignal(const QSignalSpy &spy, const QString &propertyName, const QVariant &propertyValue)

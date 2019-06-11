@@ -66,6 +66,7 @@ public:
     explicit MediaEndpointConnector(BluezQt::Manager *manager, QObject *parent = nullptr);
 
 private:
+    void onTransportChanged(BluezQt::MediaTransportPtr transport);
     void onServiceAuthorized(BluezQt::DevicePtr device, const QString &uuid, bool allowed);
     void onConfigurationSelected(const QByteArray &capabilities, const QByteArray &configuration);
     void onConfigurationSet(const QString &transportObjectPath, const QVariantMap &properties);

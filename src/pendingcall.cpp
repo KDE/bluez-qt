@@ -28,7 +28,6 @@
 #include "debug.h"
 
 #include <QTimer>
-#include <QDBusPendingReply>
 #include <QDBusPendingCallWatcher>
 
 namespace BluezQt
@@ -261,6 +260,19 @@ PendingCall::PendingCall(PendingCall::Error error, const QString &errorText, QOb
     timer->setSingleShot(true);
     timer->start(0);
     connect(timer, &QTimer::timeout, d, &PendingCallPrivate::emitDelayedFinished);
+}
+
+PendingCall::PendingCall(const QDBusPendingCall &call, ExternalProcessor externalProcessor, QObject *parent)
+    : QObject(parent)
+    , d(new PendingCallPrivate(this))
+{
+    qDBusRegisterMetaType<QVariantMapList>();
+
+    d->m_watcher = new QDBusPendingCallWatcher(call, this);
+    connect(d->m_watcher, &QDBusPendingCallWatcher::finished, [externalProcessor, this](QDBusPendingCallWatcher *watcher) {
+        externalProcessor(watcher, std::bind(&PendingCallPrivate::processError, d, std::placeholders::_1), &d->m_value);
+        d->emitFinished();
+    });
 }
 
 PendingCall::~PendingCall()

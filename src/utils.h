@@ -45,6 +45,7 @@ QString orgBluezGattManager1();
 QString orgBluezLEAdvertisingManager1();
 QString orgBluezMedia1();
 QString orgBluezMediaPlayer1();
+QString orgBluezMediaTransport1();
 QString orgBluezAgentManager1();
 QString orgBluezProfileManager1();
 QString orgBluezObex();

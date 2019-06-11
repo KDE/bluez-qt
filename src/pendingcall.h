@@ -23,11 +23,15 @@
 #ifndef BLUEZQT_PENDINGCALL_H
 #define BLUEZQT_PENDINGCALL_H
 
+#include <functional>
+
 #include <QObject>
 
 #include "bluezqt_export.h"
 
+class QDBusError;
 class QDBusPendingCall;
+class QDBusPendingCallWatcher;
 
 namespace BluezQt
 {
@@ -189,6 +193,9 @@ private:
 
     explicit PendingCall(const QDBusPendingCall &call, ReturnType type, QObject *parent = nullptr);
     explicit PendingCall(Error error, const QString &errorText, QObject *parent = nullptr);
+    using ErrorProcessor = std::function<void(const QDBusError &error)>;
+    using ExternalProcessor = std::function<void(QDBusPendingCallWatcher *watcher, ErrorProcessor errorProcessor, QVariantList *values)>;
+    explicit PendingCall(const QDBusPendingCall &call, ExternalProcessor externalProcessor, QObject *parent = nullptr);
 
     class PendingCallPrivate *const d;
 
@@ -205,6 +212,8 @@ private:
     friend class ObexSession;
     friend class ObexObjectPush;
     friend class ObexFileTransfer;
+    template<class...T>
+    friend class TPendingCall;
 };
 
 } // namespace BluezQt

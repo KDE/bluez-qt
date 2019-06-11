@@ -174,6 +174,11 @@ MediaPlayerPtr Device::mediaPlayer() const
     return d->m_mediaPlayer;
 }
 
+MediaTransportPtr Device::mediaTransport() const
+{
+    return d->m_mediaTransport;
+}
+
 AdapterPtr Device::adapter() const
 {
     return d->m_adapter;

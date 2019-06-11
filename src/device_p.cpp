@@ -27,6 +27,8 @@
 #include "input_p.h"
 #include "mediaplayer.h"
 #include "mediaplayer_p.h"
+#include "mediatransport.h"
+#include "mediatransport_p.h"
 #include "utils.h"
 #include "macros.h"
 
@@ -95,6 +97,11 @@ void DevicePrivate::interfacesAdded(const QString &path, const QVariantMapMap &i
             m_mediaPlayer->d->q = m_mediaPlayer.toWeakRef();
             Q_EMIT q.data()->mediaPlayerChanged(m_mediaPlayer);
             changed = true;
+        } else if (it.key() == Strings::orgBluezMediaTransport1()) {
+            m_mediaTransport = MediaTransportPtr(new MediaTransport(path, it.value()));
+            m_mediaTransport->d->q = m_mediaTransport.toWeakRef();
+            Q_EMIT q.data()->mediaTransportChanged(m_mediaTransport);
+            changed = true;
         }
     }
 
@@ -115,6 +122,10 @@ void DevicePrivate::interfacesRemoved(const QString &path, const QStringList &in
         } else if (interface == Strings::orgBluezMediaPlayer1() && m_mediaPlayer && m_mediaPlayer->d->m_path == path) {
             m_mediaPlayer.clear();
             Q_EMIT q.data()->mediaPlayerChanged(m_mediaPlayer);
+            changed = true;
+        } else if (interface == Strings::orgBluezMediaTransport1() && m_mediaTransport && m_mediaTransport->d->m_path == path) {
+            m_mediaTransport.clear();
+            Q_EMIT q.data()->mediaTransportChanged(m_mediaTransport);
             changed = true;
         }
     }

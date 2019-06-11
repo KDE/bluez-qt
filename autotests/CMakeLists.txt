@@ -10,6 +10,7 @@ qt5_add_dbus_interface(bluezqt_autotests_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interf
 qt5_add_dbus_interface(bluezqt_autotests_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.Adapter1.xml bluezadapter1_tst)
 qt5_add_dbus_interface(bluezqt_autotests_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.Device1.xml bluezdevice1_tst)
 qt5_add_dbus_interface(bluezqt_autotests_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.MediaPlayer1.xml bluezmediaplayer1_tst)
+qt5_add_dbus_interface(bluezqt_autotests_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.MediaTransport1.xml bluezmediatransport1_tst)
 qt5_add_dbus_interface(bluezqt_autotests_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.Input1.xml bluezinput1_tst)
 
 macro(bluezqt_tests)
@@ -30,6 +31,7 @@ bluezqt_tests(
     devicetest
     inputtest
     mediaplayertest
+    mediatransporttest
     jobstest
     mediatest
     leadvertisingmanagertest

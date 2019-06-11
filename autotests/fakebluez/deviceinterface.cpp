@@ -21,6 +21,7 @@
 #include "deviceinterface.h"
 #include "objectmanager.h"
 #include "mediaplayerinterface.h"
+#include "mediatransportinterface.h"
 #include "inputinterface.h"
 
 #include <QDBusMessage>
@@ -28,6 +29,7 @@
 #include <QDBusConnection>
 
 static const QLatin1String MediaPlayerUuid ("0000110E-0000-1000-8000-00805F9B34FB");
+static const QLatin1String MediaTransportUuid ("0000110B-0000-1000-8000-00805F9B34FB");
 
 // DeviceObject
 DeviceObject::DeviceObject(const QDBusObjectPath &path, QObject *parent)
@@ -39,7 +41,6 @@ DeviceObject::DeviceObject(const QDBusObjectPath &path, QObject *parent)
 // DeviceInterface
 DeviceInterface::DeviceInterface(const QDBusObjectPath &path, const QVariantMap &properties, QObject *parent)
     : QDBusAbstractAdaptor(parent)
-    , m_mediaPlayer(nullptr)
 {
     setPath(path);
     setObjectParent(parent);
@@ -153,10 +154,19 @@ QString DeviceInterface::modalias() const
     return Object::property(QStringLiteral("Modalias")).toString();
 }
 
+MediaTransportInterface *DeviceInterface::mediaTransport() const
+{
+    return m_mediaTransport;
+}
+
 void DeviceInterface::Connect()
 {
     if (uuids().contains(MediaPlayerUuid)) {
         connectMediaPlayer();
+    }
+
+    if (uuids().contains(MediaTransportUuid)) {
+        connectMediaTransport();
     }
 
     Object::changeProperty(QStringLiteral("Connected"), true);
@@ -166,6 +176,10 @@ void DeviceInterface::Disconnect()
 {
     if (uuids().contains(MediaPlayerUuid)) {
         disconnectMediaPlayer();
+    }
+
+    if (uuids().contains(MediaTransportUuid)) {
+        disconnectMediaTransport();
     }
 
     Object::changeProperty(QStringLiteral("Connected"), false);
@@ -187,6 +201,8 @@ void DeviceInterface::ConnectProfile(const QString &uuid, const QDBusMessage &ms
 
     if (uuid == MediaPlayerUuid) {
         connectMediaPlayer();
+    } else if (uuid == MediaTransportUuid) {
+        connectMediaTransport();
     } else {
         Q_UNIMPLEMENTED();
     }
@@ -210,6 +226,8 @@ void DeviceInterface::DisconnectProfile(const QString &uuid, const QDBusMessage 
 
     if (uuid == MediaPlayerUuid) {
         disconnectMediaPlayer();
+    } else if (uuid == MediaTransportUuid) {
+        disconnectMediaTransport();
     } else {
         Q_UNIMPLEMENTED();
     }
@@ -251,4 +269,30 @@ void DeviceInterface::disconnectMediaPlayer()
     m_connectedUuids.removeOne(MediaPlayerUuid);
 
     m_mediaPlayer = nullptr;
+}
+
+void DeviceInterface::connectMediaTransport()
+{
+    const QVariantMap &properties = qdbus_cast<QVariantMap>(Object::property(QStringLiteral("MediaTransport")));
+    const QDBusObjectPath &path = properties.value(QStringLiteral("Path")).value<QDBusObjectPath>();
+    QVariantMap props = properties;
+    props.remove(QStringLiteral("Path"));
+
+    MediaTransportObject *transportObj = new MediaTransportObject(path);
+    m_mediaTransport = new MediaTransportInterface(path, props, transportObj);
+
+    ObjectManager *manager = ObjectManager::self();
+    manager->addObject(m_mediaTransport);
+    manager->addAutoDeleteObject(transportObj);
+
+    m_connectedUuids.append(MediaTransportUuid);
+}
+
+void DeviceInterface::disconnectMediaTransport()
+{
+    ObjectManager *manager = ObjectManager::self();
+    manager->removeObject(m_mediaTransport);
+    m_connectedUuids.removeOne(MediaTransportUuid);
+
+    m_mediaTransport = nullptr;
 }

@@ -64,6 +64,7 @@ class BLUEZQT_EXPORT Device : public QObject
     Q_PROPERTY(QString modalias READ modalias NOTIFY modaliasChanged)
     Q_PROPERTY(InputPtr input READ input NOTIFY inputChanged)
     Q_PROPERTY(MediaPlayerPtr mediaPlayer READ mediaPlayer NOTIFY mediaPlayerChanged)
+    Q_PROPERTY(MediaTransportPtr mediaTransport READ mediaTransport NOTIFY mediaTransportChanged)
     Q_PROPERTY(AdapterPtr adapter READ adapter)
 
 public:
@@ -316,6 +317,16 @@ public:
     MediaPlayerPtr mediaPlayer() const;
 
     /**
+     * Returns the media transport interface for the device.
+     *
+     * Only devices with connected appropriate profile will
+     * have valid media transport interface.
+     *
+     * @return null if device have no media transport
+     */
+    MediaTransportPtr mediaTransport() const;
+
+    /**
      * Returns an adapter that discovered this device.
      *
      * @return adapter of device
@@ -507,6 +518,11 @@ Q_SIGNALS:
      * Indicates that device's media player have changed.
      */
     void mediaPlayerChanged(MediaPlayerPtr mediaPlayer);
+
+    /**
+     * Indicates that device's media transport have changed.
+     */
+    void mediaTransportChanged(MediaTransportPtr mediaTransport);
 
 private:
     explicit Device(const QString &path, const QVariantMap &properties, AdapterPtr adapter);

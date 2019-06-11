@@ -28,6 +28,8 @@ set(bluezqt_SRCS
     mediaplayer.cpp
     mediaplayer_p.cpp
     mediaplayertrack.cpp
+    mediatransport.cpp
+    mediatransport_p.cpp
     objectmanageradaptor.cpp
     devicesmodel.cpp
     job.cpp

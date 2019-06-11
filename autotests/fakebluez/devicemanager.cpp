@@ -23,6 +23,7 @@
 #include "adapterinterface.h"
 #include "deviceinterface.h"
 #include "mediainterface.h"
+#include "mediatransportinterface.h"
 #include "leadvertisingmanagerinterface.h"
 #include "gattmanagerinterface.h"
 
