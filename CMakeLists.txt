@@ -105,6 +105,6 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     endif()
 endif()
 
-install(FILES bluez.categories DESTINATION ${KDE_INSTALL_CONFDIR})
+install(FILES bluez.categories  DESTINATION  ${KDE_INSTALL_LOGGINGCATEGORIESDIR})
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
