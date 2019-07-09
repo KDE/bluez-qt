@@ -72,7 +72,7 @@ public:
     const typename Select<Index, T...>::Type valueAt() const
     {
         using ResultType = typename Select<Index, T...>::Type;
-        return qdbus_cast<ResultType>(m_reply.argumentAt(Index), 0);
+        return qdbus_cast<ResultType>(m_reply.argumentAt(Index), nullptr);
     }
 
 private:
