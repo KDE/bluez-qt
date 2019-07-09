@@ -84,7 +84,7 @@ protected:
 private:
     class GattServicePrivate *const d;
 
-    friend class GattApplication;
+    friend class GattApplicationPrivate;
     friend class GattCharacterisiticPrivate;
     friend class GattCharacteristicAdaptor;
     friend class GattManager;

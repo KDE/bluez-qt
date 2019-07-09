@@ -24,7 +24,6 @@
 
 #include <QObject>
 
-#include "bluezqt_dbustypes.h"
 #include "bluezqt_export.h"
 
 namespace BluezQt

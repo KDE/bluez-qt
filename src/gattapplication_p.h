@@ -22,16 +22,23 @@
 
 #pragma once
 
+#include "bluezqt_dbustypes.h"
+
 #include <QDBusObjectPath>
 
 namespace BluezQt
 {
+
+class GattApplication;
 
 class GattApplicationPrivate
 {
 public:
     GattApplicationPrivate(const QString &objectPathPrefix);
 
+    DBusManagerStruct getManagedObjects() const;
+
+    GattApplication *q;
     QDBusObjectPath m_objectPath;
 };
 

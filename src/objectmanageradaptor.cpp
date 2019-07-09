@@ -22,6 +22,7 @@
 
 #include "objectmanageradaptor.h"
 #include "gattapplication.h"
+#include "gattapplication_p.h"
 
 namespace BluezQt
 {
@@ -35,7 +36,7 @@ ObjectManagerAdaptor::ObjectManagerAdaptor(QObject *parent)
 DBusManagerStruct ObjectManagerAdaptor::GetManagedObjects()
 {
     if (m_gattApplication) {
-        return m_gattApplication->getManagedObjects();
+        return m_gattApplication->d->getManagedObjects();
     }
 
     return {};

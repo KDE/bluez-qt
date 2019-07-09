@@ -51,12 +51,12 @@ GattApplication::~GattApplication()
     delete d;
 }
 
-DBusManagerStruct GattApplication::getManagedObjects() const
+DBusManagerStruct GattApplicationPrivate::getManagedObjects() const
 {
     DBusManagerStruct objects;
 
-    const auto serviceAdaptors = findChildren<GattServiceAdaptor*>();
-    const auto charcAdaptors = findChildren<GattCharacteristicAdaptor*>();
+    const auto serviceAdaptors = q->findChildren<GattServiceAdaptor*>();
+    const auto charcAdaptors = q->findChildren<GattCharacteristicAdaptor*>();
 
     for (const GattServiceAdaptor *serviceAdaptor : serviceAdaptors) {
         QVariantMap properties;

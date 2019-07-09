@@ -98,7 +98,7 @@ protected:
 private:
     class GattCharacterisiticPrivate *const d;
 
-    friend class GattApplication;
+    friend class GattApplicationPrivate;
     friend class GattCharacteristicAdaptor;
     friend class GattManager;
 };

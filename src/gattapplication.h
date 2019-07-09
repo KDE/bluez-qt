@@ -22,8 +22,11 @@
 
 #pragma once
 
-#include "bluezqt_dbustypes.h"
+#include <QObject>
+
 #include "bluezqt_export.h"
+
+class QDBusObjectPath;
 
 namespace BluezQt
 {
@@ -83,17 +86,6 @@ private:
      * @return object path of GATT application
      */
     virtual QDBusObjectPath objectPath() const;
-
-    /**
-     * Gets all GattServices, GattCharacteristics and GattDescriptors that
-     * belong to this GattApplication.
-     *
-     * The return value of this method is a dict whose keys are object paths.
-     * Each value is a dict whose keys are interfaces names. Each value in this
-     * inner dict is another dict with property names (as key) and property
-     * values (as value).
-     */
-    DBusManagerStruct getManagedObjects() const;
 
     class GattApplicationPrivate *const d;
 
