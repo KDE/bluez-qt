@@ -42,7 +42,7 @@ GattApplication::GattApplication(QObject *parent)
 
 GattApplication::GattApplication(const QString &objectPathPrefix, QObject *parent)
     : QObject(parent)
-    , d(new GattApplicationPrivate(objectPathPrefix))
+    , d(new GattApplicationPrivate(objectPathPrefix, this))
 {
 }
 

@@ -25,7 +25,8 @@
 namespace BluezQt
 {
 
-GattApplicationPrivate::GattApplicationPrivate(const QString &objectPathPrefix)
+GattApplicationPrivate::GattApplicationPrivate(const QString &objectPathPrefix, GattApplication *q_ptr)
+    : q(q_ptr)
 {
     static uint8_t appNumber = 0;
     m_objectPath.setPath(objectPathPrefix + QStringLiteral("/app") + QString::number(appNumber++));

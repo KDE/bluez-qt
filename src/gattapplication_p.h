@@ -34,7 +34,7 @@ class GattApplication;
 class GattApplicationPrivate
 {
 public:
-    GattApplicationPrivate(const QString &objectPathPrefix);
+    GattApplicationPrivate(const QString &objectPathPrefix, GattApplication *q_ptr);
 
     DBusManagerStruct getManagedObjects() const;
 
