@@ -23,7 +23,6 @@
 #include "leadvertisementadaptor.h"
 #include "leadvertisement.h"
 
-#include <QDBusMessage>
 #include <QDBusObjectPath>
 
 namespace BluezQt

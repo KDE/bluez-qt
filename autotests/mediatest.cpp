@@ -27,7 +27,6 @@
 #include "mediaendpoint.h"
 #include "pendingcall.h"
 
-#include <QDebug>
 #include <QSignalSpy>
 #include <QDBusObjectPath>
 

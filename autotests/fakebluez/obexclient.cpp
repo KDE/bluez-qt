@@ -20,9 +20,7 @@
 
 #include "obexclient.h"
 
-#include <QDebug>
 #include <QDBusMessage>
-#include <QDBusConnection>
 
 ObexClient::ObexClient(QObject *parent)
     : QDBusAbstractAdaptor(parent)

@@ -22,7 +22,6 @@
 #include "objectmanager.h"
 
 #include <QDBusMessage>
-#include <QDBusArgument>
 #include <QDBusConnection>
 
 MediaTransportObject::MediaTransportObject(const QDBusObjectPath &path, QObject *parent)

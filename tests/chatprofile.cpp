@@ -28,7 +28,6 @@
 #include <QLocalSocket>
 #include <QCoreApplication>
 #include <QDBusObjectPath>
-#include <QDBusConnection>
 #include <QDBusUnixFileDescriptor>
 
 // This is a server for BluetoothChat application from Android samples.

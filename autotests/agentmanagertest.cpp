@@ -26,7 +26,6 @@
 #include "services.h"
 
 #include <QTest>
-#include <QSignalSpy>
 #include <QDBusObjectPath>
 
 namespace BluezQt

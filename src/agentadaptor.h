@@ -23,7 +23,6 @@
 #ifndef BLUEZQT_AGENTADAPTOR_H
 #define BLUEZQT_AGENTADAPTOR_H
 
-#include <QObject>
 #include <QDBusAbstractAdaptor>
 
 class QDBusMessage;

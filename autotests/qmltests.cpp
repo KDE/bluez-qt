@@ -20,7 +20,6 @@
 
 #include "autotests.h"
 
-#include <QDir>
 #include <QDBusObjectPath>
 
 #include <QtQml> // krazy:exclude=includes

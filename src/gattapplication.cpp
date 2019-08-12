@@ -29,8 +29,7 @@
 #include "gattserviceadaptor.h"
 
 #include <QDBusObjectPath>
-#include <QDebug>
-#include <QMetaClassInfo>
+#include <QMetaProperty>
 
 namespace BluezQt
 {

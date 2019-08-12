@@ -23,7 +23,6 @@
 #ifndef BLUEZQT_INITMANAGERJOB_H
 #define BLUEZQT_INITMANAGERJOB_H
 
-#include <QObject>
 
 #include "job.h"
 #include "bluezqt_export.h"

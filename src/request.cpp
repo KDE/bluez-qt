@@ -24,7 +24,6 @@
 #include "debug.h"
 #include "utils.h"
 
-#include <QStringBuilder>
 #include <QDBusMessage>
 #include <QDBusConnection>
 

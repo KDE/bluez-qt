@@ -20,8 +20,6 @@
 
 #include "inputinterface.h"
 
-#include <QDBusMessage>
-#include <QDBusArgument>
 #include <QDBusConnection>
 
 // InputObject

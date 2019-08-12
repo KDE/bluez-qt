@@ -21,7 +21,6 @@
 #include "gattmanagerinterface.h"
 #include "objectmanager.h"
 
-#include <QDebug>
 #include <QDBusMessage>
 #include <QDBusConnection>
 #include <QDBusPendingCall>

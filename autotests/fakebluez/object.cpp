@@ -22,7 +22,6 @@
 
 #include <QDBusMessage>
 #include <QDBusConnection>
-#include <QDBusAbstractAdaptor>
 
 Object::Object()
     : m_parent(nullptr)

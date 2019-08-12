@@ -24,7 +24,6 @@
 #include "initmanagerjob.h"
 
 #include <QTest>
-#include <QSignalSpy>
 
 namespace BluezQt
 {

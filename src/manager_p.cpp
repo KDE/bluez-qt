@@ -29,8 +29,6 @@
 #include "debug.h"
 #include "utils.h"
 
-#include <QDBusReply>
-#include <QDBusConnection>
 #include <QDBusServiceWatcher>
 
 namespace BluezQt

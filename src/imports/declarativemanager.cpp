@@ -27,7 +27,6 @@
 #include "adapter.h"
 #include "device.h"
 
-#include <QQmlEngine>
 
 static int adaptersCountFunction(QQmlListProperty<DeclarativeAdapter> *property)
 {

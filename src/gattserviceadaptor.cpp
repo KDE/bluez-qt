@@ -25,7 +25,6 @@
 #include "gattservice.h"
 #include "request.h"
 
-#include <QDBusMessage>
 #include <QDBusObjectPath>
 
 namespace BluezQt

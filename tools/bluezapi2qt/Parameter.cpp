@@ -21,6 +21,7 @@
  */
 
 #include "Parameter.h"
+#include <QStringList>
 
 Parameter Parameter::fromString(const QString &string)
 {

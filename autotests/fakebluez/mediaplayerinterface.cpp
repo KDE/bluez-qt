@@ -21,7 +21,6 @@
 #include "mediaplayerinterface.h"
 #include "objectmanager.h"
 
-#include <QDBusMessage>
 #include <QDBusArgument>
 #include <QDBusConnection>
 

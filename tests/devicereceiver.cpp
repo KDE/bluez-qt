@@ -23,7 +23,6 @@
 #include "devicereceiver.h"
 
 #include <QDebug>
-#include <QTimer>
 #include <QCoreApplication>
 
 #include "adapter.h"

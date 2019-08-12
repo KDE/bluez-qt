@@ -20,9 +20,7 @@
 
 #include "profilemanager.h"
 
-#include <QDebug>
 #include <QDBusMessage>
-#include <QDBusConnection>
 
 ProfileManager::ProfileManager(QObject *parent)
     : QDBusAbstractAdaptor(parent)

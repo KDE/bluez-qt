@@ -23,7 +23,6 @@
 #ifndef BLUEZQT_PROFILEADAPTOR_H
 #define BLUEZQT_PROFILEADAPTOR_H
 
-#include <QObject>
 #include <QDBusAbstractAdaptor>
 
 class QDBusMessage;

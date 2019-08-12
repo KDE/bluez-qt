@@ -22,7 +22,6 @@
 
 #include "BluezApiParser.h"
 
-#include <QDebug>
 
 BluezApiParser::BluezApiParser()
 {

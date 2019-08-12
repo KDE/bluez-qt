@@ -20,7 +20,6 @@
 
 #include "mediainterface.h"
 
-#include <QDebug>
 #include <QDBusMessage>
 #include <QDBusConnection>
 #include <QDBusPendingCall>

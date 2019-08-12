@@ -24,7 +24,6 @@
 #include "gattcharacteristic.h"
 #include "gattservice.h"
 
-#include <QDebug>
 
 namespace BluezQt
 {

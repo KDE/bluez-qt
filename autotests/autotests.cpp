@@ -26,16 +26,11 @@
 #include "mediatransport.h"
 #include "bluezqt_dbustypes.h"
 
-#include <QDir>
 #include <QDebug>
 #include <QEventLoop>
 #include <QCoreApplication>
 
 #include <QTest>
-#include <QDBusReply>
-#include <QDBusMetaType>
-#include <QDBusInterface>
-#include <QDBusPendingCall>
 #include <QDBusServiceWatcher>
 #include <QDBusConnectionInterface>
 

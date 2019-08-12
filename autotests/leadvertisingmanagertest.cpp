@@ -25,8 +25,6 @@
 #include "manager.h"
 #include "pendingcall.h"
 
-#include <QDebug>
-#include <QSignalSpy>
 #include <QDBusObjectPath>
 
 namespace BluezQt

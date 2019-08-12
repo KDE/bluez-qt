@@ -22,7 +22,7 @@
 
 #pragma once
 
-#include <QStringList>
+#include <QString>
 
 class Parameter
 {

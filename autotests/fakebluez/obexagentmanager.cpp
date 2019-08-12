@@ -20,7 +20,6 @@
 
 #include "obexagentmanager.h"
 
-#include <QDebug>
 #include <QDBusMessage>
 #include <QDBusConnection>
 

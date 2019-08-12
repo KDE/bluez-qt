@@ -24,7 +24,6 @@
 #include "initobexmanagerjob.h"
 
 #include <QTest>
-#include <QSignalSpy>
 
 namespace BluezQt
 {

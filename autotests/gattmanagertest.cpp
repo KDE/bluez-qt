@@ -26,8 +26,6 @@
 #include "gattmanager.h"
 #include "gattservice.h"
 
-#include <QDebug>
-#include <QSignalSpy>
 #include <QDBusObjectPath>
 
 namespace BluezQt
