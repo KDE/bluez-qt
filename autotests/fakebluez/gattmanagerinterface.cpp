@@ -75,7 +75,7 @@ void GattManagerInterface::runGetObjectsAction()
 
         DBusManagerStruct objects = reply.value();
         for (const auto& object : objects.keys()) {
-            if (object.path().contains(QStringLiteral("char"))) {
+            if (object.path().contains(QLatin1String("char"))) {
                 m_characteristic = object;
                 break;
             }

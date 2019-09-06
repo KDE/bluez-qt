@@ -26,7 +26,7 @@
 Parameter Parameter::fromString(const QString &string)
 {
     Parameter param;
-    QStringList arg = string.split(QStringLiteral(" "));
+    QStringList arg = string.split(QLatin1Char(' '));
     if (arg.size() != 2) {
         return param;
     }

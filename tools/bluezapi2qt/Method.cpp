@@ -29,9 +29,9 @@ Method::Method()
 bool Method::finalize()
 {
     for (const auto &tag : m_stringTags) {
-        m_tags.isOptional |= tag.contains(QStringLiteral("optional"), Qt::CaseInsensitive);
-        m_tags.isDeprecated |= tag.contains(QStringLiteral("deprecated"), Qt::CaseInsensitive);
-        m_tags.isExperimental |= tag.contains(QStringLiteral("experimental"), Qt::CaseInsensitive);
+        m_tags.isOptional |= tag.contains(QLatin1String("optional"), Qt::CaseInsensitive);
+        m_tags.isDeprecated |= tag.contains(QLatin1String("deprecated"), Qt::CaseInsensitive);
+        m_tags.isExperimental |= tag.contains(QLatin1String("experimental"), Qt::CaseInsensitive);
     }
 
     bool success = true;
@@ -50,11 +50,11 @@ bool Method::finalize()
     // Guess out parameter name from method name
     QString paramName = guessOutParameterName();
     if (!paramName.isEmpty()) {
-        m_outParameterStrings.front() += QStringLiteral(" ") + paramName;
+        m_outParameterStrings.front() += QLatin1Char(' ') + paramName;
         m_outParameter = Parameter::fromString(m_outParameterStrings.front());
     } else {
         for (int i = 0; i < m_outParameterStrings.size(); ++i) {
-            m_outParameterStrings[i] += QStringLiteral(" value") + QString::number(i);
+            m_outParameterStrings[i] += QLatin1String(" value") + QString::number(i);
         }
     }
 

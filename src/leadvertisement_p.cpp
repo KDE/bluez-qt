@@ -29,7 +29,7 @@ LEAdvertisementPrivate::LEAdvertisementPrivate(const QStringList &serviceUuids)
     : m_serviceUuids(serviceUuids)
 {
     static uint8_t advNumber = 0;
-    QString objectPath = QStringLiteral("/org/bluez/lead") + QString::number(advNumber++);
+    QString objectPath = QLatin1String("/org/bluez/lead") + QString::number(advNumber++);
     m_objectPath.setPath(objectPath);
 }
 

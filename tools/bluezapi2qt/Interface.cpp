@@ -28,17 +28,17 @@ Interface::Interface()
 
 bool Interface::parse(const QString &line)
 {
-    if (line.startsWith(QStringLiteral("Service\t"))) {
+    if (line.startsWith(QLatin1String("Service\t"))) {
         m_state = State::Service;
-    } else if (line.startsWith(QStringLiteral("Interface\t"))) {
+    } else if (line.startsWith(QLatin1String("Interface\t"))) {
         m_state = State::Interface;
-    } else if (line.startsWith(QStringLiteral("Object path\t"))) {
+    } else if (line.startsWith(QLatin1String("Object path\t"))) {
         m_state = State::ObjectPath;
-    } else if (line.startsWith(QStringLiteral("Methods\t")) || Methods::isMethod(line)) {  // Argh! AgentManager is missing the Methods keyword
+    } else if (line.startsWith(QLatin1String("Methods\t")) || Methods::isMethod(line)) {  // Argh! AgentManager is missing the Methods keyword
         m_state = State::Methods;
-    } else if (line.startsWith(QStringLiteral("Properties\t"))) {
+    } else if (line.startsWith(QLatin1String("Properties\t"))) {
         m_state = State::Properties;
-    } else if (m_state != State::Comment && !line.isEmpty() && !line.startsWith(QStringLiteral("\t"))) {
+    } else if (m_state != State::Comment && !line.isEmpty() && !line.startsWith(QLatin1String("\t"))) {
         // If we do not parse comment, but line starts with characters, we are done.
         return false;
     }
@@ -111,12 +111,12 @@ void Interface::parseComment(const QString &line)
     if (line.isEmpty()) {
         m_comment.append(QString());
         return;
-    } else if (line.startsWith(QStringLiteral(" ")) || line.startsWith(QStringLiteral("\t"))) {
+    } else if (line.startsWith(QLatin1Char(' ')) || line.startsWith(QStringLiteral("\t"))) {
         m_comment.append(QString());
     }
 
     if (!m_comment.last().isEmpty()) {
-        m_comment.last() += QStringLiteral(" ");
+        m_comment.last() += QLatin1Char(' ');
     }
     m_comment.last() += line;
 }

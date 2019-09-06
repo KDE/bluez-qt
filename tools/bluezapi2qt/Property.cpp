@@ -29,11 +29,11 @@ Property::Property()
 bool Property::finalize()
 {
     for (auto tag : m_stringTags) {
-        m_tags.isOptional |= tag.contains(QStringLiteral("optional"), Qt::CaseInsensitive);
-        m_tags.isExperimental |= tag.contains(QStringLiteral("experimental"), Qt::CaseInsensitive);
-        m_tags.isReadOnly |= tag.contains(QStringLiteral("read-only"), Qt::CaseInsensitive);
+        m_tags.isOptional |= tag.contains(QLatin1String("optional"), Qt::CaseInsensitive);
+        m_tags.isExperimental |= tag.contains(QLatin1String("experimental"), Qt::CaseInsensitive);
+        m_tags.isReadOnly |= tag.contains(QLatin1String("read-only"), Qt::CaseInsensitive);
     }
-    m_tags.isServerOnly = m_limitation.contains(QStringLiteral("server only"), Qt::CaseInsensitive);
+    m_tags.isServerOnly = m_limitation.contains(QLatin1String("server only"), Qt::CaseInsensitive);
 
     bool success = true;
     success &= m_comment.finalize();
