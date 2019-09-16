@@ -133,7 +133,7 @@ void MediaPlayerPrivate::propertiesChanged(const QString &interface, const QVari
             PROPERTY_CHANGED(m_position, toUInt, positionChanged);
         } else if (property == QLatin1String("Track")) {
             m_track = variantToTrack(value);
-            Q_EMIT q.data()->trackChanged(m_track);
+            Q_EMIT q.lock()->trackChanged(m_track);
         }
     }
 
@@ -152,7 +152,7 @@ void MediaPlayerPrivate::propertiesChanged(const QString &interface, const QVari
             PROPERTY_INVALIDATED(m_position, 0, positionChanged);
         } else if (property == QLatin1String("Track")) {
             m_track = variantToTrack(QVariant());
-            Q_EMIT q.data()->trackChanged(m_track);
+            Q_EMIT q.lock()->trackChanged(m_track);
         }
     }
 }

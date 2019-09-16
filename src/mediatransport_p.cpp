@@ -139,17 +139,17 @@ void MediaTransportPrivate::onPropertiesChanged(const QString &interface, const 
 
         if (key == QLatin1String("Volume")) {
             m_volume = value.toUInt();
-            Q_EMIT q.data()->volumeChanged(m_volume);
+            Q_EMIT q.lock()->volumeChanged(m_volume);
         } else if (key == QLatin1String("State")) {
             m_state = stringToState(value.toString());
-            Q_EMIT q.data()->stateChanged(m_state);
+            Q_EMIT q.lock()->stateChanged(m_state);
         }
     }
 
     for (const QString &property : invalidated) {
         if (property == QLatin1String("Volume")) {
             m_volume = 0;
-            Q_EMIT q.data()->volumeChanged(m_volume);
+            Q_EMIT q.lock()->volumeChanged(m_volume);
         } else if (property == QLatin1String("State")) {
             PROPERTY_INVALIDATED(m_state, MediaTransport::State::Idle, stateChanged);
         }

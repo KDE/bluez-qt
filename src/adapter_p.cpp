@@ -75,21 +75,21 @@ void AdapterPrivate::interfacesAdded(const QString &path, const QVariantMapMap &
     for (auto it = interfaces.cbegin(); it != interfaces.cend(); ++it) {
         if (it.key() == Strings::orgBluezMedia1()) {
             m_media = MediaPtr(new Media(path));
-            Q_EMIT q.data()->mediaChanged(m_media);
+            Q_EMIT q.lock()->mediaChanged(m_media);
             changed = true;
         } else if (it.key() == Strings::orgBluezLEAdvertisingManager1()) {
             m_leAdvertisingManager = LEAdvertisingManagerPtr(new LEAdvertisingManager(path));
-            Q_EMIT q.data()->leAdvertisingManagerChanged(m_leAdvertisingManager);
+            Q_EMIT q.lock()->leAdvertisingManagerChanged(m_leAdvertisingManager);
             changed = true;
         } else if (it.key() == Strings::orgBluezGattManager1()) {
             m_gattManager = GattManagerPtr(new GattManager(path));
-            Q_EMIT q.data()->gattManagerChanged(m_gattManager);
+            Q_EMIT q.lock()->gattManagerChanged(m_gattManager);
             changed = true;
         }
     }
 
     if (changed) {
-        Q_EMIT q.data()->adapterChanged(q.toStrongRef());
+        Q_EMIT q.lock()->adapterChanged(q.toStrongRef());
     }
 }
 
@@ -100,35 +100,35 @@ void AdapterPrivate::interfacesRemoved(const QString &path, const QStringList &i
     for (const QString &interface : interfaces) {
         if (interface == Strings::orgBluezMedia1() && m_media && m_media->d->m_path == path) {
             m_media.clear();
-            Q_EMIT q.data()->mediaChanged(m_media);
+            Q_EMIT q.lock()->mediaChanged(m_media);
             changed = true;
         } else if (interface == Strings::orgBluezLEAdvertisingManager1() && m_leAdvertisingManager && m_leAdvertisingManager->d->m_path == path) {
             m_leAdvertisingManager.clear();
-            Q_EMIT q.data()->leAdvertisingManagerChanged(m_leAdvertisingManager);
+            Q_EMIT q.lock()->leAdvertisingManagerChanged(m_leAdvertisingManager);
             changed = true;
         }
     }
 
     if (changed) {
-        Q_EMIT q.data()->adapterChanged(q.toStrongRef());
+        Q_EMIT q.lock()->adapterChanged(q.toStrongRef());
     }
 }
 
 void AdapterPrivate::addDevice(const DevicePtr &device)
 {
     m_devices.append(device);
-    Q_EMIT q.data()->deviceAdded(device);
+    Q_EMIT q.lock()->deviceAdded(device);
 
-    connect(device.data(), &Device::deviceChanged, q.data(), &Adapter::deviceChanged);
+    connect(device.data(), &Device::deviceChanged, q.lock().data(), &Adapter::deviceChanged);
 }
 
 void AdapterPrivate::removeDevice(const DevicePtr &device)
 {
     m_devices.removeOne(device);
     Q_EMIT device->deviceRemoved(device);
-    Q_EMIT q.data()->deviceRemoved(device);
+    Q_EMIT q.lock()->deviceRemoved(device);
 
-    disconnect(device.data(), &Device::deviceChanged, q.data(), &Adapter::deviceChanged);
+    disconnect(device.data(), &Device::deviceChanged, q.lock().data(), &Adapter::deviceChanged);
 }
 
 QDBusPendingReply<> AdapterPrivate::setDBusProperty(const QString &name, const QVariant &value)
@@ -178,7 +178,7 @@ void AdapterPrivate::propertiesChanged(const QString &interface, const QVariantM
         }
     }
 
-    Q_EMIT q.data()->adapterChanged(q.toStrongRef());
+    Q_EMIT q.lock()->adapterChanged(q.toStrongRef());
 }
 
 } // namespace BluezQt

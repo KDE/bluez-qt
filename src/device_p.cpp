@@ -90,23 +90,23 @@ void DevicePrivate::interfacesAdded(const QString &path, const QVariantMapMap &i
         if (it.key() == Strings::orgBluezInput1()) {
             m_input = InputPtr(new Input(path, it.value()));
             m_input->d->q = m_input.toWeakRef();
-            Q_EMIT q.data()->inputChanged(m_input);
+            Q_EMIT q.lock()->inputChanged(m_input);
             changed = true;
         } else if (it.key() == Strings::orgBluezMediaPlayer1()) {
             m_mediaPlayer = MediaPlayerPtr(new MediaPlayer(path, it.value()));
             m_mediaPlayer->d->q = m_mediaPlayer.toWeakRef();
-            Q_EMIT q.data()->mediaPlayerChanged(m_mediaPlayer);
+            Q_EMIT q.lock()->mediaPlayerChanged(m_mediaPlayer);
             changed = true;
         } else if (it.key() == Strings::orgBluezMediaTransport1()) {
             m_mediaTransport = MediaTransportPtr(new MediaTransport(path, it.value()));
             m_mediaTransport->d->q = m_mediaTransport.toWeakRef();
-            Q_EMIT q.data()->mediaTransportChanged(m_mediaTransport);
+            Q_EMIT q.lock()->mediaTransportChanged(m_mediaTransport);
             changed = true;
         }
     }
 
     if (changed) {
-        Q_EMIT q.data()->deviceChanged(q.toStrongRef());
+        Q_EMIT q.lock()->deviceChanged(q.toStrongRef());
     }
 }
 
@@ -117,21 +117,21 @@ void DevicePrivate::interfacesRemoved(const QString &path, const QStringList &in
     for (const QString &interface : interfaces) {
         if (interface == Strings::orgBluezInput1() && m_input && m_input->d->m_path == path) {
             m_input.clear();
-            Q_EMIT q.data()->inputChanged(m_input);
+            Q_EMIT q.lock()->inputChanged(m_input);
             changed = true;
         } else if (interface == Strings::orgBluezMediaPlayer1() && m_mediaPlayer && m_mediaPlayer->d->m_path == path) {
             m_mediaPlayer.clear();
-            Q_EMIT q.data()->mediaPlayerChanged(m_mediaPlayer);
+            Q_EMIT q.lock()->mediaPlayerChanged(m_mediaPlayer);
             changed = true;
         } else if (interface == Strings::orgBluezMediaTransport1() && m_mediaTransport && m_mediaTransport->d->m_path == path) {
             m_mediaTransport.clear();
-            Q_EMIT q.data()->mediaTransportChanged(m_mediaTransport);
+            Q_EMIT q.lock()->mediaTransportChanged(m_mediaTransport);
             changed = true;
         }
     }
 
     if (changed) {
-        Q_EMIT q.data()->deviceChanged(q.toStrongRef());
+        Q_EMIT q.lock()->deviceChanged(q.toStrongRef());
     }
 }
 
@@ -204,15 +204,15 @@ void DevicePrivate::propertiesChanged(const QString &interface, const QVariantMa
         }
     }
 
-    Q_EMIT q.data()->deviceChanged(q.toStrongRef());
+    Q_EMIT q.lock()->deviceChanged(q.toStrongRef());
 }
 
 void DevicePrivate::namePropertyChanged(const QString &value)
 {
     if (m_name != value) {
         m_name = value;
-        Q_EMIT q.data()->remoteNameChanged(m_name);
-        Q_EMIT q.data()->friendlyNameChanged(q.data()->friendlyName());
+        Q_EMIT q.lock()->remoteNameChanged(m_name);
+        Q_EMIT q.lock()->friendlyNameChanged(q.lock()->friendlyName());
     }
 }
 
@@ -220,7 +220,7 @@ void DevicePrivate::addressPropertyChanged(const QString &value)
 {
     if (m_address != value) {
         m_address = value;
-        Q_EMIT q.data()->addressChanged(m_address);
+        Q_EMIT q.lock()->addressChanged(m_address);
     }
 }
 
@@ -228,8 +228,8 @@ void DevicePrivate::aliasPropertyChanged(const QString &value)
 {
     if (m_alias != value) {
         m_alias = value;
-        Q_EMIT q.data()->nameChanged(m_alias);
-        Q_EMIT q.data()->friendlyNameChanged(q.data()->friendlyName());
+        Q_EMIT q.lock()->nameChanged(m_alias);
+        Q_EMIT q.lock()->friendlyNameChanged(q.lock()->friendlyName());
     }
 }
 
@@ -237,8 +237,8 @@ void DevicePrivate::classPropertyChanged(quint32 value)
 {
     if (m_deviceClass != value) {
         m_deviceClass = value;
-        Q_EMIT q.data()->deviceClassChanged(m_deviceClass);
-        Q_EMIT q.data()->typeChanged(q.data()->type());
+        Q_EMIT q.lock()->deviceClassChanged(m_deviceClass);
+        Q_EMIT q.lock()->typeChanged(q.lock()->type());
     }
 }
 

@@ -115,7 +115,7 @@ void ObexTransferPrivate::sessionRemoved(const ObexSessionPtr &session)
     // Change status to Error if org.bluez.obex crashes
     if (m_status != ObexTransfer::Complete && m_status != ObexTransfer::Error) {
         m_status = ObexTransfer::Error;
-        Q_EMIT q.data()->statusChanged(m_status);
+        Q_EMIT q.lock()->statusChanged(m_status);
     }
 }
 
