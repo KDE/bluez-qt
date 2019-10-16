@@ -246,9 +246,11 @@ PendingCall *Manager::unregisterProfile(Profile *profile)
                            PendingCall::ReturnVoid, this);
 }
 
+#if BLUEZQT_BUILD_DEPRECATED_SINCE(5, 57)
 MediaPtr Manager::media() const
 {
     return usableAdapter() ? usableAdapter()->media() : nullptr;
 }
+#endif
 
 } // namespace BluezQt

@@ -297,13 +297,16 @@ public:
      */
     PendingCall *unregisterProfile(Profile *profile);
 
+#if BLUEZQT_ENABLE_DEPRECATED_SINCE(5, 57)
     /**
      * Returns the media interface.
      *
-     * @deprecated since 5.57, use Adapter::media() instead.
      * @return media
+     * @deprecated since 5.57, use Adapter::media() instead.
      */
-    BLUEZQT_DEPRECATED MediaPtr media() const; // KF6 TODO: Remove
+    BLUEZQT_DEPRECATED_VERSION(5, 57, "Use Adapter::media()")
+    MediaPtr media() const;
+#endif
 
 Q_SIGNALS:
     /**

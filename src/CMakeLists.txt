@@ -83,8 +83,15 @@ qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.b
 qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.obex.ObjectPush1.xml obexobjectpush1)
 
 add_library(KF5BluezQt ${bluezqt_SRCS})
-generate_export_header(KF5BluezQt BASE_NAME BluezQt)
 add_library(KF5::BluezQt ALIAS KF5BluezQt)
+ecm_generate_export_header(KF5BluezQt
+    BASE_NAME BluezQt
+    # GROUP_BASE_NAME KF <- enable once all of KF modules use ecm_generate_export_header
+    VERSION ${KF5_VERSION}
+    DEPRECATED_BASE_VERSION 0
+    DEPRECATION_VERSIONS 5.57
+    EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
+)
 
 target_include_directories(KF5BluezQt INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF5}/BluezQt>")
 
