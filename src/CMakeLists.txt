@@ -86,7 +86,7 @@ add_library(KF5BluezQt ${bluezqt_SRCS})
 add_library(KF5::BluezQt ALIAS KF5BluezQt)
 ecm_generate_export_header(KF5BluezQt
     BASE_NAME BluezQt
-    # GROUP_BASE_NAME KF <- enable once all of KF modules use ecm_generate_export_header
+    GROUP_BASE_NAME KF
     VERSION ${KF5_VERSION}
     DEPRECATED_BASE_VERSION 0
     DEPRECATION_VERSIONS 5.57
