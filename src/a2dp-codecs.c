@@ -22,7 +22,7 @@
 
 #include "a2dp-codecs.h"
 
-/* Currently our capabilites are limited to the most common use cases.
+/* Currently our capabilities are limited to the most common use cases.
    iOS has a fixed stream configuration anyway (for SBC and AAC). */
 const a2dp_sbc_t sbcCapabilities = {
     .frequency =

@@ -126,7 +126,7 @@ void MediaEndpointConnector::onServiceAuthorized(BluezQt::DevicePtr device, cons
 void MediaEndpointConnector::onConfigurationSelected(const QByteArray &capabilities, const QByteArray &configuration)
 {
     if (configuration.isEmpty()) {
-        qDebug() << "No useable configuration found for capabilities:" << capabilities;
+        qDebug() << "No usable configuration found for capabilities:" << capabilities;
     } else {
         qDebug() << "Selected configuration:" << configuration << "for capabilities:" << capabilities;
     }

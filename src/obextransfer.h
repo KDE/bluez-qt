@@ -66,7 +66,7 @@ public:
         Active,
         /** Indicates that the transfer is suspended. */
         Suspended,
-        /** Indicates that the transfer have completed successfuly. */
+        /** Indicates that the transfer have completed successfully. */
         Complete,
         /** Indicates that the transfer have failed with error. */
         Error,

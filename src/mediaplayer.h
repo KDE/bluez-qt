@@ -182,7 +182,7 @@ public:
     MediaPlayerTrack track() const;
 
     /**
-     * Returns the playback position in miliseconds.
+     * Returns the playback position in milliseconds.
      *
      * @return playback position
      */

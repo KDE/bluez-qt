@@ -410,7 +410,7 @@ public Q_SLOTS:
     /**
      * Cancels a pairing with the device.
      *
-     * This method can be used to cancel pairing operation inititated with pair().
+     * This method can be used to cancel pairing operation initiated with pair().
      *
      * Possible errors: PendingCall::DoesNotExist, PendingCall::Failed
      *

@@ -91,7 +91,7 @@ public:
      *
      * Possible errors: PendingCall::InvalidArguments, PendingCall::Failed
      *
-     * @param targetFileName full path where the bussiness card will be saved
+     * @param targetFileName full path where the business card will be saved
      * @return ObexTransfer * pending call
      */
     PendingCall *pullBusinessCard(const QString &targetFileName);
@@ -111,7 +111,7 @@ public:
      * Possible errors: PendingCall::InvalidArguments, PendingCall::Failed
      *
      * @param clientFileName full path to local business card
-     * @param targetFileName full path where the bussiness card will be saved
+     * @param targetFileName full path where the business card will be saved
      * @return ObexTransfer * pending call
      */
     PendingCall *exchangeBusinessCards(const QString &clientFileName, const QString &targetFileName);
