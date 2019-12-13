@@ -74,6 +74,7 @@ public:
     bool m_connected;
     QStringList m_uuids;
     QString m_modalias;
+    BatteryPtr m_battery;
     InputPtr m_input;
     MediaPlayerPtr m_mediaPlayer;
     MediaTransportPtr m_mediaTransport;

@@ -8,6 +8,7 @@ set(bluezqt_autotests_SRCS
 
 qt5_add_dbus_interface(bluezqt_autotests_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.freedesktop.DBus.Properties.xml dbusproperties_tst)
 qt5_add_dbus_interface(bluezqt_autotests_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.Adapter1.xml bluezadapter1_tst)
+qt5_add_dbus_interface(bluezqt_autotests_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.Battery1.xml bluezbattery1_tst)
 qt5_add_dbus_interface(bluezqt_autotests_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.Device1.xml bluezdevice1_tst)
 qt5_add_dbus_interface(bluezqt_autotests_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.MediaPlayer1.xml bluezmediaplayer1_tst)
 qt5_add_dbus_interface(bluezqt_autotests_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.MediaTransport1.xml bluezmediatransport1_tst)
@@ -28,6 +29,7 @@ bluezqt_tests(
     agentmanagertest
     obexmanagertest
     adaptertest
+    batterytest
     devicetest
     inputtest
     mediaplayertest

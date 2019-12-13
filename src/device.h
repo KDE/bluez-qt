@@ -62,6 +62,7 @@ class BLUEZQT_EXPORT Device : public QObject
     Q_PROPERTY(bool connected READ isConnected NOTIFY connectedChanged)
     Q_PROPERTY(QStringList uuids READ uuids NOTIFY uuidsChanged)
     Q_PROPERTY(QString modalias READ modalias NOTIFY modaliasChanged)
+    Q_PROPERTY(BatteryPtr battery READ battery NOTIFY batteryChanged)
     Q_PROPERTY(InputPtr input READ input NOTIFY inputChanged)
     Q_PROPERTY(MediaPlayerPtr mediaPlayer READ mediaPlayer NOTIFY mediaPlayerChanged)
     Q_PROPERTY(MediaTransportPtr mediaTransport READ mediaTransport NOTIFY mediaTransportChanged)
@@ -298,6 +299,14 @@ public:
     QString modalias() const;
 
     /**
+     * Returns the battery interface for the device.
+     *
+     * @return null if device has no battery
+     * @since 5.66
+     */
+    BatteryPtr battery() const;
+
+    /**
      * Returns the input interface for the device.
      *
      * Only input devices will have valid input interface.
@@ -508,6 +517,11 @@ Q_SIGNALS:
      * Indicates that device's modalias have changed.
      */
     void modaliasChanged(const QString &modalias);
+
+    /**
+     * Indicates that device's battery has changed.
+     */
+    void batteryChanged(BatteryPtr battery);
 
     /**
      * Indicates that device's input have changed.

@@ -20,6 +20,7 @@
 
 #include "deviceinterface.h"
 #include "objectmanager.h"
+#include "batteryinterface.h"
 #include "mediaplayerinterface.h"
 #include "mediatransportinterface.h"
 #include "inputinterface.h"
@@ -49,6 +50,19 @@ DeviceInterface::DeviceInterface(const QDBusObjectPath &path, const QVariantMap 
 
     // Alias needs special handling
     setAlias(properties.value(QStringLiteral("Alias")).toString());
+
+    // Create Battery1
+    if (properties.contains(QStringLiteral("Battery"))) {
+        const QVariantMap &inputProps = qdbus_cast<QVariantMap>(properties.value(QStringLiteral("Battery")));
+        BatteryInterface *input = new BatteryInterface(path, inputProps, parent);
+
+        ObjectManager *manager = ObjectManager::self();
+        manager->addObject(input);
+
+        QVariantMap props = properties;
+        props.remove(QStringLiteral("Battery"));
+        setProperties(props);
+    }
 
     // Create Input1
     if (properties.contains(QStringLiteral("Input"))) {

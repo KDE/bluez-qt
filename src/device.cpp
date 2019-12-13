@@ -164,6 +164,11 @@ QString Device::modalias() const
     return d->m_modalias;
 }
 
+BatteryPtr Device::battery() const
+{
+    return d->m_battery;
+}
+
 InputPtr Device::input() const
 {
     return d->m_input;

@@ -30,6 +30,7 @@ namespace BluezQt
 
 class Manager;
 class Adapter;
+class Battery;
 class Device;
 class Input;
 class GattManager;
@@ -55,6 +56,7 @@ class GattApplication;
 
 typedef QSharedPointer<BluezQt::Manager> ManagerPtr;
 typedef QSharedPointer<BluezQt::Adapter> AdapterPtr;
+typedef QSharedPointer<BluezQt::Battery> BatteryPtr;
 typedef QSharedPointer<BluezQt::Device> DevicePtr;
 typedef QSharedPointer<BluezQt::Input> InputPtr;
 typedef QSharedPointer<BluezQt::GattManager> GattManagerPtr;

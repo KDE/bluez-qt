@@ -23,6 +23,7 @@
 #include "declarativedevicesmodel.h"
 #include "declarativemanager.h"
 #include "declarativeadapter.h"
+#include "declarativebattery.h"
 #include "declarativedevice.h"
 #include "declarativemediaplayer.h"
 
@@ -52,6 +53,7 @@ QHash<int, QByteArray> DeclarativeDevicesModel::roleNames() const
     roles[DeviceRole] = QByteArrayLiteral("Device");
     roles[AdapterRole] = QByteArrayLiteral("Adapter");
     roles[MediaPlayerRole] = QByteArrayLiteral("MediaPlayer");
+    roles[BatteryRole] = QByteArrayLiteral("Battery");
 
     return roles;
 }
@@ -76,9 +78,13 @@ QVariant DeclarativeDevicesModel::data(const QModelIndex &index, int role) const
         if (DeclarativeDevice *device = m_manager->declarativeDeviceFromPtr(dev)) {
             return QVariant::fromValue(device->mediaPlayer());
         }
-        // fallthrough
-        Q_FALLTHROUGH();
-    default:
-        return QSortFilterProxyModel::data(index, role);
+        break;
+    case BatteryRole:
+        if (DeclarativeDevice *device = m_manager->declarativeDeviceFromPtr(dev)) {
+            return QVariant::fromValue(device->battery());
+        }
+        break;
     }
+
+    return QSortFilterProxyModel::data(index, role);
 }

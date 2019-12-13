@@ -42,6 +42,7 @@ public:
     QString orgFreedesktopDBusProperties;
     QString orgBluez;
     QString orgBluezAdapter1;
+    QString orgBluezBattery1;
     QString orgBluezDevice1;
     QString orgBluezInput1;
     QString orgBluezGattManager1;
@@ -67,6 +68,7 @@ GlobalData::GlobalData()
     orgFreedesktopDBusProperties = QStringLiteral("org.freedesktop.DBus.Properties");
     orgBluez = QStringLiteral("org.bluez");
     orgBluezAdapter1 = QStringLiteral("org.bluez.Adapter1");
+    orgBluezBattery1 = QStringLiteral("org.bluez.Battery1");
     orgBluezDevice1 = QStringLiteral("org.bluez.Device1");
     orgBluezInput1 = QStringLiteral("org.bluez.Input1");
     orgBluezGattManager1 = QStringLiteral("org.bluez.GattManager1");
@@ -111,6 +113,11 @@ QString Strings::orgBluez()
 QString Strings::orgBluezAdapter1()
 {
     return globalData->orgBluezAdapter1;
+}
+
+QString Strings::orgBluezBattery1()
+{
+    return globalData->orgBluezBattery1;
 }
 
 QString Strings::orgBluezDevice1()

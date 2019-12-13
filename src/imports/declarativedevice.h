@@ -26,6 +26,7 @@
 #include "device.h"
 
 class DeclarativeAdapter;
+class DeclarativeBattery;
 class DeclarativeInput;
 class DeclarativeMediaPlayer;
 
@@ -94,6 +95,8 @@ public:
 
     QString modalias() const;
 
+    DeclarativeBattery *battery() const;
+
     DeclarativeInput *input() const;
 
     DeclarativeMediaPlayer *mediaPlayer() const;
@@ -126,15 +129,18 @@ Q_SIGNALS:
     void connectedChanged(bool connected);
     void uuidsChanged(const QStringList &uuids);
     void modaliasChanged(const QString &modalias);
+    void batteryChanged(DeclarativeBattery *battery);
     void inputChanged(DeclarativeInput *input);
     void mediaPlayerChanged(DeclarativeMediaPlayer *mediaPlayer);
 
 private:
+    void updateBattery();
     void updateInput();
     void updateMediaPlayer();
 
     BluezQt::DevicePtr m_device;
     DeclarativeAdapter *m_adapter;
+    DeclarativeBattery *m_battery;
     DeclarativeInput *m_input;
     DeclarativeMediaPlayer *m_mediaPlayer;
 };

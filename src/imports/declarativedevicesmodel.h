@@ -38,7 +38,8 @@ public:
     enum DeclarativeDeviceRoles {
         DeviceRole = BluezQt::DevicesModel::LastRole + 1,
         AdapterRole = BluezQt::DevicesModel::LastRole + 2,
-        MediaPlayerRole = BluezQt::DevicesModel::LastRole + 3
+        MediaPlayerRole = BluezQt::DevicesModel::LastRole + 3,
+        BatteryRole = BluezQt::DevicesModel::LastRole + 4
     };
 
     explicit DeclarativeDevicesModel(QObject *parent = nullptr);

@@ -22,6 +22,7 @@
 
 #include "declarativedevice.h"
 #include "declarativeadapter.h"
+#include "declarativebattery.h"
 #include "declarativeinput.h"
 #include "declarativemediaplayer.h"
 
@@ -31,6 +32,7 @@ DeclarativeDevice::DeclarativeDevice(BluezQt::DevicePtr device, DeclarativeAdapt
     : QObject(adapter)
     , m_device(device)
     , m_adapter(adapter)
+    , m_battery(nullptr)
     , m_input(nullptr)
     , m_mediaPlayer(nullptr)
 {
@@ -51,6 +53,7 @@ DeclarativeDevice::DeclarativeDevice(BluezQt::DevicePtr device, DeclarativeAdapt
     connect(m_device.data(), &BluezQt::Device::modaliasChanged, this, &DeclarativeDevice::modaliasChanged);
     connect(m_device.data(), &BluezQt::Device::mediaPlayerChanged, this, &DeclarativeDevice::updateMediaPlayer);
     connect(m_device.data(), &BluezQt::Device::inputChanged, this, &DeclarativeDevice::updateInput);
+    connect(m_device.data(), &BluezQt::Device::batteryChanged, this, &DeclarativeDevice::updateBattery);
 
     connect(m_device.data(), &BluezQt::Device::deviceRemoved, this, [this]() {
         Q_EMIT deviceRemoved(this);
@@ -164,6 +167,11 @@ QString DeclarativeDevice::modalias() const
     return m_device->modalias();
 }
 
+DeclarativeBattery *DeclarativeDevice::battery() const
+{
+    return m_battery;
+}
+
 DeclarativeInput *DeclarativeDevice::input() const
 {
     return m_input;
@@ -207,6 +215,20 @@ BluezQt::PendingCall *DeclarativeDevice::pair()
 BluezQt::PendingCall *DeclarativeDevice::cancelPairing()
 {
     return m_device->cancelPairing();
+}
+
+void DeclarativeDevice::updateBattery()
+{
+    if (m_battery) {
+        m_battery->deleteLater();
+        m_battery = nullptr;
+    }
+
+    if (m_device->battery()) {
+        m_battery = new DeclarativeBattery(m_device->battery(), this);
+    }
+
+    Q_EMIT batteryChanged(m_battery);
 }
 
 void DeclarativeDevice::updateInput()

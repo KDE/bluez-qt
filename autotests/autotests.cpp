@@ -21,6 +21,7 @@
 #include "autotests.h"
 #include "device.h"
 #include "adapter.h"
+#include "battery.h"
 #include "mediaplayer.h"
 #include "mediaplayertrack.h"
 #include "mediatransport.h"
@@ -176,6 +177,7 @@ void Autotests::registerMetatypes()
 {
     qRegisterMetaType<BluezQt::DevicePtr>("DevicePtr");
     qRegisterMetaType<BluezQt::AdapterPtr>("AdapterPtr");
+    qRegisterMetaType<BluezQt::BatteryPtr>("BatteryPtr");
     qRegisterMetaType<BluezQt::MediaPlayerPtr>("MediaPlayerPtr");
     qRegisterMetaType<BluezQt::MediaTransportPtr>("MediaTransportPtr");
 }

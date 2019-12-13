@@ -1,6 +1,7 @@
 set(bluezqtextensionplugin_SRCS
     declarativemanager.cpp
     declarativeadapter.cpp
+    declarativebattery.cpp
     declarativedevice.cpp
     declarativeinput.cpp
     declarativemediaplayer.cpp

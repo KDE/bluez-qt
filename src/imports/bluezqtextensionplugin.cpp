@@ -23,6 +23,7 @@
 #include "bluezqtextensionplugin.h"
 #include "declarativemanager.h"
 #include "declarativeadapter.h"
+#include "declarativebattery.h"
 #include "declarativedevice.h"
 #include "declarativeinput.h"
 #include "declarativemediaplayer.h"
@@ -78,6 +79,7 @@ void BluezQtExtensionPlugin::registerTypes(const char *uri)
     qmlRegisterSingletonType<DeclarativeManager>(uri, 1, 0, "Manager", manager_singleton);
     qmlRegisterType<DeclarativeDevicesModel>(uri, 1, 0, "DevicesModelPrivate");
     qmlRegisterUncreatableType<DeclarativeAdapter>(uri, 1, 0, "Adapter", QStringLiteral("Adapter cannot be created"));
+    qmlRegisterUncreatableType<DeclarativeBattery>(uri, 1, 0, "Battery", QStringLiteral("Battery cannot be created"));
     qmlRegisterUncreatableType<DeclarativeDevice>(uri, 1, 0, "Device", QStringLiteral("Device cannot be created"));
     qmlRegisterUncreatableType<DeclarativeInput>(uri, 1, 0, "Input", QStringLiteral("Input cannot be created"));
     qmlRegisterUncreatableType<DeclarativeMediaPlayer>(uri, 1, 0, "MediaPlayer", QStringLiteral("MediaPlayer cannot be created"));

@@ -23,6 +23,8 @@
 #include "device_p.h"
 #include "device.h"
 #include "adapter.h"
+#include "battery.h"
+#include "battery_p.h"
 #include "input.h"
 #include "input_p.h"
 #include "mediaplayer.h"
@@ -87,7 +89,12 @@ void DevicePrivate::interfacesAdded(const QString &path, const QVariantMapMap &i
     QVariantMapMap::const_iterator it;
 
     for (it = interfaces.constBegin(); it != interfaces.constEnd(); ++it) {
-        if (it.key() == Strings::orgBluezInput1()) {
+        if (it.key() == Strings::orgBluezBattery1()) {
+            m_battery = BatteryPtr(new Battery(path, it.value()));
+            m_battery->d->q = m_battery.toWeakRef();
+            Q_EMIT q.lock()->batteryChanged(m_battery);
+            changed = true;
+        } else if (it.key() == Strings::orgBluezInput1()) {
             m_input = InputPtr(new Input(path, it.value()));
             m_input->d->q = m_input.toWeakRef();
             Q_EMIT q.lock()->inputChanged(m_input);
@@ -115,7 +122,11 @@ void DevicePrivate::interfacesRemoved(const QString &path, const QStringList &in
     bool changed = false;
 
     for (const QString &interface : interfaces) {
-        if (interface == Strings::orgBluezInput1() && m_input && m_input->d->m_path == path) {
+        if (interface == Strings::orgBluezBattery1() && m_battery && m_battery->d->m_path == path) {
+            m_battery.clear();
+            Q_EMIT q.lock()->batteryChanged(m_battery);
+            changed = true;
+        } else if (interface == Strings::orgBluezInput1() && m_input && m_input->d->m_path == path) {
             m_input.clear();
             Q_EMIT q.lock()->inputChanged(m_input);
             changed = true;
@@ -142,7 +153,9 @@ QDBusPendingReply<> DevicePrivate::setDBusProperty(const QString &name, const QV
 
 void DevicePrivate::propertiesChanged(const QString &interface, const QVariantMap &changed, const QStringList &invalidated)
 {
-    if (interface == Strings::orgBluezInput1() && m_input) {
+    if (interface == Strings::orgBluezBattery1() && m_battery) {
+        m_battery->d->propertiesChanged(interface, changed, invalidated);
+    } else if (interface == Strings::orgBluezInput1() && m_input) {
         m_input->d->propertiesChanged(interface, changed, invalidated);
     } else if (interface == Strings::orgBluezMediaPlayer1() && m_mediaPlayer) {
         m_mediaPlayer->d->propertiesChanged(interface, changed, invalidated);

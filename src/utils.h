@@ -39,6 +39,7 @@ QString orgFreedesktopDBus();
 QString orgFreedesktopDBusProperties();
 QString orgBluez();
 QString orgBluezAdapter1();
+QString orgBluezBattery1();
 QString orgBluezDevice1();
 QString orgBluezInput1();
 QString orgBluezGattManager1();

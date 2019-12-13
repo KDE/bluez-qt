@@ -4,6 +4,7 @@ set(bluezqt_SRCS
     manager_p.cpp
     adapter.cpp
     adapter_p.cpp
+    battery.cpp
     device.cpp
     device_p.cpp
     gattapplication.cpp
@@ -67,6 +68,7 @@ qt5_add_dbus_interface(bluezqt_SRCS ${obexfiletransfer1_xml} obexfiletransfer1)
 qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.freedesktop.DBus.Properties.xml dbusproperties)
 qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.Adapter1.xml bluezadapter1)
 qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.AgentManager1.xml bluezagentmanager1)
+qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.Battery1.xml bluezbattery1)
 qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.GattCharacteristic1.xml bluezgattcharacteristic1)
 qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.GattManager1.xml bluezgattmanager1)
 qt5_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.ProfileManager1.xml bluezprofilemanager1)

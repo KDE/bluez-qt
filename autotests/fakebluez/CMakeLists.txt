@@ -9,6 +9,7 @@ set(fakebluez_SRCS
     devicemanager.cpp
     adapterinterface.cpp
     deviceinterface.cpp
+    batteryinterface.cpp
     inputinterface.cpp
     mediaplayerinterface.cpp
     mediatransportinterface.cpp
