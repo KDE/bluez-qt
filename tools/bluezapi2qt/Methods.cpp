@@ -23,6 +23,16 @@
 #include "Methods.h"
 
 #include <QStringList>
+#include <QRegularExpression>
+
+static const QRegularExpression rx(QStringLiteral(
+                             "\\t+"               // preceding tabs
+                             "(?:(.+) )?"         // return types - Argh! LE Advertising Manager does not specify return type
+                             "([A-Z]\\w+)"        // method name
+                             "\\(([^\\)]*)\\)"    // parameters
+                             "(?: \\[(.*)\\])?"   // tags
+                             "(?: \\((.*)\\))?"   // limitations
+                             ), QRegularExpression::CaseInsensitiveOption);
 
 Methods::Methods()
 {
@@ -30,40 +40,22 @@ Methods::Methods()
 
 bool Methods::isMethod(const QString &line)
 {
-    QRegExp rx(QStringLiteral(
-               "\\t+"               // preceding tabs
-               "(?:(.+) )?"         // return types - Argh! LE Advertising Manager does not specify return type
-               "([A-Z]\\w+)"        // method name
-               "\\(([^\\)]*)\\)"    // parameters
-               "(?: \\[(.*)\\])?"   // tags
-               "(?: \\((.*)\\))?"   // limitations
-               ), Qt::CaseInsensitive, QRegExp::RegExp2);
-
     // Check if we match a method
-    return (rx.indexIn(line) != -1);
+    return (rx.match(line).hasMatch());
 }
 
 void Methods::parse(const QString &line)
 {
-    QRegExp rx(QStringLiteral(
-               "\\t+"               // preceding tabs
-               "(?:(.+) )?"         // return types - Argh! LE Advertising Manager does not specify return type
-               "([A-Z]\\w+)"        // method name
-               "\\(([^\\)]*)\\)"    // parameters
-               "(?: \\[(.*)\\])?"   // tags
-               "(?: \\((.*)\\))?"   // limitations
-               ), Qt::CaseInsensitive, QRegExp::RegExp2);
-
     // Check if we match a method
-    if (rx.indexIn(line) != -1) {
-        QStringList list = rx.capturedTexts();
+    QRegularExpressionMatch match = rx.match(line);
+    if (match.hasMatch()) {
         m_methods.emplace_back(Method());
         m_currentMethod = &m_methods.back();
-        m_currentMethod->m_outParameterStrings = list.at(1).toLower().split(QStringLiteral(", "), QString::SkipEmptyParts);
-        m_currentMethod->m_name = list.at(2);
-        m_currentMethod->m_inParameterStrings = list.at(3).split(QStringLiteral(", "), QString::SkipEmptyParts);
-        m_currentMethod->m_stringTags = list.at(4).toLower().split(QStringLiteral(", "), QString::SkipEmptyParts);
-        m_currentMethod->m_limitation = list.at(5).toLower();
+        m_currentMethod->m_outParameterStrings = match.captured(1).toLower().split(QStringLiteral(", "), QString::SkipEmptyParts);
+        m_currentMethod->m_name = match.captured(2);
+        m_currentMethod->m_inParameterStrings = match.captured(3).split(QStringLiteral(", "), QString::SkipEmptyParts);
+        m_currentMethod->m_stringTags = match.captured(4).toLower().split(QStringLiteral(", "), QString::SkipEmptyParts);
+        m_currentMethod->m_limitation = match.captured(5).toLower();
     } else if (m_currentMethod) {
         // Skip first empty line
         if (line.isEmpty() && m_currentMethod->m_comment.isEmpty()) {

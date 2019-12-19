@@ -22,6 +22,8 @@
 
 #include "Interface.h"
 
+#include <QRegularExpression>
+
 Interface::Interface()
 {
 }
@@ -123,25 +125,28 @@ void Interface::parseComment(const QString &line)
 
 void Interface::parseService(const QString &line)
 {
-    QRegExp rx(QStringLiteral("Service\\t+(.+)"), Qt::CaseSensitive, QRegExp::RegExp2);
-    if (rx.indexIn(line) != -1) {
-        m_service = rx.capturedTexts().last();
+    const QRegularExpression rx(QStringLiteral("Service\\t+(.+)"));
+    QRegularExpressionMatch match = rx.match(line);
+    if (match.hasMatch()) {
+        m_service = match.captured();
     }
 }
 
 void Interface::parseInterface(const QString &line)
 {
-    QRegExp rx(QStringLiteral("Interface\\t+(.+)"), Qt::CaseSensitive, QRegExp::RegExp2);
-    if (rx.indexIn(line) != -1) {
-        m_name = rx.capturedTexts().last();
+    const QRegularExpression rx(QStringLiteral("Interface\\t+(.+)"));
+    QRegularExpressionMatch match = rx.match(line);
+    if (match.hasMatch()) {
+        m_name = match.captured();
     }
 }
 
 void Interface::parseObjectPath(const QString &line)
 {
-    QRegExp rx(QStringLiteral("Object path\\t+(.+)"), Qt::CaseSensitive, QRegExp::RegExp2);
-    if (rx.indexIn(line) != -1) {
-        m_objectPath = rx.capturedTexts().last();
+    const QRegularExpression rx(QStringLiteral("Object path\\t+(.+)"));
+    QRegularExpressionMatch match = rx.match(line);
+    if (match.hasMatch()) {
+        m_objectPath = match.captured();
     }
 }
 

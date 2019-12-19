@@ -22,7 +22,7 @@
 
 #include "Properties.h"
 
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QStringList>
 
 Properties::Properties()
@@ -31,25 +31,25 @@ Properties::Properties()
 
 void Properties::parse(const QString &line)
 {
-    QRegExp rx(QStringLiteral(
-               "(?:Properties|^)"   // Properties keyword or start of line
-               "\\t{1,2}"           // preceding tabs (max 2)
-               "([a-z1-6{}_]+)"     // type name
-               " "                  // space
-               "([A-Z]\\w+)"        // method name
-               "(?: \\[(.*)\\])?"   // tags
-               "(?: \\((.*)\\))?"   // limitations
-               ), Qt::CaseSensitive, QRegExp::RegExp2);
+    const QRegularExpression rx(QStringLiteral(
+                                "(?:Properties|^)"   // Properties keyword or start of line
+                                "\\t{1,2}"           // preceding tabs (max 2)
+                                "([a-z1-6{}_]+)"     // type name
+                                "       "                  // space
+                                "([A-Z]\\w+)"        // method name
+                                "(?: \\[(.*)\\])?"   // tags
+                                "(?: \\((.*)\\))?"   // limitations
+                                ), QRegularExpression::CaseInsensitiveOption);
 
+    QRegularExpressionMatch match = rx.match(line);
     // Check if we match a property
-    if (rx.indexIn(line) != -1) {
-        QStringList list = rx.capturedTexts();
+    if (match.hasMatch()) {
         m_properties.emplace_back(Property());
         m_currentProperty = &m_properties.back();
-        m_currentProperty->m_type = list.at(1).toLower();
-        m_currentProperty->m_name = list.at(2);
-        m_currentProperty->m_stringTags = list.at(3).toLower().split(QStringLiteral(", "), QString::SkipEmptyParts);
-        m_currentProperty->m_limitation = list.at(4).toLower();
+        m_currentProperty->m_type = match.captured(1).toLower();
+        m_currentProperty->m_name = match.captured(2);
+        m_currentProperty->m_stringTags = match.captured(3).toLower().split(QStringLiteral(", "), QString::SkipEmptyParts);
+        m_currentProperty->m_limitation = match.captured(4).toLower();
     } else if (m_currentProperty) {
         // Skip first empty line
         if (line.isEmpty() && m_currentProperty->m_comment.isEmpty()) {

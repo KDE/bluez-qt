@@ -20,6 +20,8 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QRegularExpression>
+
 #include "Method.h"
 
 Method::Method()
@@ -101,11 +103,11 @@ QString Method::guessOutParameterName() const
         return QString();
     }
 
-    QRegExp rx(QStringLiteral("([A-Z][a-z0-9]+)+"));
-    if (rx.indexIn(m_name, 1) == -1) {
+    const QRegularExpression rx(QStringLiteral("([A-Z][a-z0-9]+)+"));
+    QRegularExpressionMatch match = rx.match(m_name, 1);
+    if (!match.hasMatch()) {
         return QStringLiteral("value");
     }
 
-    QStringList list = rx.capturedTexts();
-    return list.last().toLower();
+    return match.captured().toLower();
 }

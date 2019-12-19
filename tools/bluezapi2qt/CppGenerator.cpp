@@ -20,10 +20,11 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "CppGenerator.h"
-
 #include <QDebug>
 #include <QFile>
+#include <QRegularExpression>
+
+#include "CppGenerator.h"
 
 #include "BluezApiParser.h"
 #include "TypeAnnotation.h"
@@ -204,7 +205,8 @@ void CppGenerator::writeAdaptorSource(const BluezApiParser &parser)
 
 QString CppGenerator::interfaceToClassName(const QString &interface)
 {
-    auto className = interface.mid(interface.lastIndexOf(QRegExp(QStringLiteral("\\.[A-Z]\\w+")))+1);
+    const int index = interface.lastIndexOf(QRegularExpression(QStringLiteral("\\.[A-Z]\\w+"))) + 1;
+    auto className = interface.mid(index);
     while (className.back() > L'0' && className.back() <= L'9') {
         className.remove(className.size()-1, 1);
     }
@@ -217,10 +219,11 @@ QString CppGenerator::lowerFirstChars(const QString &string)
     QString str(string);
     //str.replace(0, 1, string.at(0).toLower());
 
-    QRegExp rx(QStringLiteral("^([A-Z]+)"), Qt::CaseSensitive, QRegExp::RegExp2);
-    if (rx.indexIn(string) != -1) {
-        QString caps = rx.capturedTexts().last();
-        for (int i = 0; i < caps.size()-1; ++i) {
+    const QRegularExpression rx(QStringLiteral("^([A-Z]+)"));
+    QRegularExpressionMatch match = rx.match(string);
+    if (match.hasMatch()) {
+        QString matchedStr = match.captured();
+        for (int i = 0; i < matchedStr.size() - 1; ++i) {
             str.replace(i, 1, str.at(i).toLower());
         }
     }
