@@ -76,24 +76,28 @@ bool XmlGenerator::generate(const BluezApiParser &parser)
 
 void XmlGenerator::writeHeader(QTextStream &stream)
 {
-    stream << "<?xml version=\"1.0\"?>" << endl;
-    stream << "<!DOCTYPE node PUBLIC \"-//freedesktop//DTD D-BUS Object Introspection 1.0//EN\" \"http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd\">" << endl;
-    stream << "<node>" << endl;
+    stream << "<?xml version=\"1.0\"?>\n";
+    stream << "<!DOCTYPE node PUBLIC \"-//freedesktop//DTD D-BUS Object Introspection 1.0//EN\" \"http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd\">\n";
+    stream << "<node>\n";
+    stream.flush();
 }
 
 void XmlGenerator::writeFooter(QTextStream &stream)
 {
-    stream << "</node>" << endl;
+    stream << "</node>\n";
+    stream.flush();
 }
 
 void XmlGenerator::writeInterface(QTextStream &stream, const QString &name)
 {
-    stream << "  <interface name=\"" << name << "\">" << endl;
+    stream << "  <interface name=\"" << name << "\">\n";
+    stream.flush();
 }
 
 void XmlGenerator::closeInterface(QTextStream &stream)
 {
-    stream << "  </interface>" << endl;
+    stream << "  </interface>\n";
+    stream.flush();
 }
 
 bool XmlGenerator::writeMethod(QTextStream &stream, const Method &method)
@@ -102,11 +106,12 @@ bool XmlGenerator::writeMethod(QTextStream &stream, const Method &method)
 
     // Some beautification
     if (method.inParameters().empty() && method.outParameters().empty()) {
-        stream << "/>" << endl;
+        stream << "/>\n";
+        stream.flush();
         return true;
     }
 
-    stream << ">" << endl;
+    stream << ">\n";
 
     for (const auto &param : method.inParameters()) {
         if (!writeArg(stream, param, QStringLiteral("in"))) {
@@ -125,7 +130,8 @@ bool XmlGenerator::writeMethod(QTextStream &stream, const Method &method)
         writeAnnotation(stream, method.outParameters().at(i), QStringLiteral("Out"), i);
     }
 
-    stream << "    </method>" << endl;
+    stream << "    </method>\n";
+    stream.flush();
 
     return true;
 }
@@ -137,7 +143,8 @@ bool XmlGenerator::writeArg(QTextStream &stream, const Parameter &param, const Q
         return false;
     }
     stream << "      <arg name=\"" << param.name() << "\" type=\"" << dbusType <<
-              "\" direction=\"" << dir << "\"/>" << endl;
+              "\" direction=\"" << dir << "\"/>\n";
+    stream.flush();
 
     return true;
 }
@@ -149,7 +156,8 @@ void XmlGenerator::writeAnnotation(QTextStream &stream, const Parameter &param, 
         return;
     }
     stream << "      <annotation name=\"org.qtproject.QtDBus.QtTypeName." << dir <<
-              QString::number(i) << "\" value=\"" << qtType << "\"/>" << endl;
+              QString::number(i) << "\" value=\"" << qtType << "\"/>\n";
+    stream.flush();
 
     return;
 }

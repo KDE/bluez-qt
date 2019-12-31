@@ -58,14 +58,14 @@ void CppGenerator::writeAdaptorHeader(const BluezApiParser &parser)
         // Write content
         QTextStream stream(&file);
         writeCopyrightHeader(stream);
-        stream << "#pragma once" << endl << endl;
-        stream << "#include <QDBusAbstractAdaptor>" << endl << endl;
-        stream << "class QDBusObjectPath;" << endl << endl;
-        stream << "namespace BluezQt" << endl << "{" << endl << endl;
-        stream << "class " << className << ";" << endl << endl;
-        stream << "class " << className << "Adaptor : public QDBusAbstractAdaptor" << endl << "{" << endl;
-        stream << "    Q_OBJECT " << endl;
-        stream << "    Q_CLASSINFO(\"D-Bus Interface\", \"" << interface.name() << "\")" << endl;
+        stream << "#pragma once\n\n";
+        stream << "#include <QDBusAbstractAdaptor>\n\n";
+        stream << "class QDBusObjectPath;\n\n";
+        stream << "namespace BluezQt\n{\n\n";
+        stream << "class " << className << ";\n\n";
+        stream << "class " << className << "Adaptor : public QDBusAbstractAdaptor\n{\n";
+        stream << "    Q_OBJECT \n";
+        stream << "    Q_CLASSINFO(\"D-Bus Interface\", \"" << interface.name() << "\")\n";
 
         // Write properties
         for (const auto &property : interface.properties().properties()) {
@@ -78,11 +78,11 @@ void CppGenerator::writeAdaptorHeader(const BluezApiParser &parser)
             if (!property.tags().isReadOnly) {
                 stream << " WRITE set" << property.name();
             }
-            stream << ")" << endl;
+            stream << ")\n";
         }
 
-        stream << endl << "public:" << endl;
-        stream << "    explicit " << className << "Adaptor(" << className << "* parent);" << endl << endl;
+        stream << "\npublic:\n";
+        stream << "    explicit " << className << "Adaptor(" << className << "* parent);\n\n";
 
         // Write property accessors
         for (const auto &property : interface.properties().properties()) {
@@ -91,14 +91,14 @@ void CppGenerator::writeAdaptorHeader(const BluezApiParser &parser)
                 (property.tags().isExperimental && !m_config.useExperimental)) {
                 continue;
             }
-            stream << "    " << bluezToQt(property.type()) << " " << lowerFirstChars(property.name()) << "() const;" << endl;
+            stream << "    " << bluezToQt(property.type()) << " " << lowerFirstChars(property.name()) << "() const;\n";
             if (!property.tags().isReadOnly) {
-                stream << "    void set" << property.name() << "(const " << bluezToQt(property.type()) << " &" << lowerFirstChars(property.name()) << ");" << endl;
+                stream << "    void set" << property.name() << "(const " << bluezToQt(property.type()) << " &" << lowerFirstChars(property.name()) << ");\n";
             }
-            stream << endl;
+            stream << "\n";
         }
 
-        stream << "public Q_SLOTS:" << endl;
+        stream << "public Q_SLOTS:\n";
 
         // write Methods
         for (const auto &method : interface.methods().methods()) {
@@ -115,13 +115,13 @@ void CppGenerator::writeAdaptorHeader(const BluezApiParser &parser)
                     stream << ", ";
                 }
             }
-            stream << ");" << endl;
+            stream << ");\n";
         }
 
         // write private members
-        stream << endl << "private:" << endl;
-        stream << "    " << className << " *m_" << lowerFirstChars(className) << ";" << endl;
-        stream << "};" << endl << endl << "} // namespace BluezQt" << endl;
+        stream << "\nprivate:\n";
+        stream << "    " << className << " *m_" << lowerFirstChars(className) << ";\n";
+        stream << "};\n\n} // namespace BluezQt\n";
 
         file.close();
     }
@@ -143,13 +143,13 @@ void CppGenerator::writeAdaptorSource(const BluezApiParser &parser)
         // Write content
         QTextStream stream(&file);
         writeCopyrightHeader(stream);
-        stream << "#include \"" << className << "Adaptor.h\"" << endl << endl;
-        stream << "#include \"" << className << ".h\"" << endl << endl;
-        stream << "namespace BluezQt" << endl << "{" << endl << endl;
-        stream << className << "Adaptor::" << className << "Adaptor(" << className << " *parent)" << endl;
-        stream << "    : QDBusAbstractAdaptor(parent)" << endl;
-        stream << "    , m_" << lowerFirstChars(className) << "(parent)" << endl;
-        stream << "{" << endl << "}" << endl << endl;
+        stream << "#include \"" << className << "Adaptor.h\"\n\n";
+        stream << "#include \"" << className << ".h\"\n\n";
+        stream << "namespace BluezQt\n{\n\n";
+        stream << className << "Adaptor::" << className << "Adaptor(" << className << " *parent)\n";
+        stream << "    : QDBusAbstractAdaptor(parent)\n";
+        stream << "    , m_" << lowerFirstChars(className) << "(parent)\n";
+        stream << "{\n}\n\n";
 
         // Write property accessors
         for (const auto &property : interface.properties().properties()) {
@@ -158,15 +158,15 @@ void CppGenerator::writeAdaptorSource(const BluezApiParser &parser)
                 (property.tags().isExperimental && !m_config.useExperimental)) {
                 continue;
             }
-            stream << bluezToQt(property.type()) << " " << className << "Adaptor::" << lowerFirstChars(property.name()) << "() const" << endl;
-            stream << "{" << endl;
-            stream << "    return m_" << lowerFirstChars(className) << "->" << lowerFirstChars(property.name()) << "();" << endl;
-            stream << "}" << endl << endl;
+            stream << bluezToQt(property.type()) << " " << className << "Adaptor::" << lowerFirstChars(property.name()) << "() const\n";
+            stream << "{\n";
+            stream << "    return m_" << lowerFirstChars(className) << "->" << lowerFirstChars(property.name()) << "();\n";
+            stream << "}\n\n";
             if (!property.tags().isReadOnly) {
-                stream << "void " << className << "Adaptor::set" << property.name() << "(const " << bluezToQt(property.type()) << " &" << lowerFirstChars(property.name()) << ");" << endl;
-                stream << "{" << endl;
-                stream << "    m_" << lowerFirstChars(className) << "->set" << property.name() << "(" << lowerFirstChars(property.name()) << ");" << endl;
-                stream << "}" << endl << endl;
+                stream << "void " << className << "Adaptor::set" << property.name() << "(const " << bluezToQt(property.type()) << " &" << lowerFirstChars(property.name()) << ");\n";
+                stream << "{\n";
+                stream << "    m_" << lowerFirstChars(className) << "->set" << property.name() << "(" << lowerFirstChars(property.name()) << ");\n";
+                stream << "}\n\n";
             }
         }
 
@@ -185,7 +185,7 @@ void CppGenerator::writeAdaptorSource(const BluezApiParser &parser)
                     stream << ", ";
                 }
             }
-            stream << ")" << endl << "{" << endl;
+            stream << ")\n{\n";
             stream << "    return m_" << lowerFirstChars(className) << "->" << lowerFirstChars(method.name()) << "(";
             for (auto it = method.inParameters().begin();
                  it != method.inParameters().end(); ++it) {
@@ -194,10 +194,10 @@ void CppGenerator::writeAdaptorSource(const BluezApiParser &parser)
                     stream << ", ";
                 }
             }
-            stream << ");" << endl << "}" << endl << endl;
+            stream << ");\n}\n\n";
         }
 
-        stream << "} // namespace BluezQt" << endl;
+        stream << "} // namespace BluezQt\n";
 
         file.close();
     }
@@ -235,25 +235,26 @@ QString CppGenerator::lowerFirstChars(const QString &string)
 
 void CppGenerator::writeCopyrightHeader(QTextStream &stream)
 {
-    stream << "/*" << endl;
-    stream << " * BluezQt - Asynchronous Bluez wrapper library" << endl;
-    stream << " *" << endl;
-    stream << " * Copyright (C) " << m_config.year << " " << m_config.author << endl;
-    stream << " *" << endl;
-    stream << " * This library is free software; you can redistribute it and/or" << endl;
-    stream << " * modify it under the terms of the GNU Lesser General Public" << endl;
-    stream << " * License as published by the Free Software Foundation; either" << endl;
-    stream << " * version 2.1 of the License, or (at your option) version 3, or any" << endl;
-    stream << " * later version accepted by the membership of KDE e.V. (or its" << endl;
-    stream << " * successor approved by the membership of KDE e.V.), which shall" << endl;
-    stream << " * act as a proxy defined in Section 6 of version 3 of the license." << endl;
-    stream << " *" << endl;
-    stream << " * This library is distributed in the hope that it will be useful," << endl;
-    stream << " * but WITHOUT ANY WARRANTY; without even the implied warranty of" << endl;
-    stream << " * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU" << endl;
-    stream << " * Lesser General Public License for more details." << endl;
-    stream << " *" << endl;
-    stream << " * You should have received a copy of the GNU Lesser General Public" << endl;
-    stream << " * License along with this library. If not, see <http://www.gnu.org/licenses/>." << endl;
-    stream << " */" << endl << endl;
+    stream << "/*\n";
+    stream << " * BluezQt - Asynchronous Bluez wrapper library\n";
+    stream << " *\n";
+    stream << " * Copyright (C) " << m_config.year << " " << m_config.author << "\n";
+    stream << " *\n";
+    stream << " * This library is free software; you can redistribute it and/or\n";
+    stream << " * modify it under the terms of the GNU Lesser General Public\n";
+    stream << " * License as published by the Free Software Foundation; either\n";
+    stream << " * version 2.1 of the License, or (at your option) version 3, or any\n";
+    stream << " * later version accepted by the membership of KDE e.V. (or its\n";
+    stream << " * successor approved by the membership of KDE e.V.), which shall\n";
+    stream << " * act as a proxy defined in Section 6 of version 3 of the license.\n";
+    stream << " *\n";
+    stream << " * This library is distributed in the hope that it will be useful,\n";
+    stream << " * but WITHOUT ANY WARRANTY; without even the implied warranty of\n";
+    stream << " * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU\n";
+    stream << " * Lesser General Public License for more details.\n";
+    stream << " *\n";
+    stream << " * You should have received a copy of the GNU Lesser General Public\n";
+    stream << " * License along with this library. If not, see <http://www.gnu.org/licenses/>.\n";
+    stream << " */\n\n";
+    stream.flush();
 }
