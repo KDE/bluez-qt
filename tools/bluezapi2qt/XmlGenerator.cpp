@@ -79,25 +79,21 @@ void XmlGenerator::writeHeader(QTextStream &stream)
     stream << "<?xml version=\"1.0\"?>\n";
     stream << "<!DOCTYPE node PUBLIC \"-//freedesktop//DTD D-BUS Object Introspection 1.0//EN\" \"http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd\">\n";
     stream << "<node>\n";
-    stream.flush();
 }
 
 void XmlGenerator::writeFooter(QTextStream &stream)
 {
     stream << "</node>\n";
-    stream.flush();
 }
 
 void XmlGenerator::writeInterface(QTextStream &stream, const QString &name)
 {
     stream << "  <interface name=\"" << name << "\">\n";
-    stream.flush();
 }
 
 void XmlGenerator::closeInterface(QTextStream &stream)
 {
     stream << "  </interface>\n";
-    stream.flush();
 }
 
 bool XmlGenerator::writeMethod(QTextStream &stream, const Method &method)
@@ -107,7 +103,6 @@ bool XmlGenerator::writeMethod(QTextStream &stream, const Method &method)
     // Some beautification
     if (method.inParameters().empty() && method.outParameters().empty()) {
         stream << "/>\n";
-        stream.flush();
         return true;
     }
 
@@ -131,7 +126,6 @@ bool XmlGenerator::writeMethod(QTextStream &stream, const Method &method)
     }
 
     stream << "    </method>\n";
-    stream.flush();
 
     return true;
 }
@@ -144,7 +138,6 @@ bool XmlGenerator::writeArg(QTextStream &stream, const Parameter &param, const Q
     }
     stream << "      <arg name=\"" << param.name() << "\" type=\"" << dbusType <<
               "\" direction=\"" << dir << "\"/>\n";
-    stream.flush();
 
     return true;
 }
@@ -157,7 +150,6 @@ void XmlGenerator::writeAnnotation(QTextStream &stream, const Parameter &param, 
     }
     stream << "      <annotation name=\"org.qtproject.QtDBus.QtTypeName." << dir <<
               QString::number(i) << "\" value=\"" << qtType << "\"/>\n";
-    stream.flush();
 
     return;
 }
