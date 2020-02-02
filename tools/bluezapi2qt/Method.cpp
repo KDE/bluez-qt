@@ -95,5 +95,5 @@ QString Method::guessOutParameterName() const
         return QStringLiteral("value");
     }
 
-    return match.captured().toLower();
+    return match.captured(1).toLower();
 }

@@ -208,7 +208,7 @@ QString CppGenerator::lowerFirstChars(const QString &string)
     const QRegularExpression rx(QStringLiteral("^([A-Z]+)"));
     QRegularExpressionMatch match = rx.match(string);
     if (match.hasMatch()) {
-        QString matchedStr = match.captured();
+        QString matchedStr = match.captured(1);
         for (int i = 0; i < matchedStr.size() - 1; ++i) {
             str.replace(i, 1, str.at(i).toLower());
         }

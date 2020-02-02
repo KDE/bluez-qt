@@ -21,11 +21,11 @@ void Properties::parse(const QString &line)
                                 "(?:Properties|^)"   // Properties keyword or start of line
                                 "\\t{1,2}"           // preceding tabs (max 2)
                                 "([a-z1-6{}_]+)"     // type name
-                                "       "                  // space
+                                " "                  // space
                                 "([A-Z]\\w+)"        // method name
                                 "(?: \\[(.*)\\])?"   // tags
                                 "(?: \\((.*)\\))?"   // limitations
-                                ), QRegularExpression::CaseInsensitiveOption);
+                                ));
 
     QRegularExpressionMatch match = rx.match(line);
     // Check if we match a property

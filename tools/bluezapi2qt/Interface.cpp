@@ -114,7 +114,7 @@ void Interface::parseService(const QString &line)
     const QRegularExpression rx(QStringLiteral("Service\\t+(.+)"));
     QRegularExpressionMatch match = rx.match(line);
     if (match.hasMatch()) {
-        m_service = match.captured();
+        m_service = match.captured(1);
     }
 }
 
@@ -123,7 +123,7 @@ void Interface::parseInterface(const QString &line)
     const QRegularExpression rx(QStringLiteral("Interface\\t+(.+)"));
     QRegularExpressionMatch match = rx.match(line);
     if (match.hasMatch()) {
-        m_name = match.captured();
+        m_name = match.captured(1);
     }
 }
 
@@ -132,7 +132,7 @@ void Interface::parseObjectPath(const QString &line)
     const QRegularExpression rx(QStringLiteral("Object path\\t+(.+)"));
     QRegularExpressionMatch match = rx.match(line);
     if (match.hasMatch()) {
-        m_objectPath = match.captured();
+        m_objectPath = match.captured(1);
     }
 }
 
