@@ -1,3 +1,4 @@
 build
 apidocs
 CMakeLists.txt.user
+.cmake/
