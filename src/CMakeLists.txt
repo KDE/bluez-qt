@@ -55,7 +55,13 @@ set(bluezqt_SRCS
     obexfiletransferentry.cpp
 )
 
-ecm_qt_declare_logging_category(bluezqt_SRCS HEADER debug.h IDENTIFIER BLUEZQT CATEGORY_NAME org.kde.bluez)
+ecm_qt_declare_logging_category(bluezqt_SRCS
+    HEADER debug.h
+    IDENTIFIER BLUEZQT
+    CATEGORY_NAME org.kde.bluez
+    DESCRIPTION "BluezQt"
+    EXPORT BLUEZQT
+)
 
 set(dbusobjectmanager_xml ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.freedesktop.DBus.ObjectManager.xml)
 set_source_files_properties(${dbusobjectmanager_xml} PROPERTIES INCLUDE "bluezqt_dbustypes.h")
@@ -164,6 +170,13 @@ install(FILES
     ${BluezQt_HEADERS}
     DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}/BluezQt/bluezqt
     COMPONENT Devel)
+
+ecm_qt_install_logging_categories(
+    EXPORT BLUEZQT
+    FILE bluezqt.categories
+    DESTINATION ${KDE_INSTALL_LOGGINGCATEGORIESDIR}
+)
+
 
 if(BUILD_QCH)
     ecm_add_qch(
