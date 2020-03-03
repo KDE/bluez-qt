@@ -34,7 +34,11 @@ void Properties::parse(const QString &line)
         m_currentProperty = &m_properties.back();
         m_currentProperty->m_type = match.captured(1).toLower();
         m_currentProperty->m_name = match.captured(2);
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
         m_currentProperty->m_stringTags = match.captured(3).toLower().split(QStringLiteral(", "), QString::SkipEmptyParts);
+#else
+        m_currentProperty->m_stringTags = match.captured(3).toLower().split(QStringLiteral(", "), Qt::SkipEmptyParts);
+#endif
         m_currentProperty->m_limitation = match.captured(4).toLower();
     } else if (m_currentProperty) {
         // Skip first empty line
