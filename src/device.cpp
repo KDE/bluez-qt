@@ -150,6 +150,11 @@ QString Device::modalias() const
     return d->m_modalias;
 }
 
+QHash<QString, QByteArray> Device::serviceData() const
+{
+    return d->m_serviceData;
+}
+
 BatteryPtr Device::battery() const
 {
     return d->m_battery;

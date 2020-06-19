@@ -285,6 +285,14 @@ public:
     QString modalias() const;
 
     /**
+     * Returns the service advertisement data.
+     *
+     * @returns A hash with keys being the UUIDs in and values being the raw service data value.
+     * @since 5.72
+     */
+    QHash<QString, QByteArray> serviceData() const;
+
+    /**
      * Returns the battery interface for the device.
      *
      * @return null if device has no battery
@@ -503,6 +511,12 @@ Q_SIGNALS:
      * Indicates that device's modalias have changed.
      */
     void modaliasChanged(const QString &modalias);
+
+    /**
+     * Indicates that the device's service data has changed.
+     * @since 5.72
+     */
+    void serviceDataChanged(const QHash<QString, QByteArray> &serviceData);
 
     /**
      * Indicates that device's battery has changed.

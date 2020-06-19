@@ -43,6 +43,26 @@ DevicePrivate::DevicePrivate(const QString &path, const QVariantMap &properties,
     init(properties);
 }
 
+static QHash<QString, QByteArray> toByteArrayHash(const QDBusArgument &arg)
+{
+    if (arg.currentType() != QDBusArgument::MapType) {
+        return {};
+    }
+
+    QHash<QString, QByteArray> result;
+    arg.beginMap();
+    while (!arg.atEnd()) {
+        arg.beginMapEntry();
+        QString key;
+        QDBusVariant value;
+        arg >> key >> value;
+        result.insert(key.toUpper(), value.variant().toByteArray());
+        arg.endMapEntry();
+    }
+    arg.endMap();
+    return result;
+}
+
 void DevicePrivate::init(const QVariantMap &properties)
 {
     m_dbusProperties = new DBusProperties(Strings::orgBluez(), m_bluezDevice->path(),
@@ -63,6 +83,7 @@ void DevicePrivate::init(const QVariantMap &properties)
     m_connected = properties.value(QStringLiteral("Connected")).toBool();
     m_uuids = stringListToUpper(properties.value(QStringLiteral("UUIDs")).toStringList());
     m_modalias = properties.value(QStringLiteral("Modalias")).toString();
+    m_serviceData = toByteArrayHash(properties.value(QStringLiteral("ServiceData")).value<QDBusArgument>());
 
     if (!m_rssi) {
         m_rssi = INVALID_RSSI;
@@ -182,6 +203,8 @@ void DevicePrivate::propertiesChanged(const QString &interface, const QVariantMa
             PROPERTY_CHANGED(m_modalias, toString, modaliasChanged);
         } else if (property == QLatin1String("UUIDs")) {
             PROPERTY_CHANGED2(m_uuids, stringListToUpper(value.toStringList()), uuidsChanged);
+        } else if (property == QLatin1String("ServiceData")) {
+            PROPERTY_CHANGED2(m_serviceData, toByteArrayHash(value.value<QDBusArgument>()), serviceDataChanged);
         }
     }
 
@@ -200,6 +223,8 @@ void DevicePrivate::propertiesChanged(const QString &interface, const QVariantMa
             PROPERTY_INVALIDATED(m_modalias, QString(), modaliasChanged);
         } else if (property == QLatin1String("UUIDs")) {
             PROPERTY_INVALIDATED(m_uuids, QStringList(), uuidsChanged);
+        } else if (property == QLatin1String("ServiceData")) {
+            PROPERTY_INVALIDATED(m_serviceData, (QHash<QString, QByteArray>()), serviceDataChanged);
         }
     }
 
@@ -238,6 +263,14 @@ void DevicePrivate::classPropertyChanged(quint32 value)
         m_deviceClass = value;
         Q_EMIT q.lock()->deviceClassChanged(m_deviceClass);
         Q_EMIT q.lock()->typeChanged(q.lock()->type());
+    }
+}
+
+void DevicePrivate::serviceDataChanged(const QHash<QString, QByteArray> &value)
+{
+    if (m_serviceData != value) {
+        m_serviceData = value;
+        Q_EMIT q.lock()->serviceDataChanged(m_serviceData);
     }
 }
 

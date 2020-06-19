@@ -41,6 +41,7 @@ public:
     void aliasPropertyChanged(const QString &value);
     void addressPropertyChanged(const QString &value);
     void classPropertyChanged(quint32 value);
+    void serviceDataChanged(const QHash<QString, QByteArray> &value);
 
     QWeakPointer<Device> q;
     BluezDevice *m_bluezDevice;
@@ -60,6 +61,7 @@ public:
     bool m_connected;
     QStringList m_uuids;
     QString m_modalias;
+    QHash<QString, QByteArray> m_serviceData;
     BatteryPtr m_battery;
     InputPtr m_input;
     MediaPlayerPtr m_mediaPlayer;
