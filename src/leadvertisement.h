@@ -50,6 +50,21 @@ public:
     virtual QStringList serviceUuids() const;
 
     /**
+     * Returns the service data included in the advertisement.
+     *
+     * @since 5.75
+     */
+    QHash<QString, QByteArray> serviceData() const;
+
+    /**
+     * Sets the service data to include in the advertisement.
+     * Keys are the UUIDs of the associated data.
+     *
+     * @since 5.75
+     */
+    void setServiceData(const QHash<QString, QByteArray> &data);
+
+    /**
      * Indicates that the LEAdvertisement was unregistered.
      *
      * This method gets called when the service daemon removes the Advertisement.

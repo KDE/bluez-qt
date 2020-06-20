@@ -22,6 +22,7 @@ class LEAdvertisementAdaptor : public QDBusAbstractAdaptor
     Q_CLASSINFO("D-Bus Interface", "org.bluez.LEAdvertisement1")
     Q_PROPERTY(QString Type READ type)
     Q_PROPERTY(QStringList ServiceUUIDs READ serviceUuids)
+    Q_PROPERTY(QHash<QString, QVariant> ServiceData READ serviceData)
 
 public:
     explicit LEAdvertisementAdaptor(LEAdvertisement *parent);
@@ -29,6 +30,7 @@ public:
     QString type() const;
 
     QStringList serviceUuids() const;
+    QHash<QString, QVariant> serviceData() const;
 
 public Q_SLOTS:
     Q_NOREPLY void Release();

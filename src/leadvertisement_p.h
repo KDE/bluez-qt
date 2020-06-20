@@ -20,6 +20,7 @@ public:
     explicit LEAdvertisementPrivate(const QStringList &serviceUuids);
     QStringList m_serviceUuids;
     QDBusObjectPath m_objectPath;
+    QHash<QString, QByteArray> m_serviceData;
 };
 
 } // namespace BluezQt

@@ -33,6 +33,16 @@ QStringList LEAdvertisement::serviceUuids() const
     return d->m_serviceUuids;
 }
 
+QHash<QString, QByteArray> LEAdvertisement::serviceData() const
+{
+    return d->m_serviceData;
+}
+
+void LEAdvertisement::setServiceData(const QHash<QString, QByteArray> &data)
+{
+    d->m_serviceData = data;
+}
+
 void LEAdvertisement::release()
 {
 }
