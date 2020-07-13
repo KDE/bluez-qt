@@ -58,7 +58,8 @@ set(bluezqt_SRCS
 ecm_qt_declare_logging_category(bluezqt_SRCS
     HEADER debug.h
     IDENTIFIER BLUEZQT
-    CATEGORY_NAME org.kde.bluez
+    CATEGORY_NAME kf.bluezqt
+    OLD_CATEGORY_NAMES org.kde.bluez
     DESCRIPTION "BluezQt"
     EXPORT BLUEZQT
 )
