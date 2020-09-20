@@ -13,6 +13,7 @@
 
 #include "types.h"
 #include "bluezqt_export.h"
+#include "rfkill.h"
 
 namespace BluezQt
 {
@@ -85,6 +86,7 @@ class BLUEZQT_EXPORT Manager : public QObject
     Q_PROPERTY(AdapterPtr usableAdapter READ usableAdapter NOTIFY usableAdapterChanged)
     Q_PROPERTY(QList<AdapterPtr> adapters READ adapters)
     Q_PROPERTY(QList<DevicePtr> devices READ devices)
+    Q_PROPERTY(Rfkill *rfkill READ rfkill CONSTANT)
 
 public:
     /**
@@ -293,6 +295,8 @@ public:
     BLUEZQT_DEPRECATED_VERSION(5, 57, "Use Adapter::media()")
     MediaPtr media() const;
 #endif
+
+    Rfkill *rfkill() const;
 
 Q_SIGNALS:
     /**

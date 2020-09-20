@@ -239,4 +239,9 @@ MediaPtr Manager::media() const
 }
 #endif
 
+Rfkill *Manager::rfkill() const
+{
+    return d->m_rfkill;
+}
+
 } // namespace BluezQt
