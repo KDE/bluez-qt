@@ -17,6 +17,7 @@
 #include "device.h"
 #include "pendingcall.h"
 #include "services.h"
+#include "rfkill.h"
 
 #include <QtQml> // krazy:exclude=includes
 
@@ -70,5 +71,6 @@ void BluezQtExtensionPlugin::registerTypes(const char *uri)
     qmlRegisterUncreatableType<DeclarativeInput>(uri, 1, 0, "Input", QStringLiteral("Input cannot be created"));
     qmlRegisterUncreatableType<DeclarativeMediaPlayer>(uri, 1, 0, "MediaPlayer", QStringLiteral("MediaPlayer cannot be created"));
     qmlRegisterUncreatableType<PendingCall>(uri, 1, 0, "PendingCall", QStringLiteral("PendingCall cannot be created"));
+    qmlRegisterUncreatableType<Rfkill>(uri, 1, 0, "Rfkill", QStringLiteral("Rfkill cannot be created"));
     qmlRegisterSingletonType(uri, 1, 0, "Services", services_singleton);
 }
