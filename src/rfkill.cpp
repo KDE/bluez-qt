@@ -7,6 +7,8 @@
  */
 
 #include "rfkill.h"
+#include "rfkill_p.h"
+
 #include "debug.h"
 
 #ifdef Q_OS_LINUX
@@ -49,9 +51,7 @@ struct rfkill_event {
 
 Rfkill::Rfkill(QObject *parent)
     : QObject(parent)
-    , m_readFd(-1)
-    , m_writeFd(-1)
-    , m_state(Unknown)
+    , d(new RfkillPrivate)
 {
     init();
 }
@@ -59,28 +59,28 @@ Rfkill::Rfkill(QObject *parent)
 Rfkill::~Rfkill()
 {
 #ifdef Q_OS_LINUX
-    if (m_readFd != -1) {
-        ::close(m_readFd);
+    if (d->m_readFd != -1) {
+        ::close(d->m_readFd);
     }
 
-    if (m_writeFd != -1) {
-        ::close(m_writeFd);
+    if (d->m_writeFd != -1) {
+        ::close(d->m_writeFd);
     }
 #endif
 }
 
 Rfkill::State Rfkill::state() const
 {
-    return m_state;
+    return d->m_state;
 }
 
 bool Rfkill::block()
 {
-    if (m_state == SoftBlocked || m_state == HardBlocked) {
+    if (d->m_state == SoftBlocked || d->m_state == HardBlocked) {
         return true;
     }
 
-    if (m_state != Unblocked) {
+    if (d->m_state != Unblocked) {
         return false;
     }
 
@@ -89,11 +89,11 @@ bool Rfkill::block()
 
 bool Rfkill::unblock()
 {
-    if (m_state == Unblocked) {
+    if (d->m_state == Unblocked) {
         return true;
     }
 
-    if (m_state != SoftBlocked) {
+    if (d->m_state != SoftBlocked) {
         return false;
     }
 
@@ -102,34 +102,34 @@ bool Rfkill::unblock()
 
 void Rfkill::devReadyRead()
 {
-    State oldState = m_state;
+    State oldState = d->m_state;
 
     updateRfkillDevices();
 
-    if (m_state != oldState) {
-        Q_EMIT stateChanged(m_state);
+    if (d->m_state != oldState) {
+        Q_EMIT stateChanged(d->m_state);
     }
 }
 
 void Rfkill::init()
 {
 #ifdef Q_OS_LINUX
-    m_readFd = ::open("/dev/rfkill", O_RDONLY | O_CLOEXEC);
+    d->m_readFd = ::open("/dev/rfkill", O_RDONLY | O_CLOEXEC);
 
-    if (m_readFd == -1) {
+    if (d->m_readFd == -1) {
         qCWarning(BLUEZQT) << "Cannot open /dev/rfkill for reading!";
         return;
     }
 
-    if (::fcntl(m_readFd, F_SETFL, O_NONBLOCK) < 0) {
-        ::close(m_readFd);
-        m_readFd = -1;
+    if (::fcntl(d->m_readFd, F_SETFL, O_NONBLOCK) < 0) {
+        ::close(d->m_readFd);
+        d->m_readFd = -1;
         return;
     }
 
     updateRfkillDevices();
 
-    QSocketNotifier *notifier = new QSocketNotifier(m_readFd, QSocketNotifier::Read, this);
+    QSocketNotifier *notifier = new QSocketNotifier(d->m_readFd, QSocketNotifier::Read, this);
     connect(notifier, &QSocketNotifier::activated, this, &Rfkill::devReadyRead);
 #endif
 }
@@ -139,20 +139,20 @@ bool Rfkill::openForWriting()
 #ifndef Q_OS_LINUX
     return false;
 #else
-    if (m_writeFd != -1) {
+    if (d->m_writeFd != -1) {
         return true;
     }
 
-    m_writeFd = ::open("/dev/rfkill", O_WRONLY | O_CLOEXEC);
+    d->m_writeFd = ::open("/dev/rfkill", O_WRONLY | O_CLOEXEC);
 
-    if (m_writeFd == -1) {
+    if (d->m_writeFd == -1) {
         qCWarning(BLUEZQT) << "Cannot open /dev/rfkill for writing!";
         return false;
     }
 
-    if (::fcntl(m_writeFd, F_SETFL, O_NONBLOCK) < 0) {
-        ::close(m_writeFd);
-        m_writeFd = -1;
+    if (::fcntl(d->m_writeFd, F_SETFL, O_NONBLOCK) < 0) {
+        ::close(d->m_writeFd);
+        d->m_writeFd = -1;
         return false;
     }
 
@@ -175,12 +175,12 @@ static Rfkill::State getState(const rfkill_event &event)
 void Rfkill::updateRfkillDevices()
 {
 #ifdef Q_OS_LINUX
-    if (m_readFd == -1) {
+    if (d->m_readFd == -1) {
         return;
     }
 
     rfkill_event event;
-    while (::read(m_readFd, &event, sizeof(event)) == sizeof(event)) {
+    while (::read(d->m_readFd, &event, sizeof(event)) == sizeof(event)) {
         if (event.type != RFKILL_TYPE_BLUETOOTH) {
             continue;
         }
@@ -188,15 +188,15 @@ void Rfkill::updateRfkillDevices()
         switch (event.op) {
         case RFKILL_OP_ADD:
         case RFKILL_OP_CHANGE:
-            m_devices[event.idx] = getState(event);
+            d->m_devices[event.idx] = getState(event);
             break;
 
         case RFKILL_OP_DEL:
-            m_devices.remove(event.idx);
+            d->m_devices.remove(event.idx);
             break;
 
         case RFKILL_OP_CHANGE_ALL:
-            for (auto it = m_devices.begin(); it != m_devices.end(); ++it) {
+            for (auto it = d->m_devices.begin(); it != d->m_devices.end(); ++it) {
                 it.value() = getState(event);
             }
             break;
@@ -207,19 +207,19 @@ void Rfkill::updateRfkillDevices()
     }
 
     // Update global state
-    m_state = Unknown;
+    d->m_state = Unknown;
 
-    for (State state : qAsConst(m_devices)) {
+    for (State state : qAsConst(d->m_devices)) {
         Q_ASSERT(state != Unknown);
 
-        if (m_state == Unknown) {
-            m_state = state;
-        } else if (state > m_state) {
-            m_state = state;
+        if (d->m_state == Unknown) {
+            d->m_state = state;
+        } else if (state > d->m_state) {
+            d->m_state = state;
         }
     }
 
-    qCDebug(BLUEZQT) << "Rfkill global state changed:" << m_state;
+    qCDebug(BLUEZQT) << "Rfkill global state changed:" << d->m_state;
 #endif
 }
 
@@ -239,7 +239,7 @@ bool Rfkill::setSoftBlock(quint8 soft)
     event.type = RFKILL_TYPE_BLUETOOTH;
     event.soft = soft;
 
-    bool ret = ::write(m_writeFd, &event, sizeof(event)) == sizeof(event);
+    bool ret = ::write(d->m_writeFd, &event, sizeof(event)) == sizeof(event);
     qCDebug(BLUEZQT) << "Setting Rfkill soft block succeeded:" << ret;
     return ret;
 #endif

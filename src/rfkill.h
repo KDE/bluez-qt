@@ -12,8 +12,12 @@
 #include <QHash>
 #include <QObject>
 
+#include <memory>
+
 namespace BluezQt
 {
+
+class RfkillPrivate;
 
 class Rfkill : public QObject
 {
@@ -45,11 +49,7 @@ private:
     bool openForWriting();
     void updateRfkillDevices();
     bool setSoftBlock(quint8 soft);
-
-    int m_readFd;
-    int m_writeFd;
-    State m_state;
-    QHash<quint32, State> m_devices;
+    std::unique_ptr<RfkillPrivate> d;
 };
 
 } // namespace BluezQt
