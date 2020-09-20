@@ -24,6 +24,7 @@ class RfkillPrivate;
 class BLUEZQT_EXPORT Rfkill : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(State state READ state NOTIFY stateChanged)
 
 public:
     enum State {
@@ -32,6 +33,7 @@ public:
         HardBlocked = 2,
         Unknown = 3
     };
+    Q_ENUM(State)
 
     explicit Rfkill(QObject *parent = nullptr);
     ~Rfkill();
