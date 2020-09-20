@@ -144,6 +144,7 @@ ecm_generate_headers(BluezQt_CamelCase_HEADERS
         Profile
         PendingCall
         Request
+        Rfkill
         ObexManager
         ObexAgent
         ObexTransfer

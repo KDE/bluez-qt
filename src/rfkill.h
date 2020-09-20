@@ -12,6 +12,8 @@
 #include <QHash>
 #include <QObject>
 
+#include "bluezqt_export.h"
+
 #include <memory>
 
 namespace BluezQt
@@ -19,7 +21,7 @@ namespace BluezQt
 
 class RfkillPrivate;
 
-class Rfkill : public QObject
+class BLUEZQT_EXPORT Rfkill : public QObject
 {
     Q_OBJECT
 
