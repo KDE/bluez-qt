@@ -12,7 +12,6 @@
 #include "services.h"
 
 #include <QTest>
-#include <QDBusObjectPath>
 
 namespace BluezQt
 {

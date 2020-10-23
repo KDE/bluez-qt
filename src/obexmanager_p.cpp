@@ -13,7 +13,6 @@
 #include "debug.h"
 #include "utils.h"
 
-#include "dbusobjectmanager.h"
 
 #include <QDBusServiceWatcher>
 

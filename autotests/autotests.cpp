@@ -17,7 +17,6 @@
 #include <QEventLoop>
 #include <QCoreApplication>
 
-#include <QTest>
 #include <QDBusServiceWatcher>
 #include <QDBusConnectionInterface>
 

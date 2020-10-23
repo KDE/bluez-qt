@@ -10,7 +10,6 @@
 #include "initmanagerjob.h"
 #include "manager.h"
 #include "media.h"
-#include "mediaendpoint.h"
 #include "pendingcall.h"
 
 #include <QSignalSpy>
