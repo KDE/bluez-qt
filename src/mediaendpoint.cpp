@@ -36,7 +36,7 @@ const QVariantMap &MediaEndpoint::properties() const
 
 void MediaEndpoint::setConfiguration(const QString &transportObjectPath, const QVariantMap &properties)
 {
-    emit configurationSet(transportObjectPath, properties);
+    Q_EMIT configurationSet(transportObjectPath, properties);
 }
 
 void MediaEndpoint::selectConfiguration(const QByteArray &capabilities, const Request<QByteArray> &request)
@@ -45,7 +45,7 @@ void MediaEndpoint::selectConfiguration(const QByteArray &capabilities, const Re
     case MediaEndpoint::Codec::Sbc:
     {
         if (capabilities.size() != sizeof(a2dp_sbc_t)) {
-            emit configurationSelected(capabilities, QByteArray());
+            Q_EMIT configurationSelected(capabilities, QByteArray());
             request.reject();
             return;
         }
@@ -99,7 +99,7 @@ void MediaEndpoint::selectConfiguration(const QByteArray &capabilities, const Re
         caps.max_bitpool = 53;
 
         const QByteArray configuration(reinterpret_cast<const char*>(&caps), sizeof(caps));
-        emit configurationSelected(capabilities, configuration);
+        Q_EMIT configurationSelected(capabilities, configuration);
         request.accept(configuration);
         return;
 
@@ -107,26 +107,26 @@ void MediaEndpoint::selectConfiguration(const QByteArray &capabilities, const Re
     }
     case MediaEndpoint::Codec::Aac:
         if (capabilities.size() != sizeof(a2dp_aac_t)) {
-            emit configurationSelected(capabilities, QByteArray());
+            Q_EMIT configurationSelected(capabilities, QByteArray());
             request.reject();
             return;
         }
 
         // TODO: implement AAC. However selectConfiguration seems not to be used by iOS nor Android.
-        emit configurationSelected(capabilities, QByteArray());
+        Q_EMIT configurationSelected(capabilities, QByteArray());
         request.reject();
         return;
 
         break;
     }
 
-    emit configurationSelected(capabilities, QByteArray());
+    Q_EMIT configurationSelected(capabilities, QByteArray());
     request.reject();
 }
 
 void MediaEndpoint::clearConfiguration(const QString &transportObjectPath)
 {
-    emit configurationCleared(transportObjectPath);
+    Q_EMIT configurationCleared(transportObjectPath);
 }
 
 void MediaEndpoint::release()

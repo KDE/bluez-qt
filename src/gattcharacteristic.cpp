@@ -36,7 +36,7 @@ QByteArray GattCharacteristic::readValue()
 void GattCharacteristic::writeValue(const QByteArray &value)
 {
     d->m_value = value;
-    emit valueWritten(d->m_value);
+    Q_EMIT valueWritten(d->m_value);
 }
 
 QString GattCharacteristic::uuid() const

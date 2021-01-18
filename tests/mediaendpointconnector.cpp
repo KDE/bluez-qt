@@ -55,7 +55,7 @@ void NoInputNoOutputAgent::authorizeService(DevicePtr device, const QString &uui
     Q_UNUSED(device)
 
     d->allowedUuids.contains(uuid) ? request.accept() : request.reject();
-    emit serviceAuthorized(device, uuid, d->allowedUuids.contains(uuid));
+    Q_EMIT serviceAuthorized(device, uuid, d->allowedUuids.contains(uuid));
 }
 
 MediaEndpointConnector::MediaEndpointConnector(Manager *manager, QObject *parent)
