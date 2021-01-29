@@ -96,7 +96,7 @@ add_library(KF5::BluezQt ALIAS KF5BluezQt)
 ecm_generate_export_header(KF5BluezQt
     BASE_NAME BluezQt
     GROUP_BASE_NAME KF
-    VERSION ${KF5_VERSION}
+    VERSION ${KF_VERSION}
     DEPRECATED_BASE_VERSION 0
     DEPRECATION_VERSIONS 5.57
     EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
@@ -185,7 +185,7 @@ if(BUILD_QCH)
         KF5BluezQt_QCH
         NAME BluezQt
         BASE_NAME KF5BluezQt
-        VERSION ${KF5_VERSION}
+        VERSION ${KF_VERSION}
         ORG_DOMAIN org.kde
         SOURCES # using only public headers, to cover only public API
             ${BluezQt_HEADERS}
