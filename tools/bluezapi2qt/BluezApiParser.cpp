@@ -19,7 +19,7 @@ bool BluezApiParser::parse(QTextStream &stream)
         // Get next line
         auto line = stream.readLine();
         // Just look for section markers
-        if (line.startsWith(L'=')) {
+        if (line.startsWith(QLatin1Char('='))) {
             m_interfaces.emplace_back(Interface());
             m_currentInterface = &m_interfaces.back();
         } else if (m_currentInterface) {

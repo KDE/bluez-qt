@@ -193,7 +193,7 @@ QString CppGenerator::interfaceToClassName(const QString &interface)
 {
     const int index = interface.lastIndexOf(QRegularExpression(QStringLiteral("\\.[A-Z]\\w+"))) + 1;
     auto className = interface.mid(index);
-    while (className.back() > L'0' && className.back() <= L'9') {
+    while (className.back() > QLatin1Char('0') && className.back() <= QLatin1Char('9')) {
         className.remove(className.size()-1, 1);
     }
 
