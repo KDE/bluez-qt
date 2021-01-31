@@ -11,6 +11,8 @@
 
 #include "Method.h"
 
+#include <list>
+
 class Methods
 {
 public:
