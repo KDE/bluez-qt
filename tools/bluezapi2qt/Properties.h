@@ -11,6 +11,8 @@
 
 #include "Property.h"
 
+#include <list>
+
 class Properties
 {
 public:
