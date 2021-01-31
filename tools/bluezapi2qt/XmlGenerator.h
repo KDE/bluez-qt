@@ -13,7 +13,6 @@ class BluezApiParser;
 class Method;
 class Parameter;
 class QString;
-class QStringList;
 class QTextStream;
 
 class XmlGenerator

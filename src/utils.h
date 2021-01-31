@@ -11,8 +11,9 @@
 
 #include "device.h"
 
+#include <QStringList>
+
 class QString;
-class QStringList;
 class QDBusConnection;
 
 namespace BluezQt
