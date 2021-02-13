@@ -81,11 +81,10 @@ static AudioSampleRate byteArrayToSampleRate(AudioCodec codec, const QByteArray 
 
 MediaTransportPrivate::MediaTransportPrivate(const QString &path, const QVariantMap &properties)
     : QObject()
+    , m_dbusInterface(Strings::orgBluez(), path, DBusConnection::orgBluez())
     , m_dbusProperties(nullptr)
     , m_path(path)
 {
-    m_dbusInterface = new QDBusInterface(Strings::orgBluez(), path, QStringLiteral("org.bluez.MediaTransport1"), DBusConnection::orgBluez(), this);
-
     DBusConnection::orgBluez().connect(Strings::orgBluez(),
                                        path,
                                        Strings::orgFreedesktopDBusProperties(),

@@ -8,6 +8,7 @@
 
 #pragma once
 
+#include "bluezmediatransport1.h"
 #include "dbusproperties.h"
 #include "mediatransport.h"
 
@@ -29,7 +30,7 @@ public Q_SLOTS:
 
 public:
     QWeakPointer<MediaTransport> q;
-    QDBusInterface *m_dbusInterface;
+    OrgBluezMediaTransport1Interface m_dbusInterface;
     DBusProperties *m_dbusProperties;
 
     QString m_path;

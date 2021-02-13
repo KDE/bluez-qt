@@ -9,18 +9,15 @@
 #include "gattmanager_p.h"
 #include "utils.h"
 
-#include <QDBusInterface>
-
 namespace BluezQt
 {
 GattManagerPrivate::GattManagerPrivate(const QString &path)
+    : m_dbusInterface(Strings::orgBluez(), path, DBusConnection::orgBluez())
 {
-    m_dbusInterface = new QDBusInterface(Strings::orgBluez(), path, QStringLiteral("org.bluez.GattManager1"), DBusConnection::orgBluez());
 }
 
 GattManagerPrivate::~GattManagerPrivate()
 {
-    delete m_dbusInterface;
 }
 
 } // namespace BluezQt

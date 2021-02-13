@@ -39,17 +39,17 @@ quint16 MediaTransport::volume() const
 
 TPendingCall<QDBusUnixFileDescriptor, uint16_t, uint16_t> *MediaTransport::acquire()
 {
-    return new TPendingCall<QDBusUnixFileDescriptor, uint16_t, uint16_t>(d->m_dbusInterface->asyncCall(QStringLiteral("Acquire")), this);
+    return new TPendingCall<QDBusUnixFileDescriptor, uint16_t, uint16_t>(d->m_dbusInterface.Acquire(), this);
 }
 
 TPendingCall<QDBusUnixFileDescriptor, uint16_t, uint16_t> *MediaTransport::tryAcquire()
 {
-    return new TPendingCall<QDBusUnixFileDescriptor, uint16_t, uint16_t>(d->m_dbusInterface->asyncCall(QStringLiteral("TryAcquire")), this);
+    return new TPendingCall<QDBusUnixFileDescriptor, uint16_t, uint16_t>(d->m_dbusInterface.TryAcquire(), this);
 }
 
 TPendingCall<void> *MediaTransport::release()
 {
-    return new TPendingCall<void>(d->m_dbusInterface->asyncCall(QStringLiteral("Release")), this);
+    return new TPendingCall<void>(d->m_dbusInterface.Release(), this);
 }
 
 } // namespace BluezQt

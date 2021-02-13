@@ -8,7 +8,8 @@
 
 #pragma once
 
-class QDBusInterface;
+#include "bluezgattmanager1.h"
+
 class QString;
 
 namespace BluezQt
@@ -19,7 +20,7 @@ public:
     GattManagerPrivate(const QString &path);
     ~GattManagerPrivate();
 
-    QDBusInterface *m_dbusInterface = nullptr;
+    OrgBluezGattManager1Interface m_dbusInterface;
 };
 
 } // namespace BluezQt

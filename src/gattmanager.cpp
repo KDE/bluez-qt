@@ -19,7 +19,6 @@
 #include "pendingcall.h"
 #include "utils.h"
 
-#include <QDBusInterface>
 #include <QDBusPendingCall>
 
 namespace BluezQt
@@ -62,9 +61,7 @@ PendingCall *GattManager::registerApplication(GattApplication *application)
         qCDebug(BLUEZQT) << "Cannot register object" << application->objectPath().path();
     }
 
-    QList<QVariant> argumentList;
-    argumentList << QVariant::fromValue(application->objectPath()) << QVariantMap();
-    return new PendingCall(d->m_dbusInterface->asyncCallWithArgumentList(QStringLiteral("RegisterApplication"), argumentList), PendingCall::ReturnVoid, this);
+    return new PendingCall(d->m_dbusInterface.RegisterApplication(application->objectPath(), QVariantMap()), PendingCall::ReturnVoid, this);
 }
 
 PendingCall *GattManager::unregisterApplication(GattApplication *application)
@@ -73,9 +70,7 @@ PendingCall *GattManager::unregisterApplication(GattApplication *application)
 
     DBusConnection::orgBluez().unregisterObject(application->objectPath().path());
 
-    QList<QVariant> argumentList;
-    argumentList << QVariant::fromValue(application->objectPath());
-    return new PendingCall(d->m_dbusInterface->asyncCallWithArgumentList(QStringLiteral("UnregisterApplication"), argumentList), PendingCall::ReturnVoid, this);
+    return new PendingCall(d->m_dbusInterface.UnregisterApplication(application->objectPath()), PendingCall::ReturnVoid, this);
 }
 
 } // namespace BluezQt
