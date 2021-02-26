@@ -37,7 +37,7 @@ public:
     enum class State {
         Idle,
         Pending,
-        Active
+        Active,
     };
     Q_ENUM(State)
 

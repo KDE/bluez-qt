@@ -22,7 +22,7 @@ enum RequestOriginatingType {
     OrgBluezAgent,
     OrgBluezProfile,
     OrgBluezObexAgent,
-    OrgBluezMediaEndpoint
+    OrgBluezMediaEndpoint,
 };
 
 /**

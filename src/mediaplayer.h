@@ -44,7 +44,7 @@ public:
         /** Equalizer on. */
         EqualizerOn,
         /** Equalizer off. */
-        EqualizerOff
+        EqualizerOff,
     };
     Q_ENUM(Equalizer)
 
@@ -57,7 +57,7 @@ public:
         /** Repeat all tracks. */
         RepeatAllTracks,
         /** Repeat group. */
-        RepeatGroup
+        RepeatGroup,
     };
     Q_ENUM(Repeat)
 
@@ -68,7 +68,7 @@ public:
         /** Shuffle all tracks. */
         ShuffleAllTracks,
         /** Shuffle group. */
-        ShuffleGroup
+        ShuffleGroup,
     };
     Q_ENUM(Shuffle)
 
@@ -85,7 +85,7 @@ public:
         /** Player is reverse seeking. */
         ReverseSeek,
         /** Error */
-        Error
+        Error,
     };
     Q_ENUM(Status)
 

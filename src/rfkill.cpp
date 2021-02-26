@@ -30,14 +30,14 @@ enum rfkill_type {
     RFKILL_TYPE_BLUETOOTH,
     RFKILL_TYPE_UWB,
     RFKILL_TYPE_WIMAX,
-    RFKILL_TYPE_WWAN
+    RFKILL_TYPE_WWAN,
 };
 
 enum rfkill_operation {
     RFKILL_OP_ADD = 0,
     RFKILL_OP_DEL,
     RFKILL_OP_CHANGE,
-    RFKILL_OP_CHANGE_ALL
+    RFKILL_OP_CHANGE_ALL,
 };
 
 struct rfkill_event {

@@ -48,7 +48,7 @@ public:
         DisplayOnly = 0,
         DisplayYesNo = 1,
         KeyboardOnly = 2,
-        NoInputNoOutput = 3
+        NoInputNoOutput = 3,
     };
     Q_ENUM(Capability)
 

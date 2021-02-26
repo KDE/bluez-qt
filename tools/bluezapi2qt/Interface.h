@@ -34,7 +34,7 @@ private:
         Interface,
         ObjectPath,
         Methods,
-        Properties
+        Properties,
     };
 
     void    parseComment(const QString &line);

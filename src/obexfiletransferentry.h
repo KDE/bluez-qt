@@ -34,7 +34,7 @@ public:
         /** Indicates that the entry is a folder. */
         Folder,
         /** Indicates that the entry is invalid. */
-        Invalid
+        Invalid,
     };
 
     /**

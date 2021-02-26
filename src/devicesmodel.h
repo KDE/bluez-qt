@@ -97,7 +97,7 @@ public:
         /** UUIDs of supported services by the associated adapter (QStringList) */
         AdapterUuidsRole = Qt::UserRole + 123,
         /** Last role used by DevicesModel */
-        LastRole = Qt::UserRole + 124
+        LastRole = Qt::UserRole + 124,
     };
 
     /**

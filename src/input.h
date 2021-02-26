@@ -39,7 +39,7 @@ public:
         /** Device restores the connection. */
         DeviceReconnect,
         /** Device shall attempt to restore the lost connection, but host may also restore the connection. */
-        AnyReconnect
+        AnyReconnect,
     };
     Q_ENUM(ReconnectMode)
 

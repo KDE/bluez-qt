@@ -56,7 +56,7 @@ public:
         /** Indicates that this is a client. */
         ClientRole,
         /** Indicates that this is a server. */
-        ServerRole
+        ServerRole,
     };
 
     /**

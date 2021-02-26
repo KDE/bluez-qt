@@ -57,7 +57,7 @@ public:
         /** Indicates that the transfer have failed with error. */
         Error,
         /** Indicates that the transfer status is unknown. */
-        Unknown
+        Unknown,
     };
     Q_ENUM(Status)
 

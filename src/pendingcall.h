@@ -95,7 +95,7 @@ public:
         /** Indicates an internal error. */
         InternalError = 99,
         /** Indicates an unknown error. */
-        UnknownError = 100
+        UnknownError = 100,
     };
     Q_ENUM(Error)
 
@@ -174,7 +174,7 @@ private:
         ReturnString,
         ReturnObjectPath,
         ReturnFileTransferList,
-        ReturnTransferWithProperties
+        ReturnTransferWithProperties,
     };
 
     explicit PendingCall(const QDBusPendingCall &call, ReturnType type, QObject *parent = nullptr);

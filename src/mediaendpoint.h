@@ -34,14 +34,14 @@ public:
     /** Role which this MediaEndpoint acts as. */
     enum class Role {
         AudioSource,
-        AudioSink
+        AudioSink,
     };
 
     // KF6 TODO: use types from mediatypes.h
     /** Codec which this MediaEndpoint supports. */
     enum class Codec {
         Sbc,
-        Aac
+        Aac,
     };
 
     /** Configuration for MediaEndpoint construction. */

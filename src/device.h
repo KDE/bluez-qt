@@ -96,7 +96,7 @@ public:
         /** The device is a health device. */
         Health,
         /** The device is not of any of the known types. */
-        Uncategorized
+        Uncategorized,
     };
     Q_ENUM(Type)
 

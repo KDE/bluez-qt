@@ -31,7 +31,7 @@ public:
         Unblocked = 0,
         SoftBlocked = 1,
         HardBlocked = 2,
-        Unknown = 3
+        Unknown = 3,
     };
     Q_ENUM(State)
 
