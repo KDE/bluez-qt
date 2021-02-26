@@ -12,6 +12,7 @@ set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 
 include(KDEInstallDirs)
 include(KDECMakeSettings)
+include(KDEGitCommitHooks)
 include(KDEFrameworkCompilerSettings NO_POLICY_SCOPE)
 
 include(FeatureSummary)
@@ -109,3 +110,9 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 endif()
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
+
+kde_configure_git_pre_commit_hook(CHECKS CLANG_FORMAT)
+# Remove these 3 lines when the ECM version is bumped to 5.80
+include(KDEClangFormat)
+file(GLOB_RECURSE ALL_CLANG_FORMAT_SOURCE_FILES *.cpp *.h)
+kde_clang_format(${ALL_CLANG_FORMAT_SOURCE_FILES})
