@@ -9,6 +9,8 @@
 #ifndef BLUEZQT_MACROS_H
 #define BLUEZQT_MACROS_H
 
+// clang-format off
+
 // Change property value and emit propertyChanged signal
 #define PROPERTY_CHANGED(var, type_cast, signal) \
     if (var != value.type_cast()) { \

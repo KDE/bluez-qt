@@ -89,9 +89,9 @@ int main(int argc, char *argv[])
 
     if (parser.isSet(xmlOption)) {
         XmlGenerator::Config xmlConfig;
-        xmlConfig.useOptional = parser.isSet(optionalOption);;
-        xmlConfig.useDeprecated = parser.isSet(deprecatedOption);;
-        xmlConfig.useExperimental = parser.isSet(experimentalOption);;
+        xmlConfig.useOptional = parser.isSet(optionalOption);
+        xmlConfig.useDeprecated = parser.isSet(deprecatedOption);
+        xmlConfig.useExperimental = parser.isSet(experimentalOption);
         XmlGenerator xmlGenerator(xmlConfig);
         if (!xmlGenerator.generate(bluezParser)) {
             qCritical() << "Error generating xml";

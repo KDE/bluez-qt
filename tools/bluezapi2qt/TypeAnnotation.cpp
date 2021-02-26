@@ -12,6 +12,7 @@
 
 QString annotateType(AnnotationType from, AnnotationType to, const QString &type)
 {
+    // clang-format off
     static const std::vector<std::vector<std::string>> table = {
         {"boolean",        "b",         ""},
         //{{"fd"},             "",       ""},
@@ -24,6 +25,7 @@ QString annotateType(AnnotationType from, AnnotationType to, const QString &type
         {"array{dict}",    "aa{sv}",    "QVariantMapList"},
         {"array{string}",  "as",        ""},
     };
+    // clang-format on
 
     for (const auto &entry : table) {
         if (entry.at(static_cast<size_t>(from)) == type.toStdString()) {
@@ -36,6 +38,7 @@ QString annotateType(AnnotationType from, AnnotationType to, const QString &type
 
 QString bluezToQt(const QString &type)
 {
+    // clang-format off
     static const std::vector<std::vector<std::string>> table = {
         {"boolean",         "bool"},
         //{{"fd"},           ""},
@@ -46,6 +49,7 @@ QString bluezToQt(const QString &type)
         {"array{dict}",     "QVariantMapList"},
         {"array{string}",   "QStringList"},
     };
+    // clang-format on
 
     for (const auto &entry : table) {
         if (entry.front() == type.toStdString()) {
