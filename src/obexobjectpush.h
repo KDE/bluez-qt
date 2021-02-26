@@ -17,7 +17,6 @@ class QDBusObjectPath;
 
 namespace BluezQt
 {
-
 class PendingCall;
 
 /**

@@ -7,17 +7,17 @@
  */
 
 #include "bluezqtextensionplugin.h"
-#include "declarativemanager.h"
 #include "declarativeadapter.h"
 #include "declarativebattery.h"
 #include "declarativedevice.h"
-#include "declarativeinput.h"
-#include "declarativemediaplayer.h"
 #include "declarativedevicesmodel.h"
+#include "declarativeinput.h"
+#include "declarativemanager.h"
+#include "declarativemediaplayer.h"
 #include "device.h"
 #include "pendingcall.h"
-#include "services.h"
 #include "rfkill.h"
+#include "services.h"
 
 #include <QtQml> // krazy:exclude=includes
 

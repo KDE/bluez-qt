@@ -11,7 +11,6 @@
 
 namespace BluezQt
 {
-
 MediaTransport::MediaTransport(const QString &path, const QVariantMap &properties)
     : QObject()
     , d(new MediaTransportPrivate(path, properties))

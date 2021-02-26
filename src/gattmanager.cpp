@@ -8,6 +8,7 @@
 
 #include "gattmanager.h"
 
+#include "debug.h"
 #include "gattapplication.h"
 #include "gattcharacteristic.h"
 #include "gattcharacteristicadaptor.h"
@@ -17,14 +18,12 @@
 #include "objectmanageradaptor.h"
 #include "pendingcall.h"
 #include "utils.h"
-#include "debug.h"
 
 #include <QDBusInterface>
 #include <QDBusPendingCall>
 
 namespace BluezQt
 {
-
 GattManager::GattManager(const QString &path, QObject *parent)
     : QObject(parent)
     , d(new GattManagerPrivate(path))
@@ -40,39 +39,32 @@ PendingCall *GattManager::registerApplication(GattApplication *application)
 {
     Q_ASSERT(application);
 
-    const auto services = application->findChildren<GattService*>();
+    const auto services = application->findChildren<GattService *>();
     for (auto service : services) {
         new GattServiceAdaptor(service);
 
-        const auto charcs = service->findChildren<GattCharacteristic*>();
+        const auto charcs = service->findChildren<GattCharacteristic *>();
         for (auto charc : charcs) {
             new GattCharacteristicAdaptor(charc);
-            if (!DBusConnection::orgBluez().registerObject(charc->objectPath().path(),
-                                                           charc,
-                                                           QDBusConnection::ExportAdaptors)) {
+            if (!DBusConnection::orgBluez().registerObject(charc->objectPath().path(), charc, QDBusConnection::ExportAdaptors)) {
                 qCDebug(BLUEZQT) << "Cannot register object" << charc->objectPath().path();
             }
         }
 
-        if (!DBusConnection::orgBluez().registerObject(service->objectPath().path(),
-                                                       service,
-                                                       QDBusConnection::ExportAdaptors)) {
+        if (!DBusConnection::orgBluez().registerObject(service->objectPath().path(), service, QDBusConnection::ExportAdaptors)) {
             qCDebug(BLUEZQT) << "Cannot register object" << service->objectPath().path();
         }
     }
 
     new ObjectManagerAdaptor(application);
 
-    if (!DBusConnection::orgBluez().registerObject(application->objectPath().path(),
-                                                   application,
-                                                   QDBusConnection::ExportAdaptors)) {
+    if (!DBusConnection::orgBluez().registerObject(application->objectPath().path(), application, QDBusConnection::ExportAdaptors)) {
         qCDebug(BLUEZQT) << "Cannot register object" << application->objectPath().path();
     }
 
     QList<QVariant> argumentList;
     argumentList << QVariant::fromValue(application->objectPath()) << QVariantMap();
-    return new PendingCall(d->m_dbusInterface->asyncCallWithArgumentList(QStringLiteral("RegisterApplication"), argumentList),
-                           PendingCall::ReturnVoid, this);
+    return new PendingCall(d->m_dbusInterface->asyncCallWithArgumentList(QStringLiteral("RegisterApplication"), argumentList), PendingCall::ReturnVoid, this);
 }
 
 PendingCall *GattManager::unregisterApplication(GattApplication *application)
@@ -83,8 +75,7 @@ PendingCall *GattManager::unregisterApplication(GattApplication *application)
 
     QList<QVariant> argumentList;
     argumentList << QVariant::fromValue(application->objectPath());
-    return new PendingCall(d->m_dbusInterface->asyncCallWithArgumentList(QStringLiteral("UnregisterApplication"), argumentList),
-                           PendingCall::ReturnVoid, this);
+    return new PendingCall(d->m_dbusInterface->asyncCallWithArgumentList(QStringLiteral("UnregisterApplication"), argumentList), PendingCall::ReturnVoid, this);
 }
 
 } // namespace BluezQt

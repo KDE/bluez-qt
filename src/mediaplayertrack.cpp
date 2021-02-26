@@ -12,7 +12,6 @@
 
 namespace BluezQt
 {
-
 class MediaPlayerTrackPrivate
 {
 public:

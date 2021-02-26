@@ -17,7 +17,6 @@ class QDBusMessage;
 
 namespace BluezQt
 {
-
 enum RequestOriginatingType {
     OrgBluezAgent,
     OrgBluezProfile,

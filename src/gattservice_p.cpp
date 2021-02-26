@@ -10,7 +10,6 @@
 
 namespace BluezQt
 {
-
 GattServicePrivate::GattServicePrivate(const QString &uuid, bool isPrimary, const QString &appPath)
     : m_uuid(uuid)
     , m_isPrimary(isPrimary)

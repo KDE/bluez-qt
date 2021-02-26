@@ -11,15 +11,13 @@
 
 #include <QQmlExtensionPlugin>
 
-class BluezQtExtensionPlugin: public QQmlExtensionPlugin
+class BluezQtExtensionPlugin : public QQmlExtensionPlugin
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "org.kde.bluezqt")
 
 public:
     void registerTypes(const char *uri) override;
-
 };
 
 #endif // BLUEZQTEXTENSIONPLUGIN_H
-

@@ -11,13 +11,12 @@
 
 #include <QObject>
 
-#include "mediaplayer.h"
 #include "bluezmediaplayer1.h"
 #include "dbusproperties.h"
+#include "mediaplayer.h"
 
 namespace BluezQt
 {
-
 typedef org::bluez::MediaPlayer1 BluezMediaPlayer;
 typedef org::freedesktop::DBus::Properties DBusProperties;
 

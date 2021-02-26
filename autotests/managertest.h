@@ -28,7 +28,6 @@ private Q_SLOTS:
     void adapterWithDevicesRemovedTest();
     void bug364416();
     void bug377405();
-
 };
 
 #endif // MANAGERTEST_H

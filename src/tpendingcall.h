@@ -14,7 +14,6 @@
 
 namespace BluezQt
 {
-
 using namespace std::placeholders;
 
 /**
@@ -29,18 +28,16 @@ using namespace std::placeholders;
  */
 
 // KF6 TODO: convert all PendingCalls to TPendingCall (or convert existing PendingCall class to templated version).
-template<class...T>
+template<class... T>
 class TPendingCall : public PendingCall
 {
 private:
-    template<int Index, typename Ty, typename ...Ts>
-    struct Select
-    {
-        using Type = typename Select<Index-1, Ts...>::Type;
+    template<int Index, typename Ty, typename... Ts>
+    struct Select {
+        using Type = typename Select<Index - 1, Ts...>::Type;
     };
-    template<typename Ty, typename ...Ts>
-    struct Select<0, Ty, Ts...>
-    {
+    template<typename Ty, typename... Ts>
+    struct Select<0, Ty, Ts...> {
         using Type = Ty;
     };
 
@@ -54,8 +51,8 @@ public:
      *
      * @return return value at index
      */
-    template<int Index> inline
-    const typename Select<Index, T...>::Type valueAt() const
+    template<int Index>
+    inline const typename Select<Index, T...>::Type valueAt() const
     {
         using ResultType = typename Select<Index, T...>::Type;
         return qdbus_cast<ResultType>(m_reply.argumentAt(Index), nullptr);

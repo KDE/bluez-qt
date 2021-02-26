@@ -9,13 +9,11 @@
 #ifndef BLUEZQT_INITOBEXMANAGERJOB_H
 #define BLUEZQT_INITOBEXMANAGERJOB_H
 
-
-#include "job.h"
 #include "bluezqt_export.h"
+#include "job.h"
 
 namespace BluezQt
 {
-
 class ObexManager;
 
 /**
@@ -28,12 +26,12 @@ class ObexManager;
 class BLUEZQT_EXPORT InitObexManagerJob : public Job
 {
     Q_OBJECT
-    Q_PROPERTY(ObexManager* manager READ manager)
+    Q_PROPERTY(ObexManager *manager READ manager)
 
 public:
     /**
-      * Destroys an InitObexManagerJob object.
-      */
+     * Destroys an InitObexManagerJob object.
+     */
     ~InitObexManagerJob() override;
 
     /**

@@ -5,15 +5,15 @@
  */
 
 #include "managertest.h"
-#include "autotests.h"
-#include "manager.h"
-#include "initmanagerjob.h"
 #include "adapter.h"
+#include "autotests.h"
 #include "device.h"
+#include "initmanagerjob.h"
+#include "manager.h"
 
-#include <QTest>
-#include <QSignalSpy>
 #include <QDBusObjectPath>
+#include <QSignalSpy>
+#include <QTest>
 
 namespace BluezQt
 {

@@ -13,7 +13,6 @@
 
 namespace BluezQt
 {
-
 class Manager;
 class Adapter;
 class Battery;

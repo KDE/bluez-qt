@@ -7,15 +7,14 @@
  */
 
 #include "mediaendpoint.h"
-#include "mediaendpoint_p.h"
 #include "a2dp-codecs.h"
+#include "mediaendpoint_p.h"
 
 namespace BluezQt
 {
-
 MediaEndpoint::MediaEndpoint(const Configuration &configuration, QObject *parent)
-    : QObject(parent),
-      d(new MediaEndpointPrivate(configuration))
+    : QObject(parent)
+    , d(new MediaEndpointPrivate(configuration))
 {
 }
 
@@ -42,15 +41,14 @@ void MediaEndpoint::setConfiguration(const QString &transportObjectPath, const Q
 void MediaEndpoint::selectConfiguration(const QByteArray &capabilities, const Request<QByteArray> &request)
 {
     switch (d->m_configuration.codec) {
-    case MediaEndpoint::Codec::Sbc:
-    {
+    case MediaEndpoint::Codec::Sbc: {
         if (capabilities.size() != sizeof(a2dp_sbc_t)) {
             Q_EMIT configurationSelected(capabilities, QByteArray());
             request.reject();
             return;
         }
 
-        a2dp_sbc_t caps = *reinterpret_cast<const a2dp_sbc_t*>(capabilities.constData());
+        a2dp_sbc_t caps = *reinterpret_cast<const a2dp_sbc_t *>(capabilities.constData());
         if (caps.frequency & SBC_SAMPLING_FREQ_44100) {
             caps.frequency = SBC_SAMPLING_FREQ_44100;
         } else if (caps.frequency & SBC_SAMPLING_FREQ_48000) {
@@ -98,7 +96,7 @@ void MediaEndpoint::selectConfiguration(const QByteArray &capabilities, const Re
         caps.min_bitpool = 2;
         caps.max_bitpool = 53;
 
-        const QByteArray configuration(reinterpret_cast<const char*>(&caps), sizeof(caps));
+        const QByteArray configuration(reinterpret_cast<const char *>(&caps), sizeof(caps));
         Q_EMIT configurationSelected(capabilities, configuration);
         request.accept(configuration);
         return;

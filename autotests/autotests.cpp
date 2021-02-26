@@ -5,20 +5,20 @@
  */
 
 #include "autotests.h"
-#include "device.h"
 #include "adapter.h"
 #include "battery.h"
+#include "bluezqt_dbustypes.h"
+#include "device.h"
 #include "mediaplayer.h"
 #include "mediaplayertrack.h"
 #include "mediatransport.h"
-#include "bluezqt_dbustypes.h"
 
+#include <QCoreApplication>
 #include <QDebug>
 #include <QEventLoop>
-#include <QCoreApplication>
 
-#include <QDBusServiceWatcher>
 #include <QDBusConnectionInterface>
+#include <QDBusServiceWatcher>
 
 QProcess *FakeBluez::s_process = nullptr;
 
@@ -31,7 +31,10 @@ public:
 
     void exec();
 
-    bool foundFakeBluez() const { return !m_fakebluezPath.isEmpty(); }
+    bool foundFakeBluez() const
+    {
+        return !m_fakebluezPath.isEmpty();
+    }
 
 private Q_SLOTS:
     void processError(QProcess::ProcessError error);
@@ -50,13 +53,11 @@ StartJob::StartJob()
 
 void StartJob::exec()
 {
-    QDBusServiceWatcher watcher(QStringLiteral("org.kde.bluezqt.test"),
-                                QDBusConnection::sessionBus(),
-                                QDBusServiceWatcher::WatchForRegistration);
+    QDBusServiceWatcher watcher(QStringLiteral("org.kde.bluezqt.test"), QDBusConnection::sessionBus(), QDBusServiceWatcher::WatchForRegistration);
 
     connect(&watcher, &QDBusServiceWatcher::serviceRegistered, &m_eventLoop, &QEventLoop::quit);
     connect(FakeBluez::s_process, SIGNAL(error(QProcess::ProcessError)), this, SLOT(processError(QProcess::ProcessError)));
-    connect(FakeBluez::s_process, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(processFinished(int,QProcess::ExitStatus)));
+    connect(FakeBluez::s_process, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(processFinished(int, QProcess::ExitStatus)));
 
     FakeBluez::s_process->start(m_fakebluezPath, QStringList());
 
@@ -132,9 +133,9 @@ void FakeBluez::runTest(const QString &testName)
     }
 
     QDBusMessage call = QDBusMessage::createMethodCall(QStringLiteral("org.kde.bluezqt.test"),
-                        QStringLiteral("/"),
-                        QStringLiteral("org.kde.bluezqt.fakebluez.Test"),
-                        QStringLiteral("runTest"));
+                                                       QStringLiteral("/"),
+                                                       QStringLiteral("org.kde.bluezqt.fakebluez.Test"),
+                                                       QStringLiteral("runTest"));
 
     call << testName;
     QDBusConnection::sessionBus().call(call);
@@ -147,9 +148,9 @@ void FakeBluez::runAction(const QString &object, const QString &actionName, cons
     }
 
     QDBusMessage call = QDBusMessage::createMethodCall(QStringLiteral("org.kde.bluezqt.test"),
-                        QStringLiteral("/"),
-                        QStringLiteral("org.kde.bluezqt.fakebluez.Test"),
-                        QStringLiteral("runAction"));
+                                                       QStringLiteral("/"),
+                                                       QStringLiteral("org.kde.bluezqt.fakebluez.Test"),
+                                                       QStringLiteral("runAction"));
 
     call << object;
     call << actionName;

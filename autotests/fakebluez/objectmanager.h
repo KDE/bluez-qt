@@ -7,9 +7,9 @@
 #ifndef OBJECTMANAGER_H
 #define OBJECTMANAGER_H
 
-#include <QVariantMap>
-#include <QDBusObjectPath>
 #include <QDBusAbstractAdaptor>
+#include <QDBusObjectPath>
+#include <QVariantMap>
 
 typedef QMap<QString, QVariantMap> QVariantMapMap;
 Q_DECLARE_METATYPE(QVariantMapMap)
@@ -45,8 +45,8 @@ Q_SIGNALS:
     void InterfacesRemoved(const QDBusObjectPath &object, const QStringList &interfaces);
 
 private:
-    QMultiMap<QString, Object*> m_objects;
-    QList<QObject*> m_autoDeleteObjects;
+    QMultiMap<QString, Object *> m_objects;
+    QList<QObject *> m_autoDeleteObjects;
 };
 
 #endif // OBJECTMANAGER_H

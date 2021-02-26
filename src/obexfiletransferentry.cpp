@@ -8,12 +8,11 @@
 
 #include "obexfiletransferentry.h"
 
-#include <QVariant>
 #include <QDateTime>
+#include <QVariant>
 
 namespace BluezQt
 {
-
 class ObexFileTransferEntryPrivate
 {
 public:

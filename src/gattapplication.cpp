@@ -19,7 +19,6 @@
 
 namespace BluezQt
 {
-
 GattApplication::GattApplication(QObject *parent)
     : GattApplication(QStringLiteral("/org/kde/bluezqt"), parent)
 {
@@ -40,18 +39,17 @@ DBusManagerStruct GattApplicationPrivate::getManagedObjects() const
 {
     DBusManagerStruct objects;
 
-    const auto serviceAdaptors = q->findChildren<GattServiceAdaptor*>();
-    const auto charcAdaptors = q->findChildren<GattCharacteristicAdaptor*>();
+    const auto serviceAdaptors = q->findChildren<GattServiceAdaptor *>();
+    const auto charcAdaptors = q->findChildren<GattCharacteristicAdaptor *>();
 
     for (const GattServiceAdaptor *serviceAdaptor : serviceAdaptors) {
         QVariantMap properties;
-        for (int i = serviceAdaptor->metaObject()->propertyOffset();
-             i < serviceAdaptor->metaObject()->propertyCount(); ++i) {
+        for (int i = serviceAdaptor->metaObject()->propertyOffset(); i < serviceAdaptor->metaObject()->propertyCount(); ++i) {
             auto propertyName = serviceAdaptor->metaObject()->property(i).name();
             properties.insert(QString::fromLatin1(propertyName), serviceAdaptor->property(propertyName));
         }
 
-        GattService *service = qobject_cast<GattService*>(serviceAdaptor->parent());
+        GattService *service = qobject_cast<GattService *>(serviceAdaptor->parent());
         if (service) {
             objects[service->objectPath()].insert(QStringLiteral("org.bluez.GattService1"), properties);
         }
@@ -59,13 +57,12 @@ DBusManagerStruct GattApplicationPrivate::getManagedObjects() const
 
     for (const GattCharacteristicAdaptor *charcAdaptor : charcAdaptors) {
         QVariantMap properties;
-        for (int i = charcAdaptor->metaObject()->propertyOffset();
-             i < charcAdaptor->metaObject()->propertyCount(); ++i) {
+        for (int i = charcAdaptor->metaObject()->propertyOffset(); i < charcAdaptor->metaObject()->propertyCount(); ++i) {
             auto propertyName = charcAdaptor->metaObject()->property(i).name();
             properties.insert(QString::fromLatin1(propertyName), charcAdaptor->property(propertyName));
         }
 
-        GattCharacteristic *charc = qobject_cast<GattCharacteristic*>(charcAdaptor->parent());
+        GattCharacteristic *charc = qobject_cast<GattCharacteristic *>(charcAdaptor->parent());
         if (charc) {
             objects[charc->objectPath()].insert(QStringLiteral("org.bluez.GattCharacteristic1"), properties);
         }

@@ -15,7 +15,6 @@
 
 namespace BluezQt
 {
-
 class BatteryPrivate : public QObject
 {
     Q_OBJECT

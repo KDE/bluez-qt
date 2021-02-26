@@ -23,7 +23,6 @@ private Q_SLOTS:
     void obexNoClientTest();
     void obexNoAgentManagerTest();
     void obexServiceOkTest();
-
 };
 
 #endif // OBEXMANAGERTEST_H

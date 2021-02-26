@@ -6,8 +6,8 @@
 
 #include "mediainterface.h"
 
-#include <QDBusMessage>
 #include <QDBusConnection>
+#include <QDBusMessage>
 #include <QDBusPendingCall>
 
 MediaInterface::MediaInterface(const QDBusObjectPath &path, QObject *parent)
@@ -48,10 +48,8 @@ void MediaInterface::UnregisterEndpoint(const QDBusObjectPath &path, const QDBus
 
 void MediaInterface::runSetConfigurationAction(const QVariantMap &properties)
 {
-    QDBusMessage call = QDBusMessage::createMethodCall(m_service,
-                                                       m_endpoint.path(),
-                                                       QStringLiteral("org.bluez.MediaEndpoint1"),
-                                                       QStringLiteral("SetConfiguration"));
+    QDBusMessage call =
+        QDBusMessage::createMethodCall(m_service, m_endpoint.path(), QStringLiteral("org.bluez.MediaEndpoint1"), QStringLiteral("SetConfiguration"));
     call << QVariant::fromValue(properties.value(QStringLiteral("Transport")).value<QDBusObjectPath>());
     call << properties.value(QStringLiteral("Properties"));
     QDBusConnection::sessionBus().asyncCall(call);
@@ -59,29 +57,22 @@ void MediaInterface::runSetConfigurationAction(const QVariantMap &properties)
 
 void MediaInterface::runSelectConfigurationAction(const QVariantMap &properties)
 {
-    QDBusMessage call = QDBusMessage::createMethodCall(m_service,
-                                                       m_endpoint.path(),
-                                                       QStringLiteral("org.bluez.MediaEndpoint1"),
-                                                       QStringLiteral("SelectConfiguration"));
+    QDBusMessage call =
+        QDBusMessage::createMethodCall(m_service, m_endpoint.path(), QStringLiteral("org.bluez.MediaEndpoint1"), QStringLiteral("SelectConfiguration"));
     call << properties.value(QStringLiteral("Capabilities"));
     QDBusConnection::sessionBus().asyncCall(call);
 }
 
 void MediaInterface::runClearConfigurationAction(const QVariantMap &properties)
 {
-    QDBusMessage call = QDBusMessage::createMethodCall(m_service,
-                                                       m_endpoint.path(),
-                                                       QStringLiteral("org.bluez.MediaEndpoint1"),
-                                                       QStringLiteral("ClearConfiguration"));
+    QDBusMessage call =
+        QDBusMessage::createMethodCall(m_service, m_endpoint.path(), QStringLiteral("org.bluez.MediaEndpoint1"), QStringLiteral("ClearConfiguration"));
     call << QVariant::fromValue(properties.value(QStringLiteral("Transport")).value<QDBusObjectPath>());
     QDBusConnection::sessionBus().asyncCall(call);
 }
 
 void MediaInterface::runReleaseAction()
 {
-    QDBusMessage call = QDBusMessage::createMethodCall(m_service,
-                                                       m_endpoint.path(),
-                                                       QStringLiteral("org.bluez.MediaEndpoint1"),
-                                                       QStringLiteral("Release"));
+    QDBusMessage call = QDBusMessage::createMethodCall(m_service, m_endpoint.path(), QStringLiteral("org.bluez.MediaEndpoint1"), QStringLiteral("Release"));
     QDBusConnection::sessionBus().asyncCall(call);
 }

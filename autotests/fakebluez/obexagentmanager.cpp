@@ -6,8 +6,8 @@
 
 #include "obexagentmanager.h"
 
-#include <QDBusMessage>
 #include <QDBusConnection>
+#include <QDBusMessage>
 
 ObexAgentManager::ObexAgentManager(QObject *parent)
     : QDBusAbstractAdaptor(parent)
@@ -41,10 +41,7 @@ void ObexAgentManager::runAuthorizePushAction(const QVariantMap &properties)
 {
     Q_UNUSED(properties)
 
-    QDBusMessage call = QDBusMessage::createMethodCall(m_service,
-                        m_agent.path(),
-                        QStringLiteral("org.bluez.obex.Agent1"),
-                        QStringLiteral("AuthorizePush"));
+    QDBusMessage call = QDBusMessage::createMethodCall(m_service, m_agent.path(), QStringLiteral("org.bluez.obex.Agent1"), QStringLiteral("AuthorizePush"));
 
     call << QVariant::fromValue(QDBusObjectPath(QStringLiteral("/org/bluez/session1/transfer1")));
     const QString &fileName = QDBusConnection::sessionBus().call(call).arguments().first().toString();
@@ -53,18 +50,12 @@ void ObexAgentManager::runAuthorizePushAction(const QVariantMap &properties)
 
 void ObexAgentManager::runCancelAction()
 {
-    QDBusMessage call = QDBusMessage::createMethodCall(m_service,
-                        m_agent.path(),
-                        QStringLiteral("org.bluez.obex.Agent1"),
-                        QStringLiteral("Cancel"));
+    QDBusMessage call = QDBusMessage::createMethodCall(m_service, m_agent.path(), QStringLiteral("org.bluez.obex.Agent1"), QStringLiteral("Cancel"));
     QDBusConnection::sessionBus().call(call);
 }
 
 void ObexAgentManager::runReleaseAction()
 {
-    QDBusMessage call = QDBusMessage::createMethodCall(m_service,
-                        m_agent.path(),
-                        QStringLiteral("org.bluez.obex.Agent1"),
-                        QStringLiteral("Release"));
+    QDBusMessage call = QDBusMessage::createMethodCall(m_service, m_agent.path(), QStringLiteral("org.bluez.obex.Agent1"), QStringLiteral("Release"));
     QDBusConnection::sessionBus().call(call);
 }

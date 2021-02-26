@@ -25,26 +25,26 @@ public:
 
     bool finalize();
 
-    QString      name() const;
+    QString name() const;
     QList<Parameter> inParameters() const;
     QList<Parameter> outParameters() const;
-    Parameter    outParameter() const;
-    Tags         tags() const;
-    QStringList  comment() const;
+    Parameter outParameter() const;
+    Tags tags() const;
+    QStringList comment() const;
 
 private:
-    QString     guessOutParameterName() const;
+    QString guessOutParameterName() const;
 
-    QString     m_name;
+    QString m_name;
     QStringList m_inParameterStrings;
     QStringList m_outParameterStrings;
-    Parameter   m_outParameter;
+    Parameter m_outParameter;
     QStringList m_stringTags;
-    QString     m_limitation;
-    Comment     m_comment;
+    QString m_limitation;
+    Comment m_comment;
 
     // finalized members
-    Tags    m_tags;
+    Tags m_tags;
     QList<Parameter> m_inParameters;
     QList<Parameter> m_outParameters;
 

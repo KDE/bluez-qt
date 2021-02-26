@@ -16,7 +16,6 @@ class QDBusObjectPath;
 
 namespace BluezQt
 {
-
 class MediaEndpoint;
 
 class MediaEndpointAdaptor : public QDBusAbstractAdaptor

@@ -14,7 +14,6 @@
 
 namespace BluezQt
 {
-
 class GattApplication;
 class PendingCall;
 
@@ -91,4 +90,3 @@ private:
 };
 
 } // namespace BluezQt
-

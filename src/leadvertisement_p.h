@@ -13,7 +13,6 @@
 
 namespace BluezQt
 {
-
 class LEAdvertisementPrivate
 {
 public:

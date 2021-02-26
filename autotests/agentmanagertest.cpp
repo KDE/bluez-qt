@@ -6,8 +6,8 @@
 
 #include "agentmanagertest.h"
 #include "autotests.h"
-#include "manager.h"
 #include "initmanagerjob.h"
+#include "manager.h"
 #include "pendingcall.h"
 #include "services.h"
 
@@ -19,7 +19,6 @@ extern void bluezqt_initFakeBluezTestRun();
 }
 
 using namespace BluezQt;
-
 
 // TestAgent
 TestAgent::TestAgent(QObject *parent)
@@ -43,7 +42,6 @@ void TestAgent::requestPinCode(DevicePtr device, const BluezQt::Request<QString>
     m_pinRequested = true;
 
     request.accept(QString());
-
 }
 
 void TestAgent::displayPinCode(DevicePtr device, const QString &pinCode)

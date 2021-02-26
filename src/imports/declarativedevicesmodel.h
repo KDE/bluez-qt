@@ -18,7 +18,7 @@ class DeclarativeManager;
 class DeclarativeDevicesModel : public QSortFilterProxyModel
 {
     Q_OBJECT
-    Q_PROPERTY(DeclarativeManager* manager READ manager WRITE setManager)
+    Q_PROPERTY(DeclarativeManager *manager READ manager WRITE setManager)
 
 public:
     enum DeclarativeDeviceRoles {
@@ -42,4 +42,3 @@ private:
 };
 
 #endif // DECLARATIVEMANAGER_H
-

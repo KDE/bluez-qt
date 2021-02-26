@@ -7,13 +7,12 @@
  */
 
 #include "devicesmodel.h"
-#include "manager.h"
 #include "adapter.h"
 #include "device.h"
+#include "manager.h"
 
 namespace BluezQt
 {
-
 class DevicesModelPrivate : public QObject
 {
 public:

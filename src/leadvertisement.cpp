@@ -11,10 +11,9 @@
 
 namespace BluezQt
 {
-
 LEAdvertisement::LEAdvertisement(const QStringList &serviceUuids, QObject *parent)
-    : QObject(parent),
-      d(new LEAdvertisementPrivate(serviceUuids))
+    : QObject(parent)
+    , d(new LEAdvertisementPrivate(serviceUuids))
 {
 }
 

@@ -11,15 +11,14 @@
 
 #include <QObject>
 
+#include "bluezqt_export.h"
 #include "request.h"
 #include "types.h"
-#include "bluezqt_export.h"
 
 class QDBusObjectPath;
 
 namespace BluezQt
 {
-
 class Device;
 
 /**

@@ -15,7 +15,6 @@
 
 namespace BluezQt
 {
-
 /**
  * @class BluezQt::GattService GattService.h <BluezQt/GattService>
  *

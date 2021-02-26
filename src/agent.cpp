@@ -10,7 +10,6 @@
 
 namespace BluezQt
 {
-
 Agent::Agent(QObject *parent)
     : QObject(parent)
 {

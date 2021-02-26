@@ -10,7 +10,6 @@
 
 namespace BluezQt
 {
-
 LEAdvertisementPrivate::LEAdvertisementPrivate(const QStringList &serviceUuids)
     : m_serviceUuids(serviceUuids)
 {

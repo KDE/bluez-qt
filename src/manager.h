@@ -11,13 +11,12 @@
 
 #include <QObject>
 
-#include "types.h"
 #include "bluezqt_export.h"
 #include "rfkill.h"
+#include "types.h"
 
 namespace BluezQt
 {
-
 class Device;
 class Adapter;
 class Agent;

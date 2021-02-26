@@ -7,8 +7,8 @@
 #ifndef CHATPROFILE_H
 #define CHATPROFILE_H
 
-#include "profile.h"
 #include "device.h"
+#include "profile.h"
 
 class QLocalSocket;
 

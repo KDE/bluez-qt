@@ -7,8 +7,8 @@
 #ifndef AGENTMANAGERTEST_H
 #define AGENTMANAGERTEST_H
 
-#include <QObject>
 #include <QDBusObjectPath>
+#include <QObject>
 
 #include "agent.h"
 #include "device.h"

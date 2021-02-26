@@ -8,12 +8,11 @@
 
 #pragma once
 
-#include "mediatransport.h"
 #include "dbusproperties.h"
+#include "mediatransport.h"
 
 namespace BluezQt
 {
-
 typedef org::freedesktop::DBus::Properties DBusProperties;
 
 class MediaTransportPrivate : public QObject

@@ -14,7 +14,6 @@
 
 namespace BluezQt
 {
-
 JobPrivate::JobPrivate()
 {
     eventLoop = nullptr;

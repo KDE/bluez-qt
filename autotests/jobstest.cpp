@@ -5,14 +5,14 @@
  */
 
 #include "jobstest.h"
-#include "manager.h"
-#include "initmanagerjob.h"
-#include "obexmanager.h"
-#include "initobexmanagerjob.h"
 #include "device.h"
+#include "initmanagerjob.h"
+#include "initobexmanagerjob.h"
+#include "manager.h"
+#include "obexmanager.h"
 
-#include <QTest>
 #include <QSignalSpy>
+#include <QTest>
 
 using namespace BluezQt;
 
@@ -20,7 +20,7 @@ void JobsTest::deleteManagerTest()
 {
     Manager *manager = new Manager();
     InitManagerJob *job = manager->init();
-    QSignalSpy jobSpy(job, SIGNAL(result(InitManagerJob*)));
+    QSignalSpy jobSpy(job, SIGNAL(result(InitManagerJob *)));
 
     job->start();
     delete manager;
@@ -33,7 +33,7 @@ void JobsTest::deleteInitManagerJobTest()
 {
     Manager *manager = new Manager();
     InitManagerJob *job = manager->init();
-    QSignalSpy jobSpy(job, SIGNAL(result(InitManagerJob*)));
+    QSignalSpy jobSpy(job, SIGNAL(result(InitManagerJob *)));
 
     job->start();
     delete job;
@@ -45,7 +45,7 @@ void JobsTest::deleteInitManagerJobTest()
 
     manager = new Manager();
     job = manager->init();
-    QSignalSpy jobSpy2(job, SIGNAL(result(InitManagerJob*)));
+    QSignalSpy jobSpy2(job, SIGNAL(result(InitManagerJob *)));
 
     job->start();
     job->kill();
@@ -58,7 +58,7 @@ void JobsTest::deleteObexManagerTest()
 {
     ObexManager *manager = new ObexManager();
     InitObexManagerJob *job = manager->init();
-    QSignalSpy jobSpy(job, SIGNAL(result(InitObexManagerJob*)));
+    QSignalSpy jobSpy(job, SIGNAL(result(InitObexManagerJob *)));
 
     job->start();
     delete manager;
@@ -71,7 +71,7 @@ void JobsTest::deleteInitObexManagerJobTest()
 {
     ObexManager *manager = new ObexManager();
     InitObexManagerJob *job = manager->init();
-    QSignalSpy jobSpy(job, SIGNAL(result(InitObexManagerJob*)));
+    QSignalSpy jobSpy(job, SIGNAL(result(InitObexManagerJob *)));
 
     job->start();
     delete job;
@@ -83,7 +83,7 @@ void JobsTest::deleteInitObexManagerJobTest()
 
     manager = new ObexManager();
     job = manager->init();
-    QSignalSpy jobSpy2(job, SIGNAL(result(InitObexManagerJob*)));
+    QSignalSpy jobSpy2(job, SIGNAL(result(InitObexManagerJob *)));
 
     job->start();
     job->kill();

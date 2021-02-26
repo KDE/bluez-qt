@@ -6,12 +6,12 @@
 
 #include "mediaplayertest.h"
 #include "autotests.h"
-#include "pendingcall.h"
 #include "initmanagerjob.h"
+#include "pendingcall.h"
 #include "services.h"
 
-#include <QTest>
 #include <QSignalSpy>
+#include <QTest>
 
 namespace BluezQt
 {
@@ -197,8 +197,7 @@ void MediaPlayerTest::setEqualizerTest()
 {
     for (const MediaPlayerUnit &unit : m_units) {
         MediaPlayerPtr mediaPlayer = unit.device->mediaPlayer();
-        MediaPlayer::Equalizer value = mediaPlayer->equalizer() == MediaPlayer::EqualizerOff ?
-                    MediaPlayer::EqualizerOn : MediaPlayer::EqualizerOff;
+        MediaPlayer::Equalizer value = mediaPlayer->equalizer() == MediaPlayer::EqualizerOff ? MediaPlayer::EqualizerOn : MediaPlayer::EqualizerOff;
 
         QSignalSpy equalizerSpy(mediaPlayer.data(), SIGNAL(equalizerChanged(Equalizer)));
 
@@ -213,8 +212,7 @@ void MediaPlayerTest::setRepeatTest()
 {
     for (const MediaPlayerUnit &unit : m_units) {
         MediaPlayerPtr mediaPlayer = unit.device->mediaPlayer();
-        MediaPlayer::Repeat value = mediaPlayer->repeat() == MediaPlayer::RepeatGroup ?
-                    MediaPlayer::RepeatSingleTrack : MediaPlayer::RepeatGroup;
+        MediaPlayer::Repeat value = mediaPlayer->repeat() == MediaPlayer::RepeatGroup ? MediaPlayer::RepeatSingleTrack : MediaPlayer::RepeatGroup;
 
         QSignalSpy equalizerSpy(mediaPlayer.data(), SIGNAL(repeatChanged(Repeat)));
 
@@ -229,8 +227,7 @@ void MediaPlayerTest::setShuffleTest()
 {
     for (const MediaPlayerUnit &unit : m_units) {
         MediaPlayerPtr mediaPlayer = unit.device->mediaPlayer();
-        MediaPlayer::Shuffle value = mediaPlayer->shuffle() == MediaPlayer::ShuffleAllTracks ?
-                    MediaPlayer::ShuffleOff : MediaPlayer::ShuffleAllTracks;
+        MediaPlayer::Shuffle value = mediaPlayer->shuffle() == MediaPlayer::ShuffleAllTracks ? MediaPlayer::ShuffleOff : MediaPlayer::ShuffleAllTracks;
 
         QSignalSpy equalizerSpy(mediaPlayer.data(), SIGNAL(shuffleChanged(Shuffle)));
 
@@ -331,9 +328,7 @@ void MediaPlayerTest::bug403289()
 
         QSignalSpy deviceSpy(device.data(), SIGNAL(mediaPlayerChanged(MediaPlayerPtr)));
 
-        const QVariantMap props = {
-            { QStringLiteral("DevicePath"), QVariant::fromValue(QDBusObjectPath(device->ubi())) }
-        };
+        const QVariantMap props = {{QStringLiteral("DevicePath"), QVariant::fromValue(QDBusObjectPath(device->ubi()))}};
         FakeBluez::runAction(QStringLiteral("devicemanager"), QStringLiteral("bug403289"), props);
 
         QTRY_COMPARE(deviceSpy.count(), 1);

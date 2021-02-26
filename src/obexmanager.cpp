@@ -7,20 +7,19 @@
  */
 
 #include "obexmanager.h"
-#include "obexmanager_p.h"
-#include "initobexmanagerjob.h"
 #include "debug.h"
-#include "pendingcall.h"
+#include "initobexmanagerjob.h"
 #include "obexagent.h"
 #include "obexagentadaptor.h"
+#include "obexmanager_p.h"
 #include "obexsession.h"
+#include "pendingcall.h"
 #include "utils.h"
 
 #include <QDBusServiceWatcher>
 
 namespace BluezQt
 {
-
 ObexManager::ObexManager(QObject *parent)
     : QObject(parent)
     , d(new ObexManagerPrivate(this))
@@ -90,8 +89,7 @@ PendingCall *ObexManager::registerAgent(ObexAgent *agent)
         qCDebug(BLUEZQT) << "Cannot register object" << agent->objectPath().path();
     }
 
-    return new PendingCall(d->m_obexAgentManager->RegisterAgent(agent->objectPath()),
-                           PendingCall::ReturnVoid, this);
+    return new PendingCall(d->m_obexAgentManager->RegisterAgent(agent->objectPath()), PendingCall::ReturnVoid, this);
 }
 
 PendingCall *ObexManager::unregisterAgent(ObexAgent *agent)
@@ -104,8 +102,7 @@ PendingCall *ObexManager::unregisterAgent(ObexAgent *agent)
 
     DBusConnection::orgBluezObex().unregisterObject(agent->objectPath().path());
 
-    return new PendingCall(d->m_obexAgentManager->UnregisterAgent(agent->objectPath()),
-                           PendingCall::ReturnVoid, this);
+    return new PendingCall(d->m_obexAgentManager->UnregisterAgent(agent->objectPath()), PendingCall::ReturnVoid, this);
 }
 
 PendingCall *ObexManager::createSession(const QString &destination, const QVariantMap &args)
@@ -114,8 +111,7 @@ PendingCall *ObexManager::createSession(const QString &destination, const QVaria
         return new PendingCall(PendingCall::InternalError, QStringLiteral("ObexManager not operational!"));
     }
 
-    return new PendingCall(d->m_obexClient->CreateSession(destination, args),
-                           PendingCall::ReturnObjectPath, this);
+    return new PendingCall(d->m_obexClient->CreateSession(destination, args), PendingCall::ReturnObjectPath, this);
 }
 
 PendingCall *ObexManager::removeSession(const QDBusObjectPath &session)
@@ -124,8 +120,7 @@ PendingCall *ObexManager::removeSession(const QDBusObjectPath &session)
         return new PendingCall(PendingCall::InternalError, QStringLiteral("ObexManager not operational!"));
     }
 
-    return new PendingCall(d->m_obexClient->RemoveSession(session),
-                           PendingCall::ReturnVoid, this);
+    return new PendingCall(d->m_obexClient->RemoveSession(session), PendingCall::ReturnVoid, this);
 }
 
 } // namespace BluezQt

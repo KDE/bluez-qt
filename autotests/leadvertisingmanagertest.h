@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include "leadvertisement.h"
 #include "adapter.h"
+#include "leadvertisement.h"
 
 class TestAdvertisement : public BluezQt::LEAdvertisement
 {
@@ -32,6 +32,6 @@ private Q_SLOTS:
     void releaseTest();
 
 private:
-    TestAdvertisement* m_advertisement;
+    TestAdvertisement *m_advertisement;
     BluezQt::AdapterPtr m_adapter;
 };

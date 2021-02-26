@@ -8,14 +8,13 @@
 
 #include "input.h"
 #include "input_p.h"
-#include "utils.h"
 #include "macros.h"
+#include "utils.h"
 
 #include <QVariantMap>
 
 namespace BluezQt
 {
-
 static Input::ReconnectMode stringToReconnectMode(const QString &mode)
 {
     if (mode == QLatin1String("none")) {

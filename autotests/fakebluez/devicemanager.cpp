@@ -5,13 +5,13 @@
  */
 
 #include "devicemanager.h"
-#include "objectmanager.h"
 #include "adapterinterface.h"
 #include "deviceinterface.h"
+#include "gattmanagerinterface.h"
+#include "leadvertisingmanagerinterface.h"
 #include "mediainterface.h"
 #include "mediatransportinterface.h"
-#include "leadvertisingmanagerinterface.h"
-#include "gattmanagerinterface.h"
+#include "objectmanager.h"
 
 DeviceManager::DeviceManager(ObjectManager *parent)
     : QObject(parent)
@@ -107,7 +107,7 @@ void DeviceManager::runChangeDeviceProperty(const QVariantMap &properties)
 void DeviceManager::runAdapterMediaAction(const QString action, const QVariantMap &properties)
 {
     const QDBusObjectPath &path = properties.value(QStringLiteral("AdapterPath")).value<QDBusObjectPath>();
-    AdapterInterface *adapter = dynamic_cast<AdapterInterface*>(m_objectManager->objectByPath(path));
+    AdapterInterface *adapter = dynamic_cast<AdapterInterface *>(m_objectManager->objectByPath(path));
     if (!adapter) {
         return;
     }
@@ -117,7 +117,7 @@ void DeviceManager::runAdapterMediaAction(const QString action, const QVariantMa
 void DeviceManager::runAdapterLeAdvertisingManagerAction(const QString action, const QVariantMap &properties)
 {
     const QDBusObjectPath &path = properties.value(QStringLiteral("AdapterPath")).value<QDBusObjectPath>();
-    AdapterInterface *adapter = dynamic_cast<AdapterInterface*>(m_objectManager->objectByPath(path));
+    AdapterInterface *adapter = dynamic_cast<AdapterInterface *>(m_objectManager->objectByPath(path));
     if (!adapter) {
         return;
     }
@@ -127,7 +127,7 @@ void DeviceManager::runAdapterLeAdvertisingManagerAction(const QString action, c
 void DeviceManager::runAdapterGattManagerAction(const QString action, const QVariantMap &properties)
 {
     const QDBusObjectPath &path = properties.value(QStringLiteral("AdapterPath")).value<QDBusObjectPath>();
-    AdapterInterface *adapter = dynamic_cast<AdapterInterface*>(m_objectManager->objectByPath(path));
+    AdapterInterface *adapter = dynamic_cast<AdapterInterface *>(m_objectManager->objectByPath(path));
     if (!adapter) {
         return;
     }
@@ -154,7 +154,7 @@ void DeviceManager::runBug377405()
 void DeviceManager::runBug403289(const QVariantMap &properties)
 {
     const QDBusObjectPath &path = properties.value(QStringLiteral("DevicePath")).value<QDBusObjectPath>();
-    DeviceInterface *device = dynamic_cast<DeviceInterface*>(m_objectManager->objectByPath(path));
+    DeviceInterface *device = dynamic_cast<DeviceInterface *>(m_objectManager->objectByPath(path));
     if (!device) {
         return;
     }

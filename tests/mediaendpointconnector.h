@@ -26,8 +26,8 @@ public:
     explicit NoInputNoOutputAgent(const QStringList &uuids, QObject *parent = nullptr);
 
     /**
-      * Destroys a NoInputNoOutputAgent object.
-      */
+     * Destroys a NoInputNoOutputAgent object.
+     */
     ~NoInputNoOutputAgent() override;
 
 Q_SIGNALS:

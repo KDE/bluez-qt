@@ -11,14 +11,14 @@
 #include <QDBusUnixFileDescriptor>
 #include <QDebug>
 
+#include "adapter.h"
 #include "device.h"
 #include "initmanagerjob.h"
 #include "media.h"
 #include "mediaendpoint.h"
 #include "mediatransport.h"
-#include "tpendingcall.h"
 #include "services.h"
-#include "adapter.h"
+#include "tpendingcall.h"
 
 using namespace BluezQt;
 
@@ -89,7 +89,7 @@ void MediaEndpointConnector::onTransportChanged(MediaTransportPtr transport)
         return;
     }
 
-    connect(transport.data(), &MediaTransport::stateChanged, [transport](MediaTransport::State state){
+    connect(transport.data(), &MediaTransport::stateChanged, [transport](MediaTransport::State state) {
         qDebug() << "Transport state:" << state;
 
         if (state == MediaTransport::State::Pending) {
@@ -99,7 +99,7 @@ void MediaEndpointConnector::onTransportChanged(MediaTransportPtr transport)
             });
         }
     });
-    connect(transport.data(), &MediaTransport::volumeChanged, [](quint16 volume){
+    connect(transport.data(), &MediaTransport::volumeChanged, [](quint16 volume) {
         qDebug() << "Transport volume:" << volume;
     });
 }

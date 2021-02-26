@@ -11,14 +11,13 @@
 
 #include <QObject>
 
-#include "obexfiletransferentry.h"
 #include "bluezqt_export.h"
+#include "obexfiletransferentry.h"
 
 class QDBusObjectPath;
 
 namespace BluezQt
 {
-
 class PendingCall;
 
 /**

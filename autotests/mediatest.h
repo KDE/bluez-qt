@@ -7,8 +7,8 @@
 #ifndef MEDIATEST_H
 #define MEDIATEST_H
 
-#include "mediaendpoint.h"
 #include "adapter.h"
+#include "mediaendpoint.h"
 
 class TestEndpoint : public BluezQt::MediaEndpoint
 {
@@ -36,7 +36,7 @@ private Q_SLOTS:
     void releaseTest();
 
 private:
-    TestEndpoint* m_endpoint;
+    TestEndpoint *m_endpoint;
     BluezQt::AdapterPtr m_adapter;
 };
 

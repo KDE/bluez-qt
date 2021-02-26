@@ -17,15 +17,15 @@ Properties::Properties()
 
 void Properties::parse(const QString &line)
 {
-    const QRegularExpression rx(QStringLiteral(
-                                "(?:Properties|^)"   // Properties keyword or start of line
-                                "\\t{1,2}"           // preceding tabs (max 2)
-                                "([a-z1-6{}_]+)"     // type name
-                                " "                  // space
-                                "([A-Z]\\w+)"        // method name
-                                "(?: \\[(.*)\\])?"   // tags
-                                "(?: \\((.*)\\))?"   // limitations
-                                ));
+    const QRegularExpression rx(
+        QStringLiteral("(?:Properties|^)" // Properties keyword or start of line
+                       "\\t{1,2}" // preceding tabs (max 2)
+                       "([a-z1-6{}_]+)" // type name
+                       " " // space
+                       "([A-Z]\\w+)" // method name
+                       "(?: \\[(.*)\\])?" // tags
+                       "(?: \\((.*)\\))?" // limitations
+                       ));
 
     QRegularExpressionMatch match = rx.match(line);
     // Check if we match a property
@@ -59,7 +59,6 @@ bool Properties::finalize()
 
     return success;
 }
-
 
 std::list<Property> Properties::properties() const
 {

@@ -13,7 +13,6 @@
 
 namespace BluezQt
 {
-
 class ProfilePrivate
 {
 public:

@@ -17,15 +17,15 @@ class Interface
 public:
     Interface();
 
-    bool    parse(const QString &line);
-    bool    finalize();
+    bool parse(const QString &line);
+    bool finalize();
 
     QStringList comment() const;
-    QString     service() const;
-    QString     name() const;
-    QString     objectPath() const;
-    Methods     methods() const;
-    Properties  properties() const;
+    QString service() const;
+    QString name() const;
+    QString objectPath() const;
+    Methods methods() const;
+    Properties properties() const;
 
 private:
     enum class State {
@@ -37,19 +37,19 @@ private:
         Properties,
     };
 
-    void    parseComment(const QString &line);
-    void    parseService(const QString &line);
-    void    parseInterface(const QString &line);
-    void    parseObjectPath(const QString &line);
+    void parseComment(const QString &line);
+    void parseService(const QString &line);
+    void parseInterface(const QString &line);
+    void parseObjectPath(const QString &line);
 
-    State   m_state = State::Comment;
+    State m_state = State::Comment;
 
     QStringList m_comment;
-    QString     m_service;
-    QString     m_name;
-    QString     m_objectPath;
-    Methods     m_methods;
-    Properties  m_properties;
+    QString m_service;
+    QString m_name;
+    QString m_objectPath;
+    Methods m_methods;
+    Properties m_properties;
 };
 
 #endif // INTERFACE_H

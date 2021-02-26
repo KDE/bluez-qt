@@ -7,8 +7,8 @@
 #include "objectmanager.h"
 #include "object.h"
 
-#include <QDBusMetaType>
 #include <QDBusConnection>
+#include <QDBusMetaType>
 
 ObjectManager *s_instance = nullptr;
 

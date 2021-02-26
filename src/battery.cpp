@@ -8,14 +8,13 @@
 
 #include "battery.h"
 #include "battery_p.h"
-#include "utils.h"
 #include "macros.h"
+#include "utils.h"
 
 #include <QVariantMap>
 
 namespace BluezQt
 {
-
 BatteryPrivate::BatteryPrivate(const QString &path, const QVariantMap &properties)
     : QObject()
     , m_path(path)

@@ -10,12 +10,11 @@
 #include "debug.h"
 #include "utils.h"
 
-#include <QDBusMessage>
 #include <QDBusConnection>
+#include <QDBusMessage>
 
 namespace BluezQt
 {
-
 class RequestPrivate
 {
 public:
@@ -74,8 +73,7 @@ void RequestPrivate::acceptRequest(const QVariant &val)
 
 void RequestPrivate::rejectRequest()
 {
-    const QDBusMessage &reply = m_message.createErrorReply(interfaceName() % QStringLiteral(".Rejected"),
-                                QStringLiteral("Rejected"));
+    const QDBusMessage &reply = m_message.createErrorReply(interfaceName() % QStringLiteral(".Rejected"), QStringLiteral("Rejected"));
     if (!sendMessage(reply)) {
         qCWarning(BLUEZQT) << "Request: Failed to put reply on DBus queue";
     }
@@ -83,8 +81,7 @@ void RequestPrivate::rejectRequest()
 
 void RequestPrivate::cancelRequest()
 {
-    const QDBusMessage &reply = m_message.createErrorReply(interfaceName() % QStringLiteral(".Canceled"),
-                                QStringLiteral("Canceled"));
+    const QDBusMessage &reply = m_message.createErrorReply(interfaceName() % QStringLiteral(".Canceled"), QStringLiteral("Canceled"));
     if (!sendMessage(reply)) {
         qCWarning(BLUEZQT) << "Request: Failed to put reply on DBus queue";
     }

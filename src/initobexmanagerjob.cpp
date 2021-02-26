@@ -7,13 +7,12 @@
  */
 
 #include "initobexmanagerjob.h"
+#include "debug.h"
 #include "obexmanager.h"
 #include "obexmanager_p.h"
-#include "debug.h"
 
 namespace BluezQt
 {
-
 class InitObexManagerJobPrivate : public QObject
 {
 public:

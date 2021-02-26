@@ -7,18 +7,17 @@
  */
 
 #include "obexagentadaptor.h"
+#include "dbusproperties.h"
 #include "obexagent.h"
 #include "obexmanager.h"
 #include "obextransfer.h"
 #include "obextransfer_p.h"
-#include "dbusproperties.h"
 #include "utils.h"
 
 #include <QDBusObjectPath>
 
 namespace BluezQt
 {
-
 typedef org::freedesktop::DBus::Properties DBusProperties;
 
 ObexAgentAdaptor::ObexAgentAdaptor(ObexAgent *parent, ObexManager *manager)

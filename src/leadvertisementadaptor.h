@@ -13,7 +13,6 @@
 
 namespace BluezQt
 {
-
 class LEAdvertisement;
 
 class LEAdvertisementAdaptor : public QDBusAbstractAdaptor

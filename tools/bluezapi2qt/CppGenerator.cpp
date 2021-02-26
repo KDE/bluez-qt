@@ -15,8 +15,8 @@
 #include "BluezApiParser.h"
 #include "TypeAnnotation.h"
 
-CppGenerator::CppGenerator(const Config &config) :
-    m_config(config)
+CppGenerator::CppGenerator(const Config &config)
+    : m_config(config)
 {
 }
 
@@ -56,8 +56,7 @@ void CppGenerator::writeAdaptorHeader(const BluezApiParser &parser)
         // Write properties
         for (const auto &property : interface.properties().properties()) {
             // Respect config
-            if ((property.tags().isOptional && !m_config.useOptional) ||
-                (property.tags().isExperimental && !m_config.useExperimental)) {
+            if ((property.tags().isOptional && !m_config.useOptional) || (property.tags().isExperimental && !m_config.useExperimental)) {
                 continue;
             }
             stream << "    Q_PROPERTY(" << bluezToQt(property.type()) << " " << property.name() << " READ " << lowerFirstChars(property.name());
@@ -73,8 +72,7 @@ void CppGenerator::writeAdaptorHeader(const BluezApiParser &parser)
         // Write property accessors
         for (const auto &property : interface.properties().properties()) {
             // Respect config
-            if ((property.tags().isOptional && !m_config.useOptional) ||
-                (property.tags().isExperimental && !m_config.useExperimental)) {
+            if ((property.tags().isOptional && !m_config.useOptional) || (property.tags().isExperimental && !m_config.useExperimental)) {
                 continue;
             }
             stream << "    " << bluezToQt(property.type()) << " " << lowerFirstChars(property.name()) << "() const;\n";
@@ -89,13 +87,11 @@ void CppGenerator::writeAdaptorHeader(const BluezApiParser &parser)
         // write Methods
         for (const auto &method : interface.methods().methods()) {
             // Respect config
-            if ((method.tags().isOptional && !m_config.useOptional) ||
-                (method.tags().isExperimental && !m_config.useExperimental)) {
+            if ((method.tags().isOptional && !m_config.useOptional) || (method.tags().isExperimental && !m_config.useExperimental)) {
                 continue;
             }
-            stream << "    " << bluezToQt(method.outParameter().type()) <<  " " << method.name() << "(";
-            for (auto it = method.inParameters().begin();
-                 it != method.inParameters().end(); ++it) {
+            stream << "    " << bluezToQt(method.outParameter().type()) << " " << method.name() << "(";
+            for (auto it = method.inParameters().begin(); it != method.inParameters().end(); ++it) {
                 stream << "const " << bluezToQt(it->type()) << " &" << it->name();
                 if (it != std::prev(method.inParameters().end())) {
                     stream << ", ";
@@ -140,8 +136,7 @@ void CppGenerator::writeAdaptorSource(const BluezApiParser &parser)
         // Write property accessors
         for (const auto &property : interface.properties().properties()) {
             // Respect config
-            if ((property.tags().isOptional && !m_config.useOptional) ||
-                (property.tags().isExperimental && !m_config.useExperimental)) {
+            if ((property.tags().isOptional && !m_config.useOptional) || (property.tags().isExperimental && !m_config.useExperimental)) {
                 continue;
             }
             stream << bluezToQt(property.type()) << " " << className << "Adaptor::" << lowerFirstChars(property.name()) << "() const\n";
@@ -149,7 +144,8 @@ void CppGenerator::writeAdaptorSource(const BluezApiParser &parser)
             stream << "    return m_" << lowerFirstChars(className) << "->" << lowerFirstChars(property.name()) << "();\n";
             stream << "}\n\n";
             if (!property.tags().isReadOnly) {
-                stream << "void " << className << "Adaptor::set" << property.name() << "(const " << bluezToQt(property.type()) << " &" << lowerFirstChars(property.name()) << ");\n";
+                stream << "void " << className << "Adaptor::set" << property.name() << "(const " << bluezToQt(property.type()) << " &"
+                       << lowerFirstChars(property.name()) << ");\n";
                 stream << "{\n";
                 stream << "    m_" << lowerFirstChars(className) << "->set" << property.name() << "(" << lowerFirstChars(property.name()) << ");\n";
                 stream << "}\n\n";
@@ -159,13 +155,11 @@ void CppGenerator::writeAdaptorSource(const BluezApiParser &parser)
         // write Methods
         for (const auto &method : interface.methods().methods()) {
             // Respect config
-            if ((method.tags().isOptional && !m_config.useOptional) ||
-                (method.tags().isExperimental && !m_config.useExperimental)) {
+            if ((method.tags().isOptional && !m_config.useOptional) || (method.tags().isExperimental && !m_config.useExperimental)) {
                 continue;
             }
             stream << bluezToQt(method.outParameter().type()) << " " << className << "Adaptor::" << method.name() << "(";
-            for (auto it = method.inParameters().begin();
-                 it != method.inParameters().end(); ++it) {
+            for (auto it = method.inParameters().begin(); it != method.inParameters().end(); ++it) {
                 stream << "const " << bluezToQt(it->type()) << " &" << it->name();
                 if (it != std::prev(method.inParameters().end())) {
                     stream << ", ";
@@ -173,8 +167,7 @@ void CppGenerator::writeAdaptorSource(const BluezApiParser &parser)
             }
             stream << ")\n{\n";
             stream << "    return m_" << lowerFirstChars(className) << "->" << lowerFirstChars(method.name()) << "(";
-            for (auto it = method.inParameters().begin();
-                 it != method.inParameters().end(); ++it) {
+            for (auto it = method.inParameters().begin(); it != method.inParameters().end(); ++it) {
                 stream << it->name();
                 if (it != std::prev(method.inParameters().end())) {
                     stream << ", ";
@@ -194,7 +187,7 @@ QString CppGenerator::interfaceToClassName(const QString &interface)
     const int index = interface.lastIndexOf(QRegularExpression(QStringLiteral("\\.[A-Z]\\w+"))) + 1;
     auto className = interface.mid(index);
     while (className.back() > QLatin1Char('0') && className.back() <= QLatin1Char('9')) {
-        className.remove(className.size()-1, 1);
+        className.remove(className.size() - 1, 1);
     }
 
     return className;
@@ -203,7 +196,7 @@ QString CppGenerator::interfaceToClassName(const QString &interface)
 QString CppGenerator::lowerFirstChars(const QString &string)
 {
     QString str(string);
-    //str.replace(0, 1, string.at(0).toLower());
+    // str.replace(0, 1, string.at(0).toLower());
 
     const QRegularExpression rx(QStringLiteral("^([A-Z]+)"));
     QRegularExpressionMatch match = rx.match(string);
@@ -214,7 +207,7 @@ QString CppGenerator::lowerFirstChars(const QString &string)
         }
     }
     str.replace(0, 1, string.at(0).toLower());
-    str.replace(string.size()-1, 1, string.at(string.size()-1).toLower());
+    str.replace(string.size() - 1, 1, string.at(string.size() - 1).toLower());
 
     return str;
 }

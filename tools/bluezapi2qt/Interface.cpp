@@ -22,7 +22,7 @@ bool Interface::parse(const QString &line)
         m_state = State::Interface;
     } else if (line.startsWith(QLatin1String("Object path\t"))) {
         m_state = State::ObjectPath;
-    } else if (line.startsWith(QLatin1String("Methods\t")) || Methods::isMethod(line)) {  // Argh! AgentManager is missing the Methods keyword
+    } else if (line.startsWith(QLatin1String("Methods\t")) || Methods::isMethod(line)) { // Argh! AgentManager is missing the Methods keyword
         m_state = State::Methods;
     } else if (line.startsWith(QLatin1String("Properties\t"))) {
         m_state = State::Properties;
@@ -135,4 +135,3 @@ void Interface::parseObjectPath(const QString &line)
         m_objectPath = match.captured(1);
     }
 }
-

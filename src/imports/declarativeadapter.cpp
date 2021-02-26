@@ -11,16 +11,16 @@
 
 static int devicesCountFunction(QQmlListProperty<DeclarativeDevice> *property)
 {
-    Q_ASSERT(qobject_cast<DeclarativeAdapter*>(property->object));
-    DeclarativeAdapter *adapter = static_cast<DeclarativeAdapter*>(property->object);
+    Q_ASSERT(qobject_cast<DeclarativeAdapter *>(property->object));
+    DeclarativeAdapter *adapter = static_cast<DeclarativeAdapter *>(property->object);
 
     return adapter->m_devices.count();
 }
 
 static DeclarativeDevice *devicesAtFunction(QQmlListProperty<DeclarativeDevice> *property, int index)
 {
-    Q_ASSERT(qobject_cast<DeclarativeAdapter*>(property->object));
-    DeclarativeAdapter *adapter = static_cast<DeclarativeAdapter*>(property->object);
+    Q_ASSERT(qobject_cast<DeclarativeAdapter *>(property->object));
+    DeclarativeAdapter *adapter = static_cast<DeclarativeAdapter *>(property->object);
 
     return adapter->m_devices.values().at(index);
 }

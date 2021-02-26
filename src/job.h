@@ -16,7 +16,6 @@
 
 namespace BluezQt
 {
-
 class JobPrivate;
 
 /**
@@ -228,4 +227,4 @@ private:
 
 } // namespace BluezQt
 
-#endif //BLUEZQT_JOB_H
+#endif // BLUEZQT_JOB_H

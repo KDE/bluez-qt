@@ -8,17 +8,17 @@
 
 #include "Methods.h"
 
-#include <QStringList>
 #include <QRegularExpression>
+#include <QStringList>
 
-static const QRegularExpression rx(QStringLiteral(
-                             "\\t+"               // preceding tabs
-                             "(?:(.+) )?"         // return types - Argh! LE Advertising Manager does not specify return type
-                             "([A-Z]\\w+)"        // method name
-                             "\\(([^\\)]*)\\)"    // parameters
-                             "(?: \\[(.*)\\])?"   // tags
-                             "(?: \\((.*)\\))?"   // limitations
-                             ), QRegularExpression::CaseInsensitiveOption);
+static const QRegularExpression rx(QStringLiteral("\\t+" // preceding tabs
+                                                  "(?:(.+) )?" // return types - Argh! LE Advertising Manager does not specify return type
+                                                  "([A-Z]\\w+)" // method name
+                                                  "\\(([^\\)]*)\\)" // parameters
+                                                  "(?: \\[(.*)\\])?" // tags
+                                                  "(?: \\((.*)\\))?" // limitations
+                                                  ),
+                                   QRegularExpression::CaseInsensitiveOption);
 
 Methods::Methods()
 {
@@ -73,7 +73,6 @@ bool Methods::finalize()
 
     return success;
 }
-
 
 std::list<Method> Methods::methods() const
 {

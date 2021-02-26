@@ -6,11 +6,11 @@
 
 #include "devicetest.h"
 #include "autotests.h"
-#include "pendingcall.h"
 #include "initmanagerjob.h"
+#include "pendingcall.h"
 
-#include <QTest>
 #include <QSignalSpy>
+#include <QTest>
 
 namespace BluezQt
 {
@@ -100,14 +100,8 @@ void DeviceTest::initTestCase()
 
             DeviceUnit u;
             u.device = device;
-            u.dbusDevice = new org::bluez::Device1(service,
-                                                   device->ubi(),
-                                                   connection,
-                                                   this);
-            u.dbusProperties = new org::freedesktop::DBus::Properties(service,
-                                                                      device->ubi(),
-                                                                      connection,
-                                                                      this);
+            u.dbusDevice = new org::bluez::Device1(service, device->ubi(), connection, this);
+            u.dbusProperties = new org::freedesktop::DBus::Properties(service, device->ubi(), connection, this);
             m_units.append(u);
         }
     }
@@ -164,7 +158,7 @@ void DeviceTest::setAliasTest()
 {
     for (const DeviceUnit &unit : m_units) {
         QSignalSpy deviceSpy(unit.device.data(), SIGNAL(nameChanged(QString)));
-        QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString,QVariantMap,QStringList)));
+        QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString, QVariantMap, QStringList)));
 
         QString value = unit.device->name() + QLatin1String("_tst_alias");
 
@@ -184,7 +178,7 @@ void DeviceTest::setTrustedTest()
 {
     for (const DeviceUnit &unit : m_units) {
         QSignalSpy deviceSpy(unit.device.data(), SIGNAL(trustedChanged(bool)));
-        QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString,QVariantMap,QStringList)));
+        QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString, QVariantMap, QStringList)));
 
         bool value = !unit.device->isTrusted();
 
@@ -204,7 +198,7 @@ void DeviceTest::setBlockedTest()
 {
     for (const DeviceUnit &unit : m_units) {
         QSignalSpy deviceSpy(unit.device.data(), SIGNAL(blockedChanged(bool)));
-        QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString,QVariantMap,QStringList)));
+        QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString, QVariantMap, QStringList)));
 
         bool value = !unit.device->isBlocked();
 

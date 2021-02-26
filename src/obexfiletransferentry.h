@@ -9,14 +9,13 @@
 #ifndef BLUEZQT_OBEXFILETRANSFERENTRY_H
 #define BLUEZQT_OBEXFILETRANSFERENTRY_H
 
-#include <QString>
 #include <QSharedPointer>
+#include <QString>
 
 #include "bluezqt_export.h"
 
 namespace BluezQt
 {
-
 /**
  * @class BluezQt::ObexFileTransferEntry obexfiletransferentry.h <BluezQt/ObexFileTransferEntry>
  *

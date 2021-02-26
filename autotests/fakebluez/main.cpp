@@ -6,9 +6,9 @@
 
 #include "fakebluez.h"
 
-#include <QDebug>
-#include <QDBusConnection>
 #include <QCoreApplication>
+#include <QDBusConnection>
+#include <QDebug>
 
 int main(int argc, char **argv)
 {

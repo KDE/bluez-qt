@@ -7,18 +7,16 @@
  */
 
 #include "obexmanager_p.h"
+#include "debug.h"
 #include "obexmanager.h"
 #include "obexsession.h"
 #include "obexsession_p.h"
-#include "debug.h"
 #include "utils.h"
-
 
 #include <QDBusServiceWatcher>
 
 namespace BluezQt
 {
-
 typedef org::freedesktop::DBus::ObjectManager DBusObjectManager;
 
 ObexManagerPrivate::ObexManagerPrivate(ObexManager *q)
@@ -41,8 +39,10 @@ ObexManagerPrivate::ObexManagerPrivate(ObexManager *q)
 void ObexManagerPrivate::init()
 {
     // Keep an eye on org.bluez.obex service
-    QDBusServiceWatcher *serviceWatcher = new QDBusServiceWatcher(Strings::orgBluezObex(), DBusConnection::orgBluezObex(),
-            QDBusServiceWatcher::WatchForRegistration | QDBusServiceWatcher::WatchForUnregistration, this);
+    QDBusServiceWatcher *serviceWatcher = new QDBusServiceWatcher(Strings::orgBluezObex(),
+                                                                  DBusConnection::orgBluezObex(),
+                                                                  QDBusServiceWatcher::WatchForRegistration | QDBusServiceWatcher::WatchForUnregistration,
+                                                                  this);
 
     connect(serviceWatcher, &QDBusServiceWatcher::serviceRegistered, this, &ObexManagerPrivate::serviceRegistered);
     connect(serviceWatcher, &QDBusServiceWatcher::serviceUnregistered, this, &ObexManagerPrivate::serviceUnregistered);
@@ -53,10 +53,8 @@ void ObexManagerPrivate::init()
         return;
     }
 
-    QDBusMessage call = QDBusMessage::createMethodCall(Strings::orgFreedesktopDBus(),
-                        QStringLiteral("/"),
-                        Strings::orgFreedesktopDBus(),
-                        QStringLiteral("NameHasOwner"));
+    QDBusMessage call =
+        QDBusMessage::createMethodCall(Strings::orgFreedesktopDBus(), QStringLiteral("/"), Strings::orgFreedesktopDBus(), QStringLiteral("NameHasOwner"));
 
     call << Strings::orgBluezObex();
 
@@ -91,20 +89,13 @@ void ObexManagerPrivate::load()
     }
 
     // Force QDBus to cache owner of org.bluez.obex - this will be the only blocking call on session connection
-    DBusConnection::orgBluezObex().connect(Strings::orgBluezObex(),
-                                           QStringLiteral("/"),
-                                           Strings::orgFreedesktopDBus(),
-                                           QStringLiteral("Dummy"),
-                                           this,
-                                           SLOT(dummy()));
+    DBusConnection::orgBluezObex()
+        .connect(Strings::orgBluezObex(), QStringLiteral("/"), Strings::orgFreedesktopDBus(), QStringLiteral("Dummy"), this, SLOT(dummy()));
 
-    m_dbusObjectManager = new DBusObjectManager(Strings::orgBluezObex(), QStringLiteral("/"),
-            DBusConnection::orgBluezObex(), this);
+    m_dbusObjectManager = new DBusObjectManager(Strings::orgBluezObex(), QStringLiteral("/"), DBusConnection::orgBluezObex(), this);
 
-    connect(m_dbusObjectManager, &DBusObjectManager::InterfacesAdded,
-            this, &ObexManagerPrivate::interfacesAdded);
-    connect(m_dbusObjectManager, &DBusObjectManager::InterfacesRemoved,
-            this, &ObexManagerPrivate::interfacesRemoved);
+    connect(m_dbusObjectManager, &DBusObjectManager::InterfacesAdded, this, &ObexManagerPrivate::interfacesAdded);
+    connect(m_dbusObjectManager, &DBusObjectManager::InterfacesRemoved, this, &ObexManagerPrivate::interfacesRemoved);
 
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(m_dbusObjectManager->GetManagedObjects(), this);
     connect(watcher, &QDBusPendingCallWatcher::finished, this, &ObexManagerPrivate::getManagedObjectsFinished);

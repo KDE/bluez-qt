@@ -14,7 +14,6 @@
 
 namespace BluezQt
 {
-
 LEAdvertisementAdaptor::LEAdvertisementAdaptor(LEAdvertisement *parent)
     : QDBusAbstractAdaptor(parent)
     , m_advertisement(parent)

@@ -7,9 +7,9 @@
  */
 
 #include "profileadaptor.h"
-#include "profile.h"
-#include "manager.h"
 #include "device.h"
+#include "manager.h"
+#include "profile.h"
 
 #include <QDBusMessage>
 #include <QDBusObjectPath>
@@ -17,7 +17,6 @@
 
 namespace BluezQt
 {
-
 ProfileAdaptor::ProfileAdaptor(Profile *parent, Manager *manager)
     : QDBusAbstractAdaptor(parent)
     , m_profile(parent)

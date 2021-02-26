@@ -15,7 +15,6 @@
 
 namespace BluezQt
 {
-
 GattServiceAdaptor::GattServiceAdaptor(GattService *parent)
     : QDBusAbstractAdaptor(parent)
     , m_gattService(parent)

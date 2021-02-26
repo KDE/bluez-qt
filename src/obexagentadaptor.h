@@ -11,15 +11,14 @@
 
 #include <QDBusAbstractAdaptor>
 
-#include "types.h"
 #include "request.h"
+#include "types.h"
 
 class QDBusObjectPath;
 class QDBusPendingCallWatcher;
 
 namespace BluezQt
 {
-
 class ObexAgent;
 class ObexManager;
 

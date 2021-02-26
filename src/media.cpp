@@ -7,16 +7,15 @@
  */
 
 #include "media.h"
+#include "debug.h"
 #include "media_p.h"
 #include "mediaendpoint.h"
 #include "mediaendpointadaptor.h"
 #include "pendingcall.h"
 #include "utils.h"
-#include "debug.h"
 
 namespace BluezQt
 {
-
 Media::Media(const QString &path, QObject *parent)
     : QObject(parent)
     , d(new MediaPrivate())
@@ -44,8 +43,7 @@ PendingCall *Media::registerEndpoint(MediaEndpoint *endpoint)
         qCDebug(BLUEZQT) << "Cannot register object" << endpoint->objectPath().path();
     }
 
-    return new PendingCall(d->m_bluezMedia->RegisterEndpoint(endpoint->objectPath(), endpoint->properties()),
-                           PendingCall::ReturnVoid, this);
+    return new PendingCall(d->m_bluezMedia->RegisterEndpoint(endpoint->objectPath(), endpoint->properties()), PendingCall::ReturnVoid, this);
 }
 
 PendingCall *Media::unregisterEndpoint(MediaEndpoint *endpoint)
@@ -58,8 +56,7 @@ PendingCall *Media::unregisterEndpoint(MediaEndpoint *endpoint)
 
     DBusConnection::orgBluez().unregisterObject(endpoint->objectPath().path());
 
-    return new PendingCall(d->m_bluezMedia->UnregisterEndpoint(endpoint->objectPath()),
-                           PendingCall::ReturnVoid, this);
+    return new PendingCall(d->m_bluezMedia->UnregisterEndpoint(endpoint->objectPath()), PendingCall::ReturnVoid, this);
 }
 
 } // namespace BluezQt

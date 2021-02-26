@@ -13,7 +13,6 @@
 
 namespace BluezQt
 {
-
 class ObexSession;
 
 typedef org::bluez::obex::Session1 BluezSession;

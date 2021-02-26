@@ -17,7 +17,6 @@ class QDBusUnixFileDescriptor;
 
 namespace BluezQt
 {
-
 class Device;
 class Manager;
 class Profile;

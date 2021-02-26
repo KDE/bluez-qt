@@ -12,7 +12,6 @@
 
 namespace BluezQt
 {
-
 class GattService;
 
 class GattServiceAdaptor : public QDBusAbstractAdaptor

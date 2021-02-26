@@ -10,10 +10,8 @@
 #include "gattcharacteristic.h"
 #include "gattservice.h"
 
-
 namespace BluezQt
 {
-
 GattCharacteristicAdaptor::GattCharacteristicAdaptor(GattCharacteristic *parent)
     : QDBusAbstractAdaptor(parent)
     , m_gattCharacteristic(parent)
@@ -33,15 +31,15 @@ QDBusObjectPath GattCharacteristicAdaptor::service() const
 QStringList GattCharacteristicAdaptor::flags() const
 {
     // TODO: implement flags
-    return { QStringLiteral("read"), QStringLiteral("write") };
+    return {QStringLiteral("read"), QStringLiteral("write")};
 }
 
-QByteArray GattCharacteristicAdaptor::ReadValue(const QVariantMap &/*options*/)
+QByteArray GattCharacteristicAdaptor::ReadValue(const QVariantMap & /*options*/)
 {
     return m_gattCharacteristic->readValue();
 }
 
-void GattCharacteristicAdaptor::WriteValue(const QByteArray &value, const QVariantMap &/*options*/)
+void GattCharacteristicAdaptor::WriteValue(const QByteArray &value, const QVariantMap & /*options*/)
 {
     m_gattCharacteristic->writeValue(value);
 }

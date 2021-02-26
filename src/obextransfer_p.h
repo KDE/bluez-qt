@@ -11,12 +11,11 @@
 
 #include "obextransfer.h"
 
-#include "obextransfer1.h"
 #include "dbusproperties.h"
+#include "obextransfer1.h"
 
 namespace BluezQt
 {
-
 typedef org::bluez::obex::Transfer1 BluezTransfer;
 typedef org::freedesktop::DBus::Properties DBusProperties;
 

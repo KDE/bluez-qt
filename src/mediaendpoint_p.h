@@ -16,7 +16,6 @@
 
 namespace BluezQt
 {
-
 class MediaEndpointPrivate
 {
 public:

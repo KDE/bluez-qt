@@ -18,10 +18,8 @@ class QDBusConnection;
 
 namespace BluezQt
 {
-
 namespace Strings
 {
-
 QString orgFreedesktopDBus();
 QString orgFreedesktopDBusProperties();
 QString orgBluez();
@@ -46,7 +44,6 @@ QString orgBluezObexTransfer1();
 
 namespace DBusConnection
 {
-
 QDBusConnection orgBluez();
 QDBusConnection orgBluezObex();
 
@@ -54,7 +51,6 @@ QDBusConnection orgBluezObex();
 
 namespace Instance
 {
-
 Manager *manager();
 void setManager(Manager *manager);
 

@@ -5,13 +5,13 @@
  */
 
 #include "adapterinterface.h"
-#include "objectmanager.h"
-#include "mediainterface.h"
-#include "leadvertisingmanagerinterface.h"
 #include "gattmanagerinterface.h"
+#include "leadvertisingmanagerinterface.h"
+#include "mediainterface.h"
+#include "objectmanager.h"
 
-#include <QTimer>
 #include <QDBusConnection>
+#include <QTimer>
 
 // AdapterObject
 AdapterObject::AdapterObject(const QDBusObjectPath &path, QObject *parent)

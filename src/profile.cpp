@@ -7,17 +7,16 @@
  */
 
 #include "profile.h"
-#include "profile_p.h"
 #include "debug.h"
+#include "profile_p.h"
 
 #include <unistd.h>
 
-#include <QLocalSocket>
 #include <QDBusUnixFileDescriptor>
+#include <QLocalSocket>
 
 namespace BluezQt
 {
-
 Profile::Profile(QObject *parent)
     : QObject(parent)
     , d(new ProfilePrivate)

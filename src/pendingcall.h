@@ -21,7 +21,6 @@ class QDBusPendingCallWatcher;
 
 namespace BluezQt
 {
-
 /**
  * @class BluezQt::PendingCall pendingcall.h <BluezQt/PendingCall>
  *
@@ -198,7 +197,7 @@ private:
     friend class ObexSession;
     friend class ObexObjectPush;
     friend class ObexFileTransfer;
-    template<class...T>
+    template<class... T>
     friend class TPendingCall;
 };
 

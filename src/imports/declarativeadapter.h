@@ -72,7 +72,7 @@ public:
     QQmlListProperty<DeclarativeDevice> devices();
 
     BluezQt::AdapterPtr m_adapter;
-    QHash<QString, DeclarativeDevice*> m_devices;
+    QHash<QString, DeclarativeDevice *> m_devices;
 
 public Q_SLOTS:
     DeclarativeDevice *deviceForAddress(const QString &address) const;

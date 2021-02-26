@@ -13,7 +13,6 @@
 
 namespace BluezQt
 {
-
 typedef org::bluez::Media1 BluezMedia;
 
 class MediaPrivate

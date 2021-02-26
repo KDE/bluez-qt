@@ -16,28 +16,28 @@ public:
     struct Tags {
         bool isOptional = false;
         bool isExperimental = false;
-        bool isReadOnly    = false;
-        bool isServerOnly   = false;
+        bool isReadOnly = false;
+        bool isServerOnly = false;
     };
 
     Property();
 
     bool finalize();
 
-    QString      name() const;
-    QString      type() const;
-    Tags         tags() const;
-    QStringList  comment() const;
+    QString name() const;
+    QString type() const;
+    Tags tags() const;
+    QStringList comment() const;
 
 private:
-    QString     m_name;
-    QString     m_type;
+    QString m_name;
+    QString m_type;
     QStringList m_stringTags;
-    QString     m_limitation;
-    Comment     m_comment;
+    QString m_limitation;
+    Comment m_comment;
 
     // finalized members
-    Tags    m_tags;
+    Tags m_tags;
 
     friend class Properties;
 };

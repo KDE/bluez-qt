@@ -6,8 +6,8 @@
 
 #include "object.h"
 
-#include <QDBusMessage>
 #include <QDBusConnection>
+#include <QDBusMessage>
 
 Object::Object()
     : m_parent(nullptr)
@@ -75,9 +75,7 @@ void Object::changeProperty(const QString &name, const QVariant &value)
 
     m_properties[name] = value;
 
-    QDBusMessage signal = QDBusMessage::createSignal(m_path.path(),
-                                                     QStringLiteral("org.freedesktop.DBus.Properties"),
-                                                     QStringLiteral("PropertiesChanged"));
+    QDBusMessage signal = QDBusMessage::createSignal(m_path.path(), QStringLiteral("org.freedesktop.DBus.Properties"), QStringLiteral("PropertiesChanged"));
     signal << m_name;
     signal << updatedProperties;
     signal << QStringList();

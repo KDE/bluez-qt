@@ -46,4 +46,3 @@ QStringList Property::comment() const
 {
     return m_comment;
 }
-

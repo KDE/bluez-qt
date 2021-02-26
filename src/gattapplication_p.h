@@ -14,7 +14,6 @@
 
 namespace BluezQt
 {
-
 class GattApplication;
 
 class GattApplicationPrivate

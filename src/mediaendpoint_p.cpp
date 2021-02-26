@@ -13,7 +13,6 @@
 
 namespace BluezQt
 {
-
 MediaEndpointPrivate::MediaEndpointPrivate(const MediaEndpoint::Configuration &configuration)
     : m_configuration(configuration)
 {
@@ -42,12 +41,12 @@ void MediaEndpointPrivate::init(const MediaEndpoint::Configuration &configuratio
     switch (configuration.codec) {
     case MediaEndpoint::Codec::Sbc:
         m_properties[codec] = QVariant::fromValue(uchar(A2DP_CODEC_SBC));
-        m_properties[capabilities] = QByteArray(reinterpret_cast<const char*>(&sbcCapabilities), sizeof(sbcCapabilities));
+        m_properties[capabilities] = QByteArray(reinterpret_cast<const char *>(&sbcCapabilities), sizeof(sbcCapabilities));
         objectPath += QStringLiteral("/Sbc");
         break;
     case MediaEndpoint::Codec::Aac:
         m_properties[codec] = QVariant::fromValue(uchar(A2DP_CODEC_MPEG24));
-        m_properties[capabilities] = QByteArray(reinterpret_cast<const char*>(&aacCapabilities), sizeof(aacCapabilities));
+        m_properties[capabilities] = QByteArray(reinterpret_cast<const char *>(&aacCapabilities), sizeof(aacCapabilities));
         objectPath += QStringLiteral("/Aac");
         break;
     }

@@ -34,7 +34,6 @@ private:
     void runBug403289(const QVariantMap &properties);
 
     ObjectManager *m_objectManager;
-
 };
 
 #endif // DEVICEMANAGER_H

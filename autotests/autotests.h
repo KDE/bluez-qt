@@ -7,11 +7,11 @@
 #ifndef AUTOTESTS_H
 #define AUTOTESTS_H
 
-#include <QTest>
-#include <QSignalSpy>
-#include <QProcess>
-#include <QDBusMessage>
 #include <QDBusConnection>
+#include <QDBusMessage>
+#include <QProcess>
+#include <QSignalSpy>
+#include <QTest>
 
 class FakeBluez
 {
@@ -28,7 +28,6 @@ public:
 
 namespace Autotests
 {
-
 void registerMetatypes();
 void verifyPropertiesChangedSignal(const QSignalSpy &spy, const QString &propertyName, const QVariant &propertyValue);
 

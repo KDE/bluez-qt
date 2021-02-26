@@ -6,9 +6,9 @@
 
 #pragma once
 
+#include "adapter.h"
 #include "gattapplication.h"
 #include "gattcharacteristic.h"
-#include "adapter.h"
 
 class GattManagerTest : public QObject
 {

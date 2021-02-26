@@ -7,11 +7,11 @@
 #include "adaptertest.h"
 #include "autotests.h"
 #include "device.h"
-#include "pendingcall.h"
 #include "initmanagerjob.h"
+#include "pendingcall.h"
 
-#include <QTest>
 #include <QSignalSpy>
+#include <QTest>
 
 namespace BluezQt
 {
@@ -94,14 +94,8 @@ void AdapterTest::initTestCase()
 
         AdapterUnit u;
         u.adapter = adapter;
-        u.dbusAdapter = new org::bluez::Adapter1(service,
-                                                 adapter->ubi(),
-                                                 connection,
-                                                 this);
-        u.dbusProperties = new org::freedesktop::DBus::Properties(service,
-                                                                  adapter->ubi(),
-                                                                  connection,
-                                                                  this);
+        u.dbusAdapter = new org::bluez::Adapter1(service, adapter->ubi(), connection, this);
+        u.dbusProperties = new org::freedesktop::DBus::Properties(service, adapter->ubi(), connection, this);
         m_units.append(u);
     }
 
@@ -153,7 +147,7 @@ void AdapterTest::setAliasTest()
 {
     for (const AdapterUnit &unit : m_units) {
         QSignalSpy adapterSpy(unit.adapter.data(), SIGNAL(nameChanged(QString)));
-        QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString,QVariantMap,QStringList)));
+        QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString, QVariantMap, QStringList)));
 
         QString value = unit.adapter->name() + QLatin1String("_tst_alias");
 
@@ -173,7 +167,7 @@ void AdapterTest::setPoweredTest()
 {
     for (const AdapterUnit &unit : m_units) {
         QSignalSpy adapterSpy(unit.adapter.data(), SIGNAL(poweredChanged(bool)));
-        QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString,QVariantMap,QStringList)));
+        QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString, QVariantMap, QStringList)));
 
         bool value = !unit.adapter->isPowered();
 
@@ -199,7 +193,7 @@ void AdapterTest::setDiscoverableTest()
         unit.adapter->setPowered(true)->waitForFinished();
 
         QSignalSpy adapterSpy(unit.adapter.data(), SIGNAL(discoverableChanged(bool)));
-        QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString,QVariantMap,QStringList)));
+        QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString, QVariantMap, QStringList)));
 
         bool value = !unit.adapter->isDiscoverable();
 
@@ -219,7 +213,7 @@ void AdapterTest::setDiscoverableTimeoutTest()
 {
     for (const AdapterUnit &unit : m_units) {
         QSignalSpy adapterSpy(unit.adapter.data(), SIGNAL(discoverableTimeoutChanged(quint32)));
-        QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString,QVariantMap,QStringList)));
+        QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString, QVariantMap, QStringList)));
 
         quint32 value = unit.adapter->discoverableTimeout() + 1;
 
@@ -241,7 +235,7 @@ void AdapterTest::setPairableTest()
 {
     for (const AdapterUnit &unit : m_units) {
         QSignalSpy adapterSpy(unit.adapter.data(), SIGNAL(pairableChanged(bool)));
-        QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString,QVariantMap,QStringList)));
+        QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString, QVariantMap, QStringList)));
 
         bool value = !unit.adapter->isPairable();
 
@@ -261,7 +255,7 @@ void AdapterTest::setPairableTimeoutTest()
 {
     for (const AdapterUnit &unit : m_units) {
         QSignalSpy adapterSpy(unit.adapter.data(), SIGNAL(pairableTimeoutChanged(quint32)));
-        QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString,QVariantMap,QStringList)));
+        QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString, QVariantMap, QStringList)));
 
         quint32 value = unit.adapter->pairableTimeout() + 1;
 
@@ -291,7 +285,7 @@ void AdapterTest::discoveryTest()
         }
 
         QSignalSpy adapterSpy(unit.adapter.data(), SIGNAL(discoveringChanged(bool)));
-        QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString,QVariantMap,QStringList)));
+        QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString, QVariantMap, QStringList)));
 
         // Start Discovery
         unit.adapter->startDiscovery();

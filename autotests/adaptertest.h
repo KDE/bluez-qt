@@ -7,14 +7,14 @@
 #ifndef ADAPTERTEST_H
 #define ADAPTERTEST_H
 
-#include <QObject>
 #include <QList>
+#include <QObject>
 
 #include "bluezadapter1_tst.h"
 #include "dbusproperties_tst.h"
 
-#include "manager.h"
 #include "adapter.h"
+#include "manager.h"
 
 class AdapterTest : public QObject
 {
@@ -40,8 +40,7 @@ private Q_SLOTS:
     void adapterRemovedTest();
 
 private:
-    struct AdapterUnit
-    {
+    struct AdapterUnit {
         BluezQt::AdapterPtr adapter;
         org::bluez::Adapter1 *dbusAdapter;
         org::freedesktop::DBus::Properties *dbusProperties;

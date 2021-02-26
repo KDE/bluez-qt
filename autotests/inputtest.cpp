@@ -6,8 +6,8 @@
 
 #include "inputtest.h"
 #include "autotests.h"
-#include "pendingcall.h"
 #include "initmanagerjob.h"
+#include "pendingcall.h"
 
 #include <QTest>
 
@@ -100,10 +100,7 @@ void InputTest::initTestCase()
 
         InputUnit u;
         u.device = device;
-        u.dbusInput = new org::bluez::Input1(service,
-                                             device->ubi(),
-                                             connection,
-                                             this);
+        u.dbusInput = new org::bluez::Input1(service, device->ubi(), connection, this);
         m_units.append(u);
     }
 

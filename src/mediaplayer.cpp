@@ -12,7 +12,6 @@
 
 namespace BluezQt
 {
-
 static QString equalizerToString(MediaPlayer::Equalizer equalizer)
 {
     switch (equalizer) {
@@ -77,8 +76,7 @@ MediaPlayer::Equalizer MediaPlayer::equalizer() const
 
 PendingCall *MediaPlayer::setEqualizer(MediaPlayer::Equalizer equalizer)
 {
-    return new PendingCall(d->setDBusProperty(QStringLiteral("Equalizer"), equalizerToString(equalizer)),
-                           PendingCall::ReturnVoid, this);
+    return new PendingCall(d->setDBusProperty(QStringLiteral("Equalizer"), equalizerToString(equalizer)), PendingCall::ReturnVoid, this);
 }
 
 MediaPlayer::Repeat MediaPlayer::repeat() const
@@ -88,8 +86,7 @@ MediaPlayer::Repeat MediaPlayer::repeat() const
 
 PendingCall *MediaPlayer::setRepeat(MediaPlayer::Repeat repeat)
 {
-    return new PendingCall(d->setDBusProperty(QStringLiteral("Repeat"), repeatToString(repeat)),
-                           PendingCall::ReturnVoid, this);
+    return new PendingCall(d->setDBusProperty(QStringLiteral("Repeat"), repeatToString(repeat)), PendingCall::ReturnVoid, this);
 }
 
 MediaPlayer::Shuffle MediaPlayer::shuffle() const
@@ -99,8 +96,7 @@ MediaPlayer::Shuffle MediaPlayer::shuffle() const
 
 PendingCall *MediaPlayer::setShuffle(MediaPlayer::Shuffle shuffle)
 {
-    return new PendingCall(d->setDBusProperty(QStringLiteral("Shuffle"), shuffleToString(shuffle)),
-                           PendingCall::ReturnVoid, this);
+    return new PendingCall(d->setDBusProperty(QStringLiteral("Shuffle"), shuffleToString(shuffle)), PendingCall::ReturnVoid, this);
 }
 
 MediaPlayer::Status MediaPlayer::status() const

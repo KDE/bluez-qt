@@ -6,8 +6,8 @@
 
 #include "batterytest.h"
 #include "autotests.h"
-#include "pendingcall.h"
 #include "initmanagerjob.h"
+#include "pendingcall.h"
 
 #include <QTest>
 
@@ -96,10 +96,7 @@ void BatteryTest::initTestCase()
 
         BatteryUnit u;
         u.device = device;
-        u.dbusBattery = new org::bluez::Battery1(service,
-                                                 device->ubi(),
-                                                 connection,
-                                                 this);
+        u.dbusBattery = new org::bluez::Battery1(service, device->ubi(), connection, this);
         m_units.append(u);
     }
 

@@ -18,7 +18,6 @@ class QDBusObjectPath;
 
 namespace BluezQt
 {
-
 /**
  * @class BluezQt::MediaEndpoint MediaEndpoint.h <BluezQt/MediaEndpoint>
  *

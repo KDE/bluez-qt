@@ -10,7 +10,6 @@
 
 namespace BluezQt
 {
-
 GattApplicationPrivate::GattApplicationPrivate(const QString &objectPathPrefix, GattApplication *q_ptr)
     : q(q_ptr)
 {

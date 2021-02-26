@@ -11,12 +11,11 @@
 
 #include <QObject>
 
-#include "types.h"
 #include "bluezqt_export.h"
+#include "types.h"
 
 namespace BluezQt
 {
-
 /**
  * @class BluezQt::Battery battery.h <BluezQt/Battery>
  *

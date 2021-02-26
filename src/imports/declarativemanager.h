@@ -20,7 +20,7 @@ class DeclarativeAdapter;
 class DeclarativeManager : public BluezQt::Manager
 {
     Q_OBJECT
-    Q_PROPERTY(DeclarativeAdapter* usableAdapter READ usableAdapter NOTIFY usableAdapterChanged)
+    Q_PROPERTY(DeclarativeAdapter *usableAdapter READ usableAdapter NOTIFY usableAdapterChanged)
     Q_PROPERTY(QQmlListProperty<DeclarativeAdapter> adapters READ declarativeAdapters NOTIFY adaptersChanged)
     Q_PROPERTY(QQmlListProperty<DeclarativeDevice> devices READ declarativeDevices NOTIFY devicesChanged)
 
@@ -34,8 +34,8 @@ public:
     DeclarativeAdapter *declarativeAdapterFromPtr(BluezQt::AdapterPtr ptr) const;
     DeclarativeDevice *declarativeDeviceFromPtr(BluezQt::DevicePtr ptr) const;
 
-    QHash<QString, DeclarativeAdapter*> m_adapters;
-    QHash<QString, DeclarativeDevice*> m_devices;
+    QHash<QString, DeclarativeAdapter *> m_adapters;
+    QHash<QString, DeclarativeDevice *> m_devices;
 
 public Q_SLOTS:
     DeclarativeAdapter *adapterForAddress(const QString &address) const;

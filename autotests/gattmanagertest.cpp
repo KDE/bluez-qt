@@ -6,11 +6,11 @@
 
 #include "gattmanagertest.h"
 #include "autotests.h"
+#include "gattmanager.h"
+#include "gattservice.h"
 #include "initmanagerjob.h"
 #include "manager.h"
 #include "pendingcall.h"
-#include "gattmanager.h"
-#include "gattservice.h"
 
 #include <QDBusObjectPath>
 
@@ -64,20 +64,20 @@ void GattManagerTest::cleanupTestCase()
 
 void GattManagerTest::readCharcTest()
 {
-     QCOMPARE(m_characteristic->readValue(), QByteArray());
+    QCOMPARE(m_characteristic->readValue(), QByteArray());
 
-     bool readCallbackCalled = false;
-     m_characteristic->setReadCallback([&readCallbackCalled]() {
-         readCallbackCalled = true;
-         return QByteArray("1234");
-     });
-     QVariantMap params;
-     params.insert(QStringLiteral("AdapterPath"), QVariant::fromValue(QDBusObjectPath(m_adapter->ubi())));
-     params.insert(QStringLiteral("Options"), QVariant::fromValue(QVariantMap()));
-     FakeBluez::runAction(QStringLiteral("devicemanager"), QStringLiteral("adapter-gattmanager:read-charc"), params);
+    bool readCallbackCalled = false;
+    m_characteristic->setReadCallback([&readCallbackCalled]() {
+        readCallbackCalled = true;
+        return QByteArray("1234");
+    });
+    QVariantMap params;
+    params.insert(QStringLiteral("AdapterPath"), QVariant::fromValue(QDBusObjectPath(m_adapter->ubi())));
+    params.insert(QStringLiteral("Options"), QVariant::fromValue(QVariantMap()));
+    FakeBluez::runAction(QStringLiteral("devicemanager"), QStringLiteral("adapter-gattmanager:read-charc"), params);
 
-     QTRY_COMPARE(readCallbackCalled, true);
-     QTRY_COMPARE(m_characteristic->readValue(), QByteArray("1234"));
+    QTRY_COMPARE(readCallbackCalled, true);
+    QTRY_COMPARE(m_characteristic->readValue(), QByteArray("1234"));
 }
 
 void GattManagerTest::writeCharcTest()

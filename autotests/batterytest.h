@@ -11,9 +11,9 @@
 
 #include "bluezbattery1_tst.h"
 
-#include "manager.h"
-#include "device.h"
 #include "battery.h"
+#include "device.h"
+#include "manager.h"
 
 class BatteryTest : public QObject
 {
@@ -29,8 +29,7 @@ private Q_SLOTS:
     void getPropertiesTest();
 
 private:
-    struct BatteryUnit
-    {
+    struct BatteryUnit {
         BluezQt::DevicePtr device;
         org::bluez::Battery1 *dbusBattery;
     };

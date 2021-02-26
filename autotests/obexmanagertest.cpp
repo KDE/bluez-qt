@@ -6,8 +6,8 @@
 
 #include "obexmanagertest.h"
 #include "autotests.h"
-#include "obexmanager.h"
 #include "initobexmanagerjob.h"
+#include "obexmanager.h"
 
 #include <QTest>
 

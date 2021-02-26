@@ -11,7 +11,6 @@
 
 namespace BluezQt
 {
-
 GattCharacterisiticPrivate::GattCharacterisiticPrivate(const QString &uuid, const GattService *service)
     : m_uuid(uuid)
     , m_service(service)

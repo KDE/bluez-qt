@@ -11,9 +11,9 @@
 
 #include "bluezinput1_tst.h"
 
-#include "manager.h"
 #include "device.h"
 #include "input.h"
+#include "manager.h"
 
 class InputTest : public QObject
 {
@@ -31,8 +31,7 @@ private Q_SLOTS:
 private:
     QString reconnectModeString(const BluezQt::InputPtr &input) const;
 
-    struct InputUnit
-    {
+    struct InputUnit {
         BluezQt::DevicePtr device;
         org::bluez::Input1 *dbusInput;
     };

@@ -13,7 +13,6 @@
 
 namespace BluezQt
 {
-
 typedef org::bluez::LEAdvertisingManager1 BluezLEAdvertisingManager;
 
 class LEAdvertisingManagerPrivate

@@ -6,10 +6,10 @@
 
 #include "agentmanager.h"
 
-#include <QDebug>
-#include <QDBusMessage>
 #include <QDBusConnection>
+#include <QDBusMessage>
 #include <QDBusPendingCall>
+#include <QDebug>
 
 AgentManager::AgentManager(QObject *parent)
     : QDBusAbstractAdaptor(parent)
@@ -64,10 +64,7 @@ void AgentManager::RequestDefaultAgent(const QDBusObjectPath &path)
 
 void AgentManager::runRequestPinCodeAction(const QVariantMap &properties)
 {
-    QDBusMessage call = QDBusMessage::createMethodCall(m_service,
-                        m_agent.path(),
-                        QStringLiteral("org.bluez.Agent1"),
-                        QStringLiteral("RequestPinCode"));
+    QDBusMessage call = QDBusMessage::createMethodCall(m_service, m_agent.path(), QStringLiteral("org.bluez.Agent1"), QStringLiteral("RequestPinCode"));
 
     call << QVariant::fromValue(properties.value(QStringLiteral("Device")).value<QDBusObjectPath>());
     QDBusConnection::sessionBus().asyncCall(call);
@@ -75,10 +72,7 @@ void AgentManager::runRequestPinCodeAction(const QVariantMap &properties)
 
 void AgentManager::runDisplayPinCodeAction(const QVariantMap &properties)
 {
-    QDBusMessage call = QDBusMessage::createMethodCall(m_service,
-                        m_agent.path(),
-                        QStringLiteral("org.bluez.Agent1"),
-                        QStringLiteral("DisplayPinCode"));
+    QDBusMessage call = QDBusMessage::createMethodCall(m_service, m_agent.path(), QStringLiteral("org.bluez.Agent1"), QStringLiteral("DisplayPinCode"));
 
     call << QVariant::fromValue(properties.value(QStringLiteral("Device")).value<QDBusObjectPath>());
     call << properties.value(QStringLiteral("PinCode"));
@@ -87,10 +81,7 @@ void AgentManager::runDisplayPinCodeAction(const QVariantMap &properties)
 
 void AgentManager::runRequestPasskeyAction(const QVariantMap &properties)
 {
-    QDBusMessage call = QDBusMessage::createMethodCall(m_service,
-                        m_agent.path(),
-                        QStringLiteral("org.bluez.Agent1"),
-                        QStringLiteral("RequestPasskey"));
+    QDBusMessage call = QDBusMessage::createMethodCall(m_service, m_agent.path(), QStringLiteral("org.bluez.Agent1"), QStringLiteral("RequestPasskey"));
 
     call << QVariant::fromValue(properties.value(QStringLiteral("Device")).value<QDBusObjectPath>());
     QDBusConnection::sessionBus().asyncCall(call);
@@ -98,10 +89,7 @@ void AgentManager::runRequestPasskeyAction(const QVariantMap &properties)
 
 void AgentManager::runDisplayPasskeyAction(const QVariantMap &properties)
 {
-    QDBusMessage call = QDBusMessage::createMethodCall(m_service,
-                        m_agent.path(),
-                        QStringLiteral("org.bluez.Agent1"),
-                        QStringLiteral("DisplayPasskey"));
+    QDBusMessage call = QDBusMessage::createMethodCall(m_service, m_agent.path(), QStringLiteral("org.bluez.Agent1"), QStringLiteral("DisplayPasskey"));
 
     call << QVariant::fromValue(properties.value(QStringLiteral("Device")).value<QDBusObjectPath>());
     call << properties.value(QStringLiteral("Passkey"));
@@ -111,10 +99,7 @@ void AgentManager::runDisplayPasskeyAction(const QVariantMap &properties)
 
 void AgentManager::runRequestConfirmationAction(const QVariantMap &properties)
 {
-    QDBusMessage call = QDBusMessage::createMethodCall(m_service,
-                        m_agent.path(),
-                        QStringLiteral("org.bluez.Agent1"),
-                        QStringLiteral("RequestConfirmation"));
+    QDBusMessage call = QDBusMessage::createMethodCall(m_service, m_agent.path(), QStringLiteral("org.bluez.Agent1"), QStringLiteral("RequestConfirmation"));
 
     call << QVariant::fromValue(properties.value(QStringLiteral("Device")).value<QDBusObjectPath>());
     call << properties.value(QStringLiteral("Passkey"));
@@ -123,10 +108,7 @@ void AgentManager::runRequestConfirmationAction(const QVariantMap &properties)
 
 void AgentManager::runRequestAuthorizationAction(const QVariantMap &properties)
 {
-    QDBusMessage call = QDBusMessage::createMethodCall(m_service,
-                        m_agent.path(),
-                        QStringLiteral("org.bluez.Agent1"),
-                        QStringLiteral("RequestAuthorization"));
+    QDBusMessage call = QDBusMessage::createMethodCall(m_service, m_agent.path(), QStringLiteral("org.bluez.Agent1"), QStringLiteral("RequestAuthorization"));
 
     call << QVariant::fromValue(properties.value(QStringLiteral("Device")).value<QDBusObjectPath>());
     QDBusConnection::sessionBus().asyncCall(call);
@@ -134,10 +116,7 @@ void AgentManager::runRequestAuthorizationAction(const QVariantMap &properties)
 
 void AgentManager::runAuthorizeServiceAction(const QVariantMap &properties)
 {
-    QDBusMessage call = QDBusMessage::createMethodCall(m_service,
-                        m_agent.path(),
-                        QStringLiteral("org.bluez.Agent1"),
-                        QStringLiteral("AuthorizeService"));
+    QDBusMessage call = QDBusMessage::createMethodCall(m_service, m_agent.path(), QStringLiteral("org.bluez.Agent1"), QStringLiteral("AuthorizeService"));
 
     call << QVariant::fromValue(properties.value(QStringLiteral("Device")).value<QDBusObjectPath>());
     call << properties.value(QStringLiteral("UUID"));
@@ -146,18 +125,12 @@ void AgentManager::runAuthorizeServiceAction(const QVariantMap &properties)
 
 void AgentManager::runCancelAction()
 {
-    QDBusMessage call = QDBusMessage::createMethodCall(m_service,
-                        m_agent.path(),
-                        QStringLiteral("org.bluez.Agent1"),
-                        QStringLiteral("Cancel"));
+    QDBusMessage call = QDBusMessage::createMethodCall(m_service, m_agent.path(), QStringLiteral("org.bluez.Agent1"), QStringLiteral("Cancel"));
     QDBusConnection::sessionBus().asyncCall(call);
 }
 
 void AgentManager::runReleaseAction()
 {
-    QDBusMessage call = QDBusMessage::createMethodCall(m_service,
-                        m_agent.path(),
-                        QStringLiteral("org.bluez.Agent1"),
-                        QStringLiteral("Release"));
+    QDBusMessage call = QDBusMessage::createMethodCall(m_service, m_agent.path(), QStringLiteral("org.bluez.Agent1"), QStringLiteral("Release"));
     QDBusConnection::sessionBus().asyncCall(call);
 }

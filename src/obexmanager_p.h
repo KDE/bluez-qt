@@ -12,14 +12,13 @@
 #include <QObject>
 #include <QTimer>
 
-#include "types.h"
 #include "dbusobjectmanager.h"
-#include "obexclient1.h"
 #include "obexagentmanager1.h"
+#include "obexclient1.h"
+#include "types.h"
 
 namespace BluezQt
 {
-
 typedef org::bluez::obex::Client1 ObexClient;
 typedef org::bluez::obex::AgentManager1 ObexAgentManager;
 typedef org::freedesktop::DBus::ObjectManager DBusObjectManager;

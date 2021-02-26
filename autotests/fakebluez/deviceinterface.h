@@ -9,8 +9,8 @@
 
 #include "object.h"
 
-#include <QStringList>
 #include <QDBusAbstractAdaptor>
+#include <QStringList>
 
 class QDBusMessage;
 class QDBusObjectPath;

@@ -7,13 +7,12 @@
  */
 
 #include "mediatransport_p.h"
-#include "utils.h"
-#include "macros.h"
 #include "a2dp-codecs.h"
+#include "macros.h"
+#include "utils.h"
 
 namespace BluezQt
 {
-
 static MediaTransport::State stringToState(const QString &state)
 {
     if (state == QLatin1String("pending")) {
@@ -46,7 +45,7 @@ static AudioSampleRate byteArrayToSampleRate(AudioCodec codec, const QByteArray 
             return AudioSampleRate::Invalid;
         }
 
-        a2dp_sbc_t sbcConfig = *reinterpret_cast<const a2dp_sbc_t*>(buffer.constData());
+        a2dp_sbc_t sbcConfig = *reinterpret_cast<const a2dp_sbc_t *>(buffer.constData());
         switch (sbcConfig.frequency) {
         case SBC_SAMPLING_FREQ_44100:
             return AudioSampleRate::Rate44100;
@@ -62,7 +61,7 @@ static AudioSampleRate byteArrayToSampleRate(AudioCodec codec, const QByteArray 
             return AudioSampleRate::Invalid;
         }
 
-        a2dp_aac_t aacConfig = *reinterpret_cast<const a2dp_aac_t*>(buffer.constData());
+        a2dp_aac_t aacConfig = *reinterpret_cast<const a2dp_aac_t *>(buffer.constData());
         switch (AAC_GET_FREQUENCY(aacConfig)) {
         case AAC_SAMPLING_FREQ_44100:
             return AudioSampleRate::Rate44100;
@@ -85,27 +84,20 @@ MediaTransportPrivate::MediaTransportPrivate(const QString &path, const QVariant
     , m_dbusProperties(nullptr)
     , m_path(path)
 {
-    m_dbusInterface = new QDBusInterface(Strings::orgBluez(),
-                                         path,
-                                         QStringLiteral("org.bluez.MediaTransport1"),
-                                         DBusConnection::orgBluez(),
-                                         this);
+    m_dbusInterface = new QDBusInterface(Strings::orgBluez(), path, QStringLiteral("org.bluez.MediaTransport1"), DBusConnection::orgBluez(), this);
 
     DBusConnection::orgBluez().connect(Strings::orgBluez(),
                                        path,
                                        Strings::orgFreedesktopDBusProperties(),
                                        QStringLiteral("PropertiesChanged"),
                                        this,
-                                       SLOT(onPropertiesChanged(QString,QVariantMap,QStringList)));
+                                       SLOT(onPropertiesChanged(QString, QVariantMap, QStringList)));
     init(properties);
 }
 
 void MediaTransportPrivate::init(const QVariantMap &properties)
 {
-    m_dbusProperties = new DBusProperties(Strings::orgBluez(),
-                                          m_path,
-                                          DBusConnection::orgBluez(),
-                                          this);
+    m_dbusProperties = new DBusProperties(Strings::orgBluez(), m_path, DBusConnection::orgBluez(), this);
 
     m_volume = properties.value(QStringLiteral("Volume")).toUInt();
     m_state = stringToState(properties.value(QStringLiteral("State")).toString());

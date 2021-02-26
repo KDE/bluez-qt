@@ -6,8 +6,8 @@
 
 #include "leadvertisingmanagerinterface.h"
 
-#include <QDBusMessage>
 #include <QDBusConnection>
+#include <QDBusMessage>
 #include <QDBusPendingCall>
 
 LEAdvertisingManagerInterface::LEAdvertisingManagerInterface(const QDBusObjectPath &path, QObject *parent)
@@ -17,14 +17,14 @@ LEAdvertisingManagerInterface::LEAdvertisingManagerInterface(const QDBusObjectPa
     setPath(path);
 }
 
-void LEAdvertisingManagerInterface::runAction(const QString &actionName, const QVariantMap &/*properties*/)
+void LEAdvertisingManagerInterface::runAction(const QString &actionName, const QVariantMap & /*properties*/)
 {
     if (actionName == QLatin1String("release")) {
         runReleaseAction();
     }
 }
 
-void LEAdvertisingManagerInterface::RegisterAdvertisement(const QDBusObjectPath &path, const QVariantMap &/*options*/, const QDBusMessage &msg)
+void LEAdvertisingManagerInterface::RegisterAdvertisement(const QDBusObjectPath &path, const QVariantMap & /*options*/, const QDBusMessage &msg)
 {
     m_advertisement = path;
     m_service = msg.service();
@@ -40,9 +40,7 @@ void LEAdvertisingManagerInterface::UnregisterAdvertisement(const QDBusObjectPat
 
 void LEAdvertisingManagerInterface::runReleaseAction()
 {
-    QDBusMessage call = QDBusMessage::createMethodCall(m_service,
-                                                       m_advertisement.path(),
-                                                       QStringLiteral("org.bluez.LEAdvertisement1"),
-                                                       QStringLiteral("Release"));
+    QDBusMessage call =
+        QDBusMessage::createMethodCall(m_service, m_advertisement.path(), QStringLiteral("org.bluez.LEAdvertisement1"), QStringLiteral("Release"));
     QDBusConnection::sessionBus().asyncCall(call);
 }

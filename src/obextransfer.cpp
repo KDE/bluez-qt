@@ -7,16 +7,15 @@
  */
 
 #include "obextransfer.h"
-#include "obextransfer_p.h"
-#include "pendingcall.h"
+#include "macros.h"
 #include "obexmanager.h"
 #include "obexsession.h"
+#include "obextransfer_p.h"
+#include "pendingcall.h"
 #include "utils.h"
-#include "macros.h"
 
 namespace BluezQt
 {
-
 static ObexTransfer::Status stringToStatus(const QString &status)
 {
     if (status == QLatin1String("queued")) {
@@ -53,11 +52,9 @@ ObexTransferPrivate::ObexTransferPrivate(const QString &path, const QVariantMap 
 
 void ObexTransferPrivate::init(const QVariantMap &properties)
 {
-    m_dbusProperties = new DBusProperties(Strings::orgBluezObex(), m_bluezTransfer->path(),
-                                          DBusConnection::orgBluezObex(), this);
+    m_dbusProperties = new DBusProperties(Strings::orgBluezObex(), m_bluezTransfer->path(), DBusConnection::orgBluezObex(), this);
 
-    connect(m_dbusProperties, &DBusProperties::PropertiesChanged,
-            this, &ObexTransferPrivate::propertiesChanged, Qt::QueuedConnection);
+    connect(m_dbusProperties, &DBusProperties::PropertiesChanged, this, &ObexTransferPrivate::propertiesChanged, Qt::QueuedConnection);
 
     // Init properties
     m_status = stringToStatus(properties.value(QStringLiteral("Status")).toString());

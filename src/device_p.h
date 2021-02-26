@@ -12,14 +12,13 @@
 #include <QObject>
 #include <QStringList>
 
-#include "types.h"
 #include "bluezdevice1.h"
-#include "dbusproperties.h"
 #include "bluezqt_dbustypes.h"
+#include "dbusproperties.h"
+#include "types.h"
 
 namespace BluezQt
 {
-
 typedef org::bluez::Device1 BluezDevice;
 typedef org::freedesktop::DBus::Properties DBusProperties;
 

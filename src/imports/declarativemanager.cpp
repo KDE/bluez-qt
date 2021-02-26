@@ -7,41 +7,40 @@
  */
 
 #include "declarativemanager.h"
+#include "adapter.h"
 #include "declarativeadapter.h"
 #include "declarativedevice.h"
-#include "initmanagerjob.h"
-#include "adapter.h"
 #include "device.h"
-
+#include "initmanagerjob.h"
 
 static int adaptersCountFunction(QQmlListProperty<DeclarativeAdapter> *property)
 {
-    Q_ASSERT(qobject_cast<DeclarativeManager*>(property->object));
-    DeclarativeManager *manager = static_cast<DeclarativeManager*>(property->object);
+    Q_ASSERT(qobject_cast<DeclarativeManager *>(property->object));
+    DeclarativeManager *manager = static_cast<DeclarativeManager *>(property->object);
 
     return manager->m_adapters.count();
 }
 
 static DeclarativeAdapter *adaptersAtFunction(QQmlListProperty<DeclarativeAdapter> *property, int index)
 {
-    Q_ASSERT(qobject_cast<DeclarativeManager*>(property->object));
-    DeclarativeManager *manager = static_cast<DeclarativeManager*>(property->object);
+    Q_ASSERT(qobject_cast<DeclarativeManager *>(property->object));
+    DeclarativeManager *manager = static_cast<DeclarativeManager *>(property->object);
 
     return manager->m_adapters.values().at(index);
 }
 
 static int devicesCountFunction(QQmlListProperty<DeclarativeDevice> *property)
 {
-    Q_ASSERT(qobject_cast<DeclarativeManager*>(property->object));
-    DeclarativeManager *manager = static_cast<DeclarativeManager*>(property->object);
+    Q_ASSERT(qobject_cast<DeclarativeManager *>(property->object));
+    DeclarativeManager *manager = static_cast<DeclarativeManager *>(property->object);
 
     return manager->m_devices.count();
 }
 
 static DeclarativeDevice *devicesAtFunction(QQmlListProperty<DeclarativeDevice> *property, int index)
 {
-    Q_ASSERT(qobject_cast<DeclarativeManager*>(property->object));
-    DeclarativeManager *manager = static_cast<DeclarativeManager*>(property->object);
+    Q_ASSERT(qobject_cast<DeclarativeManager *>(property->object));
+    DeclarativeManager *manager = static_cast<DeclarativeManager *>(property->object);
 
     return manager->m_devices.values().at(index);
 }

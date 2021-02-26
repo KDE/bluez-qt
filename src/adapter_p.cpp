@@ -8,17 +8,16 @@
 
 #include "adapter_p.h"
 #include "adapter.h"
-#include "utils.h"
-#include "macros.h"
 #include "gattmanager.h"
 #include "leadvertisingmanager.h"
 #include "leadvertisingmanager_p.h"
+#include "macros.h"
 #include "media.h"
 #include "media_p.h"
+#include "utils.h"
 
 namespace BluezQt
 {
-
 AdapterPrivate::AdapterPrivate(const QString &path, const QVariantMap &properties)
     : QObject()
     , m_dbusProperties(nullptr)
@@ -36,8 +35,7 @@ AdapterPrivate::AdapterPrivate(const QString &path, const QVariantMap &propertie
 
 void AdapterPrivate::init(const QVariantMap &properties)
 {
-    m_dbusProperties = new DBusProperties(Strings::orgBluez(), m_bluezAdapter->path(),
-                                          DBusConnection::orgBluez(), this);
+    m_dbusProperties = new DBusProperties(Strings::orgBluez(), m_bluezAdapter->path(), DBusConnection::orgBluez(), this);
 
     // Init properties
     m_address = properties.value(QStringLiteral("Address")).toString();

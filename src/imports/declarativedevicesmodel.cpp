@@ -7,10 +7,10 @@
  */
 
 #include "declarativedevicesmodel.h"
-#include "declarativemanager.h"
 #include "declarativeadapter.h"
 #include "declarativebattery.h"
 #include "declarativedevice.h"
+#include "declarativemanager.h"
 #include "declarativemediaplayer.h"
 
 DeclarativeDevicesModel::DeclarativeDevicesModel(QObject *parent)

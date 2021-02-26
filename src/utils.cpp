@@ -7,17 +7,16 @@
  */
 
 #include "utils.h"
+#include "bluezqt_export.h"
 #include "manager.h"
 #include "obexmanager.h"
-#include "bluezqt_export.h"
 
+#include <QDBusConnection>
 #include <QPointer>
 #include <QStringList>
-#include <QDBusConnection>
 
 namespace BluezQt
 {
-
 class GlobalData
 {
 public:
@@ -286,28 +285,28 @@ Device::Type appearanceToType(quint16 appearance)
     switch ((appearance & 0xffc0) >> 6) {
     case 0x00:
         return Device::Uncategorized;
-    case 0x01:  // Generic Phone
+    case 0x01: // Generic Phone
         return Device::Phone;
-    case 0x02:  // Generic Computer
+    case 0x02: // Generic Computer
         return Device::Computer;
-    case 0x05:  // Generic Display
+    case 0x05: // Generic Display
         return Device::AudioVideo;
-    case 0x0a:  // Generic Media Player
+    case 0x0a: // Generic Media Player
         return Device::AudioVideo;
-    case 0x0b:  // Generic Barcode Scanner
+    case 0x0b: // Generic Barcode Scanner
         return Device::Peripheral;
     case 0x0f: // Generic HID
         switch (appearance & 0x3f) {
-        case 0x01:  // Keyboard
+        case 0x01: // Keyboard
             return Device::Keyboard;
-        case 0x02:  // Mouse
+        case 0x02: // Mouse
             return Device::Mouse;
-        case 0x03:  // Joystick
-        case 0x04:  // Gamepad
+        case 0x03: // Joystick
+        case 0x04: // Gamepad
             return Device::Joypad;
-        case 0x05:  // Digitizer Tablet
+        case 0x05: // Digitizer Tablet
             return Device::Tablet;
-        case 0x08:  // Barcode Scanner
+        case 0x08: // Barcode Scanner
             return Device::Peripheral;
         }
         // fall-through

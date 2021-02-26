@@ -7,8 +7,8 @@
 #include "mediatransportinterface.h"
 #include "objectmanager.h"
 
-#include <QDBusMessage>
 #include <QDBusConnection>
+#include <QDBusMessage>
 
 MediaTransportObject::MediaTransportObject(const QDBusObjectPath &path, QObject *parent)
     : QObject(parent)

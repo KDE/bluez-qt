@@ -7,18 +7,17 @@
  */
 
 #include "pendingcall.h"
-#include "obextransfer.h"
-#include "obextransfer_p.h"
-#include "obexfiletransferentry.h"
 #include "bluezqt_dbustypes.h"
 #include "debug.h"
+#include "obexfiletransferentry.h"
+#include "obextransfer.h"
+#include "obextransfer_p.h"
 
-#include <QTimer>
 #include <QDBusPendingCallWatcher>
+#include <QTimer>
 
 namespace BluezQt
 {
-
 static PendingCall::Error nameToError(const QString &name)
 {
     if (name.startsWith(QLatin1String("org.freedesktop.DBus.Error"))) {
@@ -29,9 +28,9 @@ static PendingCall::Error nameToError(const QString &name)
         return PendingCall::UnknownError;
     }
 
-#define FROM_BLUEZ_ERROR(string, value) \
-    if (errorName == QLatin1String(string)) { \
-        return value; \
+#define FROM_BLUEZ_ERROR(string, value)                                                                                                                        \
+    if (errorName == QLatin1String(string)) {                                                                                                                  \
+        return value;                                                                                                                                          \
     }
 
     const QString &errorName = name.mid(16);
@@ -203,10 +202,10 @@ void PendingCallPrivate::emitFinished()
 
 void PendingCallPrivate::emitDelayedFinished()
 {
-    Q_ASSERT(qobject_cast<QTimer*>(sender()));
+    Q_ASSERT(qobject_cast<QTimer *>(sender()));
 
     Q_EMIT q->finished(q);
-    static_cast<QTimer*>(sender())->deleteLater();
+    static_cast<QTimer *>(sender())->deleteLater();
 }
 
 void PendingCallPrivate::emitInternalError(const QString &errorText)

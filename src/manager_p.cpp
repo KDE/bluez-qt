@@ -7,19 +7,18 @@
  */
 
 #include "manager_p.h"
-#include "manager.h"
-#include "device.h"
-#include "device_p.h"
 #include "adapter.h"
 #include "adapter_p.h"
 #include "debug.h"
+#include "device.h"
+#include "device_p.h"
+#include "manager.h"
 #include "utils.h"
 
 #include <QDBusServiceWatcher>
 
 namespace BluezQt
 {
-
 ManagerPrivate::ManagerPrivate(Manager *parent)
     : QObject(parent)
     , q(parent)
@@ -44,8 +43,10 @@ ManagerPrivate::ManagerPrivate(Manager *parent)
 void ManagerPrivate::init()
 {
     // Keep an eye on org.bluez service
-    QDBusServiceWatcher *serviceWatcher = new QDBusServiceWatcher(Strings::orgBluez(), DBusConnection::orgBluez(),
-            QDBusServiceWatcher::WatchForRegistration | QDBusServiceWatcher::WatchForUnregistration, this);
+    QDBusServiceWatcher *serviceWatcher = new QDBusServiceWatcher(Strings::orgBluez(),
+                                                                  DBusConnection::orgBluez(),
+                                                                  QDBusServiceWatcher::WatchForRegistration | QDBusServiceWatcher::WatchForUnregistration,
+                                                                  this);
 
     connect(serviceWatcher, &QDBusServiceWatcher::serviceRegistered, this, &ManagerPrivate::serviceRegistered);
     connect(serviceWatcher, &QDBusServiceWatcher::serviceUnregistered, this, &ManagerPrivate::serviceUnregistered);
@@ -56,10 +57,8 @@ void ManagerPrivate::init()
         return;
     }
 
-    QDBusMessage call = QDBusMessage::createMethodCall(Strings::orgFreedesktopDBus(),
-                        QStringLiteral("/"),
-                        Strings::orgFreedesktopDBus(),
-                        QStringLiteral("NameHasOwner"));
+    QDBusMessage call =
+        QDBusMessage::createMethodCall(Strings::orgFreedesktopDBus(), QStringLiteral("/"), Strings::orgFreedesktopDBus(), QStringLiteral("NameHasOwner"));
 
     call << Strings::orgBluez();
 
@@ -71,7 +70,7 @@ void ManagerPrivate::init()
                                        Strings::orgFreedesktopDBusProperties(),
                                        QStringLiteral("PropertiesChanged"),
                                        this,
-                                       SLOT(propertiesChanged(QString,QVariantMap,QStringList)));
+                                       SLOT(propertiesChanged(QString, QVariantMap, QStringList)));
 }
 
 void ManagerPrivate::nameHasOwnerFinished(QDBusPendingCallWatcher *watcher)
@@ -101,15 +100,9 @@ void ManagerPrivate::load()
     }
 
     // Force QDBus to cache owner of org.bluez - this will be the only blocking call on system connection
-    DBusConnection::orgBluez().connect(Strings::orgBluez(),
-                                       QStringLiteral("/"),
-                                       Strings::orgFreedesktopDBus(),
-                                       QStringLiteral("Dummy"),
-                                       this,
-                                       SLOT(dummy()));
+    DBusConnection::orgBluez().connect(Strings::orgBluez(), QStringLiteral("/"), Strings::orgFreedesktopDBus(), QStringLiteral("Dummy"), this, SLOT(dummy()));
 
-    m_dbusObjectManager = new DBusObjectManager(Strings::orgBluez(), QStringLiteral("/"),
-            DBusConnection::orgBluez(), this);
+    m_dbusObjectManager = new DBusObjectManager(Strings::orgBluez(), QStringLiteral("/"), DBusConnection::orgBluez(), this);
 
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(m_dbusObjectManager->GetManagedObjects(), this);
     connect(watcher, &QDBusPendingCallWatcher::finished, this, &ManagerPrivate::getManagedObjectsFinished);
@@ -152,10 +145,8 @@ void ManagerPrivate::getManagedObjectsFinished(QDBusPendingCallWatcher *watcher)
         return;
     }
 
-    connect(m_dbusObjectManager, &DBusObjectManager::InterfacesAdded,
-            this, &ManagerPrivate::interfacesAdded);
-    connect(m_dbusObjectManager, &DBusObjectManager::InterfacesRemoved,
-            this, &ManagerPrivate::interfacesRemoved);
+    connect(m_dbusObjectManager, &DBusObjectManager::InterfacesAdded, this, &ManagerPrivate::interfacesAdded);
+    connect(m_dbusObjectManager, &DBusObjectManager::InterfacesRemoved, this, &ManagerPrivate::interfacesRemoved);
 
     m_loaded = true;
     m_initialized = true;
@@ -305,8 +296,8 @@ void ManagerPrivate::adapterRemoved(const AdapterPtr &adapter)
 
 void ManagerPrivate::adapterPoweredChanged(bool powered)
 {
-    Q_ASSERT(qobject_cast<Adapter*>(sender()));
-    AdapterPtr adapter = static_cast<Adapter*>(sender())->toSharedPtr();
+    Q_ASSERT(qobject_cast<Adapter *>(sender()));
+    AdapterPtr adapter = static_cast<Adapter *>(sender())->toSharedPtr();
 
     // Current usable adapter was powered off
     if (m_usableAdapter == adapter && !powered) {

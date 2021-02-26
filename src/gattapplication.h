@@ -16,7 +16,6 @@ class QDBusObjectPath;
 
 namespace BluezQt
 {
-
 /**
  * @class BluezQt::GattApplication GattApplication.h <BluezQt/GattApplication>
  *

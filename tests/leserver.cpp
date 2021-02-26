@@ -24,8 +24,8 @@
 using namespace BluezQt;
 
 LeServer::LeServer(Manager *manager, QObject *parent)
-    : QObject(parent),
-      m_manager(manager)
+    : QObject(parent)
+    , m_manager(manager)
 {
     auto advertisement = new LEAdvertisement({QStringLiteral("ad100000-d901-11e8-9f8b-f2801f1b9fd1")}, this);
     auto call = m_manager->usableAdapter()->leAdvertisingManager()->registerAdvertisement(advertisement);

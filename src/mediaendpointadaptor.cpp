@@ -15,7 +15,6 @@
 
 namespace BluezQt
 {
-
 MediaEndpointAdaptor::MediaEndpointAdaptor(MediaEndpoint *parent)
     : QDBusAbstractAdaptor(parent)
     , m_endpoint(parent)

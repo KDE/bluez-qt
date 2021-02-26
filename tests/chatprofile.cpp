@@ -5,16 +5,16 @@
  */
 
 #include "chatprofile.h"
-#include "manager.h"
 #include "initmanagerjob.h"
+#include "manager.h"
 #include "pendingcall.h"
 
-#include <QDebug>
-#include <QTimer>
-#include <QLocalSocket>
 #include <QCoreApplication>
 #include <QDBusObjectPath>
 #include <QDBusUnixFileDescriptor>
+#include <QDebug>
+#include <QLocalSocket>
+#include <QTimer>
 
 // This is a server for BluetoothChat application from Android samples.
 //

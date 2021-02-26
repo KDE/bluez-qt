@@ -9,14 +9,13 @@
 #ifndef BLUEZQT_MEDIAPLAYERTRACK_H
 #define BLUEZQT_MEDIAPLAYERTRACK_H
 
-#include <QString>
 #include <QSharedPointer>
+#include <QString>
 
 #include "bluezqt_export.h"
 
 namespace BluezQt
 {
-
 /**
  * @class BluezQt::MediaPlayerTrack mediaplayertrack.h <BluezQt/MediaPlayerTrack>
  *

@@ -45,7 +45,7 @@ protected:
     void writeCopyrightHeader(QTextStream &stream);
 
 private:
-    Config  m_config;
+    Config m_config;
 };
 
 #endif // CPPGENERATOR_H

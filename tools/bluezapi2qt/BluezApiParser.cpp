@@ -8,7 +8,6 @@
 
 #include "BluezApiParser.h"
 
-
 BluezApiParser::BluezApiParser()
 {
 }
@@ -36,9 +35,12 @@ bool BluezApiParser::finalize()
 {
     bool success = true;
 
-    m_interfaces.erase(std::remove_if(m_interfaces.begin(), m_interfaces.end(), [](const Interface &interface) {
-        return interface.methods().methods().empty() && interface.properties().properties().empty();
-    }), m_interfaces.end());
+    m_interfaces.erase(std::remove_if(m_interfaces.begin(),
+                                      m_interfaces.end(),
+                                      [](const Interface &interface) {
+                                          return interface.methods().methods().empty() && interface.properties().properties().empty();
+                                      }),
+                       m_interfaces.end());
 
     for (auto &interface : m_interfaces) {
         success &= interface.finalize();

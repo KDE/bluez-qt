@@ -10,8 +10,8 @@
 #ifndef BLUEZQT_DBUSTYPES_H
 #define BLUEZQT_DBUSTYPES_H
 
-#include <QVariantMap>
 #include <QDBusObjectPath>
+#include <QVariantMap>
 
 typedef QList<QVariantMap> QVariantMapList;
 Q_DECLARE_METATYPE(QVariantMapList)

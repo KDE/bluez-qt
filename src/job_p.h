@@ -13,7 +13,6 @@ class QEventLoop;
 
 namespace BluezQt
 {
-
 class JobPrivate
 {
 public:

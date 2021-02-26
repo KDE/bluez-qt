@@ -11,9 +11,9 @@
 
 #include <QObject>
 
+#include "bluezqt_export.h"
 #include "request.h"
 #include "types.h"
-#include "bluezqt_export.h"
 
 class QLocalSocket;
 class QDBusObjectPath;
@@ -21,7 +21,6 @@ class QDBusUnixFileDescriptor;
 
 namespace BluezQt
 {
-
 class Device;
 
 /**

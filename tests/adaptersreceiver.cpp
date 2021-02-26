@@ -8,8 +8,8 @@
 
 #include "adaptersreceiver.h"
 
-#include <QDebug>
 #include <QCoreApplication>
+#include <QDebug>
 
 #include "adapter.h"
 #include "initmanagerjob.h"

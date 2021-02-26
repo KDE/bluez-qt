@@ -13,7 +13,6 @@ class QString;
 
 namespace BluezQt
 {
-
 class GattManagerPrivate
 {
 public:

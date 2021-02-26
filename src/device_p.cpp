@@ -7,22 +7,21 @@
  */
 
 #include "device_p.h"
-#include "device.h"
 #include "adapter.h"
 #include "battery.h"
 #include "battery_p.h"
+#include "device.h"
 #include "input.h"
 #include "input_p.h"
+#include "macros.h"
 #include "mediaplayer.h"
 #include "mediaplayer_p.h"
 #include "mediatransport.h"
 #include "mediatransport_p.h"
 #include "utils.h"
-#include "macros.h"
 
 namespace BluezQt
 {
-
 static const qint16 INVALID_RSSI = -32768; // qint16 minimum
 
 DevicePrivate::DevicePrivate(const QString &path, const QVariantMap &properties, const AdapterPtr &adapter)
@@ -65,8 +64,7 @@ static QHash<QString, QByteArray> toByteArrayHash(const QDBusArgument &arg)
 
 void DevicePrivate::init(const QVariantMap &properties)
 {
-    m_dbusProperties = new DBusProperties(Strings::orgBluez(), m_bluezDevice->path(),
-                                          DBusConnection::orgBluez(), this);
+    m_dbusProperties = new DBusProperties(Strings::orgBluez(), m_bluezDevice->path(), DBusConnection::orgBluez(), this);
 
     // Init properties
     m_address = properties.value(QStringLiteral("Address")).toString();

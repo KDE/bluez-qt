@@ -7,8 +7,8 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
-#include <QVariant>
 #include <QDBusObjectPath>
+#include <QVariant>
 
 class Object
 {

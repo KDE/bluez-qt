@@ -7,15 +7,15 @@
 #ifndef DEVICETEST_H
 #define DEVICETEST_H
 
-#include <QObject>
 #include <QList>
+#include <QObject>
 
 #include "bluezdevice1_tst.h"
 #include "dbusproperties_tst.h"
 
-#include "manager.h"
 #include "adapter.h"
 #include "device.h"
+#include "manager.h"
 
 class DeviceTest : public QObject
 {
@@ -36,8 +36,7 @@ private Q_SLOTS:
     void deviceRemovedTest();
 
 private:
-    struct DeviceUnit
-    {
+    struct DeviceUnit {
         BluezQt::DevicePtr device;
         org::bluez::Device1 *dbusDevice;
         org::freedesktop::DBus::Properties *dbusProperties;

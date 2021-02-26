@@ -11,12 +11,11 @@
 
 #include <QAbstractListModel>
 
-#include "types.h"
 #include "bluezqt_export.h"
+#include "types.h"
 
 namespace BluezQt
 {
-
 class Manager;
 class Device;
 
@@ -109,28 +108,28 @@ public:
     explicit DevicesModel(Manager *manager, QObject *parent = nullptr);
 
     /**
-      * Destroys a DevicesModel object.
-      */
+     * Destroys a DevicesModel object.
+     */
     ~DevicesModel() override;
 
     /**
-      * Reimplemented from QAbstractListModel::roleNames()
-      */
+     * Reimplemented from QAbstractListModel::roleNames()
+     */
     QHash<int, QByteArray> roleNames() const override;
 
     /**
-      * Reimplemented from QAbstractListModel::rowCount()
-      */
+     * Reimplemented from QAbstractListModel::rowCount()
+     */
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 
     /**
-      * Reimplemented from QAbstractListModel::data()
-      */
+     * Reimplemented from QAbstractListModel::data()
+     */
     QVariant data(const QModelIndex &index, int role) const override;
 
     /**
-      * Reimplemented from QAbstractListModel::index()
-      */
+     * Reimplemented from QAbstractListModel::index()
+     */
     QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override;
 
     /**

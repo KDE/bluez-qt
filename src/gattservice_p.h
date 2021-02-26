@@ -12,14 +12,13 @@
 
 namespace BluezQt
 {
-
 class GattServicePrivate
 {
 public:
     GattServicePrivate(const QString &uuid, bool isPrimary, const QString &appPath);
 
     QString m_uuid;
-    bool    m_isPrimary;
+    bool m_isPrimary;
     QDBusObjectPath m_objectPath;
 };
 

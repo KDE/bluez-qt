@@ -11,7 +11,6 @@
 
 namespace BluezQt
 {
-
 ObexAgent::ObexAgent(QObject *parent)
     : QObject(parent)
 {

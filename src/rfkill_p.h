@@ -12,17 +12,17 @@
 #include <QHash>
 #include <QObject>
 
-#include "rfkill.h"
 #include "bluezqt_export.h"
+#include "rfkill.h"
 
 namespace BluezQt
 {
-    struct RfkillPrivate {
-        int m_readFd = -1;
-        int m_writeFd = -1;
-        Rfkill::State m_state = Rfkill::State::Unknown;
-        QHash<quint32, Rfkill::State> m_devices;
-    };
+struct RfkillPrivate {
+    int m_readFd = -1;
+    int m_writeFd = -1;
+    Rfkill::State m_state = Rfkill::State::Unknown;
+    QHash<quint32, Rfkill::State> m_devices;
+};
 } // namespace BluezQt
 
 #endif // BLUEZQT_RFKILL_P_H

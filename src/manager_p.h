@@ -9,19 +9,18 @@
 #ifndef BLUEZQT_MANAGER_P_H
 #define BLUEZQT_MANAGER_P_H
 
-#include <QObject>
-#include <QHash>
 #include <QDBusContext>
+#include <QHash>
+#include <QObject>
 
-#include "types.h"
-#include "rfkill.h"
-#include "dbusobjectmanager.h"
 #include "bluezagentmanager1.h"
 #include "bluezprofilemanager1.h"
+#include "dbusobjectmanager.h"
+#include "rfkill.h"
+#include "types.h"
 
 namespace BluezQt
 {
-
 typedef org::freedesktop::DBus::ObjectManager DBusObjectManager;
 typedef org::bluez::AgentManager1 BluezAgentManager;
 typedef org::bluez::ProfileManager1 BluezProfileManager;
@@ -85,7 +84,6 @@ Q_SIGNALS:
 private Q_SLOTS:
     void propertiesChanged(const QString &interface, const QVariantMap &changed, const QStringList &invalidated);
     void dummy();
-
 };
 
 } // namespace BluezQt

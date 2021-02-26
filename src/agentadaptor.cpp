@@ -7,10 +7,10 @@
  */
 
 #include "agentadaptor.h"
-#include "agent.h"
-#include "manager.h"
 #include "adapter.h"
+#include "agent.h"
 #include "device.h"
+#include "manager.h"
 #include "request.h"
 
 #include <QDBusMessage>
@@ -18,7 +18,6 @@
 
 namespace BluezQt
 {
-
 AgentAdaptor::AgentAdaptor(Agent *parent, Manager *manager)
     : QDBusAbstractAdaptor(parent)
     , m_agent(parent)

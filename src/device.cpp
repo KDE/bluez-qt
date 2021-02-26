@@ -13,7 +13,6 @@
 
 namespace BluezQt
 {
-
 Device::Device(const QString &path, const QVariantMap &properties, AdapterPtr adapter)
     : QObject()
     , d(new DevicePrivate(path, properties, adapter))
@@ -47,8 +46,7 @@ QString Device::name() const
 
 PendingCall *Device::setName(const QString &name)
 {
-    return new PendingCall(d->setDBusProperty(QStringLiteral("Alias"), name),
-                           PendingCall::ReturnVoid, this);
+    return new PendingCall(d->setDBusProperty(QStringLiteral("Alias"), name), PendingCall::ReturnVoid, this);
 }
 
 QString Device::friendlyName() const
@@ -110,8 +108,7 @@ bool Device::isTrusted() const
 
 PendingCall *Device::setTrusted(bool trusted)
 {
-    return new PendingCall(d->setDBusProperty(QStringLiteral("Trusted"), trusted),
-                           PendingCall::ReturnVoid, this);
+    return new PendingCall(d->setDBusProperty(QStringLiteral("Trusted"), trusted), PendingCall::ReturnVoid, this);
 }
 
 bool Device::isBlocked() const
@@ -121,8 +118,7 @@ bool Device::isBlocked() const
 
 PendingCall *Device::setBlocked(bool blocked)
 {
-    return new PendingCall(d->setDBusProperty(QStringLiteral("Blocked"), blocked),
-                           PendingCall::ReturnVoid, this);
+    return new PendingCall(d->setDBusProperty(QStringLiteral("Blocked"), blocked), PendingCall::ReturnVoid, this);
 }
 
 bool Device::hasLegacyPairing() const

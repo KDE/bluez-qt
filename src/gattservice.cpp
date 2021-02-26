@@ -12,7 +12,6 @@
 
 namespace BluezQt
 {
-
 GattService::GattService(const QString &uuid, bool isPrimary, GattApplication *parent)
     : QObject(parent)
     , d(new GattServicePrivate(uuid, isPrimary, parent->objectPath().path()))

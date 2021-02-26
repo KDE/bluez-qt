@@ -7,12 +7,12 @@
 #include "mediatransporttest.h"
 #include "a2dp-codecs.h"
 #include "autotests.h"
-#include "pendingcall.h"
 #include "initmanagerjob.h"
+#include "pendingcall.h"
 #include "services.h"
 
-#include <QTest>
 #include <QSignalSpy>
+#include <QTest>
 
 namespace BluezQt
 {
@@ -48,7 +48,7 @@ static AudioSampleRate byteArrayToSampleRate(AudioCodec codec, const QByteArray 
             return AudioSampleRate::Invalid;
         }
 
-        a2dp_sbc_t sbcConfig = *reinterpret_cast<const a2dp_sbc_t*>(buffer.constData());
+        a2dp_sbc_t sbcConfig = *reinterpret_cast<const a2dp_sbc_t *>(buffer.constData());
         switch (sbcConfig.frequency) {
         case SBC_SAMPLING_FREQ_44100:
             return AudioSampleRate::Rate44100;
@@ -64,7 +64,7 @@ static AudioSampleRate byteArrayToSampleRate(AudioCodec codec, const QByteArray 
             return AudioSampleRate::Invalid;
         }
 
-        a2dp_aac_t aacConfig = *reinterpret_cast<const a2dp_aac_t*>(buffer.constData());
+        a2dp_aac_t aacConfig = *reinterpret_cast<const a2dp_aac_t *>(buffer.constData());
         switch (AAC_GET_FREQUENCY(aacConfig)) {
         case AAC_SAMPLING_FREQ_44100:
             return AudioSampleRate::Rate44100;
@@ -133,8 +133,9 @@ void MediaTransportTest::initTestCase()
     mediaTransportProps[QStringLiteral("Path")] = QVariant::fromValue(QDBusObjectPath(device1 + QLatin1String("/fd0")));
     mediaTransportProps[QStringLiteral("Device")] = QVariant::fromValue(QDBusObjectPath(device1));
     mediaTransportProps[QStringLiteral("UUID")] = Services::AudioSink;
-    mediaTransportProps[QStringLiteral("Codec")] = QVariant::fromValue(quint8(A2DP_CODEC_SBC));  // SBC
-    mediaTransportProps[QStringLiteral("Configuration")] = QVariant::fromValue(QByteArray(reinterpret_cast<const char*>(&sbcConfiguration), sizeof(sbcConfiguration)));
+    mediaTransportProps[QStringLiteral("Codec")] = QVariant::fromValue(quint8(A2DP_CODEC_SBC)); // SBC
+    mediaTransportProps[QStringLiteral("Configuration")] =
+        QVariant::fromValue(QByteArray(reinterpret_cast<const char *>(&sbcConfiguration), sizeof(sbcConfiguration)));
     mediaTransportProps[QStringLiteral("State")] = QStringLiteral("pending");
     mediaTransportProps[QStringLiteral("Volume")] = QVariant::fromValue(quint16(63));
     deviceProps[QStringLiteral("MediaTransport")] = mediaTransportProps;
@@ -149,8 +150,9 @@ void MediaTransportTest::initTestCase()
     mediaTransportProps[QStringLiteral("Path")] = QVariant::fromValue(QDBusObjectPath(device2 + QLatin1String("/fd0")));
     mediaTransportProps[QStringLiteral("Device")] = QVariant::fromValue(QDBusObjectPath(device2));
     mediaTransportProps[QStringLiteral("UUID")] = Services::AudioSink;
-    mediaTransportProps[QStringLiteral("Codec")] = QVariant::fromValue(quint8(A2DP_CODEC_MPEG24));  // AAC
-    mediaTransportProps[QStringLiteral("Configuration")] = QVariant::fromValue(QByteArray(reinterpret_cast<const char*>(&aacConfiguration), sizeof(aacConfiguration)));
+    mediaTransportProps[QStringLiteral("Codec")] = QVariant::fromValue(quint8(A2DP_CODEC_MPEG24)); // AAC
+    mediaTransportProps[QStringLiteral("Configuration")] =
+        QVariant::fromValue(QByteArray(reinterpret_cast<const char *>(&aacConfiguration), sizeof(aacConfiguration)));
     mediaTransportProps[QStringLiteral("State")] = QStringLiteral("active");
     mediaTransportProps[QStringLiteral("Volume")] = QVariant::fromValue(quint16(127));
     deviceProps[QStringLiteral("MediaTransport")] = mediaTransportProps;
@@ -234,8 +236,7 @@ void MediaTransportTest::getPropertiesTest()
     for (const MediaTransportUnit &unit : m_units) {
         QCOMPARE(unit.device->mediaTransport()->audioConfiguration().codec, charToCodec(unit.dbusMediaTransport->codec()));
         QCOMPARE(unit.device->mediaTransport()->audioConfiguration().sampleRate,
-                 byteArrayToSampleRate(unit.device->mediaTransport()->audioConfiguration().codec,
-                                       unit.dbusMediaTransport->configuration()));
+                 byteArrayToSampleRate(unit.device->mediaTransport()->audioConfiguration().codec, unit.dbusMediaTransport->configuration()));
         QCOMPARE(stateString(unit.device->mediaTransport()->state()), unit.dbusMediaTransport->state());
         QCOMPARE(unit.device->mediaTransport()->volume(), unit.dbusMediaTransport->volume());
     }

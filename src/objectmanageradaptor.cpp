@@ -12,10 +12,9 @@
 
 namespace BluezQt
 {
-
 ObjectManagerAdaptor::ObjectManagerAdaptor(QObject *parent)
     : QDBusAbstractAdaptor(parent)
-    , m_gattApplication(qobject_cast<GattApplication*>(parent))
+    , m_gattApplication(qobject_cast<GattApplication *>(parent))
 {
 }
 

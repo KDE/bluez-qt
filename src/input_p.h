@@ -15,7 +15,6 @@
 
 namespace BluezQt
 {
-
 class InputPrivate : public QObject
 {
     Q_OBJECT

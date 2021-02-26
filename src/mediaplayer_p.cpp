@@ -7,12 +7,11 @@
  */
 
 #include "mediaplayer_p.h"
-#include "utils.h"
 #include "macros.h"
+#include "utils.h"
 
 namespace BluezQt
 {
-
 static MediaPlayer::Equalizer stringToEqualizer(const QString &equalizer)
 {
     if (equalizer == QLatin1String("on")) {
@@ -76,8 +75,7 @@ MediaPlayerPrivate::MediaPlayerPrivate(const QString &path, const QVariantMap &p
 
 void MediaPlayerPrivate::init(const QVariantMap &properties)
 {
-    m_dbusProperties = new DBusProperties(Strings::orgBluez(), m_bluezMediaPlayer->path(),
-                                          DBusConnection::orgBluez(), this);
+    m_dbusProperties = new DBusProperties(Strings::orgBluez(), m_bluezMediaPlayer->path(), DBusConnection::orgBluez(), this);
 
     // Init properties
     m_name = properties.value(QStringLiteral("Name")).toString();

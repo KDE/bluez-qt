@@ -26,7 +26,6 @@ public Q_SLOTS:
     void deviceFound(const BluezQt::DevicePtr &device);
     void devicePropertyChanged(const BluezQt::DevicePtr &device);
     void adapterAdded(const BluezQt::AdapterPtr &adapter);
-
 };
 
 #endif // DEVICERECEIVERTEST_H

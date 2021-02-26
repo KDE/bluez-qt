@@ -13,16 +13,15 @@
 
 #ifdef Q_OS_LINUX
 #include <fcntl.h>
+#include <stdint.h>
 #include <string.h>
 #include <unistd.h>
-#include <stdint.h>
 #endif
 
 #include <QSocketNotifier>
 
 namespace BluezQt
 {
-
 #ifdef Q_OS_LINUX
 enum rfkill_type {
     RFKILL_TYPE_ALL = 0,

@@ -11,13 +11,12 @@
 
 #include <QObject>
 
-#include "types.h"
-#include "mediaplayertrack.h"
 #include "bluezqt_export.h"
+#include "mediaplayertrack.h"
+#include "types.h"
 
 namespace BluezQt
 {
-
 class PendingCall;
 
 /**

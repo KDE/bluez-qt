@@ -6,15 +6,15 @@
 
 #pragma once
 
-#include <QObject>
 #include <QList>
+#include <QObject>
 
 #include "bluezdevice1_tst.h"
 #include "bluezmediatransport1_tst.h"
 #include "dbusproperties_tst.h"
 
-#include "manager.h"
 #include "device.h"
+#include "manager.h"
 #include "mediatransport.h"
 
 class MediaTransportTest : public QObject
@@ -37,8 +37,7 @@ private Q_SLOTS:
     void disconnectProfileTest();
 
 private:
-    struct MediaTransportUnit
-    {
+    struct MediaTransportUnit {
         BluezQt::DevicePtr device;
         org::bluez::MediaTransport1 *dbusMediaTransport;
         org::freedesktop::DBus::Properties *dbusProperties;

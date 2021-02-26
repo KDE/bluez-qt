@@ -13,12 +13,10 @@
 
 namespace BluezQt
 {
-
 ObexSessionPrivate::ObexSessionPrivate(const QString &path, const QVariantMap &properties)
     : QObject()
 {
-    m_bluezSession = new BluezSession(Strings::orgBluezObex(),
-                                      path, DBusConnection::orgBluezObex(), this);
+    m_bluezSession = new BluezSession(Strings::orgBluezObex(), path, DBusConnection::orgBluezObex(), this);
 
     init(properties);
 }

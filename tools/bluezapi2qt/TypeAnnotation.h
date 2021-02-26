@@ -12,9 +12,9 @@
 #include <QString>
 
 enum class AnnotationType {
-    Bluez   = 0,
-    Dbus    = 1,
-    Qt      = 2,
+    Bluez = 0,
+    Dbus = 1,
+    Qt = 2,
 };
 QString annotateType(AnnotationType from, AnnotationType to, const QString &type);
 

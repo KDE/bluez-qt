@@ -7,8 +7,8 @@
 #include "gattmanagerinterface.h"
 #include "objectmanager.h"
 
-#include <QDBusMessage>
 #include <QDBusConnection>
+#include <QDBusMessage>
 #include <QDBusPendingCall>
 #include <QDBusPendingReply>
 
@@ -30,7 +30,7 @@ void GattManagerInterface::runAction(const QString &actionName, const QVariantMa
     }
 }
 
-void GattManagerInterface::RegisterApplication(const QDBusObjectPath &path, const QVariantMap &/*options*/, const QDBusMessage &msg)
+void GattManagerInterface::RegisterApplication(const QDBusObjectPath &path, const QVariantMap & /*options*/, const QDBusMessage &msg)
 {
     m_application = path;
     m_service = msg.service();
@@ -60,7 +60,7 @@ void GattManagerInterface::runGetObjectsAction()
         }
 
         DBusManagerStruct objects = reply.value();
-        for (const auto& object : objects.keys()) {
+        for (const auto &object : objects.keys()) {
             if (object.path().contains(QLatin1String("char"))) {
                 m_characteristic = object;
                 break;
@@ -71,20 +71,16 @@ void GattManagerInterface::runGetObjectsAction()
 
 void GattManagerInterface::runReadCharcAction(const QVariantMap &properties)
 {
-    QDBusMessage call = QDBusMessage::createMethodCall(m_service,
-                                                       m_characteristic.path(),
-                                                       QStringLiteral("org.bluez.GattCharacteristic1"),
-                                                       QStringLiteral("ReadValue"));
+    QDBusMessage call =
+        QDBusMessage::createMethodCall(m_service, m_characteristic.path(), QStringLiteral("org.bluez.GattCharacteristic1"), QStringLiteral("ReadValue"));
     call << properties.value(QStringLiteral("Options"));
     QDBusConnection::sessionBus().asyncCall(call);
 }
 
 void GattManagerInterface::runWriteCharcAction(const QVariantMap &properties)
 {
-    QDBusMessage call = QDBusMessage::createMethodCall(m_service,
-                                                       m_characteristic.path(),
-                                                       QStringLiteral("org.bluez.GattCharacteristic1"),
-                                                       QStringLiteral("WriteValue"));
+    QDBusMessage call =
+        QDBusMessage::createMethodCall(m_service, m_characteristic.path(), QStringLiteral("org.bluez.GattCharacteristic1"), QStringLiteral("WriteValue"));
     call << properties.value(QStringLiteral("Value"));
     call << properties.value(QStringLiteral("Options"));
     QDBusConnection::sessionBus().asyncCall(call);

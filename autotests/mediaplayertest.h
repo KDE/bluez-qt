@@ -7,15 +7,15 @@
 #ifndef MEDIAPLAYERTEST_H
 #define MEDIAPLAYERTEST_H
 
-#include <QObject>
 #include <QList>
+#include <QObject>
 
 #include "bluezdevice1_tst.h"
 #include "bluezmediaplayer1_tst.h"
 #include "dbusproperties_tst.h"
 
-#include "manager.h"
 #include "device.h"
+#include "manager.h"
 #include "mediaplayer.h"
 
 class MediaPlayerTest : public QObject
@@ -51,8 +51,7 @@ private:
     QString statusString(const BluezQt::MediaPlayerPtr &mediaPlayer) const;
     QVariantMap trackMap(const BluezQt::MediaPlayerPtr &mediaPlayer) const;
 
-    struct MediaPlayerUnit
-    {
+    struct MediaPlayerUnit {
         BluezQt::DevicePtr device;
         org::bluez::MediaPlayer1 *dbusMediaPlayer;
         org::freedesktop::DBus::Properties *dbusProperties;

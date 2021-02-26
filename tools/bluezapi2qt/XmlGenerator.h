@@ -36,7 +36,7 @@ private:
     static bool writeArg(QTextStream &stream, const Parameter &param, const QString &dir);
     static void writeAnnotation(QTextStream &stream, const Parameter &param, const QString &dir, int i);
 
-    Config  m_config;
+    Config m_config;
 };
 
 #endif // XMLGENERATOR_H

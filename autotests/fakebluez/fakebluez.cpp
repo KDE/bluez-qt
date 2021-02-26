@@ -5,17 +5,17 @@
  */
 
 #include "fakebluez.h"
-#include "testinterface.h"
-#include "objectmanager.h"
 #include "agentmanager.h"
-#include "profilemanager.h"
 #include "devicemanager.h"
 #include "obexagentmanager.h"
 #include "obexclient.h"
+#include "objectmanager.h"
+#include "profilemanager.h"
+#include "testinterface.h"
 
-#include <QTimer>
-#include <QDebug>
 #include <QDBusConnection>
+#include <QDebug>
+#include <QTimer>
 
 // ObexObject
 class ObexObject : public QObject

@@ -9,16 +9,15 @@
 #ifndef BLUEZQT_ADAPTER_H
 #define BLUEZQT_ADAPTER_H
 
-#include <QObject>
 #include <QList>
+#include <QObject>
 #include <QStringList>
 
-#include "types.h"
 #include "bluezqt_export.h"
+#include "types.h"
 
 namespace BluezQt
 {
-
 class Device;
 class PendingCall;
 

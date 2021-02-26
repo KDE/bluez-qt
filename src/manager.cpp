@@ -7,21 +7,20 @@
  */
 
 #include "manager.h"
-#include "manager_p.h"
 #include "adapter.h"
 #include "agent.h"
 #include "agentadaptor.h"
+#include "debug.h"
+#include "initmanagerjob.h"
+#include "manager_p.h"
+#include "pendingcall.h"
 #include "profile.h"
 #include "profile_p.h"
 #include "profileadaptor.h"
-#include "pendingcall.h"
-#include "initmanagerjob.h"
 #include "utils.h"
-#include "debug.h"
 
 namespace BluezQt
 {
-
 Manager::Manager(QObject *parent)
     : QObject(parent)
     , d(new ManagerPrivate(this))
@@ -170,8 +169,7 @@ PendingCall *Manager::registerAgent(Agent *agent)
         qCDebug(BLUEZQT) << "Cannot register object" << agent->objectPath().path();
     }
 
-    return new PendingCall(d->m_bluezAgentManager->RegisterAgent(agent->objectPath(), capability),
-                           PendingCall::ReturnVoid, this);
+    return new PendingCall(d->m_bluezAgentManager->RegisterAgent(agent->objectPath(), capability), PendingCall::ReturnVoid, this);
 }
 
 PendingCall *Manager::unregisterAgent(Agent *agent)
@@ -184,8 +182,7 @@ PendingCall *Manager::unregisterAgent(Agent *agent)
 
     DBusConnection::orgBluez().unregisterObject(agent->objectPath().path());
 
-    return new PendingCall(d->m_bluezAgentManager->UnregisterAgent(agent->objectPath()),
-                           PendingCall::ReturnVoid, this);
+    return new PendingCall(d->m_bluezAgentManager->UnregisterAgent(agent->objectPath()), PendingCall::ReturnVoid, this);
 }
 
 PendingCall *Manager::requestDefaultAgent(Agent *agent)
@@ -196,8 +193,7 @@ PendingCall *Manager::requestDefaultAgent(Agent *agent)
         return new PendingCall(PendingCall::InternalError, QStringLiteral("Manager not operational!"));
     }
 
-    return new PendingCall(d->m_bluezAgentManager->RequestDefaultAgent(agent->objectPath()),
-                           PendingCall::ReturnVoid, this);
+    return new PendingCall(d->m_bluezAgentManager->RequestDefaultAgent(agent->objectPath()), PendingCall::ReturnVoid, this);
 }
 
 PendingCall *Manager::registerProfile(Profile *profile)
@@ -215,7 +211,8 @@ PendingCall *Manager::registerProfile(Profile *profile)
     }
 
     return new PendingCall(d->m_bluezProfileManager->RegisterProfile(profile->objectPath(), profile->uuid(), profile->d->options),
-                           PendingCall::ReturnVoid, this);
+                           PendingCall::ReturnVoid,
+                           this);
 }
 
 PendingCall *Manager::unregisterProfile(Profile *profile)
@@ -228,8 +225,7 @@ PendingCall *Manager::unregisterProfile(Profile *profile)
 
     DBusConnection::orgBluez().unregisterObject(profile->objectPath().path());
 
-    return new PendingCall(d->m_bluezProfileManager->UnregisterProfile(profile->objectPath()),
-                           PendingCall::ReturnVoid, this);
+    return new PendingCall(d->m_bluezProfileManager->UnregisterProfile(profile->objectPath()), PendingCall::ReturnVoid, this);
 }
 
 #if BLUEZQT_BUILD_DEPRECATED_SINCE(5, 57)

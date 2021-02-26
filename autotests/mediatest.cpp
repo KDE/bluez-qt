@@ -12,8 +12,8 @@
 #include "media.h"
 #include "pendingcall.h"
 
-#include <QSignalSpy>
 #include <QDBusObjectPath>
+#include <QSignalSpy>
 
 namespace BluezQt
 {
@@ -61,7 +61,7 @@ void MediaTest::cleanupTestCase()
 
 void MediaTest::setConfigurationTest()
 {
-    QSignalSpy endpointSpy(m_endpoint, SIGNAL(configurationSet(QString,QVariantMap)));
+    QSignalSpy endpointSpy(m_endpoint, SIGNAL(configurationSet(QString, QVariantMap)));
 
     QVariantMap props;
     props.insert(QStringLiteral("Key"), QVariant::fromValue(int(123)));
@@ -79,7 +79,7 @@ void MediaTest::setConfigurationTest()
 
 void MediaTest::selectConfigurationTest()
 {
-    QSignalSpy endpointSpy(m_endpoint, SIGNAL(configurationSelected(QByteArray,QByteArray)));
+    QSignalSpy endpointSpy(m_endpoint, SIGNAL(configurationSelected(QByteArray, QByteArray)));
 
     a2dp_sbc_t sbcConfiguration;
     sbcConfiguration.frequency = SBC_SAMPLING_FREQ_44100;
@@ -92,12 +92,12 @@ void MediaTest::selectConfigurationTest()
 
     QVariantMap params;
     params.insert(QStringLiteral("AdapterPath"), QVariant::fromValue(QDBusObjectPath(m_adapter->ubi())));
-    params.insert(QStringLiteral("Capabilities"), QByteArray(reinterpret_cast<const char*>(&sbcCapabilities), sizeof(sbcCapabilities)));
+    params.insert(QStringLiteral("Capabilities"), QByteArray(reinterpret_cast<const char *>(&sbcCapabilities), sizeof(sbcCapabilities)));
     FakeBluez::runAction(QStringLiteral("devicemanager"), QStringLiteral("adapter-media:select-configuration"), params);
     endpointSpy.wait();
     auto args = endpointSpy.takeFirst();
-    QCOMPARE(args.at(0).toByteArray(), QByteArray(reinterpret_cast<const char*>(&sbcCapabilities), sizeof(sbcCapabilities)));
-    QCOMPARE(args.at(1).toByteArray(), QByteArray(reinterpret_cast<const char*>(&sbcConfiguration), sizeof(sbcConfiguration)));
+    QCOMPARE(args.at(0).toByteArray(), QByteArray(reinterpret_cast<const char *>(&sbcCapabilities), sizeof(sbcCapabilities)));
+    QCOMPARE(args.at(1).toByteArray(), QByteArray(reinterpret_cast<const char *>(&sbcConfiguration), sizeof(sbcConfiguration)));
 
     params.insert(QStringLiteral("Capabilities"), QByteArray());
     FakeBluez::runAction(QStringLiteral("devicemanager"), QStringLiteral("adapter-media:select-configuration"), params);

@@ -15,7 +15,6 @@
 
 namespace BluezQt
 {
-
 class MediaEndpoint;
 class PendingCall;
 

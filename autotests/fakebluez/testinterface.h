@@ -7,8 +7,8 @@
 #ifndef TESTINTERFACE_H
 #define TESTINTERFACE_H
 
-#include <QDBusMessage>
 #include <QDBusAbstractAdaptor>
+#include <QDBusMessage>
 
 class FakeBluez;
 

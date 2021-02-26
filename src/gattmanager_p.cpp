@@ -13,13 +13,9 @@
 
 namespace BluezQt
 {
-
 GattManagerPrivate::GattManagerPrivate(const QString &path)
 {
-    m_dbusInterface = new QDBusInterface(Strings::orgBluez(),
-                                         path,
-                                         QStringLiteral("org.bluez.GattManager1"),
-                                         DBusConnection::orgBluez());
+    m_dbusInterface = new QDBusInterface(Strings::orgBluez(), path, QStringLiteral("org.bluez.GattManager1"), DBusConnection::orgBluez());
 }
 
 GattManagerPrivate::~GattManagerPrivate()

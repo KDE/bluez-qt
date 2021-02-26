@@ -7,16 +7,15 @@
  */
 
 #include "leadvertisingmanager.h"
-#include "leadvertisingmanager_p.h"
+#include "debug.h"
 #include "leadvertisement.h"
 #include "leadvertisementadaptor.h"
+#include "leadvertisingmanager_p.h"
 #include "pendingcall.h"
 #include "utils.h"
-#include "debug.h"
 
 namespace BluezQt
 {
-
 LEAdvertisingManager::LEAdvertisingManager(const QString &path, QObject *parent)
     : QObject(parent)
     , d(new LEAdvertisingManagerPrivate())
@@ -44,8 +43,7 @@ PendingCall *LEAdvertisingManager::registerAdvertisement(LEAdvertisement *advert
         qCDebug(BLUEZQT) << "Cannot register object" << advertisement->objectPath().path();
     }
 
-    return new PendingCall(d->m_bluezLEAdvertisingManager->RegisterAdvertisement(advertisement->objectPath(), QVariantMap()),
-                           PendingCall::ReturnVoid, this);
+    return new PendingCall(d->m_bluezLEAdvertisingManager->RegisterAdvertisement(advertisement->objectPath(), QVariantMap()), PendingCall::ReturnVoid, this);
 }
 
 PendingCall *LEAdvertisingManager::unregisterAdvertisement(LEAdvertisement *advertisement)
@@ -58,8 +56,7 @@ PendingCall *LEAdvertisingManager::unregisterAdvertisement(LEAdvertisement *adve
 
     DBusConnection::orgBluez().unregisterObject(advertisement->objectPath().path());
 
-    return new PendingCall(d->m_bluezLEAdvertisingManager->UnregisterAdvertisement(advertisement->objectPath()),
-                           PendingCall::ReturnVoid, this);
+    return new PendingCall(d->m_bluezLEAdvertisingManager->UnregisterAdvertisement(advertisement->objectPath()), PendingCall::ReturnVoid, this);
 }
 
 } // namespace BluezQt

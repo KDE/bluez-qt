@@ -8,13 +8,13 @@
 
 #include "devicereceiver.h"
 
-#include <QDebug>
 #include <QCoreApplication>
+#include <QDebug>
 
 #include "adapter.h"
 #include "device.h"
-#include "pendingcall.h"
 #include "initmanagerjob.h"
+#include "pendingcall.h"
 
 using namespace BluezQt;
 
