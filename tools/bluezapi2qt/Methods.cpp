@@ -37,22 +37,10 @@ void Methods::parse(const QString &line)
     if (match.hasMatch()) {
         m_methods.emplace_back(Method());
         m_currentMethod = &m_methods.back();
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-        m_currentMethod->m_outParameterStrings = match.captured(1).toLower().split(QStringLiteral(", "), QString::SkipEmptyParts);
-#else
         m_currentMethod->m_outParameterStrings = match.captured(1).toLower().split(QStringLiteral(", "), Qt::SkipEmptyParts);
-#endif
         m_currentMethod->m_name = match.captured(2);
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-        m_currentMethod->m_inParameterStrings = match.captured(3).split(QStringLiteral(", "), QString::SkipEmptyParts);
-#else
         m_currentMethod->m_inParameterStrings = match.captured(3).split(QStringLiteral(", "), Qt::SkipEmptyParts);
-#endif
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-        m_currentMethod->m_stringTags = match.captured(4).toLower().split(QStringLiteral(", "), QString::SkipEmptyParts);
-#else
         m_currentMethod->m_stringTags = match.captured(4).toLower().split(QStringLiteral(", "), Qt::SkipEmptyParts);
-#endif
         m_currentMethod->m_limitation = match.captured(5).toLower();
     } else if (m_currentMethod) {
         // Skip first empty line
