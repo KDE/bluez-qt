@@ -12,7 +12,9 @@
 #include <QObject>
 
 #include "bluezqt_export.h"
-#include "types.h"
+#include "input.h"
+#include "mediaplayer.h"
+#include "mediatransport.h"
 
 namespace BluezQt
 {

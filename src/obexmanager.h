@@ -12,7 +12,7 @@
 #include <QObject>
 
 #include "bluezqt_export.h"
-#include "types.h"
+#include "obexsession.h"
 
 class QDBusObjectPath;
 

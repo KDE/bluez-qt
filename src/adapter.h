@@ -14,11 +14,12 @@
 #include <QStringList>
 
 #include "bluezqt_export.h"
-#include "types.h"
+#include "device.h"
+#include "leadvertisingmanager.h"
+#include "media.h"
 
 namespace BluezQt
 {
-class Device;
 class PendingCall;
 
 /**
