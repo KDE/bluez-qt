@@ -18,6 +18,7 @@ add_library(bluezqtextensionplugin SHARED ${bluezqtextensionplugin_SRCS})
 target_link_libraries(bluezqtextensionplugin
     Qt5::Core
     Qt5::Qml
+    Qt5::DBus
     KF5::BluezQt
 )
 
