@@ -114,7 +114,7 @@ target_link_libraries(KF5BluezQt
 )
 
 set_target_properties(KF5BluezQt
-    PROPERTIES VERSION ${BLUEZQT_VERSION_STRING}
+    PROPERTIES VERSION ${BLUEZQT_VERSION}
     SOVERSION ${BLUEZQT_SOVERSION}
     EXPORT_NAME "BluezQt"
 )
