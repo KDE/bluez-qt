@@ -136,6 +136,7 @@ ecm_generate_headers(BluezQt_CamelCase_HEADERS
         MediaEndpoint
         MediaPlayer
         MediaPlayerTrack
+        MediaTransport
         DevicesModel
         Job
         InitManagerJob
