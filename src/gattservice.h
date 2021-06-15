@@ -22,6 +22,7 @@ namespace BluezQt
  *
  * This class represents a Bluetooth GattService.
  */
+class GattApplication;
 class BLUEZQT_EXPORT GattService : public QObject
 {
     Q_OBJECT

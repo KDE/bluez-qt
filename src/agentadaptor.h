@@ -16,7 +16,6 @@ class QDBusObjectPath;
 
 namespace BluezQt
 {
-class Device;
 class Manager;
 class Agent;
 

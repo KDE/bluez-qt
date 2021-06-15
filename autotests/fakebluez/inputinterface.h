@@ -11,7 +11,6 @@
 
 #include <QDBusAbstractAdaptor>
 
-class QDBusMessage;
 class QDBusObjectPath;
 
 class InputObject : public QObject

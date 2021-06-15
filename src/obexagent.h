@@ -19,7 +19,6 @@ class QDBusObjectPath;
 
 namespace BluezQt
 {
-class Device;
 class ObexTransfer;
 
 /**
