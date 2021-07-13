@@ -149,7 +149,7 @@ public:
     /**
      * Sets a Bluetooth blocked state.
      *
-     * This may fail either due to insufficent permissions or
+     * This may fail either due to insufficient permissions or
      * because rfkill state is HARD_BLOCKED. In that case,
      * this function returns false.
      *

@@ -19,6 +19,6 @@ public:
     QVariantMap options;
 };
 
-} // namepsace BluezQt
+} // namespace BluezQt
 
 #endif // BLUEZQT_PROFILE_P_H

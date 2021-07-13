@@ -82,7 +82,7 @@ public:
         Joypad,
         /** The device is a graphics tablet (input device). */
         Tablet,
-        /** The deivce is an uncategorized peripheral device. */
+        /** The device is an uncategorized peripheral device. */
         Peripheral,
         /** The device is a camera. */
         Camera,
