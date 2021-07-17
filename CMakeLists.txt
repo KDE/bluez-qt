@@ -35,8 +35,6 @@ ecm_setup_version(PROJECT
     SOVERSION 6
 )
 
-set(CMAKE_C_STANDARD 99)
-
 # Dependencies
 set(REQUIRED_QT_VERSION 5.15.0)
 
