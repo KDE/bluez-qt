@@ -96,7 +96,7 @@ PendingCall *Manager::startService()
 
 AdapterPtr Manager::adapterForAddress(const QString &address) const
 {
-    for (AdapterPtr adapter : qAsConst(d->m_adapters)) {
+    for (AdapterPtr adapter : std::as_const(d->m_adapters)) {
         if (adapter->address() == address) {
             return adapter;
         }
@@ -113,7 +113,7 @@ DevicePtr Manager::deviceForAddress(const QString &address) const
 {
     DevicePtr device;
 
-    for (AdapterPtr adapter : qAsConst(d->m_adapters)) {
+    for (AdapterPtr adapter : std::as_const(d->m_adapters)) {
         DevicePtr d = adapter->deviceForAddress(address);
         if (!d) {
             continue;

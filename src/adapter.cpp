@@ -147,7 +147,7 @@ QList<DevicePtr> Adapter::devices() const
 
 DevicePtr Adapter::deviceForAddress(const QString &address) const
 {
-    for (DevicePtr device : qAsConst(d->m_devices)) {
+    for (DevicePtr device : std::as_const(d->m_devices)) {
         if (device->address() == address) {
             return device;
         }

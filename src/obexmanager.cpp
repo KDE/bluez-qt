@@ -54,7 +54,7 @@ QList<ObexSessionPtr> ObexManager::sessions() const
 
 ObexSessionPtr ObexManager::sessionForPath(const QDBusObjectPath &path) const
 {
-    for (ObexSessionPtr session : qAsConst(d->m_sessions)) {
+    for (ObexSessionPtr session : std::as_const(d->m_sessions)) {
         if (path.path().startsWith(session->objectPath().path())) {
             return session;
         }

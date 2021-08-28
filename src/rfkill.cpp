@@ -208,7 +208,7 @@ void Rfkill::updateRfkillDevices()
     // Update global state
     d->m_state = Unknown;
 
-    for (State state : qAsConst(d->m_devices)) {
+    for (State state : std::as_const(d->m_devices)) {
         Q_ASSERT(state != Unknown);
 
         if (d->m_state == Unknown) {

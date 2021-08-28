@@ -198,7 +198,7 @@ void ManagerPrivate::clear()
 
 AdapterPtr ManagerPrivate::findUsableAdapter() const
 {
-    for (AdapterPtr adapter : qAsConst(m_adapters)) {
+    for (AdapterPtr adapter : std::as_const(m_adapters)) {
         if (adapter->isPowered()) {
             return adapter;
         }
