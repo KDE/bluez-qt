@@ -19,9 +19,9 @@ namespace BluezQt
 {
 typedef org::freedesktop::DBus::ObjectManager DBusObjectManager;
 
-ObexManagerPrivate::ObexManagerPrivate(ObexManager *q)
-    : QObject(q)
-    , q(q)
+ObexManagerPrivate::ObexManagerPrivate(ObexManager *qq)
+    : QObject(qq)
+    , q(qq)
     , m_obexClient(nullptr)
     , m_obexAgentManager(nullptr)
     , m_dbusObjectManager(nullptr)

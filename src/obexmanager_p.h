@@ -30,7 +30,7 @@ class ObexManagerPrivate : public QObject
     Q_OBJECT
 
 public:
-    explicit ObexManagerPrivate(ObexManager *q);
+    explicit ObexManagerPrivate(ObexManager *qq);
 
     void init();
     void nameHasOwnerFinished(QDBusPendingCallWatcher *watcher);

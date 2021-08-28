@@ -16,7 +16,7 @@ namespace BluezQt
 class DevicesModelPrivate : public QObject
 {
 public:
-    explicit DevicesModelPrivate(DevicesModel *q);
+    explicit DevicesModelPrivate(DevicesModel *qq);
 
     void init();
 
@@ -30,9 +30,9 @@ public:
     QList<DevicePtr> m_devices;
 };
 
-DevicesModelPrivate::DevicesModelPrivate(DevicesModel *q)
-    : QObject(q)
-    , q(q)
+DevicesModelPrivate::DevicesModelPrivate(DevicesModel *qq)
+    : QObject(qq)
+    , q(qq)
     , m_manager(nullptr)
 {
 }
