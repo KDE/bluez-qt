@@ -22,6 +22,7 @@ include(ECMGenerateHeaders)
 include(ECMAddQch)
 include(CMakePackageConfigHelpers)
 include(ECMQtDeclareLoggingCategory)
+include(ECMGeneratePkgConfigFile)
 
 set(EXCLUDE_DEPRECATED_BEFORE_AND_AT 0 CACHE STRING "Control the range of deprecated API excluded from the build [default=0].")
 
@@ -106,6 +107,12 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     if(${INSTALL_UDEV_RULE})
         install(FILES 61-kde-bluetooth-rfkill.rules DESTINATION ${UDEV_RULES_INSTALL_DIR})
     endif()
+
+    ecm_generate_pkgconfig_file(BASE_NAME KF5BluezQt
+      INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF5}/BluezQt/
+      DEPS "Qt5Core Qt5Network Qt5DBbus"
+    INSTALL)
+
 endif()
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
