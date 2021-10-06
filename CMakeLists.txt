@@ -110,7 +110,7 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
     ecm_generate_pkgconfig_file(BASE_NAME KF5BluezQt
       INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF5}/BluezQt/
-      DEPS "Qt5Core Qt5Network Qt5DBbus"
+      DEPS "Qt5Core Qt5Network Qt5DBus"
     INSTALL)
 
 endif()
