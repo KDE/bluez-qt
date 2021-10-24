@@ -17,6 +17,9 @@ class Manager;
 class Adapter;
 class Battery;
 class Device;
+class GattServiceRemote;
+class GattCharacteristicRemote;
+class GattDescriptorRemote;
 class Input;
 class GattManager;
 class LEAdvertisingManager;
@@ -29,10 +32,15 @@ class ObexSession;
 class ObexTransfer;
 class ObexFileTransfer;
 
+typedef QMap<uint16_t, QByteArray> ManData;
+
 typedef QSharedPointer<BluezQt::Manager> ManagerPtr;
 typedef QSharedPointer<BluezQt::Adapter> AdapterPtr;
 typedef QSharedPointer<BluezQt::Battery> BatteryPtr;
 typedef QSharedPointer<BluezQt::Device> DevicePtr;
+typedef QSharedPointer<BluezQt::GattServiceRemote> GattServiceRemotePtr;
+typedef QSharedPointer<BluezQt::GattCharacteristicRemote> GattCharacteristicRemotePtr;
+typedef QSharedPointer<BluezQt::GattDescriptorRemote> GattDescriptorRemotePtr;
 typedef QSharedPointer<BluezQt::Input> InputPtr;
 typedef QSharedPointer<BluezQt::GattManager> GattManagerPtr;
 typedef QSharedPointer<BluezQt::LEAdvertisingManager> LEAdvertisingManagerPtr;

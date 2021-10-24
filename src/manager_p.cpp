@@ -423,17 +423,18 @@ void ManagerPrivate::setUsableAdapter(const AdapterPtr &adapter)
 void ManagerPrivate::propertiesChanged(const QString &interface, const QVariantMap &changed, const QStringList &invalidated)
 {
     // Cut anything after device path to forward it to Device to handle
-    const QString path = message().path().section(QLatin1Char('/'), 0, 4);
+    const QString path_full = message().path();
+    const QString path_device = path_full.section(QLatin1Char('/'), 0, 4);
 
     QTimer::singleShot(0, this, [=]() {
-        AdapterPtr adapter = m_adapters.value(path);
+        AdapterPtr adapter = m_adapters.value(path_device);
         if (adapter) {
             adapter->d->propertiesChanged(interface, changed, invalidated);
             return;
         }
-        DevicePtr device = m_devices.value(path);
+        DevicePtr device = m_devices.value(path_device);
         if (device) {
-            device->d->propertiesChanged(interface, changed, invalidated);
+            device->d->propertiesChanged(path_full, interface, changed, invalidated);
             return;
         }
         qCDebug(BLUEZQT) << "Unhandled property change" << interface << changed << invalidated;

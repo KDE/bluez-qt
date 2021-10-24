@@ -26,6 +26,9 @@ QString orgBluez();
 QString orgBluezAdapter1();
 QString orgBluezBattery1();
 QString orgBluezDevice1();
+QString orgBluezGattService1();
+QString orgBluezGattCharacteristic1();
+QString orgBluezGattDescriptor1();
 QString orgBluezInput1();
 QString orgBluezGattManager1();
 QString orgBluezLEAdvertisingManager1();
@@ -60,6 +63,7 @@ void setObexManager(ObexManager *obexManager);
 }
 
 QStringList stringListToUpper(const QStringList &list);
+ManData variantToManData(const QVariant &value);
 Device::Type classToType(quint32 classNum);
 Device::Type appearanceToType(quint16 appearance);
 

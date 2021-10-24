@@ -70,6 +70,7 @@ public:
     void processObjectPathReply(const QDBusPendingReply<QDBusObjectPath> &reply);
     void processFileTransferListReply(const QDBusPendingReply<QVariantMapList> &reply);
     void processTransferWithPropertiesReply(const QDBusPendingReply<QDBusObjectPath, QVariantMap> &reply);
+    void processByteArrayReply(const QDBusPendingReply<QByteArray> &reply);
     void processError(const QDBusError &m_error);
 
     void emitFinished();
@@ -120,6 +121,10 @@ void PendingCallPrivate::processReply(QDBusPendingCallWatcher *call)
 
     case PendingCall::ReturnTransferWithProperties:
         processTransferWithPropertiesReply(*call);
+        break;
+
+    case PendingCall::ReturnByteArray:
+        processByteArrayReply(*call);
         break;
 
     default:
@@ -181,6 +186,14 @@ void PendingCallPrivate::processTransferWithPropertiesReply(const QDBusPendingRe
     transfer->d->q = transfer.toWeakRef();
     transfer->d->m_suspendable = true;
     m_value.append(QVariant::fromValue(transfer));
+}
+
+void PendingCallPrivate::processByteArrayReply(const QDBusPendingReply<QByteArray> &reply)
+{
+    processError(reply.error());
+    if (!reply.isError()) {
+        m_value.append(QVariant::fromValue(reply.value()));
+    }
 }
 
 void PendingCallPrivate::processError(const QDBusError &error)

@@ -46,6 +46,8 @@ class BLUEZQT_EXPORT Device : public QObject
     Q_PROPERTY(bool blocked READ isBlocked WRITE setBlocked NOTIFY blockedChanged)
     Q_PROPERTY(bool legacyPairing READ hasLegacyPairing NOTIFY legacyPairingChanged)
     Q_PROPERTY(qint16 rssi READ rssi NOTIFY rssiChanged)
+    Q_PROPERTY(ManData manufacturerData READ manufacturerData NOTIFY manufacturerDataChanged)
+    Q_PROPERTY(bool servicesResolved READ isServicesResolved NOTIFY servicesResolvedChanged)
     Q_PROPERTY(bool connected READ isConnected NOTIFY connectedChanged)
     Q_PROPERTY(QStringList uuids READ uuids NOTIFY uuidsChanged)
     Q_PROPERTY(QString modalias READ modalias NOTIFY modaliasChanged)
@@ -54,6 +56,7 @@ class BLUEZQT_EXPORT Device : public QObject
     Q_PROPERTY(MediaPlayerPtr mediaPlayer READ mediaPlayer NOTIFY mediaPlayerChanged)
     Q_PROPERTY(MediaTransportPtr mediaTransport READ mediaTransport NOTIFY mediaTransportChanged)
     Q_PROPERTY(AdapterPtr adapter READ adapter)
+    Q_PROPERTY(QList<GattServiceRemotePtr> gattServices READ gattServices NOTIFY gattServicesChanged)
 
 public:
     /**
@@ -263,6 +266,23 @@ public:
     qint16 rssi() const;
 
     /**
+     * Returns manufacturer specific advertisement data.
+     *
+     * @note Keys are 16 bits Manufacturer ID followed by
+     * its byte array value.
+     *
+     * @return manufacturerData of device.
+     */
+    ManData manufacturerData() const;
+
+    /**
+     * Returns whether or not service discovery has been resolved.
+     *
+     * @return true if servicesResolved
+     */
+    bool isServicesResolved() const;
+
+    /**
      * Returns whether the device is connected.
      *
      * @return true if connected
@@ -337,6 +357,12 @@ public:
      */
     AdapterPtr adapter() const;
 
+    /**
+     * Returns list of services known by the device.
+     *
+     * @return list of services
+     */
+    QList<GattServiceRemotePtr> gattServices() const;
     /**
      * Returns a string for device type.
      *
@@ -434,6 +460,26 @@ Q_SIGNALS:
     void deviceChanged(DevicePtr device);
 
     /**
+     * Indicates that a new service was added (eg. found by connection).
+     */
+    void gattServiceAdded(GattServiceRemotePtr service);
+
+    /**
+     * Indicates that device GATT services list has changed
+     */
+    void gattServicesChanged(QList<GattServiceRemotePtr> services);
+
+    /**
+     * Indicates that a service was removed.
+     */
+    void gattServiceRemoved(GattServiceRemotePtr service);
+
+    /**
+     * Indicates that at least one of the device's services have changed.
+     */
+    void gattServiceChanged(GattServiceRemotePtr service);
+
+    /**
      * Indicates that device's name have changed.
      */
     void nameChanged(const QString &name);
@@ -499,6 +545,16 @@ Q_SIGNALS:
     void rssiChanged(qint16 rssi);
 
     /**
+     * Indicates that device's manufacturer data have changed.
+     */
+    void manufacturerDataChanged(ManData man);
+
+    /**
+     * Indicates that device's servicesResolved state have changed.
+     */
+    void servicesResolvedChanged(bool servicesResolved);
+
+    /**
      * Indicates that device's connected state have changed.
      */
     void connectedChanged(bool connected);
@@ -550,5 +606,7 @@ private:
 };
 
 } // namespace BluezQt
+
+Q_DECLARE_METATYPE(BluezQt::ManData)
 
 #endif // BLUEZQT_DEVICE_H

@@ -29,6 +29,9 @@ public:
     QString orgBluezAdapter1;
     QString orgBluezBattery1;
     QString orgBluezDevice1;
+    QString orgBluezGattService1;
+    QString orgBluezGattCharateristic1;
+    QString orgBluezGattDescriptor1;
     QString orgBluezInput1;
     QString orgBluezGattManager1;
     QString orgBluezLEAdvertisingManager1;
@@ -55,6 +58,9 @@ GlobalData::GlobalData()
     orgBluezAdapter1 = QStringLiteral("org.bluez.Adapter1");
     orgBluezBattery1 = QStringLiteral("org.bluez.Battery1");
     orgBluezDevice1 = QStringLiteral("org.bluez.Device1");
+    orgBluezGattService1 = QStringLiteral("org.bluez.GattService1");
+    orgBluezGattCharateristic1 = QStringLiteral("org.bluez.GattCharacteristic1");
+    orgBluezGattDescriptor1 = QStringLiteral("org.bluez.GattDescriptor1");
     orgBluezInput1 = QStringLiteral("org.bluez.Input1");
     orgBluezGattManager1 = QStringLiteral("org.bluez.GattManager1");
     orgBluezLEAdvertisingManager1 = QStringLiteral("org.bluez.LEAdvertisingManager1");
@@ -108,6 +114,21 @@ QString Strings::orgBluezBattery1()
 QString Strings::orgBluezDevice1()
 {
     return globalData->orgBluezDevice1;
+}
+
+QString Strings::orgBluezGattService1()
+{
+    return globalData->orgBluezGattService1;
+}
+
+QString Strings::orgBluezGattCharacteristic1()
+{
+    return globalData->orgBluezGattCharateristic1;
+}
+
+QString Strings::orgBluezGattDescriptor1()
+{
+    return globalData->orgBluezGattDescriptor1;
 }
 
 QString Strings::orgBluezInput1()
@@ -216,6 +237,28 @@ QStringList stringListToUpper(const QStringList &list)
         converted.append(str.toUpper());
     }
     return converted;
+}
+
+ManData variantToManData(const QVariant &v) {
+    // Map to return
+    ManData manData;
+
+    if (!v.isValid()) {
+        return manData;
+    }
+
+    // Map with QVariant values
+    QMap<uint16_t,QVariant> vMap;
+    const QDBusArgument &dbusArgs = v.value<QDBusArgument>();
+    dbusArgs >> vMap;
+    // Iterate & convert values to byte array
+    QMap<uint16_t,QVariant>::const_iterator i;
+    for (i = vMap.constBegin(); i != vMap.constEnd(); ++i) {
+        const QVariant &value = i.value();
+        const uint16_t &key = i.key();
+        manData.insert(key,value.toByteArray());
+    }
+    return manData;
 }
 
 Device::Type classToType(quint32 classNum)

@@ -9,6 +9,9 @@
 #include "battery.h"
 #include "bluezqt_dbustypes.h"
 #include "device.h"
+#include "gattserviceremote.h"
+#include "gattcharacteristicremote.h"
+#include "gattdescriptorremote.h"
 #include "mediaplayer.h"
 #include "mediaplayertrack.h"
 #include "mediatransport.h"
@@ -161,6 +164,9 @@ void FakeBluez::runAction(const QString &object, const QString &actionName, cons
 
 void Autotests::registerMetatypes()
 {
+    qRegisterMetaType<BluezQt::GattDescriptorRemotePtr>("GattDescriptorRemotePtr");
+    qRegisterMetaType<BluezQt::GattCharacteristicRemotePtr>("GattCharacteristicRemotePtr");
+    qRegisterMetaType<BluezQt::GattServiceRemotePtr>("GattServiceRemotePtr");
     qRegisterMetaType<BluezQt::DevicePtr>("DevicePtr");
     qRegisterMetaType<BluezQt::AdapterPtr>("AdapterPtr");
     qRegisterMetaType<BluezQt::BatteryPtr>("BatteryPtr");

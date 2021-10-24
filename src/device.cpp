@@ -131,6 +131,16 @@ qint16 Device::rssi() const
     return d->m_rssi;
 }
 
+ManData Device::manufacturerData() const
+{
+    return d->m_manufacturerData;
+}
+
+bool Device::isServicesResolved() const
+{
+    return d->m_servicesResolved;
+}
+
 bool Device::isConnected() const
 {
     return d->m_connected;
@@ -174,6 +184,11 @@ MediaTransportPtr Device::mediaTransport() const
 AdapterPtr Device::adapter() const
 {
     return d->m_adapter;
+}
+
+QList<GattServiceRemotePtr> Device::gattServices() const
+{
+    return d->m_services;
 }
 
 QString Device::typeToString(Device::Type type)

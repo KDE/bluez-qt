@@ -34,8 +34,11 @@ public:
     void interfacesAdded(const QString &path, const QVariantMapMap &interfaces);
     void interfacesRemoved(const QString &path, const QStringList &interfaces);
 
+    void addGattService(const QString &gattServicePath, const QVariantMap &properties);
+    void removeGattService(const QString &gattServicePath);
+
     QDBusPendingReply<> setDBusProperty(const QString &name, const QVariant &value);
-    void propertiesChanged(const QString &interface, const QVariantMap &changed, const QStringList &invalidated);
+    void propertiesChanged(const QString &path, const QString &interface, const QVariantMap &changed, const QStringList &invalidated);
     void namePropertyChanged(const QString &value);
     void aliasPropertyChanged(const QString &value);
     void addressPropertyChanged(const QString &value);
@@ -57,6 +60,8 @@ public:
     bool m_blocked;
     bool m_legacyPairing;
     qint16 m_rssi;
+    ManData m_manufacturerData;
+    bool m_servicesResolved;
     bool m_connected;
     QStringList m_uuids;
     QString m_modalias;
@@ -65,6 +70,7 @@ public:
     InputPtr m_input;
     MediaPlayerPtr m_mediaPlayer;
     MediaTransportPtr m_mediaTransport;
+    QList<GattServiceRemotePtr> m_services;
     AdapterPtr m_adapter;
 };
 

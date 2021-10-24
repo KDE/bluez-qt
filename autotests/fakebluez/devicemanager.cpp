@@ -7,6 +7,9 @@
 #include "devicemanager.h"
 #include "adapterinterface.h"
 #include "deviceinterface.h"
+#include "gattserviceinterface.h"
+#include "gattcharacteristicinterface.h"
+#include "gattdescriptorinterface.h"
 #include "gattmanagerinterface.h"
 #include "leadvertisingmanagerinterface.h"
 #include "mediainterface.h"
@@ -25,10 +28,22 @@ void DeviceManager::runAction(const QString &actionName, const QVariantMap &prop
         runCreateAdapterAction(properties);
     } else if (actionName == QLatin1String("create-device")) {
         runCreateDeviceAction(properties);
+    } else if (actionName == QLatin1String("create-gatt-service")) {
+        runCreateGattServiceAction(properties);
+    } else if (actionName == QLatin1String("create-gatt-characteristic")) {
+        runCreateGattCharacteristicAction(properties);
+    } else if (actionName == QLatin1String("create-gatt-descriptor")) {
+        runCreateGattDescriptorAction(properties);
     } else if (actionName == QLatin1String("remove-adapter")) {
         runRemoveAdapterAction(properties);
     } else if (actionName == QLatin1String("remove-device")) {
         runRemoveDeviceAction(properties);
+    } else if (actionName == QLatin1String("remove-gatt-service")) {
+        runRemoveGattServiceAction(properties);
+    } else if (actionName == QLatin1String("remove-gatt-characteristic")) {
+        runRemoveGattCharacteristicAction(properties);
+    } else if (actionName == QLatin1String("remove-gatt-descriptor")) {
+        runRemoveGattDescriptorAction(properties);
     } else if (actionName == QLatin1String("change-adapter-property")) {
         runChangeAdapterProperty(properties);
     } else if (actionName == QLatin1String("change-device-property")) {
@@ -70,6 +85,42 @@ void DeviceManager::runCreateDeviceAction(const QVariantMap &properties)
     m_objectManager->addAutoDeleteObject(deviceObj);
 }
 
+void DeviceManager::runCreateGattServiceAction(const QVariantMap& properties)
+{
+    const QDBusObjectPath &path = properties.value(QStringLiteral("Path")).value<QDBusObjectPath>();
+    QVariantMap props = properties;
+    props.remove(QStringLiteral("Path"));
+
+    GattServiceObject *serviceObj = new GattServiceObject(path);
+    GattServiceInterface *service = new GattServiceInterface(path, props, serviceObj);
+    m_objectManager->addObject(service);
+    m_objectManager->addAutoDeleteObject(serviceObj);
+}
+
+void DeviceManager::runCreateGattCharacteristicAction(const QVariantMap& properties)
+{
+    const QDBusObjectPath &path = properties.value(QStringLiteral("Path")).value<QDBusObjectPath>();
+    QVariantMap props = properties;
+    props.remove(QStringLiteral("Path"));
+
+    GattCharacteristicObject *characteristicObj = new GattCharacteristicObject(path);
+    GattCharacteristicInterface *characteristic = new GattCharacteristicInterface(path, props, characteristicObj);
+    m_objectManager->addObject(characteristic);
+    m_objectManager->addAutoDeleteObject(characteristicObj);
+}
+
+void DeviceManager::runCreateGattDescriptorAction(const QVariantMap& properties)
+{
+    const QDBusObjectPath &path = properties.value(QStringLiteral("Path")).value<QDBusObjectPath>();
+    QVariantMap props = properties;
+    props.remove(QStringLiteral("Path"));
+
+    GattDescriptorObject *descriptorObj = new GattDescriptorObject(path);
+    GattDescriptorInterface *descriptor = new GattDescriptorInterface(path, props, descriptorObj);
+    m_objectManager->addObject(descriptor);
+    m_objectManager->addAutoDeleteObject(descriptorObj);
+}
+
 void DeviceManager::runRemoveAdapterAction(const QVariantMap &properties)
 {
     const QDBusObjectPath &path = properties.value(QStringLiteral("Path")).value<QDBusObjectPath>();
@@ -77,6 +128,24 @@ void DeviceManager::runRemoveAdapterAction(const QVariantMap &properties)
 }
 
 void DeviceManager::runRemoveDeviceAction(const QVariantMap &properties)
+{
+    const QDBusObjectPath &path = properties.value(QStringLiteral("Path")).value<QDBusObjectPath>();
+    m_objectManager->removeObject(m_objectManager->objectByPath(path));
+}
+
+void DeviceManager::runRemoveGattServiceAction(const QVariantMap& properties)
+{
+    const QDBusObjectPath &path = properties.value(QStringLiteral("Path")).value<QDBusObjectPath>();
+    m_objectManager->removeObject(m_objectManager->objectByPath(path));
+}
+
+void DeviceManager::runRemoveGattCharacteristicAction(const QVariantMap& properties)
+{
+    const QDBusObjectPath &path = properties.value(QStringLiteral("Path")).value<QDBusObjectPath>();
+    m_objectManager->removeObject(m_objectManager->objectByPath(path));
+}
+
+void DeviceManager::runRemoveGattDescriptorAction(const QVariantMap& properties)
 {
     const QDBusObjectPath &path = properties.value(QStringLiteral("Path")).value<QDBusObjectPath>();
     m_objectManager->removeObject(m_objectManager->objectByPath(path));

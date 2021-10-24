@@ -23,8 +23,14 @@ public:
 private:
     void runCreateAdapterAction(const QVariantMap &properties);
     void runCreateDeviceAction(const QVariantMap &properties);
+    void runCreateGattServiceAction(const QVariantMap &properties);
+    void runCreateGattCharacteristicAction(const QVariantMap &properties);
+    void runCreateGattDescriptorAction(const QVariantMap &properties);
     void runRemoveAdapterAction(const QVariantMap &properties);
     void runRemoveDeviceAction(const QVariantMap &properties);
+    void runRemoveGattServiceAction(const QVariantMap &properties);
+    void runRemoveGattCharacteristicAction(const QVariantMap &properties);
+    void runRemoveGattDescriptorAction(const QVariantMap &properties);
     void runChangeAdapterProperty(const QVariantMap &properties);
     void runChangeDeviceProperty(const QVariantMap &properties);
     void runAdapterMediaAction(const QString action, const QVariantMap &properties);

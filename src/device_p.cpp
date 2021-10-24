@@ -7,6 +7,9 @@
  */
 
 #include "device_p.h"
+#include "device.h"
+#include "gattserviceremote_p.h"
+#include "gattserviceremote.h"
 #include "adapter.h"
 #include "battery.h"
 #include "battery_p.h"
@@ -34,6 +37,8 @@ DevicePrivate::DevicePrivate(const QString &path, const QVariantMap &properties,
     , m_blocked(false)
     , m_legacyPairing(false)
     , m_rssi(INVALID_RSSI)
+    , m_manufacturerData(ManData())
+    , m_servicesResolved(false)
     , m_connected(false)
     , m_adapter(adapter)
 {
@@ -78,6 +83,8 @@ void DevicePrivate::init(const QVariantMap &properties)
     m_blocked = properties.value(QStringLiteral("Blocked")).toBool();
     m_legacyPairing = properties.value(QStringLiteral("LegacyPairing")).toBool();
     m_rssi = properties.value(QStringLiteral("RSSI")).toInt();
+    m_manufacturerData = variantToManData(properties.value(QStringLiteral("ManufacturerData")));
+    m_servicesResolved = properties.value(QStringLiteral("ServicesResolved")).toBool();
     m_connected = properties.value(QStringLiteral("Connected")).toBool();
     m_uuids = stringListToUpper(properties.value(QStringLiteral("UUIDs")).toStringList());
     m_modalias = properties.value(QStringLiteral("Modalias")).toString();
@@ -114,6 +121,16 @@ void DevicePrivate::interfacesAdded(const QString &path, const QVariantMapMap &i
             m_mediaTransport->d->q = m_mediaTransport.toWeakRef();
             Q_EMIT q.lock()->mediaTransportChanged(m_mediaTransport);
             changed = true;
+        } else if (it.key() == Strings::orgBluezGattService1()) {
+            addGattService(path,it.value());
+            changed = true;
+        }
+    }
+
+    for (auto& service : m_services) {
+        if (path.startsWith(service->ubi())) {
+            service->d->interfacesAdded(path, interfaces);
+            changed = true;
         }
     }
 
@@ -143,6 +160,16 @@ void DevicePrivate::interfacesRemoved(const QString &path, const QStringList &in
             m_mediaTransport.clear();
             Q_EMIT q.lock()->mediaTransportChanged(m_mediaTransport);
             changed = true;
+        } else if (interface == Strings::orgBluezGattService1()) {
+            removeGattService(path);
+            changed = true;
+        }
+    }
+
+    for (auto& service : m_services) {
+        if (path.startsWith(service->ubi())) {
+            service->d->interfacesRemoved(path,interfaces);
+            changed = true;
         }
     }
 
@@ -151,12 +178,64 @@ void DevicePrivate::interfacesRemoved(const QString &path, const QStringList &in
     }
 }
 
+void DevicePrivate::addGattService(const QString &gattServicePath, const QVariantMap &properties)
+{
+    // Check if we have the right path
+    if (m_bluezDevice->path() != properties.value(QStringLiteral("Device")).value<QDBusObjectPath>().path()) {
+        return;
+    }
+
+    DevicePtr device = DevicePtr(this->q);
+
+    if (!device) {
+        return;
+    }
+
+    GattServiceRemotePtr gattService = GattServiceRemotePtr(new GattServiceRemote(gattServicePath, properties, device));
+    gattService->d->q = gattService.toWeakRef();
+    m_services.append(gattService);
+
+    Q_EMIT device->gattServiceAdded(gattService);
+    Q_EMIT device->gattServicesChanged(m_services);
+
+    // Connections
+    connect(gattService.data(),&GattServiceRemote::serviceChanged,q.lock().data(),&Device::gattServiceChanged);
+}
+
+void DevicePrivate::removeGattService(const QString &gattServicePath)
+{
+    DevicePtr device = DevicePtr(this->q);
+
+    if (!device) {
+        return;
+    }
+
+    GattServiceRemotePtr gattService = nullptr;
+    for (int i=0; i < device->gattServices().size(); ++i) {
+        if (device->gattServices().at(i)->ubi() == gattServicePath) {
+            gattService = device->gattServices().at(i);
+        }
+    }
+
+    if (gattService == nullptr) {
+        return;
+    }
+
+    m_services.removeOne(gattService);
+
+    Q_EMIT device->gattServiceRemoved(gattService);
+    Q_EMIT device->gattServicesChanged(m_services);
+
+    // Connections
+    disconnect(gattService.data(),&GattServiceRemote::serviceChanged,q.lock().data(),&Device::gattServiceChanged);
+}
+
 QDBusPendingReply<> DevicePrivate::setDBusProperty(const QString &name, const QVariant &value)
 {
     return m_dbusProperties->Set(Strings::orgBluezDevice1(), name, QDBusVariant(value));
 }
 
-void DevicePrivate::propertiesChanged(const QString &interface, const QVariantMap &changed, const QStringList &invalidated)
+void DevicePrivate::propertiesChanged(const QString &path, const QString &interface, const QVariantMap &changed, const QStringList &invalidated)
 {
     if (interface == Strings::orgBluezBattery1() && m_battery) {
         m_battery->d->propertiesChanged(interface, changed, invalidated);
@@ -164,6 +243,13 @@ void DevicePrivate::propertiesChanged(const QString &interface, const QVariantMa
         m_input->d->propertiesChanged(interface, changed, invalidated);
     } else if (interface == Strings::orgBluezMediaPlayer1() && m_mediaPlayer) {
         m_mediaPlayer->d->propertiesChanged(interface, changed, invalidated);
+    } else if ((interface == Strings::orgBluezGattService1()) || (interface == Strings::orgBluezGattCharacteristic1()) || (interface == Strings::orgBluezGattDescriptor1())) {
+        for (GattServiceRemotePtr service : m_services) {
+            if (path.startsWith(service->ubi())) {
+                service->d->propertiesChanged(path, interface, changed, invalidated);
+                return;
+            }
+        }
     } else if (interface != Strings::orgBluezDevice1()) {
         return;
     }
@@ -195,6 +281,10 @@ void DevicePrivate::propertiesChanged(const QString &interface, const QVariantMa
             PROPERTY_CHANGED(m_legacyPairing, toBool, legacyPairingChanged);
         } else if (property == QLatin1String("RSSI")) {
             PROPERTY_CHANGED(m_rssi, toInt, rssiChanged);
+        } else if (property == QLatin1String("ManufacturerData")) {
+            PROPERTY_CHANGED2(m_manufacturerData, variantToManData(value), manufacturerDataChanged);
+        } else if (property == QLatin1String("ServicesResolved")) {
+            PROPERTY_CHANGED(m_servicesResolved, toBool, servicesResolvedChanged);
         } else if (property == QLatin1String("Connected")) {
             PROPERTY_CHANGED(m_connected, toBool, connectedChanged);
         } else if (property == QLatin1String("Modalias")) {
@@ -217,6 +307,11 @@ void DevicePrivate::propertiesChanged(const QString &interface, const QVariantMa
             PROPERTY_INVALIDATED(m_icon, QString(), iconChanged);
         } else if (property == QLatin1String("RSSI")) {
             PROPERTY_INVALIDATED(m_rssi, INVALID_RSSI, rssiChanged);
+        } else if (property == QLatin1String("ManufacturerData")) {
+            QMap<uint16_t,QByteArray> map;
+            PROPERTY_INVALIDATED(m_manufacturerData, map, manufacturerDataChanged);
+        } else if (property == QLatin1String("ServicesResolved")) {
+            PROPERTY_INVALIDATED(m_servicesResolved, false, servicesResolvedChanged);
         } else if (property == QLatin1String("Modalias")) {
             PROPERTY_INVALIDATED(m_modalias, QString(), modaliasChanged);
         } else if (property == QLatin1String("UUIDs")) {
