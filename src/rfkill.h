@@ -18,7 +18,7 @@
 
 namespace BluezQt
 {
-class RfkillPrivate;
+struct RfkillPrivate;
 
 class BLUEZQT_EXPORT Rfkill : public QObject
 {
