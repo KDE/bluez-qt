@@ -37,7 +37,7 @@ public:
     /**
      * Destroys an LEAdvertisingManager object.
      */
-    ~LEAdvertisingManager();
+    ~LEAdvertisingManager() override;
 
     /**
      * Registers advertisement.

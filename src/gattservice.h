@@ -38,7 +38,7 @@ public:
     /**
      * Destroys a GattService object.
      */
-    ~GattService();
+    ~GattService() override;
 
     /**
      * 128-bit service UUID.

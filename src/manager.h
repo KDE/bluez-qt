@@ -98,7 +98,7 @@ public:
     /**
      * Destroys a Manager object.
      */
-    ~Manager();
+    ~Manager() override;
 
     /**
      * Creates a new init job.

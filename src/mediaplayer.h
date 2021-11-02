@@ -91,7 +91,7 @@ public:
     /**
      * Destroys a MediaPlayer object.
      */
-    ~MediaPlayer();
+    ~MediaPlayer() override;
 
     /**
      * Returns a shared pointer from this.

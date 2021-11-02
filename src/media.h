@@ -43,7 +43,7 @@ public:
     /**
      * Destroys a Media object.
      */
-    ~Media();
+    ~Media() override;
 
     /**
      * Registers endpoint.

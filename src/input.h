@@ -45,7 +45,7 @@ public:
     /**
      * Destroys an Input object.
      */
-    ~Input();
+    ~Input() override;
 
     /**
      * Returns a shared pointer from this.

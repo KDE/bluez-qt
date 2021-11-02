@@ -46,7 +46,7 @@ public:
     /**
      * Destroys an ObexFileTransfer object.
      */
-    ~ObexFileTransfer();
+    ~ObexFileTransfer() override;
 
     /**
      * D-Bus object path of the file transfer session.

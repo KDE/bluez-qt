@@ -59,7 +59,7 @@ public:
     /**
      * Destroys a MediaEndpoint object.
      */
-    ~MediaEndpoint();
+    ~MediaEndpoint() override;
 
     /**
      * D-Bus object path of the MediaEndpoint.

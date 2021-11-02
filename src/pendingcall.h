@@ -101,7 +101,7 @@ public:
     /**
      * Destroys a PendingCall object.
      */
-    ~PendingCall();
+    ~PendingCall() override;
 
     /**
      * Returns a first return value of the call.

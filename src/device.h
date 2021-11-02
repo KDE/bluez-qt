@@ -107,7 +107,7 @@ public:
     /**
      * Destroys a Device object.
      */
-    ~Device();
+    ~Device() override;
 
     /**
      * Returns a shared pointer from this.

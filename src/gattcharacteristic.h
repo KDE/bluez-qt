@@ -31,7 +31,7 @@ public:
     /**
      * Destroys a GattCharacteristic object.
      */
-    ~GattCharacteristic();
+    ~GattCharacteristic() override;
 
     /**
      * Reads the value of the characteristic.

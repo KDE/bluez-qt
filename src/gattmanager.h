@@ -48,7 +48,7 @@ public:
     /**
      * Destroys a GattManager object.
      */
-    ~GattManager();
+    ~GattManager() override;
 
     /**
      * Registers a local GATT services hierarchy as described

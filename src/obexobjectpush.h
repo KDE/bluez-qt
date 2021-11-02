@@ -45,7 +45,7 @@ public:
     /**
      * Destroys an ObexObjectPush object.
      */
-    ~ObexObjectPush();
+    ~ObexObjectPush() override;
 
     /**
      * D-Bus object path of the object push session.

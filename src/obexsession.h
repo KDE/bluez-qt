@@ -41,7 +41,7 @@ public:
     /**
      * Destroys an ObexSession object.
      */
-    ~ObexSession();
+    ~ObexSession() override;
 
     /**
      * Returns a shared pointer from this.

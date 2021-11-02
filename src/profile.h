@@ -68,7 +68,7 @@ public:
     /**
      * Destroys a Profile object.
      */
-    ~Profile();
+    ~Profile() override;
 
     /**
      * D-Bus object path of the profile.

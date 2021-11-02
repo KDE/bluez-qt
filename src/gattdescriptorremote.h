@@ -43,7 +43,7 @@ public:
     /**
      * Destroys a GattDescriptor object.
      */
-    ~GattDescriptorRemote();
+    ~GattDescriptorRemote() override;
 
     /**
      * Returns a shared pointer from this.

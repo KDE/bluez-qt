@@ -43,7 +43,7 @@ public:
     /**
      * Destroys a MediaTransport object.
      */
-    ~MediaTransport();
+    ~MediaTransport() override;
 
     /**
      * Returns the (audio) configuration of the transport.

@@ -60,7 +60,7 @@ public:
     /**
      * Destroys a Job object.
      */
-    ~Job();
+    ~Job() override;
 
     /**
      * Error type

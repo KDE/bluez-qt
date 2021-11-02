@@ -63,7 +63,7 @@ public:
     /**
      * Destroys an ObexTransfer object.
      */
-    ~ObexTransfer();
+    ~ObexTransfer() override;
 
     /**
      * Returns a shared pointer from this.

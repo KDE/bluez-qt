@@ -48,7 +48,7 @@ public:
     /**
      * Destroys a GattCharacteristic object.
      */
-    ~GattCharacteristicRemote();
+    ~GattCharacteristicRemote() override;
 
     /**
      * Returns a shared pointer from this.

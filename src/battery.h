@@ -32,7 +32,7 @@ public:
     /**
      * Destroys a Battery object.
      */
-    ~Battery();
+    ~Battery() override;
 
     /**
      * Returns a shared pointer from this.

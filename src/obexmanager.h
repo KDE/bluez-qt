@@ -53,7 +53,7 @@ public:
     /**
      * Destroys an ObexManager object.
      */
-    ~ObexManager();
+    ~ObexManager() override;
 
     /**
      * Creates a new init job.

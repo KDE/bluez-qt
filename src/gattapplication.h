@@ -58,7 +58,7 @@ public:
     /**
      * Destroys a GattApplication object.
      */
-    ~GattApplication();
+    ~GattApplication() override;
 
 private:
     /**

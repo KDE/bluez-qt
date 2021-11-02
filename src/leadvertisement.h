@@ -39,7 +39,7 @@ public:
     /**
      * Destroys a LEAdvertisement object.
      */
-    ~LEAdvertisement();
+    ~LEAdvertisement() override;
 
     /**
      * List of UUIDs to include in the "Service UUID" field of the Advertising Data.

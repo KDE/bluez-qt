@@ -54,7 +54,7 @@ public:
     /**
      * Destroys an Adapter object.
      */
-    ~Adapter();
+    ~Adapter() override;
 
     /**
      * Returns a shared pointer from this.

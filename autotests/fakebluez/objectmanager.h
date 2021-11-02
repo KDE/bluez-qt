@@ -26,7 +26,7 @@ class ObjectManager : public QDBusAbstractAdaptor
 
 public:
     explicit ObjectManager(QObject *parent = nullptr);
-    ~ObjectManager();
+    ~ObjectManager() override;
 
     void addObject(Object *object);
     void removeObject(Object *object);

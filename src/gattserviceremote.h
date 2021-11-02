@@ -44,7 +44,7 @@ public:
     /**
      * Destroys a GattService object.
      */
-    ~GattServiceRemote();
+    ~GattServiceRemote() override;
 
     /**
      * Returns a shared pointer from this.
