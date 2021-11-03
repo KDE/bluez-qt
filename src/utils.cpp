@@ -13,7 +13,6 @@
 
 #include <QDBusConnection>
 #include <QPointer>
-#include <QStringList>
 
 namespace BluezQt
 {

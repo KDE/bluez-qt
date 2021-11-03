@@ -7,7 +7,6 @@
  */
 
 #include "manager.h"
-#include "adapter.h"
 #include "agent.h"
 #include "agentadaptor.h"
 #include "debug.h"
