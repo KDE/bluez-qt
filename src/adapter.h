@@ -285,6 +285,31 @@ public:
      */
     PendingCall *removeDevice(DevicePtr device);
 
+    /**
+     * Set the discovery filter for the caller.
+     *
+     * When this method is called with no filter parameter, the filter is removed.
+     *
+     * For details and available filter options, see [Bluez documentation for Adapter object](https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/doc/adapter-api.txt)
+     *
+     * Possible errors: PendingCall::InvalidArguments, PendingCall::Failed
+     *
+     * @param filter options dictionary
+     * @return void pending call
+     */
+     PendingCall *setDiscoveryFilter(const QVariantMap& filter);
+
+    /**
+     * Get the discovery filters for the caller.
+     *
+     * This returns the available filters that can be given to setDiscoveryFilter, for details see [Bluez documentation for Adapter object](https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/doc/adapter-api.txt)
+     *
+     * Possible errors: PendingCall::Failed
+     *
+     * @return string list pending call
+     */
+     PendingCall *getDiscoveryFilters();
+
 Q_SIGNALS:
     /**
      * Indicates that the adapter was removed.

@@ -67,6 +67,7 @@ public:
     void processVoidReply(const QDBusPendingReply<> &reply);
     void processUint32Reply(const QDBusPendingReply<quint32> &reply);
     void processStringReply(const QDBusPendingReply<QString> &reply);
+    void processStringListReply(const QDBusPendingReply<QStringList> &reply);
     void processObjectPathReply(const QDBusPendingReply<QDBusObjectPath> &reply);
     void processFileTransferListReply(const QDBusPendingReply<QVariantMapList> &reply);
     void processTransferWithPropertiesReply(const QDBusPendingReply<QDBusObjectPath, QVariantMap> &reply);
@@ -111,6 +112,10 @@ void PendingCallPrivate::processReply(QDBusPendingCallWatcher *call)
         processStringReply(*call);
         break;
 
+    case PendingCall::ReturnStringList:
+        processStringListReply(*call);
+        break;
+
     case PendingCall::ReturnObjectPath:
         processObjectPathReply(*call);
         break;
@@ -146,6 +151,14 @@ void PendingCallPrivate::processUint32Reply(const QDBusPendingReply<quint32> &re
 }
 
 void PendingCallPrivate::processStringReply(const QDBusPendingReply<QString> &reply)
+{
+    processError(reply.error());
+    if (!reply.isError()) {
+        m_value.append(reply.value());
+    }
+}
+
+void PendingCallPrivate::processStringListReply(const QDBusPendingReply<QStringList> &reply)
 {
     processError(reply.error());
     if (!reply.isError()) {

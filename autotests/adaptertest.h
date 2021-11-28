@@ -37,6 +37,8 @@ private Q_SLOTS:
 
     void discoveryTest();
     void removeDeviceTest();
+    void discoveryFilterTest_data();
+    void discoveryFilterTest();
     void adapterRemovedTest();
 
 private:

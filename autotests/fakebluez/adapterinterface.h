@@ -83,6 +83,8 @@ public Q_SLOTS:
     void StartDiscovery();
     void StopDiscovery();
     void RemoveDevice(const QDBusObjectPath &device);
+    void SetDiscoveryFilter(const QVariantMap &filter);
+    QStringList GetDiscoveryFilters();
 
 private Q_SLOTS:
     void resetPairable();

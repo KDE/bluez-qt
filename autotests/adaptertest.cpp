@@ -341,6 +341,90 @@ void AdapterTest::removeDeviceTest()
     }
 }
 
+static bool isFilterValid(const QStringList &filters, const QVariantMap &filter)
+{
+    auto i = filter.constBegin();
+    while (i != filter.constEnd()) {
+        if (!filters.contains(i.key())) {
+            return false;
+        }
+        i++;
+    }
+    return true;
+}
+
+void AdapterTest::discoveryFilterTest_data() {
+    QTest::addColumn<QVariantMap>("filter");
+    QTest::addColumn<bool>("isValid");
+    QTest::addColumn<bool>("shouldBeDiscoverable");
+
+
+    QTest::newRow("valid-non-discoverable") << QVariantMap({
+        { QStringLiteral("UUIDs"), QStringList() },
+        { QStringLiteral("RSSI"), QVariant::fromValue(qint16(-100)) },
+        { QStringLiteral("Transport"), QStringLiteral("auto") },
+        { QStringLiteral("DuplicateData"), true },
+        { QStringLiteral("Discoverable"), false },
+        { QStringLiteral("Pattern"), QLatin1String("")}
+    }) << true << false;
+
+    QTest::newRow("valid-discoverable") << QVariantMap({
+        { QStringLiteral("UUIDs"), QStringList() },
+        { QStringLiteral("RSSI"), QVariant::fromValue(qint16(-100)) },
+        { QStringLiteral("Transport"), QStringLiteral("auto") },
+        { QStringLiteral("DuplicateData"), true },
+        { QStringLiteral("Discoverable"), true },
+        { QStringLiteral("Pattern"), QLatin1String("")}
+    }) << true << true;
+
+    QTest::newRow("invalid") << QVariantMap({
+        { QStringLiteral("SomeKey"), QStringList() }
+    }) << false << false;
+}
+
+void AdapterTest::discoveryFilterTest()
+{
+    QFETCH(QVariantMap, filter);
+    QFETCH(bool, isValid);
+    QFETCH(bool, shouldBeDiscoverable);
+
+    for (const AdapterUnit &unit : m_units) {
+
+        // Get available discovery filters
+        PendingCall* p = unit.adapter->getDiscoveryFilters(); p->waitForFinished();
+        Q_ASSERT(p->isFinished());
+        QCOMPARE(p->error(), PendingCall::NoError);
+        const QStringList filters = p->value().toStringList();
+
+        // Verify filter
+        QCOMPARE(isFilterValid(filters, filter), isValid);
+
+        // Make sure adapter is powered and not discoverable
+        unit.adapter->setPowered(true)->waitForFinished();
+        unit.adapter->setDiscoverable(false);
+        QTRY_COMPARE(unit.adapter->isDiscoverable(), false);
+        QTRY_COMPARE(unit.dbusAdapter->discoverable(), false);
+
+        QSignalSpy adapterSpy(unit.adapter.data(), SIGNAL(discoverableChanged(bool)));
+        QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString, QVariantMap, QStringList)));
+
+        // Set discovery filter
+        unit.adapter->setDiscoveryFilter(filter);
+
+        if (shouldBeDiscoverable) {
+            // Check if adapter became discoverable
+            QTRY_COMPARE(adapterSpy.count(), 1);
+
+            const QList<QVariant> adapterArguments = adapterSpy.takeFirst();
+            QCOMPARE(adapterArguments.at(0).toBool(), true);
+            Autotests::verifyPropertiesChangedSignal(dbusSpy, QStringLiteral("Discoverable"), true);
+
+            QCOMPARE(unit.adapter->isDiscoverable(), true);
+            QCOMPARE(unit.dbusAdapter->discoverable(), true);
+        }
+    }
+}
+
 void AdapterTest::adapterRemovedTest()
 {
     for (const AdapterUnit &unit : m_units) {

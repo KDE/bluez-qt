@@ -175,6 +175,28 @@ void AdapterInterface::RemoveDevice(const QDBusObjectPath &device)
     manager->removeObject(manager->objectByPath(device));
 }
 
+void AdapterInterface::SetDiscoveryFilter(const QVariantMap &filter)
+{
+    // Bluez makes adapter discoverable while discovering if 'Discoverable' option is set
+    if (filter.contains(QStringLiteral("Discoverable")) && filter.value(QStringLiteral("Discoverable")).toBool())
+    {
+        Object::changeProperty(QStringLiteral("Discoverable"), true);
+    }
+}
+
+QStringList AdapterInterface::GetDiscoveryFilters()
+{
+    return {
+        QStringLiteral("UUIDs"),
+        QStringLiteral("RSSI"),
+        QStringLiteral("Pathloss"),
+        QStringLiteral("Transport"),
+        QStringLiteral("DuplicateData"),
+        QStringLiteral("Discoverable"),
+        QStringLiteral("Pattern")
+    };
+}
+
 void AdapterInterface::resetPairable()
 {
     setPairable(false);

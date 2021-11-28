@@ -171,6 +171,7 @@ private:
         ReturnVoid,
         ReturnUint32,
         ReturnString,
+        ReturnStringList,
         ReturnObjectPath,
         ReturnFileTransferList,
         ReturnTransferWithProperties,
