@@ -55,7 +55,11 @@ public:
     inline const typename Select<Index, T...>::Type valueAt() const
     {
         using ResultType = typename Select<Index, T...>::Type;
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        return qdbus_cast<ResultType>(QVariant(m_reply.argumentAt(Index)));
+#else
         return qdbus_cast<ResultType>(m_reply.argumentAt(Index), nullptr);
+#endif
     }
 
 private:

@@ -9,12 +9,12 @@
 #ifndef BLUEZQT_GATTCHARACTERISTICREMOTE_H
 #define BLUEZQT_GATTCHARACTERISTICREMOTE_H
 
-#include <QObject>
-#include <QMap>
-
-#include "types.h"
 #include "bluezqt_export.h"
-
+#include "gattdescriptorremote.h"
+#include "types.h"
+#include <QList>
+#include <QMap>
+#include <QObject>
 namespace BluezQt
 {
 

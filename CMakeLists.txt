@@ -40,14 +40,14 @@ ecm_setup_version(PROJECT
 set(REQUIRED_QT_VERSION 5.15.2)
 
 # Required Qt5 components to build this framework
-find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core DBus Network)
+find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core DBus Network)
 
 # Optional Qt5 components to build this framework
-find_package(Qt5Test ${REQUIRED_QT_VERSION} CONFIG)
+find_package(Qt${QT_MAJOR_VERSION}Test ${REQUIRED_QT_VERSION} CONFIG)
 set_package_properties(Qt5Test PROPERTIES DESCRIPTION "Autotests for BluezQt" TYPE OPTIONAL)
-find_package(Qt5Qml ${REQUIRED_QT_VERSION} CONFIG)
+find_package(Qt${QT_MAJOR_VERSION}Qml ${REQUIRED_QT_VERSION} CONFIG)
 set_package_properties(Qt5Qml PROPERTIES DESCRIPTION "QML support for BluezQt" TYPE OPTIONAL)
-find_package(Qt5QuickTest ${REQUIRED_QT_VERSION} CONFIG)
+find_package(Qt${QT_MAJOR_VERSION}QuickTest ${REQUIRED_QT_VERSION} CONFIG)
 set_package_properties(Qt5QuickTest PROPERTIES DESCRIPTION "QML autotests for BluezQt" TYPE OPTIONAL)
 add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x050f02)
 # Subdirectories
@@ -97,7 +97,7 @@ install(EXPORT KF5BluezQtTargets
 
 install(FILES
     ${CMAKE_CURRENT_BINARY_DIR}/bluezqt_version.h
-    DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}
+    DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}
     COMPONENT Devel)
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
@@ -109,7 +109,7 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     endif()
 
     ecm_generate_pkgconfig_file(BASE_NAME KF5BluezQt
-      INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF5}/BluezQt/
+      INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF}/BluezQt/
       DEPS "Qt5Core Qt5Network Qt5DBus"
     INSTALL)
 

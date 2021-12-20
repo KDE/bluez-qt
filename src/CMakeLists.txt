@@ -111,14 +111,14 @@ ecm_generate_export_header(KF5BluezQt
     EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
 )
 
-target_include_directories(KF5BluezQt INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF5}/BluezQt>")
+target_include_directories(KF5BluezQt INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/BluezQt>")
 
 target_link_libraries(KF5BluezQt
     PUBLIC
-        Qt5::Core
+        Qt${QT_MAJOR_VERSION}::Core
     PRIVATE
-        Qt5::DBus
-        Qt5::Network
+        Qt${QT_MAJOR_VERSION}::DBus
+        Qt${QT_MAJOR_VERSION}::Network
 )
 
 set_target_properties(KF5BluezQt
@@ -179,13 +179,13 @@ install(TARGETS KF5BluezQt
 
 install(FILES
     ${BluezQt_CamelCase_HEADERS}
-    DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}/BluezQt/BluezQt
+    DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/BluezQt/BluezQt
     COMPONENT Devel)
 
 install(FILES
     ${CMAKE_CURRENT_BINARY_DIR}/bluezqt_export.h
     ${BluezQt_HEADERS}
-    DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}/BluezQt/bluezqt
+    DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/BluezQt/bluezqt
     COMPONENT Devel)
 
 ecm_qt_install_logging_categories(
@@ -227,7 +227,7 @@ ecm_generate_pri_file(
     LIB_NAME KF5BluezQt
     DEPS "core"
     FILENAME_VAR PRI_FILENAME
-    INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF5}/BluezQt
+    INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF}/BluezQt
 )
 install(FILES ${PRI_FILENAME}
         DESTINATION ${ECM_MKSPECS_INSTALL_DIR})

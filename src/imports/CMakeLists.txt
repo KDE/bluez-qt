@@ -16,9 +16,9 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY org/kde/bluezqt)
 add_library(bluezqtextensionplugin SHARED ${bluezqtextensionplugin_SRCS})
 
 target_link_libraries(bluezqtextensionplugin
-    Qt5::Core
-    Qt5::Qml
-    Qt5::DBus
+    Qt${QT_MAJOR_VERSION}::Core
+    Qt${QT_MAJOR_VERSION}::Qml
+    Qt${QT_MAJOR_VERSION}::DBus
     KF5::BluezQt
 )
 
