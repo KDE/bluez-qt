@@ -206,7 +206,7 @@ if(BUILD_QCH)
             ${BluezQt_HEADERS}
         MD_MAINPAGE "${CMAKE_SOURCE_DIR}/README.md"
         LINK_QCHS
-            Qt5Core_QCH
+            Qt${QT_MAJOR_VERSION}Core_QCH
         INCLUDE_DIRS
             ${CMAKE_CURRENT_BINARY_DIR}
         BLANK_MACROS

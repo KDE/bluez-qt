@@ -39,16 +39,16 @@ ecm_setup_version(PROJECT
 # Dependencies
 set(REQUIRED_QT_VERSION 5.15.2)
 
-# Required Qt5 components to build this framework
+# Required Qt components to build this framework
 find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core DBus Network)
 
-# Optional Qt5 components to build this framework
+# Optional Qt components to build this framework
 find_package(Qt${QT_MAJOR_VERSION}Test ${REQUIRED_QT_VERSION} CONFIG)
-set_package_properties(Qt5Test PROPERTIES DESCRIPTION "Autotests for BluezQt" TYPE OPTIONAL)
+set_package_properties(Qt${QT_MAJOR_VERSION}Test PROPERTIES DESCRIPTION "Autotests for BluezQt" TYPE OPTIONAL)
 find_package(Qt${QT_MAJOR_VERSION}Qml ${REQUIRED_QT_VERSION} CONFIG)
-set_package_properties(Qt5Qml PROPERTIES DESCRIPTION "QML support for BluezQt" TYPE OPTIONAL)
+set_package_properties(Qt${QT_MAJOR_VERSION}Qml PROPERTIES DESCRIPTION "QML support for BluezQt" TYPE OPTIONAL)
 find_package(Qt${QT_MAJOR_VERSION}QuickTest ${REQUIRED_QT_VERSION} CONFIG)
-set_package_properties(Qt5QuickTest PROPERTIES DESCRIPTION "QML autotests for BluezQt" TYPE OPTIONAL)
+set_package_properties(Qt${QT_MAJOR_VERSION}QuickTest PROPERTIES DESCRIPTION "QML autotests for BluezQt" TYPE OPTIONAL)
 add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x050f02)
 # Subdirectories
 add_subdirectory(src)
@@ -56,12 +56,12 @@ add_subdirectory(tools/bluezapi2qt)
 
 if (BUILD_TESTING)
     add_subdirectory(tests)
-    if(Qt5Test_FOUND)
+    if(Qt${QT_MAJOR_VERSION}Test_FOUND)
         add_subdirectory(autotests)
     endif()
 endif()
 
-if(Qt5Qml_FOUND)
+if(Qt${QT_MAJOR_VERSION}Qml_FOUND)
     add_subdirectory(src/imports)
 endif()
 
@@ -110,7 +110,7 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
     ecm_generate_pkgconfig_file(BASE_NAME KF5BluezQt
       INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF}/BluezQt/
-      DEPS "Qt5Core Qt5Network Qt5DBus"
+      DEPS "Qt${QT_MAJOR_VERSION}Core Qt${QT_MAJOR_VERSION}Network Qt${QT_MAJOR_VERSION}DBus"
     INSTALL)
 
 endif()

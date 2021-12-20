@@ -46,7 +46,7 @@ bluezqt_tests(
     gattmanagertest
 )
 
-if(Qt5Qml_FOUND AND Qt5QuickTest_FOUND)
+if(Qt${QT_MAJOR_VERSION}Qml_FOUND AND Qt${QT_MAJOR_VERSION}QuickTest_FOUND)
     bluezqt_tests(qmltests)
     target_link_libraries(qmltests Qt${QT_MAJOR_VERSION}::Qml Qt${QT_MAJOR_VERSION}::QuickTest)
     add_definitions(-DBLUEZQT_QML_IMPORT_PATH="${CMAKE_CURRENT_BINARY_DIR}/../src/imports")
