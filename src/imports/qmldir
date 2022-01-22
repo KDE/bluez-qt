@@ -1,4 +1,0 @@
-module org.kde.bluezqt
-plugin bluezqtextensionplugin
-
-DevicesModel 1.0 DevicesModel.qml

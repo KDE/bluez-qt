@@ -1,4 +1,6 @@
-set(bluezqtextensionplugin_SRCS
+ecm_add_qml_module(bluezqtextensionplugin URI "org.kde.bluezqt" VERSION 1.0)
+
+target_sources(bluezqtextensionplugin PRIVATE
     declarativemanager.cpp
     declarativeadapter.cpp
     declarativebattery.cpp
@@ -7,13 +9,9 @@ set(bluezqtextensionplugin_SRCS
     declarativemediaplayer.cpp
     declarativedevicesmodel.cpp
     bluezqtextensionplugin.cpp
-    )
+)
 
-# Needed to run QML autotests
-configure_file(qmldir org/kde/bluezqt/qmldir COPYONLY)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY org/kde/bluezqt)
-
-add_library(bluezqtextensionplugin SHARED ${bluezqtextensionplugin_SRCS})
+ecm_target_qml_sources(bluezqtextensionplugin SOURCES DevicesModel.qml)
 
 target_link_libraries(bluezqtextensionplugin
     Qt${QT_MAJOR_VERSION}::Core
@@ -22,6 +20,4 @@ target_link_libraries(bluezqtextensionplugin
     KF5::BluezQt
 )
 
-install(TARGETS bluezqtextensionplugin DESTINATION ${KDE_INSTALL_QMLDIR}/org/kde/bluezqt)
-install(FILES DevicesModel.qml DESTINATION ${KDE_INSTALL_QMLDIR}/org/kde/bluezqt)
-install(FILES qmldir DESTINATION ${KDE_INSTALL_QMLDIR}/org/kde/bluezqt)
+ecm_finalize_qml_module(bluezqtextensionplugin DESTINATION ${KDE_INSTALL_QMLDIR})
