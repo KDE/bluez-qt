@@ -55,7 +55,8 @@ static QJSValue services_singleton(QQmlEngine *engine, QJSEngine *scriptEngine)
     object.setProperty(QStringLiteral("PhonebookAccessServer"), BluezQt::Services::PhonebookAccessServer);
     object.setProperty(QStringLiteral("MessageAccessServer"), BluezQt::Services::MessageAccessServer);
     object.setProperty(QStringLiteral("PnpInformation"), BluezQt::Services::PnpInformation);
-    object.setProperty(QStringLiteral("GenericAcces"), BluezQt::Services::GenericAcces);
+    object.setProperty(QStringLiteral("GenericAccess"), BluezQt::Services::GenericAccess);
+    object.setProperty(QStringLiteral("GenericAcces"), BluezQt::Services::GenericAccess); // TODO KF6: Remove the one with typo
     object.setProperty(QStringLiteral("GenericAttribute"), BluezQt::Services::GenericAttribute);
     object.setProperty(QStringLiteral("ImmediateAlert"), BluezQt::Services::ImmediateAlert);
     object.setProperty(QStringLiteral("LinkLoss"), BluezQt::Services::LinkLoss);
