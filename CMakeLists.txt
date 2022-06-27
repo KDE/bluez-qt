@@ -24,6 +24,7 @@ include(CMakePackageConfigHelpers)
 include(ECMQtDeclareLoggingCategory)
 include(ECMGeneratePkgConfigFile)
 include(ECMQmlModule)
+include(ECMDeprecationSettings)
 
 set(EXCLUDE_DEPRECATED_BEFORE_AND_AT 0 CACHE STRING "Control the range of deprecated API excluded from the build [default=0].")
 
@@ -50,7 +51,11 @@ find_package(Qt${QT_MAJOR_VERSION}Qml ${REQUIRED_QT_VERSION} CONFIG)
 set_package_properties(Qt${QT_MAJOR_VERSION}Qml PROPERTIES DESCRIPTION "QML support for BluezQt" TYPE OPTIONAL)
 find_package(Qt${QT_MAJOR_VERSION}QuickTest ${REQUIRED_QT_VERSION} CONFIG)
 set_package_properties(Qt${QT_MAJOR_VERSION}QuickTest PROPERTIES DESCRIPTION "QML autotests for BluezQt" TYPE OPTIONAL)
-add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x050f02)
+
+ecm_set_disabled_deprecation_versions(
+    QT 5.15.2
+)
+
 # Subdirectories
 add_subdirectory(src)
 add_subdirectory(tools/bluezapi2qt)
