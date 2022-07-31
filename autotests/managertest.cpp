@@ -38,7 +38,7 @@ void ManagerTest::bluezNotRunningTest()
 {
     // org.bluez is not running at all
     // expected: init successful
-    Manager *manager = new Manager;
+    auto manager = std::make_unique<Manager>();
     InitManagerJob *job = manager->init();
     job->exec();
 
@@ -46,8 +46,6 @@ void ManagerTest::bluezNotRunningTest()
     QVERIFY(manager->isInitialized());
     QVERIFY(!manager->isOperational());
     QVERIFY(!manager->isBluetoothOperational());
-
-    delete manager;
 }
 
 void ManagerTest::bluezNotExportingInterfacesTest()
@@ -57,7 +55,7 @@ void ManagerTest::bluezNotExportingInterfacesTest()
     FakeBluez::start();
     FakeBluez::runTest(QStringLiteral("bluez-not-exporting-interfaces"));
 
-    Manager *manager = new Manager;
+    auto manager = std::make_unique<Manager>();
     InitManagerJob *job = manager->init();
     job->exec();
 
@@ -65,8 +63,6 @@ void ManagerTest::bluezNotExportingInterfacesTest()
     QVERIFY(!manager->isInitialized());
     QVERIFY(!manager->isOperational());
     QVERIFY(!manager->isBluetoothOperational());
-
-    delete manager;
 }
 
 void ManagerTest::bluezEmptyManagedObjectsTest()
@@ -76,7 +72,7 @@ void ManagerTest::bluezEmptyManagedObjectsTest()
     FakeBluez::start();
     FakeBluez::runTest(QStringLiteral("bluez-empty-managed-objects"));
 
-    Manager *manager = new Manager;
+    auto manager = std::make_unique<Manager>();
     InitManagerJob *job = manager->init();
     job->exec();
 
@@ -84,8 +80,6 @@ void ManagerTest::bluezEmptyManagedObjectsTest()
     QVERIFY(!manager->isInitialized());
     QVERIFY(!manager->isOperational());
     QVERIFY(!manager->isBluetoothOperational());
-
-    delete manager;
 }
 
 void ManagerTest::bluezNoAdaptersTest()
@@ -95,7 +89,7 @@ void ManagerTest::bluezNoAdaptersTest()
     FakeBluez::start();
     FakeBluez::runTest(QStringLiteral("bluez-no-adapters"));
 
-    Manager *manager = new Manager;
+    auto manager = std::make_unique<Manager>();
     InitManagerJob *job = manager->init();
     job->exec();
 
@@ -103,8 +97,6 @@ void ManagerTest::bluezNoAdaptersTest()
     QVERIFY(manager->isInitialized());
     QVERIFY(manager->isOperational());
     QVERIFY(!manager->isBluetoothOperational());
-
-    delete manager;
 }
 
 void ManagerTest::bluezShutdownTest()
@@ -143,9 +135,9 @@ void ManagerTest::bluezShutdownTest()
     deviceProps[QStringLiteral("Name")] = QStringLiteral("TestDevice2");
     FakeBluez::runAction(QStringLiteral("devicemanager"), QStringLiteral("create-device"), deviceProps);
 
-    Manager *manager = new Manager;
+    auto manager = std::make_unique<Manager>();
 
-    QSignalSpy btOperationalChangedSpy(manager, SIGNAL(bluetoothOperationalChanged(bool)));
+    QSignalSpy btOperationalChangedSpy(manager.get(), SIGNAL(bluetoothOperationalChanged(bool)));
 
     InitManagerJob *job = manager->init();
     job->exec();
@@ -170,8 +162,8 @@ void ManagerTest::bluezShutdownTest()
     QVERIFY(device1);
     QVERIFY(device2);
 
-    QSignalSpy allAdaptersRemovedSpy(manager, SIGNAL(allAdaptersRemoved()));
-    QSignalSpy adapterRemovedSpy(manager, SIGNAL(adapterRemoved(AdapterPtr)));
+    QSignalSpy allAdaptersRemovedSpy(manager.get(), SIGNAL(allAdaptersRemoved()));
+    QSignalSpy adapterRemovedSpy(manager.get(), SIGNAL(adapterRemoved(AdapterPtr)));
     QSignalSpy device1RemovedSpy(adapter1.data(), SIGNAL(deviceRemoved(DevicePtr)));
     QSignalSpy device2RemovedSpy(adapter2.data(), SIGNAL(deviceRemoved(DevicePtr)));
 
@@ -187,8 +179,6 @@ void ManagerTest::bluezShutdownTest()
 
     QCOMPARE(btOperationalChangedSpy.count(), 1);
     QCOMPARE(btOperationalChangedSpy.first().first().toBool(), false);
-
-    delete manager;
 }
 
 void ManagerTest::usableAdapterTest()
@@ -212,9 +202,9 @@ void ManagerTest::usableAdapterTest()
     adapterProps[QStringLiteral("Powered")] = false;
     FakeBluez::runAction(QStringLiteral("devicemanager"), QStringLiteral("create-adapter"), adapterProps);
 
-    Manager *manager = new Manager;
+    auto manager = std::make_unique<Manager>();
 
-    QSignalSpy usableAdapterChangedSpy(manager, SIGNAL(usableAdapterChanged(AdapterPtr)));
+    QSignalSpy usableAdapterChangedSpy(manager.get(), SIGNAL(usableAdapterChanged(AdapterPtr)));
 
     InitManagerJob *job = manager->init();
     job->exec();
@@ -252,8 +242,6 @@ void ManagerTest::usableAdapterTest()
 
     QTRY_COMPARE(usableAdapterChangedSpy.count(), 1);
     QCOMPARE(manager->usableAdapter()->ubi(), adapter2path.path());
-
-    delete manager;
 }
 
 void ManagerTest::deviceForAddressTest()
@@ -291,7 +279,7 @@ void ManagerTest::deviceForAddressTest()
     deviceProps[QStringLiteral("Adapter")] = QVariant::fromValue(adapter2path);
     FakeBluez::runAction(QStringLiteral("devicemanager"), QStringLiteral("create-device"), deviceProps);
 
-    Manager *manager = new Manager;
+    auto manager = std::make_unique<Manager>();
 
     InitManagerJob *job = manager->init();
     job->exec();
@@ -331,8 +319,6 @@ void ManagerTest::deviceForAddressTest()
 
     QTRY_COMPARE(adapter1Spy.count(), 2);
     QVERIFY(manager->deviceForAddress(address));
-
-    delete manager;
 }
 
 void ManagerTest::adapterWithDevicesRemovedTest()
@@ -365,7 +351,7 @@ void ManagerTest::adapterWithDevicesRemovedTest()
     deviceProps[QStringLiteral("Name")] = QStringLiteral("TestDevice2");
     FakeBluez::runAction(QStringLiteral("devicemanager"), QStringLiteral("create-device"), deviceProps);
 
-    Manager *manager = new Manager;
+    auto manager = std::make_unique<Manager>();
 
     InitManagerJob *job = manager->init();
     job->exec();
@@ -380,8 +366,8 @@ void ManagerTest::adapterWithDevicesRemovedTest()
     QVERIFY(device1);
     QVERIFY(device2);
 
-    QSignalSpy adapterRemovedSpy(manager, SIGNAL(adapterRemoved(AdapterPtr)));
-    QSignalSpy deviceRemovedSpy(manager, SIGNAL(deviceRemoved(DevicePtr)));
+    QSignalSpy adapterRemovedSpy(manager.get(), SIGNAL(adapterRemoved(AdapterPtr)));
+    QSignalSpy deviceRemovedSpy(manager.get(), SIGNAL(deviceRemoved(DevicePtr)));
 
     QVariantMap properties;
     properties[QStringLiteral("Path")] = QVariant::fromValue(adapter1path);
@@ -392,8 +378,6 @@ void ManagerTest::adapterWithDevicesRemovedTest()
     QCOMPARE(manager->adapters().count(), 0);
     QCOMPARE(manager->devices().count(), 0);
     QCOMPARE(adapter->devices().count(), 0);
-
-    delete manager;
 }
 
 void ManagerTest::bug364416()
@@ -403,7 +387,7 @@ void ManagerTest::bug364416()
     FakeBluez::start();
     FakeBluez::runTest(QStringLiteral("bluez-standard"));
 
-    Manager *manager = new Manager;
+    auto manager = std::make_unique<Manager>();
 
     InitManagerJob *job = manager->init();
     job->exec();
@@ -420,8 +404,6 @@ void ManagerTest::bug364416()
 
     // Wait for Manager to receive the interfacesAdded signal
     QTest::qWait(100);
-
-    delete manager;
 }
 
 void ManagerTest::bug377405()
@@ -431,7 +413,7 @@ void ManagerTest::bug377405()
     FakeBluez::start();
     FakeBluez::runTest(QStringLiteral("bluez-standard"));
 
-    Manager *manager = new Manager;
+    auto manager = std::make_unique<Manager>();
 
     InitManagerJob *job = manager->init();
     job->exec();
