@@ -175,7 +175,7 @@ ecm_generate_headers(BluezQt_CamelCase_HEADERS
 # Install files
 install(TARGETS KF5BluezQt
         EXPORT KF5BluezQtTargets
-        ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
+        ${KF_INSTALL_TARGETS_DEFAULT_ARGS})
 
 install(FILES
     ${BluezQt_CamelCase_HEADERS}
