@@ -136,7 +136,7 @@ void GattServiceRemoteTest::initTestCase()
 
 void GattServiceRemoteTest::cleanupTestCase()
 {
-    for (const GattServiceRemoteUnit &unit : qAsConst(m_units)) {
+    for (const GattServiceRemoteUnit &unit : std::as_const(m_units)) {
         delete unit.dbusService;
         delete unit.dbusProperties;
     }
@@ -148,7 +148,7 @@ void GattServiceRemoteTest::cleanupTestCase()
 
 void GattServiceRemoteTest::getPropertiesTest()
 {
-    for (const GattServiceRemoteUnit &unit : qAsConst(m_units)) {
+    for (const GattServiceRemoteUnit &unit : std::as_const(m_units)) {
         QCOMPARE(unit.service->ubi(), unit.dbusService->path());
         QCOMPARE(unit.service->uuid(), unit.dbusService->uUID());
         QCOMPARE(unit.service->isPrimary(), unit.dbusService->primary());
@@ -160,7 +160,7 @@ void GattServiceRemoteTest::getPropertiesTest()
 
 void GattServiceRemoteTest::setHandleTest()
 {
-    for (const GattServiceRemoteUnit &unit : qAsConst(m_units)) {
+    for (const GattServiceRemoteUnit &unit : std::as_const(m_units)) {
         QSignalSpy serviceSpy(unit.service.data(), SIGNAL(handleChanged(quint16)));
         QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString, QVariantMap, QStringList)));
 
@@ -180,7 +180,7 @@ void GattServiceRemoteTest::setHandleTest()
 
 void GattServiceRemoteTest::serviceRemovedTest()
 {
-    for (const GattServiceRemoteUnit &unit : qAsConst(m_units)) {
+    for (const GattServiceRemoteUnit &unit : std::as_const(m_units)) {
         QSignalSpy deviceSpy(unit.service->device().data(), SIGNAL(gattServiceRemoved(GattServiceRemotePtr)));
 
         QVariantMap properties;

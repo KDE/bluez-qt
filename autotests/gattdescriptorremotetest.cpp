@@ -193,7 +193,7 @@ void GattDescriptorRemoteTest::initTestCase()
 
 void GattDescriptorRemoteTest::cleanupTestCase()
 {
-    for (const GattDescriptorRemoteUnit &unit : qAsConst(m_units)) {
+    for (const GattDescriptorRemoteUnit &unit : std::as_const(m_units)) {
         delete unit.dbusDescriptor;
         delete unit.dbusProperties;
     }
@@ -205,7 +205,7 @@ void GattDescriptorRemoteTest::cleanupTestCase()
 
 void GattDescriptorRemoteTest::getPropertiesTest()
 {
-    for (const GattDescriptorRemoteUnit &unit : qAsConst(m_units)) {
+    for (const GattDescriptorRemoteUnit &unit : std::as_const(m_units)) {
         QCOMPARE(unit.descriptor->ubi(), unit.dbusDescriptor->path());
         QCOMPARE(unit.descriptor->uuid(), unit.dbusDescriptor->uUID());
         QCOMPARE(unit.descriptor->characteristic()->ubi(), unit.dbusDescriptor->characteristic().path());
@@ -217,7 +217,7 @@ void GattDescriptorRemoteTest::getPropertiesTest()
 
 void GattDescriptorRemoteTest::setHandleTest()
 {
-    for (const GattDescriptorRemoteUnit &unit : qAsConst(m_units)) {
+    for (const GattDescriptorRemoteUnit &unit : std::as_const(m_units)) {
         QSignalSpy descriptorSpy(unit.descriptor.data(), SIGNAL(handleChanged(quint16)));
         QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString, QVariantMap, QStringList)));
 
@@ -237,7 +237,7 @@ void GattDescriptorRemoteTest::setHandleTest()
 
 void GattDescriptorRemoteTest::readValueTest()
 {
-    for (const GattDescriptorRemoteUnit &unit : qAsConst(m_units)) {
+    for (const GattDescriptorRemoteUnit &unit : std::as_const(m_units)) {
         QSignalSpy descriptorSpy(unit.descriptor.data(), SIGNAL(valueChanged(const QByteArray)));
         QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString, QVariantMap, QStringList)));
 
@@ -264,7 +264,7 @@ void GattDescriptorRemoteTest::readValueTest()
 
 void GattDescriptorRemoteTest::writeValueTest()
 {
-    for (const GattDescriptorRemoteUnit &unit : qAsConst(m_units)) {
+    for (const GattDescriptorRemoteUnit &unit : std::as_const(m_units)) {
         QSignalSpy descriptorSpy(unit.descriptor.data(), SIGNAL(valueChanged(const QByteArray)));
         QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString, QVariantMap, QStringList)));
 
@@ -284,7 +284,7 @@ void GattDescriptorRemoteTest::writeValueTest()
 
 void GattDescriptorRemoteTest::descriptorRemovedTest()
 {
-    for (const GattDescriptorRemoteUnit &unit : qAsConst(m_units)) {
+    for (const GattDescriptorRemoteUnit &unit : std::as_const(m_units)) {
         QSignalSpy characteristicSpy(unit.descriptor->characteristic().data(), SIGNAL(gattDescriptorRemoved(GattDescriptorRemotePtr)));
 
         QVariantMap properties;
