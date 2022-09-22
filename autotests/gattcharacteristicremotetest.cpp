@@ -166,7 +166,7 @@ void GattCharacteristicRemoteTest::initTestCase()
 
 void GattCharacteristicRemoteTest::cleanupTestCase()
 {
-    for (const GattCharacteristicRemoteUnit &unit : qAsConst(m_units)) {
+    for (const GattCharacteristicRemoteUnit &unit : std::as_const(m_units)) {
         delete unit.dbusCharacteristic;
         delete unit.dbusProperties;
     }
@@ -178,7 +178,7 @@ void GattCharacteristicRemoteTest::cleanupTestCase()
 
 void GattCharacteristicRemoteTest::getPropertiesTest()
 {
-    for (const GattCharacteristicRemoteUnit &unit : qAsConst(m_units)) {
+    for (const GattCharacteristicRemoteUnit &unit : std::as_const(m_units)) {
         QCOMPARE(unit.characteristic->ubi(), unit.dbusCharacteristic->path());
         QCOMPARE(unit.characteristic->uuid(), unit.dbusCharacteristic->uUID());
         QCOMPARE(unit.characteristic->service()->ubi(), unit.dbusCharacteristic->service().path());
@@ -192,7 +192,7 @@ void GattCharacteristicRemoteTest::getPropertiesTest()
 
 void GattCharacteristicRemoteTest::setHandleTest()
 {
-    for (const GattCharacteristicRemoteUnit &unit : qAsConst(m_units)) {
+    for (const GattCharacteristicRemoteUnit &unit : std::as_const(m_units)) {
         QSignalSpy characteristicSpy(unit.characteristic.data(), SIGNAL(handleChanged(quint16)));
         QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString, QVariantMap, QStringList)));
 
@@ -212,7 +212,7 @@ void GattCharacteristicRemoteTest::setHandleTest()
 
 void GattCharacteristicRemoteTest::readValueTest()
 {
-    for (const GattCharacteristicRemoteUnit &unit : qAsConst(m_units)) {
+    for (const GattCharacteristicRemoteUnit &unit : std::as_const(m_units)) {
         QSignalSpy characteristicSpy(unit.characteristic.data(), SIGNAL(valueChanged(const QByteArray)));
         QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString, QVariantMap, QStringList)));
 
@@ -239,7 +239,7 @@ void GattCharacteristicRemoteTest::readValueTest()
 
 void GattCharacteristicRemoteTest::writeValueTest()
 {
-    for (const GattCharacteristicRemoteUnit &unit : qAsConst(m_units)) {
+    for (const GattCharacteristicRemoteUnit &unit : std::as_const(m_units)) {
         QSignalSpy characteristicSpy(unit.characteristic.data(), SIGNAL(valueChanged(const QByteArray)));
         QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString, QVariantMap, QStringList)));
 
@@ -259,7 +259,7 @@ void GattCharacteristicRemoteTest::writeValueTest()
 
 void GattCharacteristicRemoteTest::startNotifyTest()
 {
-    for (const GattCharacteristicRemoteUnit &unit : qAsConst(m_units)) {
+    for (const GattCharacteristicRemoteUnit &unit : std::as_const(m_units)) {
         QSignalSpy characteristicSpy(unit.characteristic.data(), SIGNAL(notifyingChanged(bool)));
         QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString, QVariantMap, QStringList)));
 
@@ -286,7 +286,7 @@ void GattCharacteristicRemoteTest::startNotifyTest()
 
 void GattCharacteristicRemoteTest::stopNotifyTest()
 {
-    for (const GattCharacteristicRemoteUnit &unit : qAsConst(m_units)) {
+    for (const GattCharacteristicRemoteUnit &unit : std::as_const(m_units)) {
         QSignalSpy characteristicSpy(unit.characteristic.data(), SIGNAL(notifyingChanged(bool)));
         QSignalSpy dbusSpy(unit.dbusProperties, SIGNAL(PropertiesChanged(QString, QVariantMap, QStringList)));
 
@@ -313,7 +313,7 @@ void GattCharacteristicRemoteTest::stopNotifyTest()
 
 void GattCharacteristicRemoteTest::characteristicRemovedTest()
 {
-    for (const GattCharacteristicRemoteUnit &unit : qAsConst(m_units)) {
+    for (const GattCharacteristicRemoteUnit &unit : std::as_const(m_units)) {
         QSignalSpy serviceSpy(unit.characteristic->service().data(), SIGNAL(gattCharacteristicRemoved(GattCharacteristicRemotePtr)));
 
         QVariantMap properties;
