@@ -11,6 +11,11 @@
 #include <QtQml> // krazy:exclude=includes
 #include <QtQuickTest> // krazy:exclude=includes
 
+#ifdef IMPORT_EXTENSIONS_QML_PLUGIN
+#include <QPluginLoader>
+Q_IMPORT_PLUGIN(BluezQtExtensionPlugin)
+#endif
+
 class FakeBluezObject : public QObject
 {
     Q_OBJECT
