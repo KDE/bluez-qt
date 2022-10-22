@@ -67,6 +67,7 @@ static QJSValue services_singleton(QQmlEngine *engine, QJSEngine *scriptEngine)
 
 void BluezQtExtensionPlugin::registerTypes(const char *uri)
 {
+    qWarning() << Q_FUNC_INFO;
     using namespace BluezQt;
 
     Q_ASSERT(QLatin1String(uri) == QLatin1String("org.kde.bluezqt"));
