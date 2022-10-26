@@ -22,6 +22,23 @@
 #include <QPluginLoader> // krazy:exclude=includes
 #include <QtQml> // krazy:exclude=includes
 
+#include <QQmlExtensionPlugin>
+
+class BluezQtExtensionPlugin : public QQmlExtensionPlugin
+{
+    Q_OBJECT
+    Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QQmlExtensionInterface")
+
+public:
+    BluezQtExtensionPlugin(QObject *parent = nullptr)
+        : QQmlExtensionPlugin(parent)
+    {
+        qWarning() << Q_FUNC_INFO;
+        setObjectName(QStringLiteral("blaaaaaaaaaaa"));
+    };
+    void registerTypes(const char *uri) override;
+};
+
 static QObject *manager_singleton(QQmlEngine *engine, QJSEngine *scriptEngine)
 {
     Q_UNUSED(engine)
@@ -84,3 +101,5 @@ void BluezQtExtensionPlugin::registerTypes(const char *uri)
     qmlRegisterUncreatableType<Rfkill>(uri, 1, 0, "Rfkill", QStringLiteral("Rfkill cannot be created"));
     qmlRegisterSingletonType(uri, 1, 0, "Services", services_singleton);
 }
+
+#include "bluezqtextensionplugin.moc"
