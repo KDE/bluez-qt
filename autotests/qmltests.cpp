@@ -86,6 +86,9 @@ extern void bluezqt_initFakeBluezTestRun();
 int main(int argc, char *argv[])
 {
     Q_INIT_RESOURCE(bluezqtextensionplugin);
+    qWarning() << Q_FUNC_INFO << QPluginLoader::staticPlugins().size();
+    for (auto p : QPluginLoader::staticPlugins())
+        qWarning() << Q_FUNC_INFO << p.metaData();
     qmlRegisterSingletonType<QObject>("org.kde.bluezqt.fakebluez", 1, 0, "FakeBluez", fakebluez_singleton);
 
     BluezQt::bluezqt_initFakeBluezTestRun();

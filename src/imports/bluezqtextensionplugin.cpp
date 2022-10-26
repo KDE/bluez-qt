@@ -19,6 +19,7 @@
 #include "rfkill.h"
 #include "services.h"
 
+#include <QPluginLoader> // krazy:exclude=includes
 #include <QtQml> // krazy:exclude=includes
 
 static QObject *manager_singleton(QQmlEngine *engine, QJSEngine *scriptEngine)
@@ -67,7 +68,7 @@ static QJSValue services_singleton(QQmlEngine *engine, QJSEngine *scriptEngine)
 
 void BluezQtExtensionPlugin::registerTypes(const char *uri)
 {
-    qWarning() << Q_FUNC_INFO;
+    qWarning() << Q_FUNC_INFO << "blaaa?";
     using namespace BluezQt;
 
     Q_ASSERT(QLatin1String(uri) == QLatin1String("org.kde.bluezqt"));
