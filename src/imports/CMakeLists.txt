@@ -9,7 +9,7 @@ target_sources(bluezqtextensionplugin PRIVATE
     declarativemediaplayer.cpp
     declarativedevicesmodel.cpp
     bluezqtextensionplugin.cpp
-    bluezqtextensionplugin.qrc
+    bluezqtextensionplugin2.qrc
 )
 
 if (NOT BUILD_SHARED_LIBS)

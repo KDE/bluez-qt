@@ -92,7 +92,7 @@ extern void bluezqt_initFakeBluezTestRun();
 
 int main(int argc, char *argv[])
 {
-    Q_INIT_RESOURCE(bluezqtextensionplugin);
+    Q_INIT_RESOURCE(bluezqtextensionplugin2);
     QFile f(QStringLiteral(":/qt-project.org/imports/org/kde/bluezqt.1.0/qmldir"));
     qWarning() << f.open(QIODevice::ReadOnly);
     qWarning() << f.readAll();
