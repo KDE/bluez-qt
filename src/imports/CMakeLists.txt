@@ -13,7 +13,7 @@ target_sources(bluezqtextensionplugin PRIVATE
 )
 
 if (NOT BUILD_SHARED_LIBS)
-    target_compile_definitions(bluezqtextensionplugin PRIVATE -DQT_PLUGIN -DQT_STATICPLUGIN=1)
+    target_compile_definitions(bluezqtextensionplugin PRIVATE -DQT_PLUGIN -DQT_STATICPLUGIN=1 -DQT_PLUGIN_RESOURCE_INIT_FUNCTION=initBluezQtExtensionPluginResources)
     set_target_properties(bluezqtextensionplugin PROPERTIES AUTOMOC_MOC_OPTIONS -Muri=org.kde.bluezqt)
 endif()
 

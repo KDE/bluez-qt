@@ -92,15 +92,6 @@ extern void bluezqt_initFakeBluezTestRun();
 
 int main(int argc, char *argv[])
 {
-    Q_INIT_RESOURCE(bluezqtextensionplugin2);
-    QFile f(QStringLiteral(":/qt-project.org/imports/org/kde/bluezqt.1.0/qmldir"));
-    qWarning() << f.open(QIODevice::ReadOnly);
-    qWarning() << f.readAll();
-    for (auto a : QDir(QStringLiteral("qrc:/")).entryList())
-        qWarning() << a;
-    // Q_INIT_RESOURCE(bluezqtextensionplugin);
-    for (auto p : QPluginLoader::staticPlugins())
-        qWarning() << Q_FUNC_INFO << p.metaData();
     qmlRegisterSingletonType<QObject>("org.kde.bluezqt.fakebluez", 1, 0, "FakeBluez", fakebluez_singleton);
 
     BluezQt::bluezqt_initFakeBluezTestRun();

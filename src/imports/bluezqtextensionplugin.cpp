@@ -102,4 +102,9 @@ void BluezQtExtensionPlugin::registerTypes(const char *uri)
     qmlRegisterSingletonType(uri, 1, 0, "Services", services_singleton);
 }
 
+void initBluezQtExtensionPluginResources()
+{
+    Q_INIT_RESOURCE(bluezqtextensionplugin2);
+}
+
 #include "bluezqtextensionplugin.moc"
