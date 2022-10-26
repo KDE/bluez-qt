@@ -6,8 +6,8 @@
 
 import QtTest 1.0
 import QtQuick 2.2
-import org.kde.bluezqt.fakebluez 1.0
 import org.kde.bluezqt 1.0 as BluezQt
+import org.kde.bluezqt.fakebluez 1.0
 
 TestCase {
     name: "Device"

@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: LGPL-2.1-only OR LGPL-3.0-only OR LicenseRef-KDE-Accepted-LGPL
  */
 
+#define QT_PLUGIN_RESOURCE_INIT_FUNCTION initme
+
 #include "autotests.h"
 
 #include <QDBusObjectPath>
@@ -12,7 +14,12 @@
 #include <QtQuickTest> // krazy:exclude=includes
 
 #ifdef IMPORT_EXTENSIONS_QML_PLUGIN
+void initme()
+{
+    Q_INIT_RESOURCE(bluezqtextensionplugin);
+}
 #include <QPluginLoader>
+#include <qplugin.h>
 Q_IMPORT_PLUGIN(BluezQtExtensionPlugin)
 #endif
 
@@ -85,8 +92,7 @@ extern void bluezqt_initFakeBluezTestRun();
 
 int main(int argc, char *argv[])
 {
-    Q_INIT_RESOURCE(bluezqtextensionplugin);
-    qWarning() << Q_FUNC_INFO << QPluginLoader::staticPlugins().size();
+    // Q_INIT_RESOURCE(bluezqtextensionplugin);
     for (auto p : QPluginLoader::staticPlugins())
         qWarning() << Q_FUNC_INFO << p.metaData();
     qmlRegisterSingletonType<QObject>("org.kde.bluezqt.fakebluez", 1, 0, "FakeBluez", fakebluez_singleton);
