@@ -1,0 +1,6 @@
+<RCC>
+<qresource prefix="/qt-project.org/imports/org/kde/bluezqt.1.0/">
+<file alias="qmldir">bluezqtextensionplugin_qmldir</file>
+<file alias="DevicesModel.qml">DevicesModel.qml</file>
+</qresource>
+</RCC>

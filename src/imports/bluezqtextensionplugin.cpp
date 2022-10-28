@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: LGPL-2.1-only OR LGPL-3.0-only OR LicenseRef-KDE-Accepted-LGPL
  */
 
-#include "bluezqtextensionplugin.h"
 #include "declarativeadapter.h"
 #include "declarativebattery.h"
 #include "declarativedevice.h"
@@ -20,6 +19,8 @@
 #include "services.h"
 
 #include <QtQml> // krazy:exclude=includes
+
+#include <QQmlExtensionPlugin>
 
 static QObject *manager_singleton(QQmlEngine *engine, QJSEngine *scriptEngine)
 {
@@ -65,20 +66,36 @@ static QJSValue services_singleton(QQmlEngine *engine, QJSEngine *scriptEngine)
     return object;
 }
 
-void BluezQtExtensionPlugin::registerTypes(const char *uri)
+class BluezQtExtensionPlugin : public QQmlExtensionPlugin
 {
-    using namespace BluezQt;
+    Q_OBJECT
+    Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QQmlExtensionInterface")
 
-    Q_ASSERT(QLatin1String(uri) == QLatin1String("org.kde.bluezqt"));
+public:
+    void registerTypes(const char *uri) override
+    {
+        using namespace BluezQt;
 
-    qmlRegisterSingletonType<DeclarativeManager>(uri, 1, 0, "Manager", manager_singleton);
-    qmlRegisterType<DeclarativeDevicesModel>(uri, 1, 0, "DevicesModelPrivate");
-    qmlRegisterUncreatableType<DeclarativeAdapter>(uri, 1, 0, "Adapter", QStringLiteral("Adapter cannot be created"));
-    qmlRegisterUncreatableType<DeclarativeBattery>(uri, 1, 0, "Battery", QStringLiteral("Battery cannot be created"));
-    qmlRegisterUncreatableType<DeclarativeDevice>(uri, 1, 0, "Device", QStringLiteral("Device cannot be created"));
-    qmlRegisterUncreatableType<DeclarativeInput>(uri, 1, 0, "Input", QStringLiteral("Input cannot be created"));
-    qmlRegisterUncreatableType<DeclarativeMediaPlayer>(uri, 1, 0, "MediaPlayer", QStringLiteral("MediaPlayer cannot be created"));
-    qmlRegisterUncreatableType<PendingCall>(uri, 1, 0, "PendingCall", QStringLiteral("PendingCall cannot be created"));
-    qmlRegisterUncreatableType<Rfkill>(uri, 1, 0, "Rfkill", QStringLiteral("Rfkill cannot be created"));
-    qmlRegisterSingletonType(uri, 1, 0, "Services", services_singleton);
+        Q_ASSERT(QLatin1String(uri) == QLatin1String("org.kde.bluezqt"));
+
+        qmlRegisterSingletonType<DeclarativeManager>(uri, 1, 0, "Manager", manager_singleton);
+        qmlRegisterType<DeclarativeDevicesModel>(uri, 1, 0, "DevicesModelPrivate");
+        qmlRegisterUncreatableType<DeclarativeAdapter>(uri, 1, 0, "Adapter", QStringLiteral("Adapter cannot be created"));
+        qmlRegisterUncreatableType<DeclarativeBattery>(uri, 1, 0, "Battery", QStringLiteral("Battery cannot be created"));
+        qmlRegisterUncreatableType<DeclarativeDevice>(uri, 1, 0, "Device", QStringLiteral("Device cannot be created"));
+        qmlRegisterUncreatableType<DeclarativeInput>(uri, 1, 0, "Input", QStringLiteral("Input cannot be created"));
+        qmlRegisterUncreatableType<DeclarativeMediaPlayer>(uri, 1, 0, "MediaPlayer", QStringLiteral("MediaPlayer cannot be created"));
+        qmlRegisterUncreatableType<PendingCall>(uri, 1, 0, "PendingCall", QStringLiteral("PendingCall cannot be created"));
+        qmlRegisterUncreatableType<Rfkill>(uri, 1, 0, "Rfkill", QStringLiteral("Rfkill cannot be created"));
+        qmlRegisterSingletonType(uri, 1, 0, "Services", services_singleton);
+    }
+};
+
+#ifdef QT_PLUGIN_RESOURCE_INIT_FUNCTION
+void initBluezQtExtensionPluginResources()
+{
+    Q_INIT_RESOURCE(bluezqtextensionplugin2);
 }
+#endif
+
+#include "bluezqtextensionplugin.moc"

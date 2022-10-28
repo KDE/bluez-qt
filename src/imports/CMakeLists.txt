@@ -1,4 +1,4 @@
-ecm_add_qml_module(bluezqtextensionplugin URI "org.kde.bluezqt" VERSION 1.0)
+ecm_add_qml_module(bluezqtextensionplugin URI "org.kde.bluezqt" CLASSNAME BluezQtExtensionPlugin VERSION 1.0)
 
 target_sources(bluezqtextensionplugin PRIVATE
     declarativemanager.cpp
@@ -10,6 +10,11 @@ target_sources(bluezqtextensionplugin PRIVATE
     declarativedevicesmodel.cpp
     bluezqtextensionplugin.cpp
 )
+
+if (NOT BUILD_SHARED_LIBS)
+    target_compile_definitions(bluezqtextensionplugin PRIVATE -DQT_PLUGIN -DQT_STATICPLUGIN=1 -DQT_PLUGIN_RESOURCE_INIT_FUNCTION=initBluezQtExtensionPluginResources)
+    target_sources(bluezqtextensionplugin PRIVATE bluezqtextensionplugin2.qrc)
+endif()
 
 ecm_target_qml_sources(bluezqtextensionplugin SOURCES DevicesModel.qml)
 
