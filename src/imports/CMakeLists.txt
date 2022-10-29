@@ -1,4 +1,4 @@
-ecm_add_qml_module(bluezqtextensionplugin URI "org.kde.bluezqt" VERSION 1.0)
+ecm_add_qml_module(bluezqtextensionplugin URI "org.kde.bluezqt" CLASSNAME BluezQtExtensionPlugin VERSION 1.0)
 
 target_sources(bluezqtextensionplugin PRIVATE
     declarativemanager.cpp
