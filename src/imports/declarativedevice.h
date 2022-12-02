@@ -37,6 +37,7 @@ class DeclarativeDevice : public QObject
     Q_PROPERTY(bool connected READ isConnected NOTIFY connectedChanged)
     Q_PROPERTY(QStringList uuids READ uuids NOTIFY uuidsChanged)
     Q_PROPERTY(QString modalias READ modalias NOTIFY modaliasChanged)
+    Q_PROPERTY(DeclarativeBattery *battery READ battery NOTIFY batteryChanged)
     Q_PROPERTY(DeclarativeInput *input READ input NOTIFY inputChanged)
     Q_PROPERTY(DeclarativeMediaPlayer *mediaPlayer READ mediaPlayer NOTIFY mediaPlayerChanged)
     Q_PROPERTY(DeclarativeAdapter *adapter READ adapter CONSTANT)
