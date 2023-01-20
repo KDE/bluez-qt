@@ -10,8 +10,8 @@ platforms:
       note: Functional only with running BlueZ 5
 libraries:
     - qmake: BluezQt
-      cmake: KF5::BluezQt
-cmakename: KF5BluezQt
+      cmake: KF6::BluezQt
+cmakename: KF6BluezQt
 
 public_lib: true
 group: Frameworks

@@ -34,7 +34,7 @@ add_feature_info(QCH ${BUILD_QCH} "API documentation in QCH format (for e.g. Qt 
 ecm_setup_version(PROJECT
     VARIABLE_PREFIX BLUEZQT
     VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/bluezqt_version.h"
-    PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5BluezQtConfigVersion.cmake"
+    PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF6BluezQtConfigVersion.cmake"
     SOVERSION 6
 )
 
@@ -72,34 +72,34 @@ if(Qt${QT_MAJOR_VERSION}Qml_FOUND)
 endif()
 
 # Create a Config.cmake and a ConfigVersion.cmake file and install them
-set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF5BluezQt")
+set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF6BluezQt")
 
 if (BUILD_QCH)
     ecm_install_qch_export(
-        TARGETS KF5BluezQt_QCH
-        FILE KF5BluezQtQchTargets.cmake
+        TARGETS KF6BluezQt_QCH
+        FILE KF6BluezQtQchTargets.cmake
         DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
         COMPONENT Devel
     )
-    set(PACKAGE_INCLUDE_QCHTARGETS "include(\"\${CMAKE_CURRENT_LIST_DIR}/KF5BluezQtQchTargets.cmake\")")
+    set(PACKAGE_INCLUDE_QCHTARGETS "include(\"\${CMAKE_CURRENT_LIST_DIR}/KF6BluezQtQchTargets.cmake\")")
 endif()
 
 configure_package_config_file(
-    "${CMAKE_CURRENT_SOURCE_DIR}/KF5BluezQtConfig.cmake.in"
-    "${CMAKE_CURRENT_BINARY_DIR}/KF5BluezQtConfig.cmake"
+    "${CMAKE_CURRENT_SOURCE_DIR}/KF6BluezQtConfig.cmake.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/KF6BluezQtConfig.cmake"
     INSTALL_DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
 )
 
 install(FILES
-    "${CMAKE_CURRENT_BINARY_DIR}/KF5BluezQtConfig.cmake"
-    "${CMAKE_CURRENT_BINARY_DIR}/KF5BluezQtConfigVersion.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/KF6BluezQtConfig.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/KF6BluezQtConfigVersion.cmake"
     DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
     COMPONENT Devel)
 
-install(EXPORT KF5BluezQtTargets
+install(EXPORT KF6BluezQtTargets
     DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
-    FILE KF5BluezQtTargets.cmake
-    NAMESPACE KF5::)
+    FILE KF6BluezQtTargets.cmake
+    NAMESPACE KF6::)
 
 install(FILES
     ${CMAKE_CURRENT_BINARY_DIR}/bluezqt_version.h
@@ -114,7 +114,7 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
         install(FILES 61-kde-bluetooth-rfkill.rules DESTINATION ${UDEV_RULES_INSTALL_DIR})
     endif()
 
-    ecm_generate_pkgconfig_file(BASE_NAME KF5BluezQt
+    ecm_generate_pkgconfig_file(BASE_NAME KF6BluezQt
       INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF}/BluezQt/
       DEPS "Qt${QT_MAJOR_VERSION}Core Qt${QT_MAJOR_VERSION}Network Qt${QT_MAJOR_VERSION}DBus"
     INSTALL)

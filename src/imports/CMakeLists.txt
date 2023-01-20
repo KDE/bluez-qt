@@ -17,7 +17,7 @@ target_link_libraries(bluezqtextensionplugin
     Qt${QT_MAJOR_VERSION}::Core
     Qt${QT_MAJOR_VERSION}::Qml
     Qt${QT_MAJOR_VERSION}::DBus
-    KF5::BluezQt
+    KF6::BluezQt
 )
 
 ecm_finalize_qml_module(bluezqtextensionplugin DESTINATION ${KDE_INSTALL_QMLDIR})

@@ -100,9 +100,9 @@ qt_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bl
 qt_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.obex.Session1.xml obexsession1)
 qt_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bluez.obex.ObjectPush1.xml obexobjectpush1)
 
-add_library(KF5BluezQt ${bluezqt_SRCS})
-add_library(KF5::BluezQt ALIAS KF5BluezQt)
-ecm_generate_export_header(KF5BluezQt
+add_library(KF6BluezQt ${bluezqt_SRCS})
+add_library(KF6::BluezQt ALIAS KF6BluezQt)
+ecm_generate_export_header(KF6BluezQt
     BASE_NAME BluezQt
     GROUP_BASE_NAME KF
     VERSION ${KF_VERSION}
@@ -111,9 +111,9 @@ ecm_generate_export_header(KF5BluezQt
     EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
 )
 
-target_include_directories(KF5BluezQt INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/BluezQt>")
+target_include_directories(KF6BluezQt INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/BluezQt>")
 
-target_link_libraries(KF5BluezQt
+target_link_libraries(KF6BluezQt
     PUBLIC
         Qt${QT_MAJOR_VERSION}::Core
     PRIVATE
@@ -121,7 +121,7 @@ target_link_libraries(KF5BluezQt
         Qt${QT_MAJOR_VERSION}::Network
 )
 
-set_target_properties(KF5BluezQt
+set_target_properties(KF6BluezQt
     PROPERTIES VERSION ${BLUEZQT_VERSION}
     SOVERSION ${BLUEZQT_SOVERSION}
     EXPORT_NAME "BluezQt"
@@ -173,8 +173,8 @@ ecm_generate_headers(BluezQt_CamelCase_HEADERS
 )
 
 # Install files
-install(TARGETS KF5BluezQt
-        EXPORT KF5BluezQtTargets
+install(TARGETS KF6BluezQt
+        EXPORT KF6BluezQtTargets
         ${KF_INSTALL_TARGETS_DEFAULT_ARGS})
 
 install(FILES
@@ -197,9 +197,9 @@ ecm_qt_install_logging_categories(
 
 if(BUILD_QCH)
     ecm_add_qch(
-        KF5BluezQt_QCH
+        KF6BluezQt_QCH
         NAME BluezQt
-        BASE_NAME KF5BluezQt
+        BASE_NAME KF6BluezQt
         VERSION ${KF_VERSION}
         ORG_DOMAIN org.kde
         SOURCES # using only public headers, to cover only public API
@@ -224,7 +224,7 @@ include(ECMGeneratePriFile)
 
 ecm_generate_pri_file(
     BASE_NAME BluezQt
-    LIB_NAME KF5BluezQt
+    LIB_NAME KF6BluezQt
     DEPS "core"
     FILENAME_VAR PRI_FILENAME
     INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF}/BluezQt

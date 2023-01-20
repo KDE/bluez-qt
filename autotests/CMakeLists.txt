@@ -20,7 +20,7 @@ qt_add_dbus_interface(bluezqt_autotests_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfa
 macro(bluezqt_tests)
     foreach(_testname ${ARGN})
         add_executable(${_testname} ${_testname}.cpp ${bluezqt_autotests_SRCS})
-        target_link_libraries(${_testname} Qt${QT_MAJOR_VERSION}::DBus Qt${QT_MAJOR_VERSION}::Test KF5BluezQt)
+        target_link_libraries(${_testname} Qt${QT_MAJOR_VERSION}::DBus Qt${QT_MAJOR_VERSION}::Test KF6BluezQt)
         add_test(NAME bluezqt-${_testname} COMMAND ${_testname})
         ecm_mark_as_test(${_testname})
         set_tests_properties(bluezqt-${_testname} PROPERTIES RUN_SERIAL TRUE)
