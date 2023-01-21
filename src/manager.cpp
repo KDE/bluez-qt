@@ -227,13 +227,6 @@ PendingCall *Manager::unregisterProfile(Profile *profile)
     return new PendingCall(d->m_bluezProfileManager->UnregisterProfile(profile->objectPath()), PendingCall::ReturnVoid, this);
 }
 
-#if BLUEZQT_BUILD_DEPRECATED_SINCE(5, 57)
-MediaPtr Manager::media() const
-{
-    return usableAdapter() ? usableAdapter()->media() : nullptr;
-}
-#endif
-
 Rfkill *Manager::rfkill() const
 {
     return d->m_rfkill;
