@@ -55,7 +55,7 @@ public Q_SLOTS:
             it.next();
             if (it.key() == QLatin1String("UUIDs")) {
                 properties[it.key()] = it.value().toStringList();
-            } else if (it.value().type() == QVariant::Map) {
+            } else if (it.value().userType() == QMetaType::QVariantMap) {
                 QVariantMap props = it.value().toMap();
                 processProperties(props);
                 properties[it.key()] = props;
