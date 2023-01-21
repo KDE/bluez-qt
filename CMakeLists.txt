@@ -42,15 +42,15 @@ ecm_setup_version(PROJECT
 set(REQUIRED_QT_VERSION 6.4.0)
 
 # Required Qt components to build this framework
-find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core DBus Network)
+find_package(Qt6 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core DBus Network)
 
 # Optional Qt components to build this framework
-find_package(Qt${QT_MAJOR_VERSION}Test ${REQUIRED_QT_VERSION} CONFIG)
-set_package_properties(Qt${QT_MAJOR_VERSION}Test PROPERTIES DESCRIPTION "Autotests for BluezQt" TYPE OPTIONAL)
-find_package(Qt${QT_MAJOR_VERSION}Qml ${REQUIRED_QT_VERSION} CONFIG)
-set_package_properties(Qt${QT_MAJOR_VERSION}Qml PROPERTIES DESCRIPTION "QML support for BluezQt" TYPE OPTIONAL)
-find_package(Qt${QT_MAJOR_VERSION}QuickTest ${REQUIRED_QT_VERSION} CONFIG)
-set_package_properties(Qt${QT_MAJOR_VERSION}QuickTest PROPERTIES DESCRIPTION "QML autotests for BluezQt" TYPE OPTIONAL)
+find_package(Qt6Test ${REQUIRED_QT_VERSION} CONFIG)
+set_package_properties(Qt6Test PROPERTIES DESCRIPTION "Autotests for BluezQt" TYPE OPTIONAL)
+find_package(Qt6Qml ${REQUIRED_QT_VERSION} CONFIG)
+set_package_properties(Qt6Qml PROPERTIES DESCRIPTION "QML support for BluezQt" TYPE OPTIONAL)
+find_package(Qt6QuickTest ${REQUIRED_QT_VERSION} CONFIG)
+set_package_properties(Qt6QuickTest PROPERTIES DESCRIPTION "QML autotests for BluezQt" TYPE OPTIONAL)
 
 ecm_set_disabled_deprecation_versions(
     QT 6.4
@@ -62,12 +62,12 @@ add_subdirectory(tools/bluezapi2qt)
 
 if (BUILD_TESTING)
     add_subdirectory(tests)
-    if(Qt${QT_MAJOR_VERSION}Test_FOUND)
+    if(Qt6Test_FOUND)
         add_subdirectory(autotests)
     endif()
 endif()
 
-if(Qt${QT_MAJOR_VERSION}Qml_FOUND)
+if(Qt6Qml_FOUND)
     add_subdirectory(src/imports)
 endif()
 
@@ -116,7 +116,7 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
     ecm_generate_pkgconfig_file(BASE_NAME KF6BluezQt
       INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF}/BluezQt/
-      DEPS "Qt${QT_MAJOR_VERSION}Core Qt${QT_MAJOR_VERSION}Network Qt${QT_MAJOR_VERSION}DBus"
+      DEPS "Qt6Core Qt6Network Qt6DBus"
     INSTALL)
 
 endif()

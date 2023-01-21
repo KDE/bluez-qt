@@ -14,5 +14,5 @@ add_executable(bluezapi2qt
 )
 
 target_link_libraries(bluezapi2qt
-    Qt${QT_MAJOR_VERSION}::Core
+    Qt6::Core
 )

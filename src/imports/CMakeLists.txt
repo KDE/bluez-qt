@@ -14,9 +14,9 @@ target_sources(bluezqtextensionplugin PRIVATE
 ecm_target_qml_sources(bluezqtextensionplugin SOURCES DevicesModel.qml)
 
 target_link_libraries(bluezqtextensionplugin
-    Qt${QT_MAJOR_VERSION}::Core
-    Qt${QT_MAJOR_VERSION}::Qml
-    Qt${QT_MAJOR_VERSION}::DBus
+    Qt6::Core
+    Qt6::Qml
+    Qt6::DBus
     KF6::BluezQt
 )
 

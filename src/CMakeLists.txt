@@ -115,10 +115,10 @@ target_include_directories(KF6BluezQt INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTA
 
 target_link_libraries(KF6BluezQt
     PUBLIC
-        Qt${QT_MAJOR_VERSION}::Core
+        Qt6::Core
     PRIVATE
-        Qt${QT_MAJOR_VERSION}::DBus
-        Qt${QT_MAJOR_VERSION}::Network
+        Qt6::DBus
+        Qt6::Network
 )
 
 set_target_properties(KF6BluezQt
@@ -206,7 +206,7 @@ if(BUILD_QCH)
             ${BluezQt_HEADERS}
         MD_MAINPAGE "${CMAKE_SOURCE_DIR}/README.md"
         LINK_QCHS
-            Qt${QT_MAJOR_VERSION}Core_QCH
+            Qt6Core_QCH
         INCLUDE_DIRS
             ${CMAKE_CURRENT_BINARY_DIR}
         BLANK_MACROS

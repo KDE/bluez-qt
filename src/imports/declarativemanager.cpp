@@ -12,11 +12,7 @@
 #include "declarativedevice.h"
 #include "device.h"
 #include "initmanagerjob.h"
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 static qsizetype adaptersCountFunction(QQmlListProperty<DeclarativeAdapter> *property)
-#else
-static int adaptersCountFunction(QQmlListProperty<DeclarativeAdapter> *property)
-#endif
 {
     Q_ASSERT(qobject_cast<DeclarativeManager *>(property->object));
     DeclarativeManager *manager = static_cast<DeclarativeManager *>(property->object);
@@ -24,11 +20,7 @@ static int adaptersCountFunction(QQmlListProperty<DeclarativeAdapter> *property)
     return manager->m_adapters.count();
 }
 
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 static DeclarativeAdapter *adaptersAtFunction(QQmlListProperty<DeclarativeAdapter> *property, qsizetype index)
-#else
-static DeclarativeAdapter *adaptersAtFunction(QQmlListProperty<DeclarativeAdapter> *property, int index)
-#endif
 {
     Q_ASSERT(qobject_cast<DeclarativeManager *>(property->object));
     DeclarativeManager *manager = static_cast<DeclarativeManager *>(property->object);
@@ -36,11 +28,7 @@ static DeclarativeAdapter *adaptersAtFunction(QQmlListProperty<DeclarativeAdapte
     return manager->m_adapters.values().at(index);
 }
 
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 static qsizetype devicesCountFunction(QQmlListProperty<DeclarativeDevice> *property)
-#else
-static int devicesCountFunction(QQmlListProperty<DeclarativeDevice> *property)
-#endif
 {
     Q_ASSERT(qobject_cast<DeclarativeManager *>(property->object));
     DeclarativeManager *manager = static_cast<DeclarativeManager *>(property->object);
@@ -48,11 +36,7 @@ static int devicesCountFunction(QQmlListProperty<DeclarativeDevice> *property)
     return manager->m_devices.count();
 }
 
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 static DeclarativeDevice *devicesAtFunction(QQmlListProperty<DeclarativeDevice> *property, qsizetype index)
-#else
-static DeclarativeDevice *devicesAtFunction(QQmlListProperty<DeclarativeDevice> *property, int index)
-#endif
 {
     Q_ASSERT(qobject_cast<DeclarativeManager *>(property->object));
     DeclarativeManager *manager = static_cast<DeclarativeManager *>(property->object);

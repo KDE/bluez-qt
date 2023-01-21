@@ -26,6 +26,6 @@ set(fakebluez_SRCS
 add_executable(fakebluez ${fakebluez_SRCS})
 
 target_link_libraries(fakebluez
-    Qt${QT_MAJOR_VERSION}::Core
-    Qt${QT_MAJOR_VERSION}::DBus
+    Qt6::Core
+    Qt6::DBus
 )
