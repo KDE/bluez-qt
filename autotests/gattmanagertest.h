@@ -4,7 +4,8 @@
  * SPDX-License-Identifier: LGPL-2.1-only OR LGPL-3.0-only OR LicenseRef-KDE-Accepted-LGPL
  */
 
-#pragma once
+#ifndef GATTMANAGERTEST_H
+#define GATTMANAGERTEST_H
 
 #include "adapter.h"
 #include "gattapplication.h"
@@ -26,3 +27,5 @@ private:
     BluezQt::GattCharacteristic *m_characteristic;
     BluezQt::AdapterPtr m_adapter;
 };
+
+#endif

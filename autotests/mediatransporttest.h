@@ -4,7 +4,8 @@
  * SPDX-License-Identifier: LGPL-2.1-only OR LGPL-3.0-only OR LicenseRef-KDE-Accepted-LGPL
  */
 
-#pragma once
+#ifndef MEDIATRANSPORTTEST_H
+#define MEDIATRANSPORTTEST_H
 
 #include <QList>
 #include <QObject>
@@ -46,3 +47,5 @@ private:
     BluezQt::Manager *m_manager;
     QList<MediaTransportUnit> m_units;
 };
+
+#endif

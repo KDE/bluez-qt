@@ -4,7 +4,8 @@
  * SPDX-License-Identifier: LGPL-2.1-only OR LGPL-3.0-only OR LicenseRef-KDE-Accepted-LGPL
  */
 
-#pragma once
+#ifndef MEDIAINTERFACE_H
+#define MEDIAINTERFACE_H
 
 #include "object.h"
 
@@ -36,3 +37,5 @@ private:
     QString m_service;
     QVariantMap m_properties;
 };
+
+#endif

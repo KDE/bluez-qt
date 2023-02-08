@@ -6,7 +6,8 @@
  * SPDX-License-Identifier: LGPL-2.1-only OR LGPL-3.0-only OR LicenseRef-KDE-Accepted-LGPL
  */
 
-#pragma once
+#ifndef BLUEZQT_GATTCHARACTERISTICADAPTOR_H
+#define BLUEZQT_GATTCHARACTERISTICADAPTOR_H
 
 #include <QDBusAbstractAdaptor>
 
@@ -44,3 +45,5 @@ private:
 };
 
 } // namespace BluezQt
+
+#endif
