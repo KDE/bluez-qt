@@ -4,7 +4,8 @@
  * SPDX-License-Identifier: LGPL-2.1-only OR LGPL-3.0-only OR LicenseRef-KDE-Accepted-LGPL
  */
 
-#pragma once
+#ifndef LEADVERTISINGMANAGERINTERFACE_H
+#define LEADVERTISINGMANAGERINTERFACE_H
 
 #include "object.h"
 
@@ -32,3 +33,5 @@ private:
     QDBusObjectPath m_advertisement;
     QString m_service;
 };
+
+#endif

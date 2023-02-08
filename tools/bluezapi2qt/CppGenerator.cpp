@@ -33,6 +33,7 @@ void CppGenerator::writeAdaptorHeader(const BluezApiParser &parser)
     // Iterate interfaces
     for (const auto &interface : parser.interfaces()) {
         auto className = interfaceToClassName(interface.name());
+        const QString includeGuard = QLatin1String("BLUEZQT_") + className.toUpper() + QLatin1String("ADAPTOR_H");
 
         // Create file
         QFile file(className.toLower() + QStringLiteral("adaptor.h"));
@@ -44,7 +45,8 @@ void CppGenerator::writeAdaptorHeader(const BluezApiParser &parser)
         // Write content
         QTextStream stream(&file);
         writeCopyrightHeader(stream);
-        stream << "#pragma once\n\n";
+        stream << "#ifndef " << includeGuard << "\n";
+        stream << "#define " << includeGuard << "\n\n";
         stream << "#include <QDBusAbstractAdaptor>\n\n";
         stream << "class QDBusObjectPath;\n\n";
         stream << "namespace BluezQt\n{\n\n";
@@ -103,7 +105,10 @@ void CppGenerator::writeAdaptorHeader(const BluezApiParser &parser)
         // write private members
         stream << "\nprivate:\n";
         stream << "    " << className << " *m_" << lowerFirstChars(className) << ";\n";
-        stream << "};\n\n} // namespace BluezQt\n";
+        stream << "};\n\n} // namespace BluezQt\n\n";
+
+        // include guard
+        stream << "#endif\n";
 
         file.close();
     }

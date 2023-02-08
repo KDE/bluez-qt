@@ -6,7 +6,8 @@
  * SPDX-License-Identifier: LGPL-2.1-only OR LGPL-3.0-only OR LicenseRef-KDE-Accepted-LGPL
  */
 
-#pragma once
+#ifndef BLUEZQT_GATTCHARACTERISTIC_P_H
+#define BLUEZQT_GATTCHARACTERISTIC_P_H
 
 #include "gattcharacteristic.h"
 
@@ -27,3 +28,5 @@ public:
 };
 
 } // namespace BluezQt
+
+#endif

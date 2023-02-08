@@ -4,7 +4,8 @@
  * SPDX-License-Identifier: LGPL-2.1-only OR LGPL-3.0-only OR LicenseRef-KDE-Accepted-LGPL
  */
 
-#pragma once
+#ifndef LESERVER_H
+#define LESERVER_H
 
 #include <QObject>
 
@@ -27,3 +28,5 @@ private:
 
     BluezQt::Manager *m_manager;
 };
+
+#endif
