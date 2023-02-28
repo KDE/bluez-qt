@@ -113,16 +113,16 @@ DevicePtr Manager::deviceForAddress(const QString &address) const
     DevicePtr device;
 
     for (AdapterPtr adapter : std::as_const(d->m_adapters)) {
-        DevicePtr d = adapter->deviceForAddress(address);
-        if (!d) {
+        DevicePtr oneDevice = adapter->deviceForAddress(address);
+        if (!oneDevice) {
             continue;
         }
 
         // Prefer powered adapter
         if (!device) {
-            device = d;
+            device = oneDevice;
         } else if (adapter->isPowered()) {
-            device = d;
+            device = oneDevice;
         }
     }
 
