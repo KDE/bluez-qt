@@ -204,7 +204,7 @@ protected:
     void setErrorText(const QString &errorText);
 
     /**
-     * Utility function to emit the result signal, and suicide this job.
+     * Utility function to emit the result signal, and remove this job.
      *
      * @note Deletes this job using deleteLater().
      * @see result() const
