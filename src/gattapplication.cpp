@@ -11,6 +11,8 @@
 #include "gattapplication_p.h"
 #include "gattcharacteristic.h"
 #include "gattcharacteristicadaptor.h"
+#include "gattdescriptor.h"
+#include "gattdescriptoradaptor.h"
 #include "gattservice.h"
 #include "gattserviceadaptor.h"
 
@@ -41,6 +43,7 @@ DBusManagerStruct GattApplicationPrivate::getManagedObjects() const
 
     const auto serviceAdaptors = q->findChildren<GattServiceAdaptor *>();
     const auto charcAdaptors = q->findChildren<GattCharacteristicAdaptor *>();
+    const auto descriptorAdaptors = q->findChildren<GattDescriptorAdaptor *>();
 
     for (const GattServiceAdaptor *serviceAdaptor : serviceAdaptors) {
         QVariantMap properties;
@@ -65,6 +68,19 @@ DBusManagerStruct GattApplicationPrivate::getManagedObjects() const
         GattCharacteristic *charc = qobject_cast<GattCharacteristic *>(charcAdaptor->parent());
         if (charc) {
             objects[charc->objectPath()].insert(QStringLiteral("org.bluez.GattCharacteristic1"), properties);
+        }
+    }
+
+    for (const GattDescriptorAdaptor *descAdaptor : descriptorAdaptors) {
+        QVariantMap properties;
+        for (int i = descAdaptor->metaObject()->propertyOffset(); i < descAdaptor->metaObject()->propertyCount(); ++i) {
+            auto propertyName = descAdaptor->metaObject()->property(i).name();
+            properties.insert(QString::fromLatin1(propertyName), descAdaptor->property(propertyName));
+        }
+
+        GattDescriptor *desc = qobject_cast<GattDescriptor *>(descAdaptor->parent());
+        if (desc) {
+            objects[desc->objectPath()].insert(QStringLiteral("org.bluez.GattDescriptor1"), properties);
         }
     }
 

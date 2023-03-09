@@ -12,6 +12,8 @@
 #include "gattapplication.h"
 #include "gattcharacteristic.h"
 #include "gattcharacteristicadaptor.h"
+#include "gattdescriptor.h"
+#include "gattdescriptoradaptor.h"
 #include "gattmanager_p.h"
 #include "gattservice.h"
 #include "gattserviceadaptor.h"
@@ -45,6 +47,15 @@ PendingCall *GattManager::registerApplication(GattApplication *application)
         const auto charcs = service->findChildren<GattCharacteristic *>();
         for (auto charc : charcs) {
             new GattCharacteristicAdaptor(charc);
+
+            for (auto descriptor : charc->findChildren<GattDescriptor *>()) {
+                new GattDescriptorAdaptor(descriptor);
+
+                if (!DBusConnection::orgBluez().registerObject(descriptor->objectPath().path(), descriptor, QDBusConnection::ExportAdaptors)) {
+                    qCDebug(BLUEZQT) << "Cannot register object" << descriptor->objectPath().path();
+                }
+            }
+
             if (!DBusConnection::orgBluez().registerObject(charc->objectPath().path(), charc, QDBusConnection::ExportAdaptors)) {
                 qCDebug(BLUEZQT) << "Cannot register object" << charc->objectPath().path();
             }

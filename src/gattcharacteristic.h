@@ -87,6 +87,8 @@ private:
 
     friend class GattApplicationPrivate;
     friend class GattCharacteristicAdaptor;
+    friend class GattDescriptor;
+    friend class GattDescriptorPrivate;
     friend class GattManager;
 };
 

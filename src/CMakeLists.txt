@@ -12,6 +12,9 @@ set(bluezqt_SRCS
     gattcharacteristic.cpp
     gattcharacteristic_p.cpp
     gattcharacteristicadaptor.cpp
+    gattdescriptor.cpp
+    gattdescriptor_p.cpp
+    gattdescriptoradaptor.cpp
     gattmanager.cpp
     gattmanager_p.cpp
     gattservice.cpp
@@ -135,6 +138,7 @@ ecm_generate_headers(BluezQt_CamelCase_HEADERS
         Device
         GattApplication
         GattCharacteristic
+        GattDescriptor
         GattManager
         GattService
         GattServiceRemote
