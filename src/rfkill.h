@@ -48,10 +48,11 @@ private Q_SLOTS:
     void devReadyRead();
 
 private:
-    void init();
-    bool openForWriting();
-    void updateRfkillDevices();
-    bool setSoftBlock(quint8 soft);
+    BLUEZQT_NO_EXPORT void init();
+    BLUEZQT_NO_EXPORT bool openForWriting();
+    BLUEZQT_NO_EXPORT void updateRfkillDevices();
+    BLUEZQT_NO_EXPORT bool setSoftBlock(quint8 soft);
+
     std::unique_ptr<RfkillPrivate> d;
 };
 
