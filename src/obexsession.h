@@ -106,7 +106,7 @@ public:
     PendingCall *getCapabilities();
 
 private:
-    explicit ObexSession(const QString &path, const QVariantMap &properties);
+    BLUEZQT_NO_EXPORT explicit ObexSession(const QString &path, const QVariantMap &properties);
 
     class ObexSessionPrivate *const d;
 

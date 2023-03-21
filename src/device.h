@@ -596,7 +596,7 @@ Q_SIGNALS:
     void mediaTransportChanged(MediaTransportPtr mediaTransport);
 
 private:
-    explicit Device(const QString &path, const QVariantMap &properties, AdapterPtr adapter);
+    BLUEZQT_NO_EXPORT explicit Device(const QString &path, const QVariantMap &properties, AdapterPtr adapter);
 
     class DevicePrivate *const d;
 

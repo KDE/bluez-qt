@@ -83,7 +83,7 @@ public:
     PendingCall *unregisterApplication(GattApplication *application);
 
 private:
-    explicit GattManager(const QString &path, QObject *parent = nullptr);
+    BLUEZQT_NO_EXPORT explicit GattManager(const QString &path, QObject *parent = nullptr);
 
     class GattManagerPrivate *const d;
 

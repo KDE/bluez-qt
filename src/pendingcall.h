@@ -178,8 +178,10 @@ private:
         ReturnByteArray
     };
 
-    explicit PendingCall(const QDBusPendingCall &call, ReturnType type, QObject *parent = nullptr);
-    explicit PendingCall(Error error, const QString &errorText, QObject *parent = nullptr);
+    BLUEZQT_NO_EXPORT explicit PendingCall(Error error, const QString &errorText, QObject *parent = nullptr);
+    BLUEZQT_NO_EXPORT explicit PendingCall(const QDBusPendingCall &call, ReturnType type, QObject *parent = nullptr);
+
+    // exported because called from template BluezQt::TPendingCall constructor
     using ErrorProcessor = std::function<void(const QDBusError &error)>;
     using ExternalProcessor = std::function<void(QDBusPendingCallWatcher *watcher, ErrorProcessor errorProcessor, QVariantList *values)>;
     explicit PendingCall(const QDBusPendingCall &call, ExternalProcessor externalProcessor, QObject *parent = nullptr);

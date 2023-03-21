@@ -107,7 +107,7 @@ public:
     quint32 duration() const;
 
 private:
-    explicit MediaPlayerTrack(const QVariantMap &properties);
+    BLUEZQT_NO_EXPORT explicit MediaPlayerTrack(const QVariantMap &properties);
 
     QSharedPointer<class MediaPlayerTrackPrivate> d;
 

@@ -162,7 +162,7 @@ Q_SIGNALS:
     void includesChanged(const QList<QDBusObjectPath> &includes);
 
 private:
-    explicit GattServiceRemote(const QString &path, const QVariantMap &properties, DevicePtr device);
+    BLUEZQT_NO_EXPORT explicit GattServiceRemote(const QString &path, const QVariantMap &properties, DevicePtr device);
 
     const std::unique_ptr<class GattServiceRemotePrivate> d;
 

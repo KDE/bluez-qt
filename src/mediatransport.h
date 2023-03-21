@@ -117,7 +117,7 @@ Q_SIGNALS:
     void volumeChanged(quint16 volume);
 
 private:
-    explicit MediaTransport(const QString &path, const QVariantMap &properties);
+    BLUEZQT_NO_EXPORT explicit MediaTransport(const QString &path, const QVariantMap &properties);
 
     class MediaTransportPrivate *const d;
 
