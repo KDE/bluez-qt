@@ -68,7 +68,7 @@ Q_SIGNALS:
     void reconnectModeChanged(ReconnectMode mode);
 
 private:
-    explicit Input(const QString &path, const QVariantMap &properties);
+    BLUEZQT_NO_EXPORT explicit Input(const QString &path, const QVariantMap &properties);
 
     class InputPrivate *const d;
 

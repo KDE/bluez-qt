@@ -274,7 +274,7 @@ Q_SIGNALS:
     void positionChanged(quint32 position);
 
 private:
-    explicit MediaPlayer(const QString &path, const QVariantMap &properties);
+    BLUEZQT_NO_EXPORT explicit MediaPlayer(const QString &path, const QVariantMap &properties);
 
     class MediaPlayerPrivate *const d;
 

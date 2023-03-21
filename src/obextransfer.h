@@ -184,7 +184,7 @@ Q_SIGNALS:
     void fileNameChanged(const QString &fileName);
 
 private:
-    explicit ObexTransfer(const QString &path, const QVariantMap &properties);
+    BLUEZQT_NO_EXPORT explicit ObexTransfer(const QString &path, const QVariantMap &properties);
 
     class ObexTransferPrivate *const d;
 

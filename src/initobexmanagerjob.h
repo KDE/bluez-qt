@@ -48,7 +48,7 @@ Q_SIGNALS:
     void result(InitObexManagerJob *job);
 
 private:
-    explicit InitObexManagerJob(ObexManager *manager);
+    BLUEZQT_NO_EXPORT explicit InitObexManagerJob(ObexManager *manager);
 
     void doStart() override;
     void doEmitResult() override;

@@ -123,7 +123,7 @@ public:
     QDateTime modificationTime() const;
 
 private:
-    explicit ObexFileTransferEntry(const QVariantMap &properties);
+    BLUEZQT_NO_EXPORT explicit ObexFileTransferEntry(const QVariantMap &properties);
 
     QSharedPointer<class ObexFileTransferEntryPrivate> d;
 

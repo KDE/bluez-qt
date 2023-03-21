@@ -68,7 +68,7 @@ public:
     PendingCall *unregisterEndpoint(MediaEndpoint *endpoint);
 
 private:
-    explicit Media(const QString &path, QObject *parent = nullptr);
+    BLUEZQT_NO_EXPORT explicit Media(const QString &path, QObject *parent = nullptr);
 
     class MediaPrivate *const d;
 

@@ -278,7 +278,7 @@ Q_SIGNALS:
     void MTUChanged(quint16 MTU);
 
 private:
-    explicit GattCharacteristicRemote(const QString &path, const QVariantMap &properties, GattServiceRemotePtr service);
+    BLUEZQT_NO_EXPORT explicit GattCharacteristicRemote(const QString &path, const QVariantMap &properties, GattServiceRemotePtr service);
 
     const std::unique_ptr<class GattCharacteristicRemotePrivate> d;
 

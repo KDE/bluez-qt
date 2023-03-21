@@ -73,7 +73,7 @@ public:
     PendingCall *unregisterAdvertisement(LEAdvertisement *advertisement);
 
 private:
-    explicit LEAdvertisingManager(const QString &path, QObject *parent = nullptr);
+    BLUEZQT_NO_EXPORT explicit LEAdvertisingManager(const QString &path, QObject *parent = nullptr);
 
     class LEAdvertisingManagerPrivate *const d;
 

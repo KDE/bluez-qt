@@ -157,7 +157,7 @@ Q_SIGNALS:
     void handleChanged(quint16 handle);
 
 private:
-    explicit GattDescriptorRemote(const QString &path, const QVariantMap &properties, GattCharacteristicRemotePtr characteristic);
+    BLUEZQT_NO_EXPORT explicit GattDescriptorRemote(const QString &path, const QVariantMap &properties, GattCharacteristicRemotePtr characteristic);
 
     const std::unique_ptr<class GattDescriptorRemotePrivate> d;
 

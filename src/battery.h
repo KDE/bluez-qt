@@ -55,7 +55,7 @@ Q_SIGNALS:
     void percentageChanged(int percentage);
 
 private:
-    explicit Battery(const QString &path, const QVariantMap &properties);
+    BLUEZQT_NO_EXPORT explicit Battery(const QString &path, const QVariantMap &properties);
 
     class BatteryPrivate *const d;
 
