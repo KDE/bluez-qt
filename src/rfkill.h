@@ -45,7 +45,7 @@ Q_SIGNALS:
     void stateChanged(State state);
 
 private Q_SLOTS:
-    void devReadyRead();
+    BLUEZQT_NO_EXPORT void devReadyRead();
 
 private:
     BLUEZQT_NO_EXPORT void init();
