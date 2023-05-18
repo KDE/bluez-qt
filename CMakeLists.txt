@@ -107,20 +107,10 @@ install(FILES
     DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/BluezQt
     COMPONENT Devel)
 
-if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-    set(INSTALL_UDEV_RULE ON CACHE BOOL "Whether to install udev rule")
-    set(UDEV_RULES_INSTALL_DIR /lib/udev/rules.d CACHE PATH "The location of udev rules")
-
-    if(${INSTALL_UDEV_RULE})
-        install(FILES 61-kde-bluetooth-rfkill.rules DESTINATION ${UDEV_RULES_INSTALL_DIR})
-    endif()
-
-    ecm_generate_pkgconfig_file(BASE_NAME KF6BluezQt
-      INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF}/BluezQt/
-      DEPS "Qt6Core Qt6Network Qt6DBus"
-    INSTALL)
-
-endif()
+ecm_generate_pkgconfig_file(BASE_NAME KF6BluezQt
+  INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF}/BluezQt/
+  DEPS "Qt6Core Qt6Network Qt6DBus"
+INSTALL)
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
 
