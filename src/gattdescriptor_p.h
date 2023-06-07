@@ -8,9 +8,9 @@
 
 #pragma once
 
-#include <QtCore/QString>
+#include <QString>
 
-#include <QtDBus/QDBusObjectPath>
+#include <QDBusObjectPath>
 
 namespace BluezQt
 {

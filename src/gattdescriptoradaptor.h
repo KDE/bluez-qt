@@ -8,11 +8,11 @@
 
 #pragma once
 
-#include <QtCore/QObject>
-#include <QtCore/QStringList>
+#include <QObject>
+#include <QStringList>
 
-#include <QtDBus/QDBusAbstractAdaptor>
-#include <QtDBus/QDBusObjectPath>
+#include <QDBusAbstractAdaptor>
+#include <QDBusObjectPath>
 
 namespace BluezQt
 {

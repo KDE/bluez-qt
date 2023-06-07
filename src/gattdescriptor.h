@@ -8,8 +8,8 @@
 
 #pragma once
 
-#include <QtCore/QObject>
-#include <QtDBus/QDBusObjectPath>
+#include <QDBusObjectPath>
+#include <QObject>
 
 #include "bluezqt_export.h"
 
