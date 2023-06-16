@@ -19,7 +19,7 @@
 #include "rfkill.h"
 #include "services.h"
 
-#include <QtQml> // krazy:exclude=includes
+#include <QQmlEngine>
 
 static QObject *manager_singleton(QQmlEngine *engine, QJSEngine *scriptEngine)
 {

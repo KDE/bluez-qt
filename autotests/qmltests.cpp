@@ -8,7 +8,7 @@
 
 #include <QDBusObjectPath>
 
-#include <QtQml> // krazy:exclude=includes
+#include <QQmlEngine>
 #include <QtQuickTest> // krazy:exclude=includes
 
 #ifdef IMPORT_EXTENSIONS_QML_PLUGIN
