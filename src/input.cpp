@@ -75,3 +75,6 @@ Input::ReconnectMode Input::reconnectMode() const
 }
 
 } // namespace BluezQt
+
+#include "moc_input.cpp"
+#include "moc_input_p.cpp"

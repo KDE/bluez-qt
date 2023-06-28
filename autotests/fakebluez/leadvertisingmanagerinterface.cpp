@@ -44,3 +44,5 @@ void LEAdvertisingManagerInterface::runReleaseAction()
         QDBusMessage::createMethodCall(m_service, m_advertisement.path(), QStringLiteral("org.bluez.LEAdvertisement1"), QStringLiteral("Release"));
     QDBusConnection::sessionBus().asyncCall(call);
 }
+
+#include "moc_leadvertisingmanagerinterface.cpp"

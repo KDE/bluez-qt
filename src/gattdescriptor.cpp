@@ -70,3 +70,5 @@ QDBusObjectPath GattDescriptor::objectPath() const
 }
 
 }
+
+#include "moc_gattdescriptor.cpp"

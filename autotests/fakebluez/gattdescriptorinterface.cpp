@@ -72,3 +72,5 @@ void GattDescriptorInterface::WriteValue(const QByteArray& value, const QVariant
     Q_UNUSED(options)
     Object::changeProperty(QStringLiteral("Value"), value);
 }
+
+#include "moc_gattdescriptorinterface.cpp"

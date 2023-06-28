@@ -93,3 +93,5 @@ void InitManagerJob::doEmitResult()
 }
 
 } // namespace BluezQt
+
+#include "moc_initmanagerjob.cpp"

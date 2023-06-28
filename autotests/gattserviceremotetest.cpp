@@ -194,3 +194,5 @@ void GattServiceRemoteTest::serviceRemovedTest()
 }
 
 QTEST_MAIN(GattServiceRemoteTest)
+
+#include "moc_gattserviceremotetest.cpp"

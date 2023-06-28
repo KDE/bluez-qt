@@ -252,3 +252,5 @@ void AgentManagerTest::releaseTest()
 }
 
 QTEST_MAIN(AgentManagerTest)
+
+#include "moc_agentmanagertest.cpp"

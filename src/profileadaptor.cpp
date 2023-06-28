@@ -58,3 +58,5 @@ void ProfileAdaptor::Release()
 }
 
 } // namespace BluezQt
+
+#include "moc_profileadaptor.cpp"

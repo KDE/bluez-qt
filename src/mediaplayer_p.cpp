@@ -148,3 +148,5 @@ MediaPlayerTrack MediaPlayerPrivate::variantToTrack(const QVariant &variant) con
 }
 
 } // namespace BluezQt
+
+#include "moc_mediaplayer_p.cpp"

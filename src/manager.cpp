@@ -233,3 +233,5 @@ Rfkill *Manager::rfkill() const
 }
 
 } // namespace BluezQt
+
+#include "moc_manager.cpp"

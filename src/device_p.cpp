@@ -368,3 +368,5 @@ void DevicePrivate::serviceDataChanged(const QHash<QString, QByteArray> &value)
 }
 
 } // namespace BluezQt
+
+#include "moc_device_p.cpp"

@@ -79,3 +79,5 @@ DBusManagerStruct ObjectManager::GetManagedObjects()
 
     return objects;
 }
+
+#include "moc_objectmanager.cpp"

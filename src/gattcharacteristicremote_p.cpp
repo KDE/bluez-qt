@@ -208,3 +208,5 @@ void GattCharacteristicRemotePrivate::propertiesChanged(const QString &path, con
 }
 
 } // namespace BluezQt
+
+#include "moc_gattcharacteristicremote_p.cpp"

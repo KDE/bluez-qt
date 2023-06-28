@@ -94,3 +94,5 @@ void GattManagerTest::writeCharcTest()
 }
 
 QTEST_MAIN(GattManagerTest)
+
+#include "moc_gattmanagertest.cpp"

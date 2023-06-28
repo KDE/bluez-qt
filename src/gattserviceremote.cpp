@@ -72,3 +72,5 @@ QList<GattCharacteristicRemotePtr> GattServiceRemote::characteristics() const
 }
 
 } // namespace BluezQt
+
+#include "moc_gattserviceremote.cpp"

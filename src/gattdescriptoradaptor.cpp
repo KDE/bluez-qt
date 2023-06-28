@@ -50,3 +50,5 @@ void GattDescriptorAdaptor::WriteValue(QByteArray value)
 }
 
 }
+
+#include "moc_gattdescriptoradaptor.cpp"

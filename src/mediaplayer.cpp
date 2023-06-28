@@ -150,3 +150,5 @@ PendingCall *MediaPlayer::rewind()
 }
 
 } // namespace BluezQt
+
+#include "moc_mediaplayer.cpp"

@@ -427,3 +427,5 @@ void ManagerTest::bug377405()
 }
 
 QTEST_MAIN(ManagerTest)
+
+#include "moc_managertest.cpp"

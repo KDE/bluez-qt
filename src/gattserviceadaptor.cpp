@@ -32,3 +32,5 @@ bool GattServiceAdaptor::primary() const
 }
 
 } // namespace BluezQt
+
+#include "moc_gattserviceadaptor.cpp"

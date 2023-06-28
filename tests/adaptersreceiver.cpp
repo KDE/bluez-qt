@@ -89,3 +89,5 @@ int main(int argc, char **argv)
     new AdaptersReceiver(manager);
     return app.exec();
 }
+
+#include "moc_adaptersreceiver.cpp"

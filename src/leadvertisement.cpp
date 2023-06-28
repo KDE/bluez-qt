@@ -47,3 +47,5 @@ void LEAdvertisement::release()
 }
 
 } // namespace BluezQt
+
+#include "moc_leadvertisement.cpp"

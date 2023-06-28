@@ -170,3 +170,5 @@ void DeclarativeManager::slotUsableAdapterChanged(BluezQt::AdapterPtr adapter)
 {
     Q_EMIT usableAdapterChanged(declarativeAdapterFromPtr(adapter));
 }
+
+#include "moc_declarativemanager.cpp"

@@ -55,3 +55,5 @@ void GattCharacteristicAdaptor::StopNotify()
 }
 
 } // namespace BluezQt
+
+#include "moc_gattcharacteristicadaptor.cpp"

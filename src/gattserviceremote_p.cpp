@@ -198,3 +198,5 @@ void GattServiceRemotePrivate::propertiesChanged(const QString &path, const QStr
 }
 
 } // namespace BluezQt
+
+#include "moc_gattserviceremote_p.cpp"

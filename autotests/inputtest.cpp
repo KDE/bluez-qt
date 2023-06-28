@@ -141,3 +141,5 @@ QString InputTest::reconnectModeString(const InputPtr &input) const
 }
 
 QTEST_MAIN(InputTest)
+
+#include "moc_inputtest.cpp"

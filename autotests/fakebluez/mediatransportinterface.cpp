@@ -56,3 +56,5 @@ void MediaTransportInterface::TryAcquire(const QDBusMessage &msg)
 void MediaTransportInterface::Release()
 {
 }
+
+#include "moc_mediatransportinterface.cpp"

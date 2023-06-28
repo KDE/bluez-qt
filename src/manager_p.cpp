@@ -446,3 +446,5 @@ void ManagerPrivate::dummy()
 }
 
 } // namespace BluezQt
+
+#include "moc_manager_p.cpp"

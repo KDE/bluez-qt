@@ -238,3 +238,5 @@ void ObexManagerPrivate::dummy()
 }
 
 } // namespace BluezQt
+
+#include "moc_obexmanager_p.cpp"

@@ -53,3 +53,5 @@ TPendingCall<void> *MediaTransport::release()
 }
 
 } // namespace BluezQt
+
+#include "moc_mediatransport.cpp"

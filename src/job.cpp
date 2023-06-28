@@ -118,3 +118,5 @@ bool Job::exec()
 }
 
 } // namespace BluezQt
+
+#include "moc_job.cpp"

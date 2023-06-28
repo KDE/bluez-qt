@@ -136,3 +136,5 @@ void Profile::release()
 }
 
 } // namespace BluezQt
+
+#include "moc_profile.cpp"

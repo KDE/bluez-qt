@@ -444,3 +444,5 @@ void AdapterTest::adapterRemovedTest()
 }
 
 QTEST_MAIN(AdapterTest)
+
+#include "moc_adaptertest.cpp"

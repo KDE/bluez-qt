@@ -308,3 +308,5 @@ PendingCall *Device::cancelPairing()
 }
 
 } // namespace BluezQt
+
+#include "moc_device.cpp"

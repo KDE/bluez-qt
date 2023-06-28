@@ -230,3 +230,5 @@ void DeviceManager::runBug403289(const QVariantMap &properties)
     device->connectMediaPlayer();
     Q_EMIT m_objectManager->InterfacesRemoved(path, QStringList(QStringLiteral("org.bluez.MediaPlayer1")));
 }
+
+#include "moc_devicemanager.cpp"

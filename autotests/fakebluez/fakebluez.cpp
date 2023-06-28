@@ -200,3 +200,5 @@ void FakeBluez::runObexStandardTest()
     createObexClient();
     createObexAgentManager();
 }
+
+#include "moc_fakebluez.cpp"

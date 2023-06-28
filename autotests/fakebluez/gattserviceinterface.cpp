@@ -58,3 +58,5 @@ void GattServiceInterface::setHandle(const quint16 handle)
 {
     Object::changeProperty(QStringLiteral("Handle"), QVariant::fromValue(handle));
 }
+
+#include "moc_gattserviceinterface.cpp"

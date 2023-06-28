@@ -242,3 +242,5 @@ void DeclarativeDevice::updateMediaPlayer()
 
     Q_EMIT mediaPlayerChanged(m_mediaPlayer);
 }
+
+#include "moc_declarativedevice.cpp"

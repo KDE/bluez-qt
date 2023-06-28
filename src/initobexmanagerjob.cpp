@@ -95,3 +95,5 @@ void InitObexManagerJob::doEmitResult()
 }
 
 } // namespace BluezQt
+
+#include "moc_initobexmanagerjob.cpp"

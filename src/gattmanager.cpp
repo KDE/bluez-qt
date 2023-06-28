@@ -85,3 +85,5 @@ PendingCall *GattManager::unregisterApplication(GattApplication *application)
 }
 
 } // namespace BluezQt
+
+#include "moc_gattmanager.cpp"

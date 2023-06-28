@@ -123,3 +123,5 @@ void BatteryTest::getPropertiesTest()
 }
 
 QTEST_MAIN(BatteryTest)
+
+#include "moc_batterytest.cpp"

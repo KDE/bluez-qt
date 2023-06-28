@@ -115,3 +115,5 @@ PendingCall *GattCharacteristicRemote::confirm()
 }
 
 } // namespace BluezQt
+
+#include "moc_gattcharacteristicremote.cpp"

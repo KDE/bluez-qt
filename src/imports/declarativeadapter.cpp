@@ -195,3 +195,5 @@ DeclarativeDevice *DeclarativeAdapter::declarativeDeviceFromPtr(BluezQt::DeviceP
     }
     return m_devices.value(ptr->ubi());
 }
+
+#include "moc_declarativeadapter.cpp"
