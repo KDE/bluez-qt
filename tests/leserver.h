@@ -8,7 +8,9 @@
 #define LESERVER_H
 
 #include <QObject>
+#include <QTimer>
 
+#include "gattcharacteristic.h"
 #include "types.h"
 
 namespace BluezQt
@@ -27,6 +29,9 @@ private:
     void onCallFinished(BluezQt::PendingCall *call);
 
     BluezQt::Manager *m_manager;
+    BluezQt::GattCharacteristic *m_notifyingCharacteristic = nullptr;
+
+    QTimer m_characteristicWriteTimer; // < Used to write to characteristic with 'notify' flag set.
 };
 
 #endif

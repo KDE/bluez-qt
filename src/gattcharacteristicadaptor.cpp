@@ -30,8 +30,7 @@ QDBusObjectPath GattCharacteristicAdaptor::service() const
 
 QStringList GattCharacteristicAdaptor::flags() const
 {
-    // TODO: implement flags
-    return {QStringLiteral("read"), QStringLiteral("write")};
+    return m_gattCharacteristic->flags();
 }
 
 QByteArray GattCharacteristicAdaptor::ReadValue(const QVariantMap & /*options*/)
@@ -46,12 +45,12 @@ void GattCharacteristicAdaptor::WriteValue(const QByteArray &value, const QVaria
 
 void GattCharacteristicAdaptor::StartNotify()
 {
-    // TODO: implement
+    m_gattCharacteristic->startNotify();
 }
 
 void GattCharacteristicAdaptor::StopNotify()
 {
-    // TODO: implement
+    m_gattCharacteristic->stopNotify();
 }
 
 } // namespace BluezQt

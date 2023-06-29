@@ -9,22 +9,35 @@
 #ifndef BLUEZQT_GATTCHARACTERISTIC_P_H
 #define BLUEZQT_GATTCHARACTERISTIC_P_H
 
+#include "dbusproperties.h"
 #include "gattcharacteristic.h"
+
+#include <memory>
 
 namespace BluezQt
 {
+
+typedef org::freedesktop::DBus::Properties DBusProperties;
+
 class GattServicePrivate;
 
 class GattCharacterisiticPrivate
 {
 public:
-    GattCharacterisiticPrivate(const QString &uuid, const GattService *service);
+    GattCharacterisiticPrivate(const QString &uuid, const QStringList &flags, const GattService *service);
 
     QString m_uuid;
     const GattService *m_service;
+    bool m_notifying;
+    QStringList m_flags;
+
+    bool m_canNotify;
     QDBusObjectPath m_objectPath;
     QByteArray m_value;
     GattCharacteristic::ReadCallback m_readCallback = nullptr;
+    std::unique_ptr<DBusProperties> m_dbusProperties;
+
+    void emitPropertyChanged(QVariantMap updatedProperties);
 };
 
 } // namespace BluezQt

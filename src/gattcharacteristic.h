@@ -25,9 +25,23 @@ public:
     /**
      * Creates a new GattCharacteristic object.
      *
-     * @param parent
+     * This constructor creates a characteristic with the Read and Write flags set.
+     *
+     * @param uuid The UUID of the characteristic.
+     * @param service The parent service.
      */
     explicit GattCharacteristic(const QString &uuid, GattService *service);
+
+    /**
+     * Creates a new GattCharacteristic object.
+     *
+     * @param uuid The UUID of the characteristic.
+     * @param flags Flags indicating the characteristic usage.
+     * @param service The parent service.
+     *
+     * @since 6.0
+     */
+    GattCharacteristic(const QString &uuid, const QStringList &flags, GattService *service);
 
     /**
      * Destroys a GattCharacteristic object.
@@ -63,6 +77,38 @@ public:
      * @return service this characteristic belongs to
      */
     const GattService *service() const;
+
+    /**
+     * The flags of this characteristic.
+     *
+     * @return flags associated with this characteristic
+     *
+     * @since 6.0
+     */
+    QStringList flags() const;
+
+    /**
+     * Enables notifications for this characteristic, if supported. Does nothing otherwise.
+     *
+     * @since 6.0
+     */
+    void startNotify();
+
+    /**
+     * Disables notifications for this characteristic.
+     *
+     * @since 6.0
+     */
+    void stopNotify();
+
+    /**
+     * Indicates if this characteristic currently has notifications enabled.
+     *
+     * @return True if notifications are enabled, false otherwise
+     *
+     * @since 6.0
+     */
+    bool isNotifying() const;
 
 Q_SIGNALS:
     /**

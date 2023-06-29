@@ -9,12 +9,18 @@
 #include "gattcharacteristic.h"
 #include "gattcharacteristic_p.h"
 #include "gattservice.h"
+#include "utils.h"
 
 namespace BluezQt
 {
 GattCharacteristic::GattCharacteristic(const QString &uuid, GattService *service)
+    : GattCharacteristic(uuid, {QLatin1String("read"), QLatin1String("write")}, service)
+{
+}
+
+GattCharacteristic::GattCharacteristic(const QString &uuid, const QStringList &flags, GattService *service)
     : QObject(service)
-    , d(new GattCharacterisiticPrivate(uuid, service))
+    , d(new GattCharacterisiticPrivate(uuid, flags, service))
 {
 }
 
@@ -35,6 +41,11 @@ QByteArray GattCharacteristic::readValue()
 void GattCharacteristic::writeValue(const QByteArray &value)
 {
     d->m_value = value;
+
+    if (isNotifying()) {
+        d->emitPropertyChanged({{QLatin1String("Value"), value}});
+    }
+
     Q_EMIT valueWritten(d->m_value);
 }
 
@@ -46,6 +57,28 @@ QString GattCharacteristic::uuid() const
 const GattService *GattCharacteristic::service() const
 {
     return d->m_service;
+}
+
+QStringList GattCharacteristic::flags() const
+{
+    return d->m_flags;
+}
+
+void GattCharacteristic::startNotify()
+{
+    if (d->m_canNotify) {
+        d->m_notifying = true;
+    }
+}
+
+void GattCharacteristic::stopNotify()
+{
+    d->m_notifying = false;
+}
+
+bool GattCharacteristic::isNotifying() const
+{
+    return d->m_notifying;
 }
 
 QDBusObjectPath GattCharacteristic::objectPath() const

@@ -30,7 +30,12 @@ LeServer::LeServer(Manager *manager, QObject *parent)
 {
     auto advertisement = new LEAdvertisement({QStringLiteral("ad100000-d901-11e8-9f8b-f2801f1b9fd1")}, this);
     auto call = m_manager->usableAdapter()->leAdvertisingManager()->registerAdvertisement(advertisement);
-    connect(call, &PendingCall::finished, this, &LeServer::onCallFinished);
+    connect(call, &PendingCall::finished, this, [](BluezQt::PendingCall *call) {
+        if (call->error()) {
+            qWarning() << "Register advertisement error: " << call->errorText();
+            return;
+        }
+    });
 
     auto application = new GattApplication(QStringLiteral("/org/kde/bluezqt"), this);
     auto service = new GattService(QStringLiteral("ad100000-d901-11e8-9f8b-f2801f1b9fd1"), true, application);
@@ -38,16 +43,26 @@ LeServer::LeServer(Manager *manager, QObject *parent)
     GattCharacteristic *characteristic = new GattCharacteristic(QStringLiteral("ad10e100-d901-11e8-9f8b-f2801f1b9fd1"), service);
     GattDescriptor::createUserDescription(QLatin1String("MyCharacteristic"), characteristic);
 
-    auto call2 = m_manager->usableAdapter()->gattManager()->registerApplication(application);
-    connect(call2, &PendingCall::finished, this, &LeServer::onCallFinished);
-}
+    m_notifyingCharacteristic =
+        new GattCharacteristic(QStringLiteral("ad10e100-d902-11e8-9f8b-f2801f1b9fd1"), {QStringLiteral("read"), QStringLiteral("notify")}, service);
 
-void LeServer::onCallFinished(BluezQt::PendingCall *call)
-{
-    if (call->error()) {
-        qWarning() << "Error: " << call->errorText();
-        return;
-    }
+    auto call2 = m_manager->usableAdapter()->gattManager()->registerApplication(application);
+
+    connect(call2, &PendingCall::finished, this, [](BluezQt::PendingCall *call) {
+        if (call->error()) {
+            qWarning() << "Register application error: " << call->errorText();
+            return;
+        }
+    });
+
+    m_characteristicWriteTimer.setInterval(std::chrono::seconds(1));
+    m_characteristicWriteTimer.setSingleShot(false);
+    m_characteristicWriteTimer.start();
+
+    static int charValue = 1;
+    QObject::connect(&m_characteristicWriteTimer, &QTimer::timeout, [this]() {
+        m_notifyingCharacteristic->writeValue(QByteArray::number(charValue++));
+    });
 }
 
 int main(int argc, char **argv)
