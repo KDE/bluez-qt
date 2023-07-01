@@ -206,3 +206,5 @@ void AdapterInterface::resetDiscoverable()
 {
     setDiscoverable(false);
 }
+
+#include "moc_adapterinterface.cpp"

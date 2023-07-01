@@ -134,3 +134,5 @@ void AgentManager::runReleaseAction()
     QDBusMessage call = QDBusMessage::createMethodCall(m_service, m_agent.path(), QStringLiteral("org.bluez.Agent1"), QStringLiteral("Release"));
     QDBusConnection::sessionBus().asyncCall(call);
 }
+
+#include "moc_agentmanager.cpp"

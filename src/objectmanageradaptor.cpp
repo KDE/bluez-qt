@@ -28,3 +28,5 @@ DBusManagerStruct ObjectManagerAdaptor::GetManagedObjects()
 }
 
 } // namespace BluezQt
+
+#include "moc_objectmanageradaptor.cpp"

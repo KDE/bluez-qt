@@ -92,3 +92,5 @@ void GattCharacteristicInterface::StopNotify()
 {
     Object::changeProperty(QStringLiteral("Notifying"), false);
 }
+
+#include "moc_gattcharacteristicinterface.cpp"

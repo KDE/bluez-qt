@@ -60,3 +60,5 @@ PendingCall *Media::unregisterEndpoint(MediaEndpoint *endpoint)
 }
 
 } // namespace BluezQt
+
+#include "moc_media.cpp"

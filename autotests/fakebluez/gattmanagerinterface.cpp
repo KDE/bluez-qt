@@ -85,3 +85,5 @@ void GattManagerInterface::runWriteCharcAction(const QVariantMap &properties)
     call << properties.value(QStringLiteral("Options"));
     QDBusConnection::sessionBus().asyncCall(call);
 }
+
+#include "moc_gattmanagerinterface.cpp"

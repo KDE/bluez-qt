@@ -214,3 +214,5 @@ DevicePtr DevicesModel::device(const QModelIndex &index) const
 }
 
 } // namespace BluezQt
+
+#include "moc_devicesmodel.cpp"

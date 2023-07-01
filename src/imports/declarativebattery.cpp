@@ -19,3 +19,5 @@ int DeclarativeBattery::percentage() const
 {
     return m_battery->percentage();
 }
+
+#include "moc_declarativebattery.cpp"

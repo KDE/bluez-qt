@@ -327,3 +327,5 @@ void GattCharacteristicRemoteTest::characteristicRemovedTest()
 }
 
 QTEST_MAIN(GattCharacteristicRemoteTest)
+
+#include "moc_gattcharacteristicremotetest.cpp"

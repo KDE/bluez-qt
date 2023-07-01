@@ -123,3 +123,5 @@ void DeclarativeMediaPlayer::updateTrack()
     m_track[QStringLiteral("trackNumber")] = qint64(m_mediaPlayer->track().trackNumber());
     m_track[QStringLiteral("duration")] = qint64(m_mediaPlayer->track().duration());
 }
+
+#include "moc_declarativemediaplayer.cpp"

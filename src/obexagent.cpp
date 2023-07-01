@@ -32,3 +32,5 @@ void ObexAgent::release()
 }
 
 } // namespace BluezQt
+
+#include "moc_obexagent.cpp"

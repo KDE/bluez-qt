@@ -132,3 +132,5 @@ void MediaTest::releaseTest()
 }
 
 QTEST_MAIN(MediaTest)
+
+#include "moc_mediatest.cpp"

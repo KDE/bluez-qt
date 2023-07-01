@@ -32,3 +32,5 @@ void TestInterface::emitActionFinished()
 {
     QDBusConnection::sessionBus().send(m_msg.createReply());
 }
+
+#include "moc_testinterface.cpp"

@@ -166,3 +166,5 @@ void AdapterPrivate::propertiesChanged(const QString &interface, const QVariantM
 }
 
 } // namespace BluezQt
+
+#include "moc_adapter_p.cpp"

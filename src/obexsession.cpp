@@ -82,3 +82,6 @@ PendingCall *ObexSession::getCapabilities()
 }
 
 } // namespace BluezQt
+
+#include "moc_obexsession.cpp"
+#include "moc_obexsession_p.cpp"

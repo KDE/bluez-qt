@@ -29,3 +29,5 @@ QString InputInterface::reconnectMode() const
 {
     return Object::property(QStringLiteral("ReconnectMode")).toString();
 }
+
+#include "moc_inputinterface.cpp"

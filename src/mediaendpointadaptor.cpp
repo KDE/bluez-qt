@@ -46,3 +46,5 @@ void MediaEndpointAdaptor::Release()
 }
 
 } // namespace BluezQt
+
+#include "moc_mediaendpointadaptor.cpp"

@@ -39,3 +39,5 @@ QDBusObjectPath GattService::objectPath() const
 }
 
 } // namespace BluezQt
+
+#include "moc_gattservice.cpp"

@@ -132,3 +132,5 @@ void MediaEndpoint::release()
 }
 
 } // namespace BluezQt
+
+#include "moc_mediaendpoint.cpp"

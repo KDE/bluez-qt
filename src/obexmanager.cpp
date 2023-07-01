@@ -123,3 +123,5 @@ PendingCall *ObexManager::removeSession(const QDBusObjectPath &session)
 }
 
 } // namespace BluezQt
+
+#include "moc_obexmanager.cpp"

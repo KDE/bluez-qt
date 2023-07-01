@@ -93,3 +93,5 @@ void JobsTest::deleteInitObexManagerJobTest()
 }
 
 QTEST_MAIN(JobsTest)
+
+#include "moc_jobstest.cpp"

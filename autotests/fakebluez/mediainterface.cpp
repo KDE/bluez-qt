@@ -76,3 +76,5 @@ void MediaInterface::runReleaseAction()
     QDBusMessage call = QDBusMessage::createMethodCall(m_service, m_endpoint.path(), QStringLiteral("org.bluez.MediaEndpoint1"), QStringLiteral("Release"));
     QDBusConnection::sessionBus().asyncCall(call);
 }
+
+#include "moc_mediainterface.cpp"

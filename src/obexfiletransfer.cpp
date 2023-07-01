@@ -81,3 +81,5 @@ PendingCall *ObexFileTransfer::deleteFile(const QString &fileName)
 }
 
 } // namespace BluezQt
+
+#include "moc_obexfiletransfer.cpp"

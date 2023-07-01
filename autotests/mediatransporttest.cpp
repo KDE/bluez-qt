@@ -256,3 +256,5 @@ void MediaTransportTest::disconnectProfileTest()
 }
 
 QTEST_MAIN(MediaTransportTest)
+
+#include "moc_mediatransporttest.cpp"

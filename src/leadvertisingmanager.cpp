@@ -60,3 +60,5 @@ PendingCall *LEAdvertisingManager::unregisterAdvertisement(LEAdvertisement *adve
 }
 
 } // namespace BluezQt
+
+#include "moc_leadvertisingmanager.cpp"

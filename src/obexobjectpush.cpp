@@ -56,3 +56,5 @@ PendingCall *ObexObjectPush::exchangeBusinessCards(const QString &clientFileName
 }
 
 } // namespace BluezQt
+
+#include "moc_obexobjectpush.cpp"

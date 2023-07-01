@@ -89,3 +89,5 @@ void GattDescriptorRemotePrivate::propertiesChanged(const QString &path, const Q
 }
 
 } // namespace BluezQt
+
+#include "moc_gattdescriptorremote_p.cpp"

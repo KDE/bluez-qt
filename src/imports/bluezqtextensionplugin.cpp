@@ -82,3 +82,5 @@ void BluezQtExtensionPlugin::registerTypes(const char *uri)
     qmlRegisterUncreatableType<Rfkill>(uri, 1, 0, "Rfkill", QStringLiteral("Rfkill cannot be created"));
     qmlRegisterSingletonType(uri, 1, 0, "Services", services_singleton);
 }
+
+#include "moc_bluezqtextensionplugin.cpp"

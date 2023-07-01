@@ -74,3 +74,5 @@ PendingCall *GattDescriptorRemote::writeValue(const QByteArray &value, const QVa
 }
 
 }  // namespace BluezQt
+
+#include "moc_gattdescriptorremote.cpp"

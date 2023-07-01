@@ -134,3 +134,5 @@ QString AgentAdaptor::passkeyToString(quint32 passkey) const
 }
 
 } // namespace BluezQt
+
+#include "moc_agentadaptor.cpp"

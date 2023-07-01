@@ -180,3 +180,5 @@ PendingCall* Adapter::getDiscoveryFilters()
 }
 
 } // namespace BluezQt
+
+#include "moc_adapter.cpp"

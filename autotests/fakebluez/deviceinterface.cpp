@@ -296,3 +296,5 @@ void DeviceInterface::disconnectMediaTransport()
 
     m_mediaTransport = nullptr;
 }
+
+#include "moc_deviceinterface.cpp"

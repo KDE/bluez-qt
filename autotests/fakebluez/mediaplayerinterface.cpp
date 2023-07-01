@@ -124,3 +124,5 @@ void MediaPlayerInterface::Rewind()
 {
     Object::changeProperty(QStringLiteral("Status"), QStringLiteral("reverse-seek"));
 }
+
+#include "moc_mediaplayerinterface.cpp"

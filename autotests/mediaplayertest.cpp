@@ -415,3 +415,5 @@ QVariantMap MediaPlayerTest::trackMap(const MediaPlayerPtr &mediaPlayer) const
 }
 
 QTEST_MAIN(MediaPlayerTest)
+
+#include "moc_mediaplayertest.cpp"

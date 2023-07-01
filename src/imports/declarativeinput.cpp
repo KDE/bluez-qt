@@ -19,3 +19,5 @@ BluezQt::Input::ReconnectMode DeclarativeInput::reconnectMode() const
 {
     return m_input->reconnectMode();
 }
+
+#include "moc_declarativeinput.cpp"

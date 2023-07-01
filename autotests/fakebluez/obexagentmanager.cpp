@@ -59,3 +59,5 @@ void ObexAgentManager::runReleaseAction()
     QDBusMessage call = QDBusMessage::createMethodCall(m_service, m_agent.path(), QStringLiteral("org.bluez.obex.Agent1"), QStringLiteral("Release"));
     QDBusConnection::sessionBus().call(call);
 }
+
+#include "moc_obexagentmanager.cpp"

@@ -73,3 +73,5 @@ QVariant DeclarativeDevicesModel::data(const QModelIndex &index, int role) const
 
     return QSortFilterProxyModel::data(index, role);
 }
+
+#include "moc_declarativedevicesmodel.cpp"

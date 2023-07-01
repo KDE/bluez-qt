@@ -59,3 +59,5 @@ void GattCharacteristic::setReadCallback(ReadCallback callback)
 }
 
 } // namespace BluezQt
+
+#include "moc_gattcharacteristic.cpp"

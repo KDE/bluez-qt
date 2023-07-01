@@ -71,3 +71,5 @@ void LEAdvertisingManagerTest::releaseTest()
 }
 
 QTEST_MAIN(LEAdvertisingManagerTest)
+
+#include "moc_leadvertisingmanagertest.cpp"

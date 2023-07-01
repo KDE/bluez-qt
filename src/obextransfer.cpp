@@ -179,3 +179,6 @@ PendingCall *ObexTransfer::resume()
 }
 
 } // namespace BluezQt
+
+#include "moc_obextransfer.cpp"
+#include "moc_obextransfer_p.cpp"

@@ -298,3 +298,5 @@ void GattDescriptorRemoteTest::descriptorRemovedTest()
 }
 
 QTEST_MAIN(GattDescriptorRemoteTest)
+
+#include "moc_gattdescriptorremotetest.cpp"

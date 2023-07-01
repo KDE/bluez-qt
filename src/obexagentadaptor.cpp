@@ -77,3 +77,5 @@ void ObexAgentAdaptor::getPropertiesFinished(QDBusPendingCallWatcher *watcher)
 }
 
 } // namespace BluezQt
+
+#include "moc_obexagentadaptor.cpp"

@@ -33,3 +33,5 @@ void ObexClient::RemoveSession(const QDBusObjectPath &session, const QDBusMessag
     Q_UNUSED(session)
     Q_UNUSED(msg)
 }
+
+#include "moc_obexclient.cpp"

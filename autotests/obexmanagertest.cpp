@@ -135,3 +135,5 @@ void ObexManagerTest::obexServiceOkTest()
 }
 
 QTEST_MAIN(ObexManagerTest)
+
+#include "moc_obexmanagertest.cpp"

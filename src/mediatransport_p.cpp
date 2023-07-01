@@ -134,3 +134,5 @@ void MediaTransportPrivate::onPropertiesChanged(const QString &interface, const 
 }
 
 } // namespace BluezQt
+
+#include "moc_mediatransport_p.cpp"

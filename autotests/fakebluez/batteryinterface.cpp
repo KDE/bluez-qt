@@ -29,3 +29,5 @@ uchar BatteryInterface::percentage() const
 {
     return Object::property(QStringLiteral("Percentage")).value<uchar>();
 }
+
+#include "moc_batteryinterface.cpp"

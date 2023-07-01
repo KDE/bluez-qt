@@ -245,3 +245,5 @@ bool Rfkill::setSoftBlock(quint8 soft)
 }
 
 } // namespace BluezQt
+
+#include "moc_rfkill.cpp"

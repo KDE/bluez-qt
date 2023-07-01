@@ -79,3 +79,5 @@ void Agent::release()
 }
 
 } // namespace BluezQt
+
+#include "moc_agent.cpp"

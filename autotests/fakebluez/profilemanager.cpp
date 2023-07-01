@@ -28,3 +28,5 @@ void ProfileManager::UnregisterProfile(const QDBusObjectPath &path, const QDBusM
     Q_UNUSED(path)
     Q_UNUSED(msg)
 }
+
+#include "moc_profilemanager.cpp"

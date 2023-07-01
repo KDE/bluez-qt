@@ -261,3 +261,5 @@ qint16 DeviceTest::deviceRssi(org::bluez::Device1 *device) const
 }
 
 QTEST_MAIN(DeviceTest)
+
+#include "moc_devicetest.cpp"

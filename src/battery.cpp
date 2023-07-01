@@ -63,3 +63,6 @@ int Battery::percentage() const
 }
 
 } // namespace BluezQt
+
+#include "moc_battery.cpp"
+#include "moc_battery_p.cpp"

@@ -340,3 +340,5 @@ void PendingCall::setUserData(const QVariant &userData)
 }
 
 } // namespace BluezQt
+
+#include "moc_pendingcall.cpp"
