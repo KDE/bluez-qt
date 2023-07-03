@@ -8,6 +8,7 @@
 
 #include "adapter.h"
 #include "adapter_p.h"
+#include "device.h"
 #include "device_p.h"
 #include "pendingcall.h"
 

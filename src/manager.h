@@ -11,16 +11,16 @@
 
 #include <QObject>
 
-#include "adapter.h"
 #include "bluezqt_export.h"
-#include "media.h"
 #include "rfkill.h"
+#include "types.h"
 
 #include <memory>
 
 namespace BluezQt
 {
 class Device;
+class Adapter;
 class Agent;
 class Profile;
 class PendingCall;

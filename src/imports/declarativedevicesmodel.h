@@ -11,8 +11,9 @@
 
 #include <QSortFilterProxyModel>
 
-#include "declarativemanager.h"
 #include "devicesmodel.h"
+
+class DeclarativeManager;
 
 class DeclarativeDevicesModel : public QSortFilterProxyModel
 {

@@ -12,6 +12,7 @@
 #include "obexagent.h"
 #include "obexagentadaptor.h"
 #include "obexmanager_p.h"
+#include "obexsession.h"
 #include "pendingcall.h"
 #include "utils.h"
 

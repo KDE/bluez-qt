@@ -11,6 +11,7 @@
 #include "manager.h"
 #include "obexmanager.h"
 
+#include <QDBusArgument>
 #include <QDBusConnection>
 #include <QPointer>
 

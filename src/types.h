@@ -9,6 +9,7 @@
 #ifndef BLUEZQT_TYPES_H
 #define BLUEZQT_TYPES_H
 
+#include <QMap>
 #include <QSharedPointer>
 
 namespace BluezQt

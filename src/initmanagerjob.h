@@ -11,13 +11,13 @@
 
 #include "bluezqt_export.h"
 #include "job.h"
-#include "manager.h"
-#include "obexmanager.h"
 
 #include <memory>
 
 namespace BluezQt
 {
+class Manager;
+
 /**
  * @class BluezQt::InitManagerJob initmanagerjob.h <BluezQt/InitManagerJob>
  *

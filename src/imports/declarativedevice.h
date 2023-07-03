@@ -9,12 +9,12 @@
 #ifndef DECLARATIVEDEVICE_H
 #define DECLARATIVEDEVICE_H
 
-#include "declarativeinput.h"
-#include "declarativemediaplayer.h"
 #include "device.h"
 
 class DeclarativeAdapter;
 class DeclarativeBattery;
+class DeclarativeInput;
+class DeclarativeMediaPlayer;
 
 class DeclarativeDevice : public QObject
 {

@@ -9,6 +9,8 @@
 #include "declarativedevice.h"
 #include "declarativeadapter.h"
 #include "declarativebattery.h"
+#include "declarativeinput.h"
+#include "declarativemediaplayer.h"
 
 #include <QStringList>
 

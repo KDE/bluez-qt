@@ -5,7 +5,9 @@
  */
 
 #include "gattserviceremotetest.h"
+#include "adapter.h"
 #include "autotests.h"
+#include "device.h"
 #include "initmanagerjob.h"
 #include "pendingcall.h"
 

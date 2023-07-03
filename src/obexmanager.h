@@ -12,7 +12,7 @@
 #include <QObject>
 
 #include "bluezqt_export.h"
-#include "obexsession.h"
+#include "types.h"
 
 #include <memory>
 

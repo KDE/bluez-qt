@@ -5,11 +5,13 @@
  */
 
 #include "gattdescriptorremotetest.h"
+#include "adapter.h"
 #include "autotests.h"
+#include "device.h"
+#include "gattcharacteristicremote.h"
+#include "gattserviceremote.h"
 #include "initmanagerjob.h"
 #include "pendingcall.h"
-#include "gattserviceremote.h"
-#include "gattcharacteristicremote.h"
 
 #include <QSignalSpy>
 #include <QTest>
