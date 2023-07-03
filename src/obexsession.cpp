@@ -36,10 +36,7 @@ ObexSession::ObexSession(const QString &path, const QVariantMap &properties)
 {
 }
 
-ObexSession::~ObexSession()
-{
-    delete d;
-}
+ObexSession::~ObexSession() = default;
 
 ObexSessionPtr ObexSession::toSharedPtr() const
 {

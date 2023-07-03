@@ -18,10 +18,7 @@ GattService::GattService(const QString &uuid, bool isPrimary, GattApplication *p
 {
 }
 
-GattService::~GattService()
-{
-    delete d;
-}
+GattService::~GattService() = default;
 
 QString GattService::uuid() const
 {

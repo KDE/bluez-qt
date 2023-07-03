@@ -14,6 +14,8 @@
 #include "bluezqt_export.h"
 #include "types.h"
 
+#include <memory>
+
 namespace BluezQt
 {
 /**
@@ -70,7 +72,7 @@ Q_SIGNALS:
 private:
     BLUEZQT_NO_EXPORT explicit Input(const QString &path, const QVariantMap &properties);
 
-    class InputPrivate *const d;
+    std::unique_ptr<class InputPrivate> const d;
 
     friend class InputPrivate;
     friend class DevicePrivate;

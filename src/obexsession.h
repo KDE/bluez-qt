@@ -14,6 +14,8 @@
 #include "bluezqt_export.h"
 #include "types.h"
 
+#include <memory>
+
 class QDBusObjectPath;
 
 namespace BluezQt
@@ -108,7 +110,7 @@ public:
 private:
     BLUEZQT_NO_EXPORT explicit ObexSession(const QString &path, const QVariantMap &properties);
 
-    class ObexSessionPrivate *const d;
+    std::unique_ptr<class ObexSessionPrivate> const d;
 
     friend class ObexSessionPrivate;
     friend class ObexManagerPrivate;

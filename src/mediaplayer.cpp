@@ -54,10 +54,7 @@ MediaPlayer::MediaPlayer(const QString &path, const QVariantMap &properties)
 {
 }
 
-MediaPlayer::~MediaPlayer()
-{
-    delete d;
-}
+MediaPlayer::~MediaPlayer() = default;
 
 MediaPlayerPtr MediaPlayer::toSharedPtr() const
 {

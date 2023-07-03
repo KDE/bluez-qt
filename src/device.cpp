@@ -19,10 +19,7 @@ Device::Device(const QString &path, const QVariantMap &properties, AdapterPtr ad
 {
 }
 
-Device::~Device()
-{
-    delete d;
-}
+Device::~Device() = default;
 
 DevicePtr Device::toSharedPtr() const
 {

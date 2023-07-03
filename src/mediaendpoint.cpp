@@ -18,10 +18,7 @@ MediaEndpoint::MediaEndpoint(const Configuration &configuration, QObject *parent
 {
 }
 
-MediaEndpoint::~MediaEndpoint()
-{
-    delete d;
-}
+MediaEndpoint::~MediaEndpoint() = default;
 
 QDBusObjectPath MediaEndpoint::objectPath() const
 {

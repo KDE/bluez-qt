@@ -59,10 +59,7 @@ Input::Input(const QString &path, const QVariantMap &properties)
 {
 }
 
-Input::~Input()
-{
-    delete d;
-}
+Input::~Input() = default;
 
 InputPtr Input::toSharedPtr() const
 {

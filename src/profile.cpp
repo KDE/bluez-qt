@@ -23,10 +23,7 @@ Profile::Profile(QObject *parent)
 {
 }
 
-Profile::~Profile()
-{
-    delete d;
-}
+Profile::~Profile() = default;
 
 void Profile::setName(const QString &name)
 {

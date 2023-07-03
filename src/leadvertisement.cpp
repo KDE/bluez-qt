@@ -17,10 +17,7 @@ LEAdvertisement::LEAdvertisement(const QStringList &serviceUuids, QObject *paren
 {
 }
 
-LEAdvertisement::~LEAdvertisement()
-{
-    delete d;
-}
+LEAdvertisement::~LEAdvertisement() = default;
 
 QDBusObjectPath LEAdvertisement::objectPath() const
 {

@@ -16,6 +16,8 @@
 #include "media.h"
 #include "rfkill.h"
 
+#include <memory>
+
 namespace BluezQt
 {
 class Device;
@@ -343,7 +345,7 @@ Q_SIGNALS:
     void allAdaptersRemoved();
 
 private:
-    class ManagerPrivate *const d;
+    std::unique_ptr<class ManagerPrivate> const d;
 
     friend class ManagerPrivate;
     friend class InitManagerJobPrivate;

@@ -14,6 +14,8 @@
 #include "bluezqt_export.h"
 #include "request.h"
 
+#include <memory>
+
 class QDBusObjectPath;
 
 namespace BluezQt
@@ -132,7 +134,7 @@ Q_SIGNALS:
     void configurationCleared(const QString &transportObjectPath);
 
 private:
-    class MediaEndpointPrivate *const d;
+    std::unique_ptr<class MediaEndpointPrivate> const d;
 };
 
 } // namespace BluezQt

@@ -17,10 +17,7 @@ MediaTransport::MediaTransport(const QString &path, const QVariantMap &propertie
 {
 }
 
-MediaTransport::~MediaTransport()
-{
-    delete d;
-}
+MediaTransport::~MediaTransport() = default;
 
 AudioConfiguration MediaTransport::audioConfiguration() const
 {

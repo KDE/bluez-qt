@@ -16,6 +16,9 @@
 #include "input.h"
 #include "mediaplayer.h"
 #include "mediatransport.h"
+
+#include <memory>
+
 namespace BluezQt
 {
 class Adapter;
@@ -598,7 +601,7 @@ Q_SIGNALS:
 private:
     BLUEZQT_NO_EXPORT explicit Device(const QString &path, const QVariantMap &properties, AdapterPtr adapter);
 
-    class DevicePrivate *const d;
+    std::unique_ptr<class DevicePrivate> const d;
 
     friend class DevicePrivate;
     friend class ManagerPrivate;

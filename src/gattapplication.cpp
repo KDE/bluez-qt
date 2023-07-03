@@ -32,10 +32,7 @@ GattApplication::GattApplication(const QString &objectPathPrefix, QObject *paren
 {
 }
 
-GattApplication::~GattApplication()
-{
-    delete d;
-}
+GattApplication::~GattApplication() = default;
 
 DBusManagerStruct GattApplicationPrivate::getManagedObjects() const
 {

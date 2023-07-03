@@ -19,10 +19,7 @@ Adapter::Adapter(const QString &path, const QVariantMap &properties)
 {
 }
 
-Adapter::~Adapter()
-{
-    delete d;
-}
+Adapter::~Adapter() = default;
 
 AdapterPtr Adapter::toSharedPtr() const
 {

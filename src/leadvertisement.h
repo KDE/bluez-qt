@@ -13,6 +13,8 @@
 
 #include "bluezqt_export.h"
 
+#include <memory>
+
 class QDBusObjectPath;
 
 namespace BluezQt
@@ -86,7 +88,7 @@ protected:
     virtual QDBusObjectPath objectPath() const;
 
 private:
-    class LEAdvertisementPrivate *const d;
+    std::unique_ptr<class LEAdvertisementPrivate> const d;
 
     friend class LEAdvertisingManager;
 };

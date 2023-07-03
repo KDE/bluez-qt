@@ -14,6 +14,8 @@
 #include "bluezqt_export.h"
 #include "types.h"
 
+#include <memory>
+
 class QDBusObjectPath;
 
 namespace BluezQt
@@ -186,7 +188,7 @@ Q_SIGNALS:
 private:
     BLUEZQT_NO_EXPORT explicit ObexTransfer(const QString &path, const QVariantMap &properties);
 
-    class ObexTransferPrivate *const d;
+    std::unique_ptr<class ObexTransferPrivate> const d;
 
     friend class ObexTransferPrivate;
     friend class ObexAgentAdaptor;

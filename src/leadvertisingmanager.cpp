@@ -24,10 +24,7 @@ LEAdvertisingManager::LEAdvertisingManager(const QString &path, QObject *parent)
     d->m_bluezLEAdvertisingManager = new BluezLEAdvertisingManager(Strings::orgBluez(), path, DBusConnection::orgBluez(), this);
 }
 
-LEAdvertisingManager::~LEAdvertisingManager()
-{
-    delete d;
-}
+LEAdvertisingManager::~LEAdvertisingManager() = default;
 
 PendingCall *LEAdvertisingManager::registerAdvertisement(LEAdvertisement *advertisement)
 {

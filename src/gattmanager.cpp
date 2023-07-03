@@ -31,10 +31,7 @@ GattManager::GattManager(const QString &path, QObject *parent)
 {
 }
 
-GattManager::~GattManager()
-{
-    delete d;
-}
+GattManager::~GattManager() = default;
 
 PendingCall *GattManager::registerApplication(GattApplication *application)
 {

@@ -13,6 +13,8 @@
 
 #include "bluezqt_export.h"
 
+#include <memory>
+
 namespace BluezQt
 {
 class GattApplication;
@@ -85,7 +87,7 @@ public:
 private:
     BLUEZQT_NO_EXPORT explicit GattManager(const QString &path, QObject *parent = nullptr);
 
-    class GattManagerPrivate *const d;
+    std::unique_ptr<class GattManagerPrivate> const d;
 
     friend class AdapterPrivate;
 };

@@ -14,6 +14,8 @@
 
 #include "bluezqt_export.h"
 
+#include <memory>
+
 namespace BluezQt
 {
 class JobPrivate;
@@ -220,7 +222,7 @@ protected:
     virtual void doEmitResult() = 0;
 
 private:
-    JobPrivate *const d_ptr;
+    std::unique_ptr<JobPrivate> const d_ptr;
 
     Q_DECLARE_PRIVATE(Job)
 };

@@ -18,6 +18,8 @@
 #include "leadvertisingmanager.h"
 #include "media.h"
 
+#include <memory>
+
 namespace BluezQt
 {
 class PendingCall;
@@ -409,7 +411,7 @@ Q_SIGNALS:
 private:
     BLUEZQT_NO_EXPORT explicit Adapter(const QString &path, const QVariantMap &properties);
 
-    class AdapterPrivate *const d;
+    std::unique_ptr<class AdapterPrivate> const d;
 
     friend class AdapterPrivate;
     friend class ManagerPrivate;

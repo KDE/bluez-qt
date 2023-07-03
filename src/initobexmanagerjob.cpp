@@ -41,8 +41,8 @@ void InitObexManagerJobPrivate::doStart()
         return;
     }
 
-    connect(m_manager->d, &ObexManagerPrivate::initError, this, &InitObexManagerJobPrivate::initError);
-    connect(m_manager->d, &ObexManagerPrivate::initFinished, this, &InitObexManagerJobPrivate::initFinished);
+    connect(m_manager->d.get(), &ObexManagerPrivate::initError, this, &InitObexManagerJobPrivate::initError);
+    connect(m_manager->d.get(), &ObexManagerPrivate::initFinished, this, &InitObexManagerJobPrivate::initFinished);
 
     m_manager->d->init();
 }
@@ -76,7 +76,6 @@ InitObexManagerJob::~InitObexManagerJob()
         setErrorText(QStringLiteral("Job was deleted before finished."));
         emitResult();
     }
-    delete d;
 }
 
 ObexManager *InitObexManagerJob::manager() const

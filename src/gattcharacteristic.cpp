@@ -24,10 +24,7 @@ GattCharacteristic::GattCharacteristic(const QString &uuid, const QStringList &f
 {
 }
 
-GattCharacteristic::~GattCharacteristic()
-{
-    delete d;
-}
+GattCharacteristic::~GattCharacteristic() = default;
 
 QByteArray GattCharacteristic::readValue()
 {

@@ -13,6 +13,8 @@
 
 #include "bluezqt_export.h"
 
+#include <memory>
+
 namespace BluezQt
 {
 class LEAdvertisement;
@@ -75,7 +77,7 @@ public:
 private:
     BLUEZQT_NO_EXPORT explicit LEAdvertisingManager(const QString &path, QObject *parent = nullptr);
 
-    class LEAdvertisingManagerPrivate *const d;
+    std::unique_ptr<class LEAdvertisingManagerPrivate> const d;
 
     friend class AdapterPrivate;
 };

@@ -14,6 +14,8 @@
 #include "bluezqt_export.h"
 #include "types.h"
 
+#include <memory>
+
 namespace BluezQt
 {
 class Manager;
@@ -141,7 +143,7 @@ public:
     DevicePtr device(const QModelIndex &index) const;
 
 private:
-    class DevicesModelPrivate *const d;
+    std::unique_ptr<class DevicesModelPrivate> const d;
 
     friend class DevicesModelPrivate;
 };

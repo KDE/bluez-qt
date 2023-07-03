@@ -41,8 +41,8 @@ void InitManagerJobPrivate::doStart()
     }
 
     m_manager->d->init();
-    connect(m_manager->d, &ManagerPrivate::initError, this, &InitManagerJobPrivate::initError);
-    connect(m_manager->d, &ManagerPrivate::initFinished, this, &InitManagerJobPrivate::initFinished);
+    connect(m_manager->d.get(), &ManagerPrivate::initError, this, &InitManagerJobPrivate::initError);
+    connect(m_manager->d.get(), &ManagerPrivate::initFinished, this, &InitManagerJobPrivate::initFinished);
 }
 
 void InitManagerJobPrivate::initError(const QString &errorText)
@@ -74,7 +74,6 @@ InitManagerJob::~InitManagerJob()
         setErrorText(QStringLiteral("Job was deleted before finished."));
         emitResult();
     }
-    delete d;
 }
 
 Manager *InitManagerJob::manager() const

@@ -14,6 +14,8 @@
 #include "bluezqt_export.h"
 #include "obexsession.h"
 
+#include <memory>
+
 class QDBusObjectPath;
 
 namespace BluezQt
@@ -188,7 +190,7 @@ Q_SIGNALS:
     void sessionRemoved(ObexSessionPtr session);
 
 private:
-    class ObexManagerPrivate *const d;
+    std::unique_ptr<class ObexManagerPrivate> const d;
 
     friend class ObexManagerPrivate;
     friend class InitObexManagerJobPrivate;

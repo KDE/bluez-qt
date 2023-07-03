@@ -14,6 +14,8 @@
 #include "manager.h"
 #include "obexmanager.h"
 
+#include <memory>
+
 namespace BluezQt
 {
 /**
@@ -53,7 +55,7 @@ private:
     void doStart() override;
     void doEmitResult() override;
 
-    class InitManagerJobPrivate *const d;
+    std::unique_ptr<class InitManagerJobPrivate> const d;
 
     friend class InitManagerJobPrivate;
     friend class Manager;

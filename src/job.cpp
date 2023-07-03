@@ -30,10 +30,7 @@ Job::Job(QObject *parent)
     d_ptr->q_ptr = this;
 }
 
-Job::~Job()
-{
-    delete d_ptr;
-}
+Job::~Job() = default;
 
 void Job::start()
 {

@@ -24,10 +24,7 @@ Media::Media(const QString &path, QObject *parent)
     d->m_bluezMedia = new BluezMedia(Strings::orgBluez(), path, DBusConnection::orgBluez(), this);
 }
 
-Media::~Media()
-{
-    delete d;
-}
+Media::~Media() = default;
 
 PendingCall *Media::registerEndpoint(MediaEndpoint *endpoint)
 {

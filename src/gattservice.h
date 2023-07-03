@@ -14,6 +14,8 @@
 
 #include <QDBusObjectPath>
 
+#include <memory>
+
 namespace BluezQt
 {
 /**
@@ -69,7 +71,7 @@ protected:
     virtual QDBusObjectPath objectPath() const;
 
 private:
-    class GattServicePrivate *const d;
+    std::unique_ptr<class GattServicePrivate> const d;
 
     friend class GattApplicationPrivate;
     friend class GattCharacterisiticPrivate;

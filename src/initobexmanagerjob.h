@@ -53,7 +53,7 @@ private:
     void doStart() override;
     void doEmitResult() override;
 
-    class InitObexManagerJobPrivate *const d;
+    std::unique_ptr<class InitObexManagerJobPrivate> const d;
 
     friend class InitObexManagerJobPrivate;
     friend class ObexManager;

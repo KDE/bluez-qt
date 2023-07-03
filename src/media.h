@@ -13,6 +13,8 @@
 
 #include "bluezqt_export.h"
 
+#include <memory>
+
 namespace BluezQt
 {
 class MediaEndpoint;
@@ -70,7 +72,7 @@ public:
 private:
     BLUEZQT_NO_EXPORT explicit Media(const QString &path, QObject *parent = nullptr);
 
-    class MediaPrivate *const d;
+    std::unique_ptr<class MediaPrivate> const d;
 
     friend class AdapterPrivate;
 };

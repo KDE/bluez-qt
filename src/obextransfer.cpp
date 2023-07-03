@@ -108,10 +108,7 @@ ObexTransfer::ObexTransfer(const QString &path, const QVariantMap &properties)
 {
 }
 
-ObexTransfer::~ObexTransfer()
-{
-    delete d;
-}
+ObexTransfer::~ObexTransfer() = default;
 
 ObexTransferPtr ObexTransfer::toSharedPtr() const
 {

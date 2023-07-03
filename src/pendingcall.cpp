@@ -257,7 +257,7 @@ PendingCall::PendingCall(const QDBusPendingCall &call, ReturnType type, QObject 
     d->m_type = type;
     d->m_watcher = new QDBusPendingCallWatcher(call, this);
 
-    connect(d->m_watcher, &QDBusPendingCallWatcher::finished, d, &PendingCallPrivate::pendingCallFinished);
+    connect(d->m_watcher, &QDBusPendingCallWatcher::finished, d.get(), &PendingCallPrivate::pendingCallFinished);
 }
 
 PendingCall::PendingCall(PendingCall::Error error, const QString &errorText, QObject *parent)
@@ -270,7 +270,7 @@ PendingCall::PendingCall(PendingCall::Error error, const QString &errorText, QOb
     QTimer *timer = new QTimer(this);
     timer->setSingleShot(true);
     timer->start(0);
-    connect(timer, &QTimer::timeout, d, &PendingCallPrivate::emitDelayedFinished);
+    connect(timer, &QTimer::timeout, d.get(), &PendingCallPrivate::emitDelayedFinished);
 }
 
 PendingCall::PendingCall(const QDBusPendingCall &call, ExternalProcessor externalProcessor, QObject *parent)
@@ -281,15 +281,12 @@ PendingCall::PendingCall(const QDBusPendingCall &call, ExternalProcessor externa
 
     d->m_watcher = new QDBusPendingCallWatcher(call, this);
     connect(d->m_watcher, &QDBusPendingCallWatcher::finished, [externalProcessor, this](QDBusPendingCallWatcher *watcher) {
-        externalProcessor(watcher, std::bind(&PendingCallPrivate::processError, d, std::placeholders::_1), &d->m_value);
+        externalProcessor(watcher, std::bind(&PendingCallPrivate::processError, d.get(), std::placeholders::_1), &d->m_value);
         d->emitFinished();
     });
 }
 
-PendingCall::~PendingCall()
-{
-    delete d;
-}
+PendingCall::~PendingCall() = default;
 
 QVariant PendingCall::value() const
 {

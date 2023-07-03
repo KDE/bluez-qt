@@ -13,6 +13,8 @@
 #include "manager.h"
 #include "types.h"
 
+#include <memory>
+
 class NoInputNoOutputAgent : public BluezQt::Agent
 {
     Q_OBJECT
@@ -41,7 +43,7 @@ private:
     Capability capability() const override;
     void authorizeService(BluezQt::DevicePtr device, const QString &uuid, const BluezQt::Request<> &request) override;
 
-    class NoInputNoOutputAgentPrivate *const d;
+    std::unique_ptr<class NoInputNoOutputAgentPrivate> const d;
 };
 
 class MediaEndpointConnector : public QObject

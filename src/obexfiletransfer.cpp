@@ -30,10 +30,7 @@ ObexFileTransfer::ObexFileTransfer(const QDBusObjectPath &path, QObject *parent)
     d->m_bluezFileTransfer = new BluezFileTransfer(Strings::orgBluezObex(), path.path(), DBusConnection::orgBluezObex(), this);
 }
 
-ObexFileTransfer::~ObexFileTransfer()
-{
-    delete d;
-}
+ObexFileTransfer::~ObexFileTransfer() = default;
 
 QDBusObjectPath ObexFileTransfer::objectPath() const
 {

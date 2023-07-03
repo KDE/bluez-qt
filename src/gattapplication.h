@@ -13,6 +13,8 @@
 
 #include "bluezqt_export.h"
 
+#include <memory>
+
 class QDBusObjectPath;
 
 namespace BluezQt
@@ -73,7 +75,7 @@ private:
      */
     virtual QDBusObjectPath objectPath() const;
 
-    class GattApplicationPrivate *const d;
+    std::unique_ptr<class GattApplicationPrivate> const d;
 
     friend class GattManager;
     friend class GattService;

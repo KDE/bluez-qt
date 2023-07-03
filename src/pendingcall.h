@@ -15,6 +15,8 @@
 
 #include "bluezqt_export.h"
 
+#include <memory>
+
 class QDBusError;
 class QDBusPendingCall;
 class QDBusPendingCallWatcher;
@@ -186,7 +188,7 @@ private:
     using ExternalProcessor = std::function<void(QDBusPendingCallWatcher *watcher, ErrorProcessor errorProcessor, QVariantList *values)>;
     explicit PendingCall(const QDBusPendingCall &call, ExternalProcessor externalProcessor, QObject *parent = nullptr);
 
-    class PendingCallPrivate *const d;
+    std::unique_ptr<class PendingCallPrivate> const d;
 
     friend class PendingCallPrivate;
     friend class Manager;

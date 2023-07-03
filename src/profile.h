@@ -15,6 +15,8 @@
 #include "request.h"
 #include "types.h"
 
+#include <memory>
+
 class QLocalSocket;
 class QDBusObjectPath;
 class QDBusUnixFileDescriptor;
@@ -246,7 +248,7 @@ public:
     virtual void release();
 
 private:
-    class ProfilePrivate *const d;
+    std::unique_ptr<class ProfilePrivate> const d;
 
     friend class Manager;
 };

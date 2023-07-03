@@ -14,6 +14,8 @@
 #include "bluezqt_export.h"
 #include "types.h"
 
+#include <memory>
+
 namespace BluezQt
 {
 /**
@@ -57,7 +59,7 @@ Q_SIGNALS:
 private:
     BLUEZQT_NO_EXPORT explicit Battery(const QString &path, const QVariantMap &properties);
 
-    class BatteryPrivate *const d;
+    std::unique_ptr<class BatteryPrivate> const d;
 
     friend class BatteryPrivate;
     friend class DevicePrivate;

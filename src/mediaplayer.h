@@ -15,6 +15,8 @@
 #include "mediaplayertrack.h"
 #include "types.h"
 
+#include <memory>
+
 namespace BluezQt
 {
 class PendingCall;
@@ -276,7 +278,7 @@ Q_SIGNALS:
 private:
     BLUEZQT_NO_EXPORT explicit MediaPlayer(const QString &path, const QVariantMap &properties);
 
-    class MediaPlayerPrivate *const d;
+    std::unique_ptr<class MediaPlayerPrivate> const d;
 
     friend class MediaPlayerPrivate;
     friend class DevicePrivate;

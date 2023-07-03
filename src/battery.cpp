@@ -47,10 +47,7 @@ Battery::Battery(const QString &path, const QVariantMap &properties)
 {
 }
 
-Battery::~Battery()
-{
-    delete d;
-}
+Battery::~Battery() = default;
 
 BatteryPtr Battery::toSharedPtr() const
 {

@@ -14,6 +14,8 @@
 #include "bluezqt_export.h"
 #include "obexfiletransferentry.h"
 
+#include <memory>
+
 class QDBusObjectPath;
 
 namespace BluezQt
@@ -145,7 +147,7 @@ public:
     PendingCall *deleteFile(const QString &fileName);
 
 private:
-    class ObexFileTransferPrivate *const d;
+    std::unique_ptr<class ObexFileTransferPrivate> const d;
 
     friend class ObexFileTransferPrivate;
 };

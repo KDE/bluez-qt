@@ -26,10 +26,7 @@ ObexManager::ObexManager(QObject *parent)
     Instance::setObexManager(this);
 }
 
-ObexManager::~ObexManager()
-{
-    delete d;
-}
+ObexManager::~ObexManager() = default;
 
 InitObexManagerJob *ObexManager::init()
 {

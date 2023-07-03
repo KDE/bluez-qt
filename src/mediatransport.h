@@ -15,6 +15,8 @@
 #include "mediatypes.h"
 #include "tpendingcall.h"
 
+#include <memory>
+
 namespace BluezQt
 {
 class PendingCall;
@@ -119,7 +121,7 @@ Q_SIGNALS:
 private:
     BLUEZQT_NO_EXPORT explicit MediaTransport(const QString &path, const QVariantMap &properties);
 
-    class MediaTransportPrivate *const d;
+    std::unique_ptr<class MediaTransportPrivate> const d;
 
     friend class MediaTransportPrivate;
     friend class DevicePrivate;

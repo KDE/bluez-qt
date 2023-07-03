@@ -27,10 +27,7 @@ Manager::Manager(QObject *parent)
     Instance::setManager(this);
 }
 
-Manager::~Manager()
-{
-    delete d;
-}
+Manager::~Manager() = default;
 
 InitManagerJob *Manager::init()
 {

@@ -13,6 +13,8 @@
 
 #include "bluezqt_export.h"
 
+#include <memory>
+
 class QDBusObjectPath;
 
 namespace BluezQt
@@ -102,7 +104,7 @@ public:
     PendingCall *exchangeBusinessCards(const QString &clientFileName, const QString &targetFileName);
 
 private:
-    class ObexObjectPushPrivate *const d;
+    std::unique_ptr<class ObexObjectPushPrivate> const d;
 
     friend class ObexObjectPushPrivate;
 };

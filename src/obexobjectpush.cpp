@@ -30,10 +30,7 @@ ObexObjectPush::ObexObjectPush(const QDBusObjectPath &path, QObject *parent)
     d->m_bluezObjectPush = new BluezObjectPush(Strings::orgBluezObex(), path.path(), DBusConnection::orgBluezObex(), this);
 }
 
-ObexObjectPush::~ObexObjectPush()
-{
-    delete d;
-}
+ObexObjectPush::~ObexObjectPush() = default;
 
 QDBusObjectPath ObexObjectPush::objectPath() const
 {

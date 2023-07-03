@@ -89,10 +89,7 @@ DevicesModel::DevicesModel(Manager *manager, QObject *parent)
     d->init();
 }
 
-DevicesModel::~DevicesModel()
-{
-    delete d;
-}
+DevicesModel::~DevicesModel() = default;
 
 QHash<int, QByteArray> DevicesModel::roleNames() const
 {

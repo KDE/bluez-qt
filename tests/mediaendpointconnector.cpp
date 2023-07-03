@@ -35,10 +35,7 @@ NoInputNoOutputAgent::NoInputNoOutputAgent(const QStringList &uuids, QObject *pa
     d->allowedUuids = uuids;
 }
 
-NoInputNoOutputAgent::~NoInputNoOutputAgent()
-{
-    delete d;
-}
+NoInputNoOutputAgent::~NoInputNoOutputAgent() = default;
 
 QDBusObjectPath NoInputNoOutputAgent::objectPath() const
 {

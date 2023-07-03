@@ -34,10 +34,7 @@ GattDescriptor::GattDescriptor(const QString &uuid, const QStringList &flags, co
 {
 }
 
-GattDescriptor::~GattDescriptor()
-{
-    delete d;
-}
+GattDescriptor::~GattDescriptor() = default;
 
 QByteArray GattDescriptor::readValue()
 {
