@@ -6,8 +6,8 @@
  * SPDX-License-Identifier: LGPL-2.1-only OR LGPL-3.0-only OR LicenseRef-KDE-Accepted-LGPL
  */
 
-#ifndef BLUEZQT_GATTSERVICE_P_H
-#define BLUEZQT_GATTSERVICE_P_H
+#ifndef BLUEZQT_GATTSERVICEREMOTE_P_H
+#define BLUEZQT_GATTSERVICEREMOTE_P_H
 
 #include <QObject>
 #include <QStringList>
@@ -55,4 +55,4 @@ public:
 
 } // namespace BluezQt
 
-#endif // BLUEZQT_GATTSERVICE_P_H
+#endif // BLUEZQT_GATTSERVICEREMOTE_P_H
