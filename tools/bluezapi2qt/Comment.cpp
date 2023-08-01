@@ -16,11 +16,7 @@ bool Comment::finalize()
     }
 
     // Find indents
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-    qsizetype indents = 255;
-#else
     int indents = 255;
-#endif
     for (const auto &line : *this) {
         if (line.isEmpty()) {
             continue;
