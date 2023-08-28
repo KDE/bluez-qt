@@ -156,10 +156,8 @@ public:
      * this function returns false.
      *
      * @note This requires write access to /dev/rfkill.
-     *
-     * @return true if unblocking rfkill devices succeeded
      */
-    bool setBluetoothBlocked(bool blocked);
+    void setBluetoothBlocked(bool blocked);
 
     /**
      * Returns a usable adapter.

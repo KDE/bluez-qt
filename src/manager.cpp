@@ -56,12 +56,12 @@ bool Manager::isBluetoothBlocked() const
     return d->m_bluetoothBlocked;
 }
 
-bool Manager::setBluetoothBlocked(bool blocked)
+void Manager::setBluetoothBlocked(bool blocked)
 {
     if (blocked) {
-        return d->m_rfkill->block();
+        d->m_rfkill->block();
     } else {
-        return d->m_rfkill->unblock();
+        d->m_rfkill->unblock();
     }
 }
 

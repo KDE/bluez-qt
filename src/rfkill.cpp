@@ -73,30 +73,22 @@ Rfkill::State Rfkill::state() const
     return d->m_state;
 }
 
-bool Rfkill::block()
+void Rfkill::block()
 {
     if (d->m_state == SoftBlocked || d->m_state == HardBlocked) {
-        return true;
+        return;
     }
 
-    if (d->m_state != Unblocked) {
-        return false;
-    }
-
-    return setSoftBlock(1);
+    setSoftBlock(1);
 }
 
-bool Rfkill::unblock()
+void Rfkill::unblock()
 {
     if (d->m_state == Unblocked) {
-        return true;
+        return;
     }
 
-    if (d->m_state != SoftBlocked) {
-        return false;
-    }
-
-    return setSoftBlock(0);
+    setSoftBlock(0);
 }
 
 void Rfkill::devReadyRead()

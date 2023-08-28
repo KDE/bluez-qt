@@ -38,8 +38,8 @@ public:
     ~Rfkill() override;
 
     State state() const;
-    bool block();
-    bool unblock();
+    void block();
+    void unblock();
 
 Q_SIGNALS:
     void stateChanged(State state);
