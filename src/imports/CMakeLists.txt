@@ -13,7 +13,7 @@ target_sources(bluezqtextensionplugin PRIVATE
 
 ecm_target_qml_sources(bluezqtextensionplugin SOURCES DevicesModel.qml)
 
-target_link_libraries(bluezqtextensionplugin
+target_link_libraries(bluezqtextensionplugin PRIVATE
     Qt6::Core
     Qt6::Qml
     Qt6::DBus
