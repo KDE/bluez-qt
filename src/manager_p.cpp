@@ -32,6 +32,7 @@ ManagerPrivate::ManagerPrivate(Manager *parent)
 {
     qDBusRegisterMetaType<DBusManagerStruct>();
     qDBusRegisterMetaType<QVariantMapMap>();
+    qRegisterMetaType<QVariantMapMap>("QVariantMapMap");
 
     m_rfkill = new Rfkill(this);
     m_bluetoothBlocked = rfkillBlocked();
