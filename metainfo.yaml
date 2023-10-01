@@ -9,8 +9,7 @@ platforms:
     - name: Linux
       note: Functional only with running BlueZ 5
 libraries:
-    - qmake: BluezQt
-      cmake: KF6::BluezQt
+    - cmake: KF6::BluezQt
 cmakename: KF6BluezQt
 
 public_lib: true
