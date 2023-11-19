@@ -426,7 +426,7 @@ void ManagerPrivate::propertiesChanged(const QString &interface, const QVariantM
     const QString path_full = message().path();
     const QString path_device = path_full.section(QLatin1Char('/'), 0, 4);
 
-    QTimer::singleShot(0, this, [=]() {
+    QTimer::singleShot(0, this, [this, interface, changed, invalidated, path_full, path_device]() {
         AdapterPtr adapter = m_adapters.value(path_device);
         if (adapter) {
             adapter->d->propertiesChanged(interface, changed, invalidated);
