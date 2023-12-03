@@ -10,6 +10,7 @@
 #ifndef BLUEZQT_A2DPCODECS_H
 #define BLUEZQT_A2DPCODECS_H
 
+#include <endian.h>
 #include <stdint.h>
 
 // clang-format off
