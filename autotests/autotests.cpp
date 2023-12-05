@@ -59,8 +59,8 @@ void StartJob::exec()
     QDBusServiceWatcher watcher(QStringLiteral("org.kde.bluezqt.test"), QDBusConnection::sessionBus(), QDBusServiceWatcher::WatchForRegistration);
 
     connect(&watcher, &QDBusServiceWatcher::serviceRegistered, &m_eventLoop, &QEventLoop::quit);
-    connect(FakeBluez::s_process, SIGNAL(error(QProcess::ProcessError)), this, SLOT(processError(QProcess::ProcessError)));
-    connect(FakeBluez::s_process, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(processFinished(int, QProcess::ExitStatus)));
+    connect(FakeBluez::s_process, &QProcess::errorOccurred, this, &StartJob::processError);
+    connect(FakeBluez::s_process, &QProcess::finished, this, &StartJob::processFinished);
 
     FakeBluez::s_process->start(m_fakebluezPath, QStringList());
 

@@ -85,7 +85,7 @@ extern void bluezqt_initFakeBluezTestRun();
 
 int main(int argc, char *argv[])
 {
-    qmlRegisterSingletonType<QObject>("org.kde.bluezqt.fakebluez", 1, 0, "FakeBluez", fakebluez_singleton);
+    qmlRegisterSingletonType<FakeBluezObject>("org.kde.bluezqt.fakebluez", 1, 0, "FakeBluez", fakebluez_singleton);
 
     BluezQt::bluezqt_initFakeBluezTestRun();
 
