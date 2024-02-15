@@ -31,6 +31,7 @@ ManagerPrivate::ManagerPrivate(Manager *parent)
     , m_adaptersLoaded(false)
 {
     qDBusRegisterMetaType<DBusManagerStruct>();
+    qRegisterMetaType<QVariantMapMap>("QVariantMapMap");
     qDBusRegisterMetaType<QVariantMapMap>();
 
     m_rfkill = new Rfkill(this);
