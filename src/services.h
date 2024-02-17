@@ -48,7 +48,11 @@ const QString ImmediateAlert = QLatin1String("00001802-0000-1000-8000-00805f9b34
 const QString LinkLoss = QLatin1String("00001803-0000-1000-8000-00805f9b34fb");
 const QString TxPower = QLatin1String("00001804-0000-1000-8000-00805f9b34fb");
 const QString HeartRate = QLatin1String("0000180d-0000-1000-8000-00805f9b34fb");
-
+const QString CoordinatedSetIdentification = QLatin1String("00001846-0000-1000-8000-00805f9b34fb");
+const QString MicrophoneControl = QLatin1String("0000184D-0000-1000-8000-00805f9b34fb");
+const QString BroadcastAudioScan = QLatin1String("0000184F-0000-1000-8000-00805f9b34fb");
+const QString PublishedAudioCapabilities = QLatin1String("00001851-0000-1000-8000-00805f9b34fb");
+const QString CommonAudio = QLatin1String("00001853-0000-1000-8000-00805f9b34fb");
 }
 
 } // namespace BluezQt

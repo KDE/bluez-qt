@@ -45,6 +45,11 @@ static QJSValue services_singleton(QQmlEngine *engine, QJSEngine *scriptEngine)
     object.setProperty(QStringLiteral("LinkLoss"), BluezQt::Services::LinkLoss);
     object.setProperty(QStringLiteral("TxPower"), BluezQt::Services::TxPower);
     object.setProperty(QStringLiteral("HeartRate"), BluezQt::Services::HeartRate);
+    object.setProperty(QStringLiteral("CoordinatedSetIdentification"), BluezQt::Services::CoordinatedSetIdentification);
+    object.setProperty(QStringLiteral("MicrophoneControl"), BluezQt::Services::MicrophoneControl);
+    object.setProperty(QStringLiteral("BroadcastAudioScan"), BluezQt::Services::BroadcastAudioScan);
+    object.setProperty(QStringLiteral("PublishedAudioCapabilities"), BluezQt::Services::PublishedAudioCapabilities);
+    object.setProperty(QStringLiteral("CommonAudio"), BluezQt::Services::CommonAudio);
 
     return object;
 }
