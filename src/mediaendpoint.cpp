@@ -90,8 +90,8 @@ void MediaEndpoint::selectConfiguration(const QByteArray &capabilities, const Re
             break;
         }
 
-        caps.min_bitpool = 2;
-        caps.max_bitpool = 53;
+        caps.min_bitpool = std::max(caps.min_bitpool, static_cast<uint8_t>(MIN_BITPOOL));
+        caps.max_bitpool = std::min(caps.max_bitpool, static_cast<uint8_t>(MAX_BITPOOL));
 
         const QByteArray configuration(reinterpret_cast<const char *>(&caps), sizeof(caps));
         Q_EMIT configurationSelected(capabilities, configuration);

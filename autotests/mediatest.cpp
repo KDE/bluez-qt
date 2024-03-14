@@ -88,7 +88,7 @@ void MediaTest::selectConfigurationTest()
     sbcConfiguration.subbands = SBC_SUBBANDS_8;
     sbcConfiguration.allocation_method = SBC_ALLOCATION_LOUDNESS;
     sbcConfiguration.min_bitpool = 2;
-    sbcConfiguration.max_bitpool = 53;
+    sbcConfiguration.max_bitpool = 64;
 
     QVariantMap params;
     params.insert(QStringLiteral("AdapterPath"), QVariant::fromValue(QDBusObjectPath(m_adapter->ubi())));
