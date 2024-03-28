@@ -19,6 +19,7 @@ LEAdvertisementAdaptor::LEAdvertisementAdaptor(LEAdvertisement *parent)
     , m_advertisement(parent)
 {
     qDBusRegisterMetaType<QHash<QString, QVariant>>();
+    qDBusRegisterMetaType<QHash<quint16, QDBusVariant>>();
 }
 
 QString LEAdvertisementAdaptor::type() const
@@ -40,6 +41,20 @@ QHash<QString, QVariant> LEAdvertisementAdaptor::serviceData() const
     for (auto it = sd.begin(); it != sd.end(); ++it) {
         data.insert(it.key(), it.value());
     }
+    return data;
+}
+
+QHash<quint16, QDBusVariant> LEAdvertisementAdaptor::manufacturerData() const
+{
+    QHash<quint16, QDBusVariant> data;
+
+    const auto &md = m_advertisement->manufacturerData();
+    data.reserve(md.size());
+
+    for (auto it = md.cbegin(); it != md.cend(); ++it) {
+        data.insert(it.key(), QDBusVariant(QVariant::fromValue(it.value())));
+    }
+
     return data;
 }
 

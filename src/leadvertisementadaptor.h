@@ -10,6 +10,7 @@
 #define BLUEZQT_LEADVERTISEMENTADAPTOR_H
 
 #include <QDBusAbstractAdaptor>
+#include <QDBusVariant>
 
 namespace BluezQt
 {
@@ -22,6 +23,7 @@ class LEAdvertisementAdaptor : public QDBusAbstractAdaptor
     Q_PROPERTY(QString Type READ type)
     Q_PROPERTY(QStringList ServiceUUIDs READ serviceUuids)
     Q_PROPERTY(QHash<QString, QVariant> ServiceData READ serviceData)
+    Q_PROPERTY(QHash<quint16, QDBusVariant> ManufacturerData READ manufacturerData)
 
 public:
     explicit LEAdvertisementAdaptor(LEAdvertisement *parent);
@@ -30,6 +32,7 @@ public:
 
     QStringList serviceUuids() const;
     QHash<QString, QVariant> serviceData() const;
+    QHash<quint16, QDBusVariant> manufacturerData() const;
 
 public Q_SLOTS:
     Q_NOREPLY void Release();

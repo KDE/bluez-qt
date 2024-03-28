@@ -20,6 +20,7 @@ public:
     QStringList m_serviceUuids;
     QDBusObjectPath m_objectPath;
     QHash<QString, QByteArray> m_serviceData;
+    QHash<quint16, QByteArray> m_manufacturerData;
 };
 
 } // namespace BluezQt

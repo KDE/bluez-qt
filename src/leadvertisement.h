@@ -66,6 +66,22 @@ public:
     void setServiceData(const QHash<QString, QByteArray> &data);
 
     /**
+     * Returns the manufacturer data included in the advertisement.
+     *
+     * @return A QHash representing the manufaturer IDs and associated data. Keys are manufaturer ID.
+     * @since 6.1
+     */
+    QHash<quint16, QByteArray> manufacturerData() const;
+
+    /**
+     * Sets the manufacturer data to be included in the advertisement.
+     *
+     * @param data QHash representing the manufacturer IDs and associated data. Keys are manufacturer ID.
+     * @since 6.1
+     */
+    void setManufacturerData(const QHash<quint16, QByteArray> &data);
+
+    /**
      * Indicates that the LEAdvertisement was unregistered.
      *
      * This method gets called when the service daemon removes the Advertisement.

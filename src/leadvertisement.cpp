@@ -39,6 +39,16 @@ void LEAdvertisement::setServiceData(const QHash<QString, QByteArray> &data)
     d->m_serviceData = data;
 }
 
+QHash<quint16, QByteArray> LEAdvertisement::manufacturerData() const
+{
+    return d->m_manufacturerData;
+}
+
+void LEAdvertisement::setManufacturerData(const QHash<quint16, QByteArray> &data)
+{
+    d->m_manufacturerData = data;
+}
+
 void LEAdvertisement::release()
 {
 }
