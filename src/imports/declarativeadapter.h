@@ -10,14 +10,17 @@
 #define DECLARATIVEADAPTER_H
 
 #include <QQmlListProperty>
+#include <qqmlregistration.h>
 
 #include "adapter.h"
-
-class DeclarativeDevice;
+#include "declarativedevice.h"
+#include "pendingcall.h"
 
 class DeclarativeAdapter : public QObject
 {
     Q_OBJECT
+    QML_NAMED_ELEMENT(Adapter)
+    QML_UNCREATABLE("Adapter cannot be created")
 
     Q_PROPERTY(QString ubi READ ubi CONSTANT)
     Q_PROPERTY(QString address READ address CONSTANT)

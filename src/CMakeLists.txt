@@ -106,6 +106,8 @@ qt_add_dbus_interface(bluezqt_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces/org.bl
 add_library(KF6BluezQt ${bluezqt_SRCS})
 add_library(KF6::BluezQt ALIAS KF6BluezQt)
 
+qt_extract_metatypes(KF6BluezQt)
+
 ecm_generate_export_header(KF6BluezQt
     BASE_NAME BluezQt
     GROUP_BASE_NAME KF

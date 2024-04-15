@@ -10,10 +10,13 @@
 #define DECLARATIVEINPUT_H
 
 #include "input.h"
+#include "qqmlregistration.h"
 
 class DeclarativeInput : public QObject
 {
     Q_OBJECT
+    QML_NAMED_ELEMENT(Input)
+    QML_UNCREATABLE("Input cannot be created")
     Q_PROPERTY(BluezQt::Input::ReconnectMode reconnectMode READ reconnectMode NOTIFY reconnectModeChanged)
 
 public:

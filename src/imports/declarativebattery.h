@@ -10,10 +10,13 @@
 #define DECLARATIVEBATTERY_H
 
 #include "battery.h"
+#include "qqmlregistration.h"
 
 class DeclarativeBattery : public QObject
 {
     Q_OBJECT
+    QML_NAMED_ELEMENT(Battery)
+    QML_UNCREATABLE("Battery cannot be created")
     Q_PROPERTY(int percentage READ percentage NOTIFY percentageChanged)
 
 public:

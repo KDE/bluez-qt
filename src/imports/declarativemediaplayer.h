@@ -10,12 +10,16 @@
 #define DECLARATIVEMEDIAPLAYER_H
 
 #include <QJsonObject>
+#include <qqmlregistration.h>
 
 #include "mediaplayer.h"
+#include "pendingcall.h"
 
 class DeclarativeMediaPlayer : public QObject
 {
     Q_OBJECT
+    QML_NAMED_ELEMENT(MediaPlayer)
+    QML_UNCREATABLE("MediaPlayer cannot be created")
     Q_PROPERTY(QString name READ name NOTIFY nameChanged)
     Q_PROPERTY(BluezQt::MediaPlayer::Equalizer equalizer READ equalizer WRITE setEqualizer NOTIFY equalizerChanged)
     Q_PROPERTY(BluezQt::MediaPlayer::Repeat repeat READ repeat WRITE setRepeat NOTIFY repeatChanged)

@@ -10,6 +10,7 @@
 #define DECLARATIVEDEVICE_H
 
 #include "device.h"
+#include <qqmlregistration.h>
 
 class DeclarativeAdapter;
 class DeclarativeBattery;
@@ -19,6 +20,8 @@ class DeclarativeMediaPlayer;
 class DeclarativeDevice : public QObject
 {
     Q_OBJECT
+    QML_NAMED_ELEMENT(Device)
+    QML_UNCREATABLE("Device cannot be created")
 
     Q_PROPERTY(QString ubi READ ubi CONSTANT)
     Q_PROPERTY(QString address READ address CONSTANT)
