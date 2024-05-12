@@ -1,4 +1,3 @@
-maintainer: drosca
 description: Qt wrapper for BlueZ 5 DBus API
 tier: 1
 type: integration
