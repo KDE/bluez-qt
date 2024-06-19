@@ -12,6 +12,7 @@
 #include "declarativedevice.h"
 #include "device.h"
 #include "initmanagerjob.h"
+#include <algorithm>
 static qsizetype adaptersCountFunction(QQmlListProperty<DeclarativeAdapter> *property)
 {
     Q_ASSERT(qobject_cast<DeclarativeManager *>(property->object));
@@ -42,6 +43,33 @@ static DeclarativeDevice *devicesAtFunction(QQmlListProperty<DeclarativeDevice> 
     DeclarativeManager *manager = static_cast<DeclarativeManager *>(property->object);
 
     return manager->m_devices.values().at(index);
+}
+
+static qsizetype connectedDevicesCountFunction(QQmlListProperty<DeclarativeDevice> *property)
+{
+    Q_ASSERT(qobject_cast<DeclarativeManager *>(property->object));
+    DeclarativeManager *manager = static_cast<DeclarativeManager *>(property->object);
+
+    return std::ranges::count_if(manager->m_devices.values(), [](DeclarativeDevice *device) {
+        return device->isConnected();
+    });
+}
+
+static DeclarativeDevice *connectedDevicesAtFunction(QQmlListProperty<DeclarativeDevice> *property, qsizetype index)
+{
+    Q_ASSERT(qobject_cast<DeclarativeManager *>(property->object));
+    DeclarativeManager *manager = static_cast<DeclarativeManager *>(property->object);
+
+    int i = 0;
+    for (const auto device : manager->m_devices) {
+        if (device->isConnected()) {
+            if (index == i) {
+                return device;
+            }
+            i++;
+        }
+    }
+    return nullptr;
 }
 
 DeclarativeManager::DeclarativeManager(QObject *parent)
@@ -79,6 +107,11 @@ QQmlListProperty<DeclarativeAdapter> DeclarativeManager::declarativeAdapters()
 QQmlListProperty<DeclarativeDevice> DeclarativeManager::declarativeDevices()
 {
     return QQmlListProperty<DeclarativeDevice>(this, nullptr, devicesCountFunction, devicesAtFunction);
+}
+
+QQmlListProperty<DeclarativeDevice> DeclarativeManager::declarativeConnectedDevices()
+{
+    return QQmlListProperty<DeclarativeDevice>(this, nullptr, connectedDevicesCountFunction, connectedDevicesAtFunction);
 }
 
 DeclarativeAdapter *DeclarativeManager::declarativeAdapterFromPtr(BluezQt::AdapterPtr ptr) const
@@ -154,6 +187,10 @@ void DeclarativeManager::slotDeviceAdded(BluezQt::DevicePtr device)
 
     Q_EMIT deviceAdded(dDevice);
     Q_EMIT devicesChanged(declarativeDevices());
+    if (device->isConnected()) {
+        connect(device.get(), &BluezQt::Device::connectedChanged, this, &DeclarativeManager::slotDeviceConnectedChanged);
+        Q_EMIT connectedDevicesChanged(declarativeConnectedDevices());
+    }
 }
 
 void DeclarativeManager::slotDeviceRemoved(BluezQt::DevicePtr device)
@@ -164,6 +201,15 @@ void DeclarativeManager::slotDeviceRemoved(BluezQt::DevicePtr device)
 
     Q_EMIT deviceRemoved(dDevice);
     Q_EMIT devicesChanged(declarativeDevices());
+    if (device->isConnected()) {
+        disconnect(device.get(), &BluezQt::Device::connectedChanged, this, &DeclarativeManager::slotDeviceConnectedChanged);
+        Q_EMIT connectedDevicesChanged(declarativeConnectedDevices());
+    }
+}
+
+void DeclarativeManager::slotDeviceConnectedChanged()
+{
+    Q_EMIT connectedDevicesChanged(declarativeConnectedDevices());
 }
 
 void DeclarativeManager::slotUsableAdapterChanged(BluezQt::AdapterPtr adapter)

@@ -76,6 +76,7 @@ TestCase {
             Adapter: adapter2path,
             Address: "50:79:6A:0C:39:75",
             Name: "TestDevice2",
+            Connected: true,
             _toDBusObjectPath: [ "Path", "Adapter" ]
         }
         FakeBluez.runAction("devicemanager", "create-device", device2props);
@@ -83,6 +84,7 @@ TestCase {
         tryCompare(manager, "operational", true);
         compare(manager.adapters.length, 2, "adapters-length");
         compare(manager.devices.length, 2, "devices-length");
+        compare(manager.connectedDevices.length, 1, "connected-devices-length");
     }
 
     function cleanupTestCase()

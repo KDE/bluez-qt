@@ -87,6 +87,7 @@ TestCase {
         tryCompare(manager, "operational", true);
         compare(manager.adapters.length, 2, "adapters-length");
         compare(manager.devices.length, 2, "devices-length");
+        compare(manager.connectedDevices.length, 0, "connected-devices-length");
     }
 
     function cleanupTestCase()
@@ -206,5 +207,15 @@ TestCase {
             tryCompare(deviceDeviceRemovedSpy, "count", 1);
         }
     }
-}
 
+    function test_setConnected(): void {
+        const device1 = manager.deviceForUbi(device1props.Path);
+        verify(!device1.connected);
+        compare(manager.connectedDevices.length, 0, "connected-devices-length");
+
+        device1.connectToDevice();
+
+        tryCompare(device1, "connected", true);
+        compare(manager.connectedDevices.length, 1, "connected-devices-length");
+    }
+}
