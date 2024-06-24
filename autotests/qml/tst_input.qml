@@ -11,15 +11,17 @@ import org.kde.bluezqt 1.0 as BluezQt
 
 TestCase {
     name: "Input"
-    property QtObject manager : BluezQt.Manager;
-    property var input1props;
-    property var input2props;
-    property var input3props;
-    property var input4props;
-    property var device1props;
-    property var device2props;
-    property var device3props;
-    property var device4props;
+
+    readonly property BluezQt.Manager manager: BluezQt.Manager
+
+    property var input1props
+    property var input2props
+    property var input3props
+    property var input4props
+    property var device1props
+    property var device2props
+    property var device3props
+    property var device4props
 
     function initTestCase()
     {
@@ -110,10 +112,10 @@ TestCase {
 
     function test_getProperties()
     {
-        var device1 = manager.deviceForUbi(device1props.Path);
-        var device2 = manager.deviceForUbi(device2props.Path);
-        var device3 = manager.deviceForUbi(device3props.Path);
-        var device4 = manager.deviceForUbi(device4props.Path);
+        const device1 = manager.deviceForUbi(device1props.Path);
+        const device2 = manager.deviceForUbi(device2props.Path);
+        const device3 = manager.deviceForUbi(device3props.Path);
+        const device4 = manager.deviceForUbi(device4props.Path);
 
         compareProperties(device1.input, input1props);
         compareProperties(device2.input, input2props);
@@ -135,4 +137,3 @@ TestCase {
         }
     }
 }
-

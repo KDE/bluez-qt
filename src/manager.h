@@ -54,13 +54,13 @@ class InitManagerJob;
  *
  * Example use in QML code:
  * @code
- * import QtQuick 2.2
- * import org.kde.bluezqt 1.0 as BluezQt
+ * import QtQuick
+ * import org.kde.bluezqt as BluezQt
  *
  * Item {
- *     property QtObject manager : BluezQt.Manager
- *     property devicesCount : manager.devices.length
- *     property adaptersCount : manager.adapters.length
+ *     readonly property BluezQt.Manager manager: BluezQt.Manager
+ *     property devicesCount: manager.devices.length
+ *     property adaptersCount: manager.adapters.length
  *
  *     Component.onCompleted: {
  *         console.log("Manager operational:", manager.operational)

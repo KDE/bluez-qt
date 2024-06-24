@@ -11,7 +11,9 @@ import org.kde.bluezqt 1.0 as BluezQt
 
 TestCase {
     name: "MediaPlayer"
-    property QtObject manager : BluezQt.Manager;
+
+    readonly property BluezQt.Manager manager: BluezQt.Manager
+
     property var mediaPlayer1props;
     property var mediaPlayer2props;
 
@@ -357,4 +359,3 @@ TestCase {
         }
     }
 }
-

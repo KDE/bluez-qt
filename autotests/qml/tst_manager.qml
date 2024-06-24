@@ -12,6 +12,8 @@ import org.kde.bluezqt 1.0 as BluezQt
 TestCase {
     name: "Manager"
 
+    readonly property BluezQt.Manager manager: BluezQt.Manager
+
     function cleanup()
     {
         FakeBluez.stop();
@@ -19,7 +21,6 @@ TestCase {
 
     function test_bluezNotRunning()
     {
-        var manager = BluezQt.Manager;
         tryCompare(manager, "operational", false);
 
         verify(!manager.operational, "operational");
@@ -31,7 +32,6 @@ TestCase {
         FakeBluez.start();
         FakeBluez.runTest("bluez-not-exporting-interfaces");
 
-        var manager = BluezQt.Manager;
         tryCompare(manager, "operational", false);
 
         verify(!manager.operational, "operational");
@@ -43,7 +43,6 @@ TestCase {
         FakeBluez.start();
         FakeBluez.runTest("bluez-no-adapters");
 
-        var manager = BluezQt.Manager;
         tryCompare(manager, "operational", true);
 
         verify(manager.operational, "operational");
@@ -80,8 +79,6 @@ TestCase {
         }
         FakeBluez.runAction("devicemanager", "create-adapter", adapter2props);
 
-
-        var manager = BluezQt.Manager;
 
         tryCompare(manager, "operational", true);
         verify(!manager.bluetoothOperational, "btOperational");
@@ -160,8 +157,6 @@ TestCase {
         }
         FakeBluez.runAction("devicemanager", "create-device", device2props);
 
-        var manager = BluezQt.Manager;
-
         tryCompare(manager, "operational", true);
 
         var adapter = manager.adapterForAddress("1C:E5:C3:BC:94:7E");
@@ -187,4 +182,3 @@ TestCase {
         compare(manager.devices.length, 0);
     }
 }
-

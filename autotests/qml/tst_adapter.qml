@@ -11,9 +11,11 @@ import org.kde.bluezqt 1.0 as BluezQt
 
 TestCase {
     name: "Adapter"
-    property QtObject manager : BluezQt.Manager;
-    property var adapter1props;
-    property var adapter2props;
+
+    readonly property BluezQt.Manager manager: BluezQt.Manager
+
+    property var adapter1props
+    property var adapter2props
 
     function initTestCase()
     {
