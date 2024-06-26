@@ -14,6 +14,7 @@ static QJSValue services_singleton(QQmlEngine *engine, QJSEngine *scriptEngine)
     Q_UNUSED(engine)
 
     QJSValue object = scriptEngine->newObject();
+
     object.setProperty(QStringLiteral("ServiceDiscoveryServer"), BluezQt::Services::ServiceDiscoveryServer);
     object.setProperty(QStringLiteral("SerialPort"), BluezQt::Services::SerialPort);
     object.setProperty(QStringLiteral("DialupNetworking"), BluezQt::Services::DialupNetworking);
@@ -35,6 +36,8 @@ static QJSValue services_singleton(QQmlEngine *engine, QJSEngine *scriptEngine)
     object.setProperty(QStringLiteral("PhonebookAccessServer"), BluezQt::Services::PhonebookAccessServer);
     object.setProperty(QStringLiteral("MessageAccessServer"), BluezQt::Services::MessageAccessServer);
     object.setProperty(QStringLiteral("PnpInformation"), BluezQt::Services::PnpInformation);
+
+    // Bluetooth Low Energy
     object.setProperty(QStringLiteral("GenericAccess"), BluezQt::Services::GenericAccess);
     object.setProperty(QStringLiteral("GenericAcces"), BluezQt::Services::GenericAccess); // TODO KF7: Remove the one with typo
     object.setProperty(QStringLiteral("GenericAttribute"), BluezQt::Services::GenericAttribute);
@@ -42,6 +45,7 @@ static QJSValue services_singleton(QQmlEngine *engine, QJSEngine *scriptEngine)
     object.setProperty(QStringLiteral("LinkLoss"), BluezQt::Services::LinkLoss);
     object.setProperty(QStringLiteral("TxPower"), BluezQt::Services::TxPower);
     object.setProperty(QStringLiteral("HeartRate"), BluezQt::Services::HeartRate);
+
     return object;
 }
 

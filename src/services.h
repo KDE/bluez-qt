@@ -16,6 +16,8 @@ namespace BluezQt
 /** Service UUIDs. */
 namespace Services
 {
+// Note: If you add/remove/modify any UUIDs in this namespace, make sure to
+// mirror the changes to src/imports/bluezqtextensionplugin.cpp as well
 const QString ServiceDiscoveryServer = QLatin1String("00001000-0000-1000-8000-00805F9B34FB");
 const QString SerialPort = QLatin1String("00001101-0000-1000-8000-00805F9B34FB");
 const QString DialupNetworking = QLatin1String("00001103-0000-1000-8000-00805F9B34FB");
