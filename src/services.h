@@ -40,7 +40,7 @@ const QString PnpInformation = QLatin1String("00001200-0000-1000-8000-00805F9B34
 
 // Bluetooth Low Energy
 const QString GenericAccess = QLatin1String("00001800-0000-1000-8000-00805f9b34fb");
-const QString GenericAcces = GenericAccess; // TODO KF6: Remove the one with typo
+const QString GenericAcces = GenericAccess; // TODO KF7: Remove the one with typo
 const QString GenericAttribute = QLatin1String("00001801-0000-1000-8000-00805f9b34fb");
 const QString ImmediateAlert = QLatin1String("00001802-0000-1000-8000-00805f9b34fb");
 const QString LinkLoss = QLatin1String("00001803-0000-1000-8000-00805f9b34fb");
