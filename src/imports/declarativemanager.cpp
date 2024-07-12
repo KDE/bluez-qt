@@ -187,8 +187,8 @@ void DeclarativeManager::slotDeviceAdded(BluezQt::DevicePtr device)
 
     Q_EMIT deviceAdded(dDevice);
     Q_EMIT devicesChanged(declarativeDevices());
+    connect(device.get(), &BluezQt::Device::connectedChanged, this, &DeclarativeManager::slotDeviceConnectedChanged);
     if (device->isConnected()) {
-        connect(device.get(), &BluezQt::Device::connectedChanged, this, &DeclarativeManager::slotDeviceConnectedChanged);
         Q_EMIT connectedDevicesChanged(declarativeConnectedDevices());
     }
 }
@@ -201,8 +201,8 @@ void DeclarativeManager::slotDeviceRemoved(BluezQt::DevicePtr device)
 
     Q_EMIT deviceRemoved(dDevice);
     Q_EMIT devicesChanged(declarativeDevices());
+    disconnect(device.get(), &BluezQt::Device::connectedChanged, this, &DeclarativeManager::slotDeviceConnectedChanged);
     if (device->isConnected()) {
-        disconnect(device.get(), &BluezQt::Device::connectedChanged, this, &DeclarativeManager::slotDeviceConnectedChanged);
         Q_EMIT connectedDevicesChanged(declarativeConnectedDevices());
     }
 }
