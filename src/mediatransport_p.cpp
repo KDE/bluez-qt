@@ -104,6 +104,11 @@ void MediaTransportPrivate::init(const QVariantMap &properties)
     m_configuration.sampleRate = byteArrayToSampleRate(m_configuration.codec, properties.value(QStringLiteral("Configuration")).toByteArray());
 }
 
+QDBusPendingReply<> MediaTransportPrivate::setDBusProperty(const QString &name, const QVariant &value)
+{
+    return m_dbusProperties->Set(Strings::orgBluezMediaTransport1(), name, QDBusVariant(value));
+}
+
 void MediaTransportPrivate::onPropertiesChanged(const QString &interface, const QVariantMap &changed, const QStringList &invalidated)
 {
     if (interface != Strings::orgBluezMediaTransport1()) {

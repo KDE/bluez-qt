@@ -201,6 +201,7 @@ private:
     friend class LEAdvertisingManager;
     friend class Media;
     friend class MediaPlayer;
+    friend class MediaTransport;
     friend class ObexManager;
     friend class ObexTransfer;
     friend class ObexSession;

@@ -8,6 +8,7 @@
 
 #include "mediatransport.h"
 #include "mediatransport_p.h"
+#include "pendingcall.h"
 
 namespace BluezQt
 {
@@ -32,6 +33,11 @@ MediaTransport::State MediaTransport::state() const
 quint16 MediaTransport::volume() const
 {
     return d->m_volume;
+}
+
+PendingCall *MediaTransport::setVolume(quint16 volume)
+{
+    return new PendingCall(d->setDBusProperty(QStringLiteral("Volume"), QVariant::fromValue(volume)), PendingCall::ReturnVoid, this);
 }
 
 TPendingCall<QDBusUnixFileDescriptor, uint16_t, uint16_t> *MediaTransport::acquire()

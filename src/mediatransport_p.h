@@ -15,6 +15,7 @@
 
 namespace BluezQt
 {
+typedef org::bluez::MediaTransport1 BluezMediaTransport;
 typedef org::freedesktop::DBus::Properties DBusProperties;
 
 class MediaTransportPrivate : public QObject
@@ -25,6 +26,8 @@ public:
     explicit MediaTransportPrivate(const QString &path, const QVariantMap &properties);
 
     void init(const QVariantMap &properties);
+
+    QDBusPendingReply<> setDBusProperty(const QString &name, const QVariant &value);
 
 public Q_SLOTS:
     void onPropertiesChanged(const QString &interface, const QVariantMap &changed, const QStringList &invalidated);

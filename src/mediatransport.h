@@ -76,6 +76,18 @@ public:
      */
     quint16 volume() const;
 
+    /**
+     * Sets the volume of the transport.
+     *
+     * Only works when the transport was acquired by the sender.
+     *
+     * @param quint16 volume of the transport in the range [0x00..0x7F] (0-127)
+     *
+     * @return void pending call
+     * @since 6.6
+     */
+    PendingCall *setVolume(quint16 volume);
+
 public Q_SLOTS:
     /**
      * Acquire transport file descriptor and the MTU for read
