@@ -14,7 +14,6 @@
 #include "obextransfer_p.h"
 
 #include <QDBusPendingCallWatcher>
-#include <QTimer>
 
 namespace BluezQt
 {
@@ -58,7 +57,7 @@ static PendingCall::Error nameToError(const QString &name)
     return PendingCall::UnknownError;
 }
 
-class PendingCallPrivate : public QObject
+class PendingCallPrivate
 {
 public:
     explicit PendingCallPrivate(PendingCall *parent);
@@ -75,7 +74,6 @@ public:
     void processError(const QDBusError &m_error);
 
     void emitFinished();
-    void emitDelayedFinished();
     void emitInternalError(const QString &errorText);
     void pendingCallFinished(QDBusPendingCallWatcher *m_watcher);
 
@@ -89,8 +87,7 @@ public:
 };
 
 PendingCallPrivate::PendingCallPrivate(PendingCall *parent)
-    : QObject(parent)
-    , q(parent)
+    : q(parent)
     , m_error(PendingCall::NoError)
     , m_type(PendingCall::ReturnVoid)
     , m_watcher(nullptr)
@@ -226,14 +223,6 @@ void PendingCallPrivate::emitFinished()
     q->deleteLater();
 }
 
-void PendingCallPrivate::emitDelayedFinished()
-{
-    Q_ASSERT(qobject_cast<QTimer *>(sender()));
-
-    Q_EMIT q->finished(q);
-    static_cast<QTimer *>(sender())->deleteLater();
-}
-
 void PendingCallPrivate::emitInternalError(const QString &errorText)
 {
     qCWarning(BLUEZQT) << "PendingCall Internal error:" << errorText;
@@ -257,7 +246,9 @@ PendingCall::PendingCall(const QDBusPendingCall &call, ReturnType type, QObject 
     d->m_type = type;
     d->m_watcher = new QDBusPendingCallWatcher(call, this);
 
-    connect(d->m_watcher, &QDBusPendingCallWatcher::finished, d.get(), &PendingCallPrivate::pendingCallFinished);
+    connect(d->m_watcher, &QDBusPendingCallWatcher::finished, this, [this](QDBusPendingCallWatcher *watcher) {
+        d->pendingCallFinished(watcher);
+    });
 }
 
 PendingCall::PendingCall(PendingCall::Error error, const QString &errorText, QObject *parent)
@@ -267,10 +258,12 @@ PendingCall::PendingCall(PendingCall::Error error, const QString &errorText, QOb
     d->m_error = error;
     d->m_errorText = errorText;
 
-    QTimer *timer = new QTimer(this);
-    timer->setSingleShot(true);
-    timer->start(0);
-    connect(timer, &QTimer::timeout, d.get(), &PendingCallPrivate::emitDelayedFinished);
+    QMetaObject::invokeMethod(
+        this,
+        [this]() {
+            Q_EMIT finished(this);
+        },
+        Qt::QueuedConnection);
 }
 
 PendingCall::PendingCall(const QDBusPendingCall &call, ExternalProcessor externalProcessor, QObject *parent)
