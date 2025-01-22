@@ -23,6 +23,7 @@ public:
 
     bool sendMessage(const QDBusMessage &msg);
     QString interfaceName();
+    QString serviceName();
 
     void acceptRequest(const QVariant &val);
     void rejectRequest();
@@ -57,6 +58,16 @@ QString RequestPrivate::interfaceName()
     }
 }
 
+QString RequestPrivate::serviceName()
+{
+    switch (m_type) {
+    case OrgBluezObexAgent:
+        return QStringLiteral("org.bluez.obex");
+    default:
+        return QStringLiteral("org.bluez");
+    }
+}
+
 void RequestPrivate::acceptRequest(const QVariant &val)
 {
     QDBusMessage reply;
@@ -73,7 +84,7 @@ void RequestPrivate::acceptRequest(const QVariant &val)
 
 void RequestPrivate::rejectRequest()
 {
-    const QDBusMessage &reply = m_message.createErrorReply(interfaceName() % QStringLiteral(".Rejected"), QStringLiteral("Rejected"));
+    const QDBusMessage &reply = m_message.createErrorReply(serviceName() % QStringLiteral(".Error.Rejected"), QStringLiteral("Rejected"));
     if (!sendMessage(reply)) {
         qCWarning(BLUEZQT) << "Request: Failed to put reply on DBus queue";
     }
@@ -81,7 +92,7 @@ void RequestPrivate::rejectRequest()
 
 void RequestPrivate::cancelRequest()
 {
-    const QDBusMessage &reply = m_message.createErrorReply(interfaceName() % QStringLiteral(".Canceled"), QStringLiteral("Canceled"));
+    const QDBusMessage &reply = m_message.createErrorReply(serviceName() % QStringLiteral(".Error.Canceled"), QStringLiteral("Canceled"));
     if (!sendMessage(reply)) {
         qCWarning(BLUEZQT) << "Request: Failed to put reply on DBus queue";
     }
