@@ -18,7 +18,7 @@ namespace BluezQt
 {
 class Manager;
 
-/**
+/*!
  * @class BluezQt::InitManagerJob initmanagerjob.h <BluezQt/InitManagerJob>
  *
  * Init manager job.
@@ -31,12 +31,12 @@ class BLUEZQT_EXPORT InitManagerJob : public Job
     Q_PROPERTY(Manager *manager READ manager)
 
 public:
-    /**
+    /*!
      * Destroys an InitManagerJob object.
      */
     ~InitManagerJob() override;
 
-    /**
+    /*!
      * Returns a manager that is being initialized.
      *
      * @return manager
@@ -44,7 +44,7 @@ public:
     Manager *manager() const;
 
 Q_SIGNALS:
-    /**
+    /*!
      * Indicates that the job have finished.
      */
     void result(InitManagerJob *job);

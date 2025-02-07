@@ -21,7 +21,7 @@ namespace BluezQt
 {
 class PendingCall;
 
-/**
+/*!
  * @class BluezQt::MediaTransport mediatransport.h <BluezQt/MediaTransport>
  *
  * Media transport.
@@ -35,7 +35,7 @@ class BLUEZQT_EXPORT MediaTransport : public QObject
     Q_PROPERTY(quint16 volume READ volume NOTIFY volumeChanged)
 
 public:
-    /** Indicates the state of the transport. */
+    /*! Indicates the state of the transport. */
     enum class State {
         Idle,
         Pending,
@@ -43,26 +43,26 @@ public:
     };
     Q_ENUM(State)
 
-    /**
+    /*!
      * Destroys a MediaTransport object.
      */
     ~MediaTransport() override;
 
-    /**
+    /*!
      * Returns the (audio) configuration of the transport.
      *
      * @return configuration of transport
      */
     AudioConfiguration audioConfiguration() const;
 
-    /**
+    /*!
      * Returns the state of the transport.
      *
      * @return state of transport
      */
     State state() const;
 
-    /**
+    /*!
      * Returns the volume of the transport.
      *
      * The volume is a percentage of the maximum. The value 0x00 corresponds to 0%.
@@ -76,7 +76,7 @@ public:
      */
     quint16 volume() const;
 
-    /**
+    /*!
      * Sets the volume of the transport.
      *
      * Only works when the transport was acquired by the sender.
@@ -89,7 +89,7 @@ public:
     PendingCall *setVolume(quint16 volume);
 
 public Q_SLOTS:
-    /**
+    /*!
      * Acquire transport file descriptor and the MTU for read
      * and write respectively.
      *
@@ -99,7 +99,7 @@ public Q_SLOTS:
      */
     TPendingCall<QDBusUnixFileDescriptor, uint16_t, uint16_t> *acquire();
 
-    /**
+    /*!
      * Acquire transport file descriptor only if the transport
      * is in "pending" state at the time the message is
      * received by BlueZ. Otherwise no request will be sent
@@ -112,7 +112,7 @@ public Q_SLOTS:
      */
     TPendingCall<QDBusUnixFileDescriptor, uint16_t, uint16_t> *tryAcquire();
 
-    /**
+    /*!
      * Releases file descriptor.
      *
      * @return void pending call
@@ -120,12 +120,12 @@ public Q_SLOTS:
     TPendingCall<void> *release();
 
 Q_SIGNALS:
-    /**
+    /*!
      * Indicates that transport's state have changed.
      */
     void stateChanged(State state);
 
-    /**
+    /*!
      * Indicates that transport's volume have changed.
      */
     void volumeChanged(quint16 volume);

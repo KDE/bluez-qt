@@ -19,7 +19,7 @@ class QDBusObjectPath;
 
 namespace BluezQt
 {
-/**
+/*!
  * @class BluezQt::GattApplication GattApplication.h <BluezQt/GattApplication>
  *
  * Bluetooth GattApplication.
@@ -39,7 +39,7 @@ class BLUEZQT_EXPORT GattApplication : public QObject
     Q_OBJECT
 
 public:
-    /**
+    /*!
      * Creates a new GattApplication object with default object path prefix.
      *
      * Object path: /org/kde/bluezqt/appXX/serviceYY/charZZ
@@ -48,7 +48,7 @@ public:
      */
     explicit GattApplication(QObject *parent = nullptr);
 
-    /**
+    /*!
      * Creates a new GattApplication object with custom object path prefix.
      *
      * Object path: [objectPathPrefix]/appXX/serviceYY/charZZ
@@ -58,13 +58,13 @@ public:
      */
     explicit GattApplication(const QString &objectPathPrefix, QObject *parent = nullptr);
 
-    /**
+    /*!
      * Destroys a GattApplication object.
      */
     ~GattApplication() override;
 
 private:
-    /**
+    /*!
      * D-Bus object path of the GATT application.
      *
      * The path where the GATT application will be registered.

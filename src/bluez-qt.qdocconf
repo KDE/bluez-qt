@@ -1,0 +1,30 @@
+include($KDE_DOCS/global/qt-module-defaults.qdocconf)
+
+project = BluezQt
+description = Additions to Qt Core
+
+documentationinheaders = true
+
+headerdirs = .
+sourcedirs = .
+
+outputformats = HTML
+
+depends += \
+    kde \
+    qtcore \
+    qtgui
+
+qhp.projects            = BluezQt
+
+qhp.BluezQt.file                = bluez-qt.qhp
+qhp.BluezQt.namespace           = org.kde.bluez-qt.$QT_VERSION_TAG
+qhp.BluezQt.virtualFolder       = bluez-qt
+qhp.BluezQt.indexTitle          = BluezQt
+qhp.BluezQt.indexRoot           =
+
+qhp.BluezQt.subprojects         = classes
+qhp.BluezQt.subprojects.classes.title = C++ Classes
+qhp.BluezQt.subprojects.classes.indexTitle = BluezQt C++ Classes
+qhp.BluezQt.subprojects.classes.selectors = class fake:headerfile
+qhp.BluezQt.subprojects.classes.sortPages = true
