@@ -19,7 +19,7 @@ include(FeatureSummary)
 include(ECMGenerateExportHeader)
 include(ECMSetupVersion)
 include(ECMGenerateHeaders)
-include(ECMAddQch)
+include(ECMGenerateQDoc)
 include(CMakePackageConfigHelpers)
 include(ECMQtDeclareLoggingCategory)
 include(ECMGeneratePkgConfigFile)
@@ -27,9 +27,6 @@ include(ECMQmlModule)
 include(ECMDeprecationSettings)
 
 set(EXCLUDE_DEPRECATED_BEFORE_AND_AT 0 CACHE STRING "Control the range of deprecated API excluded from the build [default=0].")
-
-option(BUILD_QCH "Build API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)" OFF)
-add_feature_info(QCH ${BUILD_QCH} "API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)")
 
 set(bluezqt_version_header "${CMAKE_CURRENT_BINARY_DIR}/src/bluezqt_version.h")
 ecm_setup_version(PROJECT
@@ -74,16 +71,6 @@ endif()
 
 # Create a Config.cmake and a ConfigVersion.cmake file and install them
 set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF6BluezQt")
-
-if (BUILD_QCH)
-    ecm_install_qch_export(
-        TARGETS KF6BluezQt_QCH
-        FILE KF6BluezQtQchTargets.cmake
-        DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
-        COMPONENT Devel
-    )
-    set(PACKAGE_INCLUDE_QCHTARGETS "include(\"\${CMAKE_CURRENT_LIST_DIR}/KF6BluezQtQchTargets.cmake\")")
-endif()
 
 configure_package_config_file(
     "${CMAKE_CURRENT_SOURCE_DIR}/KF6BluezQtConfig.cmake.in"
