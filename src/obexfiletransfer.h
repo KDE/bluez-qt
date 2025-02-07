@@ -22,7 +22,7 @@ namespace BluezQt
 {
 class PendingCall;
 
-/**
+/*!
  * @class BluezQt::ObexFileTransfer obexfiletransfer.h <BluezQt/ObexFileTransfer>
  *
  * OBEX file transfer.
@@ -34,7 +34,7 @@ class BLUEZQT_EXPORT ObexFileTransfer : public QObject
     Q_OBJECT
 
 public:
-    /**
+    /*!
      * Creates a new ObexFileTransfer object.
      *
      * This class will be typically used with a @p path
@@ -45,19 +45,19 @@ public:
      */
     explicit ObexFileTransfer(const QDBusObjectPath &path, QObject *parent = nullptr);
 
-    /**
+    /*!
      * Destroys an ObexFileTransfer object.
      */
     ~ObexFileTransfer() override;
 
-    /**
+    /*!
      * D-Bus object path of the file transfer session.
      *
      * @return object path of session
      */
     QDBusObjectPath objectPath() const;
 
-    /**
+    /*!
      * Changes the current folder.
      *
      * Possible errors: PendingCall::InvalidArguments, PendingCall::Failed
@@ -67,7 +67,7 @@ public:
      */
     PendingCall *changeFolder(const QString &folder);
 
-    /**
+    /*!
      * Creates a new folder.
      *
      * Possible errors: PendingCall::InvalidArguments, PendingCall::Failed
@@ -77,7 +77,7 @@ public:
      */
     PendingCall *createFolder(const QString &folder);
 
-    /**
+    /*!
      * Lists a current folder.
      *
      * Possible errors: PendingCall::Failed
@@ -86,7 +86,7 @@ public:
      */
     PendingCall *listFolder();
 
-    /**
+    /*!
      * Gets the file from the remote device.
      *
      * If an empty @p targetFileName is given, a name will be
@@ -100,7 +100,7 @@ public:
      */
     PendingCall *getFile(const QString &targetFileName, const QString &sourceFileName);
 
-    /**
+    /*!
      * Puts the file to the remote device.
      *
      * If an empty @p targetFileName is given, a name will be
@@ -114,7 +114,7 @@ public:
      */
     PendingCall *putFile(const QString &sourceFileName, const QString &targetFileName);
 
-    /**
+    /*!
      * Copies a file within the remote device.
      *
      * Possible errors: PendingCall::InvalidArguments, PendingCall::Failed
@@ -125,7 +125,7 @@ public:
      */
     PendingCall *copyFile(const QString &sourceFileName, const QString &targetFileName);
 
-    /**
+    /*!
      * Moves a file within the remote device.
      *
      * Possible errors: PendingCall::InvalidArguments, PendingCall::Failed
@@ -136,7 +136,7 @@ public:
      */
     PendingCall *moveFile(const QString &sourceFileName, const QString &targetFileName);
 
-    /**
+    /*!
      * Deletes a file/folder within the remote device.
      *
      * Possible errors: PendingCall::InvalidArguments, PendingCall::Failed

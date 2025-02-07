@@ -24,7 +24,7 @@ class BLUEZQT_EXPORT GattCharacteristic : public QObject
     Q_OBJECT
 
 public:
-    /**
+    /*!
      * Creates a new GattCharacteristic object.
      *
      * This constructor creates a characteristic with the Read and Write flags set.
@@ -34,7 +34,7 @@ public:
      */
     explicit GattCharacteristic(const QString &uuid, GattService *service);
 
-    /**
+    /*!
      * Creates a new GattCharacteristic object.
      *
      * @param uuid The UUID of the characteristic.
@@ -45,42 +45,42 @@ public:
      */
     GattCharacteristic(const QString &uuid, const QStringList &flags, GattService *service);
 
-    /**
+    /*!
      * Destroys a GattCharacteristic object.
      */
     ~GattCharacteristic() override;
 
-    /**
+    /*!
      * Reads the value of the characteristic.
      */
     QByteArray readValue();
 
-    /**
+    /*!
      * Writes the value of the characteristic.
      */
     void writeValue(const QByteArray &value);
 
-    /**
+    /*!
      * Provide a read callback to operate in *pull* mode.
      */
     using ReadCallback = std::function<QByteArray()>;
     void setReadCallback(ReadCallback callback);
 
-    /**
+    /*!
      * 128-bit GATT characteristic UUID.
      *
      * @return uuid of characteristic
      */
     QString uuid() const;
 
-    /**
+    /*!
      * The GATT service the characteristic belongs to.
      *
      * @return service this characteristic belongs to
      */
     const GattService *service() const;
 
-    /**
+    /*!
      * The flags of this characteristic.
      *
      * @return flags associated with this characteristic
@@ -89,21 +89,21 @@ public:
      */
     QStringList flags() const;
 
-    /**
+    /*!
      * Enables notifications for this characteristic, if supported. Does nothing otherwise.
      *
      * @since 6.0
      */
     void startNotify();
 
-    /**
+    /*!
      * Disables notifications for this characteristic.
      *
      * @since 6.0
      */
     void stopNotify();
 
-    /**
+    /*!
      * Indicates if this characteristic currently has notifications enabled.
      *
      * @return True if notifications are enabled, false otherwise
@@ -113,13 +113,13 @@ public:
     bool isNotifying() const;
 
 Q_SIGNALS:
-    /**
+    /*!
      * Indicates that a value was written.
      */
     void valueWritten(const QByteArray &value);
 
 protected:
-    /**
+    /*!
      * D-Bus object path of the GattCharacteristic.
      *
      * The path where the GattCharacteristic will be registered.

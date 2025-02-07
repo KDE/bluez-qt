@@ -20,7 +20,7 @@ namespace BluezQt
 class LEAdvertisement;
 class PendingCall;
 
-/**
+/*!
  * @class BluezQt::LEAdvertisingManager leadvertisingmanager.h <BluezQt/LEAdvertisingManager>
  *
  * Bluetooth LE advertising manager.
@@ -36,12 +36,12 @@ class BLUEZQT_EXPORT LEAdvertisingManager : public QObject
     Q_OBJECT
 
 public:
-    /**
+    /*!
      * Destroys an LEAdvertisingManager object.
      */
     ~LEAdvertisingManager() override;
 
-    /**
+    /*!
      * Registers advertisement.
      *
      * Registers an advertisement object to be sent over the LE Advertising
@@ -61,7 +61,7 @@ public:
      */
     PendingCall *registerAdvertisement(LEAdvertisement *advertisement);
 
-    /**
+    /*!
      * Unregisters advertisement.
      *
      * This unregisters an advertisement that has been previously registered.

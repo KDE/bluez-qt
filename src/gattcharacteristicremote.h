@@ -21,7 +21,7 @@ namespace BluezQt
 class GattServiceRemote;
 class PendingCall;
 
-/**
+/*!
  * @class BluezQt::GattCharacteristicRemote gattcharacteristicremote.h <BluezQt/GattCharacteristicRemote>
  *
  * Bluetooth LE GATT characteristic.
@@ -45,19 +45,19 @@ class BLUEZQT_EXPORT GattCharacteristicRemote : public QObject
 
 
 public:
-    /**
+    /*!
      * Destroys a GattCharacteristic object.
      */
     ~GattCharacteristicRemote() override;
 
-    /**
+    /*!
      * Returns a shared pointer from this.
      *
      * @return DevicePtr
      */
     GattCharacteristicRemotePtr toSharedPtr() const;
 
-    /**
+    /*!
      * Returns an UBI of the GATT characteristic.
      *
      * Example UBI: "/org/bluez/hci0/dev_40_79_6A_0C_39_75"
@@ -66,56 +66,56 @@ public:
      */
     QString ubi() const;
 
-    /**
+    /*!
      * Returns an uuid of the characteristic.
      *
      * @return uuid of the characteristic
      */
     QString uuid() const;
 
-    /**
+    /*!
      * Returns an value of the characteristic.
      *
      * @return value of the characteristic
      */
     QByteArray value() const;
 
-    /**
+    /*!
      * Returns whether writeAcquired for the characteristic.
      *
      * @return true if write is acquired
      */
     bool isWriteAcquired() const;
 
-    /**
+    /*!
      * Returns whether notifyAcquired for the characteristic.
      *
      * @return true if notify is acquired
      */
     bool isNotifyAcquired() const;
 
-    /**
+    /*!
      * Returns whether the characteristic is notifying.
      *
      * @return true if notifying
      */
     bool isNotifying() const;
 
-    /**
+    /*!
      * Returns flags the characteristic.
      *
      * @return flags of characteristic
      */
     QStringList flags() const;
 
-    /**
+    /*!
      * Returns characteristic handle.
      *
      * @return qint16 characteristic handle
      */
     quint16 handle() const;
 
-    /**
+    /*!
      * Sets the characteristic handle.
      *
      * @param handle characteristic handle
@@ -123,21 +123,21 @@ public:
      */
     PendingCall *setHandle(quint16 handle);
 
-    /**
+    /*!
      * Returns characteristic MTU.
      *
      * @return qint16 characteristic MTU
      */
     quint16 MTU() const;
 
-    /**
+    /*!
      * Returns a service that owns that characteristic.
      *
      * @return service of characteristic
      */
     GattServiceRemotePtr service() const;
 
-    /**
+    /*!
      * Returns object paths representing the included
      * services of this service.
      *
@@ -146,7 +146,7 @@ public:
     QList<GattDescriptorRemotePtr> descriptors() const;
 
 public Q_SLOTS:
-    /**
+    /*!
      * Read the value of the GATT characteristic.
      *
      * Issues a request to read the value of the characteristic and
@@ -159,7 +159,7 @@ public Q_SLOTS:
      */
     PendingCall *readValue(const QVariantMap &options);
 
-    /**
+    /*!
      * Write the value of the GATT characteristic.
      *
      * Issues a request to write the value of the characteristic.
@@ -171,7 +171,7 @@ public Q_SLOTS:
      */
     PendingCall *writeValue(const QByteArray &value, const QVariantMap &options);
 
-    /**
+    /*!
      * Start notifying the value of the GATT characteristic.
      *
      * Starts a notification session from this characteristic if it supports
@@ -184,7 +184,7 @@ public Q_SLOTS:
      */
     PendingCall *startNotify();
 
-    /**
+    /*!
      * Stop notifying the value of the GATT characteristic.
      *
      * This method will cancel any previous StartNotify transaction.
@@ -198,7 +198,7 @@ public Q_SLOTS:
      */
     PendingCall *stopNotify();
 
-    /**
+    /*!
      * Confirmation that value of the characteristic was received.
      *
      * This method doesn't expect a reply so it is just a confirmation
@@ -212,67 +212,67 @@ public Q_SLOTS:
     PendingCall *confirm();
 
 Q_SIGNALS:
-    /**
+    /*!
      * Indicates that at least one of the characteristic's properties have changed.
      */
     void characteristicChanged(GattCharacteristicRemotePtr characteristic);
 
-    /**
+    /*!
      * Indicates that a new descriptor was added (eg. found by connection).
      */
     void gattDescriptorAdded(GattDescriptorRemotePtr descriptor);
 
-    /**
+    /*!
      * Indicates that characteristic descriptors list has changed
      */
     void descriptorsChanged(QList<GattDescriptorRemotePtr> descriptors);
 
-    /**
+    /*!
      * Indicates that a descriptor was removed.
      */
     void gattDescriptorRemoved(GattDescriptorRemotePtr descriptor);
 
-    /**
+    /*!
      * Indicates that at least one of the descriptor's properties have changed.
      */
     void gattDescriptorChanged(GattDescriptorRemotePtr descriptor);
 
-    /**
+    /*!
      * Indicates that characteristic's uuid have changed.
      */
     void uuidChanged(const QString &uuid);
 
-    /**
+    /*!
      * Indicates that characteristic's value have changed.
      */
     void valueChanged(const QByteArray value);
 
-    /**
+    /*!
      * Indicates that characteristic's writeAcquired state have changed.
      */
     void writeAcquiredChanged(bool writeAcquired);
 
-    /**
+    /*!
      * Indicates that characteristic's notifyAcquired state have changed.
      */
     void notifyAcquiredChanged(bool notifyAcquired);
 
-    /**
+    /*!
      * Indicates that characteristic's notifying state have changed.
      */
     void notifyingChanged(bool notifying);
 
-    /**
+    /*!
      * Indicates that characteristic's flags have changed.
      */
     void flagsChanged(QStringList flags);
 
-    /**
+    /*!
      * Indicates that characteristic's handle have changed.
      */
     void handleChanged(quint16 handle);
 
-    /**
+    /*!
      * Indicates that characteristic's MTU have changed.
      */
     void MTUChanged(quint16 MTU);

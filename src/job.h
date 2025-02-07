@@ -20,7 +20,7 @@ namespace BluezQt
 {
 class JobPrivate;
 
-/**
+/*!
  * @class BluezQt::Job job.h <BluezQt/Job>
  *
  * This class represents an asynchronous job performed by BluezQt,
@@ -52,32 +52,32 @@ class BLUEZQT_EXPORT Job : public QObject
     Q_PROPERTY(bool finished READ isFinished)
 
 public:
-    /**
+    /*!
      * Creates a new Job object.
      *
      * @param parent
      */
     explicit Job(QObject *parent = nullptr);
 
-    /**
+    /*!
      * Destroys a Job object.
      */
     ~Job() override;
 
-    /**
+    /*!
      * Error type
      *
      * @see error() const
      */
     enum Error {
-        /** Indicates there is no error */
+        /*! Indicates there is no error */
         NoError = 0,
-        /** Subclasses should define error codes starting at this value */
+        /*! Subclasses should define error codes starting at this value */
         UserDefinedError = 100
     };
     Q_ENUM(Error)
 
-    /**
+    /*!
      * Executes the job synchronously.
      *
      * This will start a nested QEventLoop internally. Nested event loop can be dangerous and
@@ -99,7 +99,7 @@ public:
      */
     bool exec();
 
-    /**
+    /*!
      * Returns the error code, if there has been an error.
      *
      * Make sure to call this once result() has been emitted
@@ -108,7 +108,7 @@ public:
      */
     int error() const;
 
-    /**
+    /*!
      * Returns the error text if there has been an error.
      *
      * Only call if error is not 0.
@@ -121,14 +121,14 @@ public:
      */
     QString errorText() const;
 
-    /**
+    /*!
      * Returns whether the job is currently running
      *
      * @return true if the job is running
      */
     bool isRunning() const;
 
-    /**
+    /*!
      * Returns whether the job have already finished
      *
      * @return true if the job already finished
@@ -136,7 +136,7 @@ public:
     bool isFinished() const;
 
 public Q_SLOTS:
-    /**
+    /*!
      * Starts the job asynchronously.
      *
      * This method will schedule doStart() to be executed in the next
@@ -146,7 +146,7 @@ public Q_SLOTS:
      */
     void start();
 
-    /**
+    /*!
      * Kills the job.
      *
      * This method will kill the job and then call deleteLater().
@@ -157,7 +157,7 @@ public Q_SLOTS:
     void kill();
 
 protected Q_SLOTS:
-    /**
+    /*!
      * Implementation for start() that will be executed in next loop
      *
      * This slot is always called in the next loop, triggered by start().
@@ -169,7 +169,7 @@ protected Q_SLOTS:
     virtual void doStart() = 0;
 
 protected:
-    /**
+    /*!
      * Sets the error code.
      *
      * It should be called when an error
@@ -190,7 +190,7 @@ protected:
      */
     void setError(int errorCode);
 
-    /**
+    /*!
      * Sets the error text.
      *
      * It should be called when an error
@@ -205,7 +205,7 @@ protected:
      */
     void setErrorText(const QString &errorText);
 
-    /**
+    /*!
      * Utility function to emit the result signal, and remove this job.
      *
      * @note Deletes this job using deleteLater().
@@ -213,7 +213,7 @@ protected:
      */
     void emitResult();
 
-    /**
+    /*!
      * Implementation for emitting the result signal
      *
      * This function is needed to be able to emit result() signal

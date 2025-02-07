@@ -21,7 +21,7 @@ namespace BluezQt
 class GattCharacteristicRemote;
 class PendingCall;
 
-/**
+/*!
  * @class BluezQt::GattDescriptorRemote gattdescriptorremote.h <BluezQt/GattDescriptorRemote>
  *
  * Bluetooth LE GATT descriptor.
@@ -40,19 +40,19 @@ class BLUEZQT_EXPORT GattDescriptorRemote : public QObject
 
 
 public:
-    /**
+    /*!
      * Destroys a GattDescriptor object.
      */
     ~GattDescriptorRemote() override;
 
-    /**
+    /*!
      * Returns a shared pointer from this.
      *
      * @return DevicePtr
      */
     GattDescriptorRemotePtr toSharedPtr() const;
 
-    /**
+    /*!
      * Returns an UBI of the GATT descriptor.
      *
      * Example UBI: "/org/bluez/hci0/dev_40_79_6A_0C_39_75"
@@ -61,35 +61,35 @@ public:
      */
     QString ubi() const;
 
-    /**
+    /*!
      * Returns an uuid of the descriptor.
      *
      * @return uuid of the descriptor
      */
     QString uuid() const;
 
-    /**
+    /*!
      * Returns an value of the descriptor.
      *
      * @return value of the descriptor
      */
     QByteArray value() const;
 
-    /**
+    /*!
      * Returns flags the descriptor.
      *
      * @return flags of descriptor
      */
     QStringList flags() const;
 
-    /**
+    /*!
      * Returns descriptor handle.
      *
      * @return qint16 descriptor handle
      */
     quint16 handle() const;
 
-    /**
+    /*!
      * Sets the descriptor handle.
      *
      * @param handle descriptor handle
@@ -97,7 +97,7 @@ public:
      */
     PendingCall *setHandle(quint16 handle);
 
-    /**
+    /*!
      * Returns a characteristic that owns that descriptor.
      *
      * @return characteristic of descriptor
@@ -105,7 +105,7 @@ public:
     GattCharacteristicRemotePtr characteristic() const;
 
 public Q_SLOTS:
-    /**
+    /*!
      * Read the value of the GATT descriptor.
      *
      * Issues a request to read the value of the descriptor and
@@ -118,7 +118,7 @@ public Q_SLOTS:
      */
     PendingCall *readValue(const QVariantMap &options);
 
-    /**
+    /*!
      * Write the value of the GATT descriptor.
      *
      * Issues a request to write the value of the descriptor.
@@ -131,27 +131,27 @@ public Q_SLOTS:
     PendingCall *writeValue(const QByteArray &value, const QVariantMap &options);
 
 Q_SIGNALS:
-    /**
+    /*!
      * Indicates that at least one of the descriptors's properties have changed.
      */
     void descriptorChanged(GattDescriptorRemotePtr descriptor);
 
-    /**
+    /*!
      * Indicates that descriptor's uuid have changed.
      */
     void uuidChanged(const QString &uuid);
 
-    /**
+    /*!
      * Indicates that descriptor's value have changed.
      */
     void valueChanged(const QByteArray value);
 
-    /**
+    /*!
      * Indicates that descriptor's flags have changed.
      */
     void flagsChanged(QStringList flags);
 
-    /**
+    /*!
      * Indicates that descriptor's handle have changed.
      */
     void handleChanged(quint16 handle);

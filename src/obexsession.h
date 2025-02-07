@@ -22,7 +22,7 @@ namespace BluezQt
 {
 class PendingCall;
 
-/**
+/*!
  * @class BluezQt::ObexSession obexsession.h <BluezQt/ObexSession>
  *
  * OBEX session.
@@ -40,26 +40,26 @@ class BLUEZQT_EXPORT ObexSession : public QObject
     Q_PROPERTY(QString root READ root)
 
 public:
-    /**
+    /*!
      * Destroys an ObexSession object.
      */
     ~ObexSession() override;
 
-    /**
+    /*!
      * Returns a shared pointer from this.
      *
      * @return ObexSessionPtr
      */
     ObexSessionPtr toSharedPtr() const;
 
-    /**
+    /*!
      * D-Bus object path of the session.
      *
      * @return object path of session
      */
     QDBusObjectPath objectPath() const;
 
-    /**
+    /*!
      * Returns address of the Bluetooth adapter.
      *
      * @see Manager::adapterForAddress() const
@@ -68,7 +68,7 @@ public:
      */
     QString source() const;
 
-    /**
+    /*!
      * Returns address of the Bluetooth device.
      *
      * @see Manager::deviceForAddress() const
@@ -77,28 +77,28 @@ public:
      */
     QString destination() const;
 
-    /**
+    /*!
      * Returns the Bluetooth channel.
      *
      * @return channel
      */
     quint8 channel() const;
 
-    /**
+    /*!
      * Returns the target UUID.
      *
      * @return target UUID
      */
     QString target() const;
 
-    /**
+    /*!
      * Returns the root path.
      *
      * @return root path
      */
     QString root() const;
 
-    /**
+    /*!
      * Returns the remote device capabilities.
      *
      * Possible errors: PendingCall::NotSupported, PendingCall::Failed
