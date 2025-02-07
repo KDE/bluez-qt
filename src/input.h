@@ -18,7 +18,7 @@
 
 namespace BluezQt
 {
-/**
+/*!
  * @class BluezQt::Input input.h <BluezQt/Input>
  *
  * %Device input.
@@ -31,32 +31,32 @@ class BLUEZQT_EXPORT Input : public QObject
     Q_PROPERTY(ReconnectMode reconnectMode READ reconnectMode NOTIFY reconnectModeChanged)
 
 public:
-    /** Reconnect mode. */
+    /*! Reconnect mode. */
     enum ReconnectMode {
-        /** Device and host are not required to automatically restore the connection. */
+        /*! Device and host are not required to automatically restore the connection. */
         NoReconnect,
-        /** Host restores the connection. */
+        /*! Host restores the connection. */
         HostReconnect,
-        /** Device restores the connection. */
+        /*! Device restores the connection. */
         DeviceReconnect,
-        /** Device shall attempt to restore the lost connection, but host may also restore the connection. */
+        /*! Device shall attempt to restore the lost connection, but host may also restore the connection. */
         AnyReconnect,
     };
     Q_ENUM(ReconnectMode)
 
-    /**
+    /*!
      * Destroys an Input object.
      */
     ~Input() override;
 
-    /**
+    /*!
      * Returns a shared pointer from this.
      *
      * @return InputPtr
      */
     InputPtr toSharedPtr() const;
 
-    /**
+    /*!
      * Returns the reconnect mode.
      *
      * @return reconnect mode
@@ -64,7 +64,7 @@ public:
     ReconnectMode reconnectMode() const;
 
 Q_SIGNALS:
-    /**
+    /*!
      * Indicates that input's reconnect mode have changed.
      */
     void reconnectModeChanged(ReconnectMode mode);

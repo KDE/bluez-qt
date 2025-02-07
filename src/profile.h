@@ -25,7 +25,7 @@ namespace BluezQt
 {
 class Device;
 
-/**
+/*!
  * @class BluezQt::Profile profile.h <BluezQt/Profile>
  *
  * Bluetooth profile.
@@ -52,27 +52,27 @@ class BLUEZQT_EXPORT Profile : public QObject
     Q_PROPERTY(QString uuid READ uuid)
 
 public:
-    /** Local role to identify sides in asymmetric profiles. */
+    /*! Local role to identify sides in asymmetric profiles. */
     enum LocalRole {
-        /** Indicates that this is a client. */
+        /*! Indicates that this is a client. */
         ClientRole,
-        /** Indicates that this is a server. */
+        /*! Indicates that this is a server. */
         ServerRole,
     };
 
-    /**
+    /*!
      * Creates a new Profile object.
      *
      * @param parent
      */
     explicit Profile(QObject *parent = nullptr);
 
-    /**
+    /*!
      * Destroys a Profile object.
      */
     ~Profile() override;
 
-    /**
+    /*!
      * D-Bus object path of the profile.
      *
      * The path where the profile will be registered.
@@ -83,28 +83,28 @@ public:
      */
     virtual QDBusObjectPath objectPath() const = 0;
 
-    /**
+    /*!
      * UUID of the profile.
      *
      * @return UUID of the profile
      */
     virtual QString uuid() const = 0;
 
-    /**
+    /*!
      * Sets the human readable name of the profile.
      *
      * @param name name of the profile
      */
     void setName(const QString &name);
 
-    /**
+    /*!
      * Sets the primary service class UUID (if different from profile UUID).
      *
      * @param service service UUID
      */
     void setService(const QString &service);
 
-    /**
+    /*!
      * Sets the local role to identify side.
      *
      * For asymmetric profiles that do not have UUIDs available
@@ -115,7 +115,7 @@ public:
      */
     void setLocalRole(LocalRole role);
 
-    /**
+    /*!
      * Sets the RFCOMM channel number.
      *
      * Available channel number range is 0-31.
@@ -126,7 +126,7 @@ public:
      */
     void setChannel(quint16 channel);
 
-    /**
+    /*!
      * Sets the L2CAP port number.
      *
      * PSM (Protocol Service Multiplexer) is a port number
@@ -139,21 +139,21 @@ public:
      */
     void setPsm(quint16 psm);
 
-    /**
+    /*!
      * Sets whether the pairing is required to connect.
      *
      * @param require require to pair
      */
     void setRequireAuthentication(bool require);
 
-    /**
+    /*!
      * Sets whether the authorization is required to connect.
      *
      * @param require require to authorize
      */
     void setRequireAuthorization(bool require);
 
-    /**
+    /*!
      * Sets whether the profile is automatically connected.
      *
      * In case of a client UUID this will force connection
@@ -164,7 +164,7 @@ public:
      */
     void setAutoConnect(bool autoConnect);
 
-    /**
+    /*!
      * Sets a SDP record.
      *
      * This allows to provide a manual SDP record, otherwise it will
@@ -174,21 +174,21 @@ public:
      */
     void setServiceRecord(const QString &serviceRecord);
 
-    /**
+    /*!
      * Sets the profile version.
      *
      * @param version version of the profile
      */
     void setVersion(quint16 version);
 
-    /**
+    /*!
      * Sets the profile features.
      *
      * @param features features of the profile
      */
     void setFeatures(quint16 features);
 
-    /**
+    /*!
      * Creates a socket from file descriptor.
      *
      * @param fd socket file descriptor
@@ -198,7 +198,7 @@ public:
      */
     QSharedPointer<QLocalSocket> createSocket(const QDBusUnixFileDescriptor &fd);
 
-    /**
+    /*!
      * Requests the new connection.
      *
      * Common properties:
@@ -224,7 +224,7 @@ public:
      */
     virtual void newConnection(DevicePtr device, const QDBusUnixFileDescriptor &fd, const QVariantMap &properties, const Request<> &request);
 
-    /**
+    /*!
      * Requests the disconnection of the profile.
      *
      * This method gets called when a profile gets disconnected.
@@ -234,7 +234,7 @@ public:
      */
     virtual void requestDisconnection(DevicePtr device, const Request<> &request);
 
-    /**
+    /*!
      * Indicates that the profile was unregistered.
      *
      * This method gets called when the Bluetooth daemon

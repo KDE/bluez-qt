@@ -21,7 +21,7 @@ namespace BluezQt
 {
 class PendingCall;
 
-/**
+/*!
  * @class BluezQt::ObexObjectPush obexobjectpush.h <BluezQt/ObexObjectPush>
  *
  * OBEX object push.
@@ -33,7 +33,7 @@ class BLUEZQT_EXPORT ObexObjectPush : public QObject
     Q_OBJECT
 
 public:
-    /**
+    /*!
      * Creates a new ObexObjectPush object.
      *
      * This class will be typically used with a @p path
@@ -44,19 +44,19 @@ public:
      */
     explicit ObexObjectPush(const QDBusObjectPath &path, QObject *parent = nullptr);
 
-    /**
+    /*!
      * Destroys an ObexObjectPush object.
      */
     ~ObexObjectPush() override;
 
-    /**
+    /*!
      * D-Bus object path of the object push session.
      *
      * @return object path of session
      */
     QDBusObjectPath objectPath() const;
 
-    /**
+    /*!
      * Sends one local file to the remote device.
      *
      * The returned ObexTransfer can be used to track progress of transfer.
@@ -68,7 +68,7 @@ public:
      */
     PendingCall *sendFile(const QString &fileName);
 
-    /**
+    /*!
      * Pulls the business card from a remote device.
      *
      * If an empty @p targetFileName is given, a name will be
@@ -83,7 +83,7 @@ public:
      */
     PendingCall *pullBusinessCard(const QString &targetFileName);
 
-    /**
+    /*!
      * Exchanges the business cards on the remote device.
      *
      * This method pushes the local business card to the remote

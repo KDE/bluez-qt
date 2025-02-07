@@ -24,7 +24,7 @@ class ObexAgent;
 class PendingCall;
 class InitObexManagerJob;
 
-/**
+/*!
  * @class BluezQt::ObexManager obexmanager.h <BluezQt/ObexManager>
  *
  * OBEX manager.
@@ -45,33 +45,33 @@ class BLUEZQT_EXPORT ObexManager : public QObject
     Q_PROPERTY(QList<ObexSessionPtr> sessions READ sessions)
 
 public:
-    /**
+    /*!
      * Creates a new ObexManager object.
      *
      * @param parent
      */
     explicit ObexManager(QObject *parent = nullptr);
 
-    /**
+    /*!
      * Destroys an ObexManager object.
      */
     ~ObexManager() override;
 
-    /**
+    /*!
      * Creates a new init job.
      *
      * @return init manager job
      */
     InitObexManagerJob *init();
 
-    /**
+    /*!
      * Returns whether the manager is initialized.
      *
      * @return true if manager is initialized
      */
     bool isInitialized() const;
 
-    /**
+    /*!
      * Returns whether the manager is operational.
      *
      * The manager is operational when initialization was successful
@@ -81,14 +81,14 @@ public:
      */
     bool isOperational() const;
 
-    /**
+    /*!
      * Returns a list of all sessions.
      *
      * @return list of sessions
      */
     QList<ObexSessionPtr> sessions() const;
 
-    /**
+    /*!
      * Returns a session for specified path.
      *
      * The @p path does not need to be equal to ObexSession path, startsWith
@@ -100,7 +100,7 @@ public:
      */
     ObexSessionPtr sessionForPath(const QDBusObjectPath &path) const;
 
-    /**
+    /*!
      * Attempts to start org.bluez.obex service by D-Bus activation.
      *
      * Possible return values are 1 if the service was started,
@@ -112,7 +112,7 @@ public:
     static PendingCall *startService();
 
 public Q_SLOTS:
-    /**
+    /*!
      * Registers agent.
      *
      * This agent will be used to authorize an incoming object push requests.
@@ -124,7 +124,7 @@ public Q_SLOTS:
      */
     PendingCall *registerAgent(ObexAgent *agent);
 
-    /**
+    /*!
      * Unregisters agent.
      *
      * Possible errors: PendingCall::DoesNotExist
@@ -134,7 +134,7 @@ public Q_SLOTS:
      */
     PendingCall *unregisterAgent(ObexAgent *agent);
 
-    /**
+    /*!
      * Creates a new OBEX session.
      *
      * The @p args parameter is a dictionary to hold optional or
@@ -163,7 +163,7 @@ public Q_SLOTS:
      */
     PendingCall *createSession(const QString &destination, const QVariantMap &args);
 
-    /**
+    /*!
      * Removes an existing OBEX session.
      *
      * Possible errors: PendingCall::InvalidArguments, PendingCall::NotAuthorized
@@ -174,17 +174,17 @@ public Q_SLOTS:
     PendingCall *removeSession(const QDBusObjectPath &session);
 
 Q_SIGNALS:
-    /**
+    /*!
      * Indicates that operational state have changed.
      */
     void operationalChanged(bool operational);
 
-    /**
+    /*!
      * Indicates that the session was added.
      */
     void sessionAdded(ObexSessionPtr session);
 
-    /**
+    /*!
      * Indicates that the session was removed.
      */
     void sessionRemoved(ObexSessionPtr session);

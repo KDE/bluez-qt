@@ -16,7 +16,7 @@
 
 namespace BluezQt
 {
-/**
+/*!
  * @class BluezQt::MediaPlayerTrack mediaplayertrack.h <BluezQt/MediaPlayerTrack>
  *
  * Media player track.
@@ -26,80 +26,80 @@ namespace BluezQt
 class BLUEZQT_EXPORT MediaPlayerTrack
 {
 public:
-    /**
+    /*!
      * Creates a new invalid MediaPlayerTrack object.
      */
     explicit MediaPlayerTrack();
 
-    /**
+    /*!
      * Destroys a MediaPlayerTrack object.
      */
     virtual ~MediaPlayerTrack();
 
-    /**
+    /*!
      * Copy constructor.
      *
      * @param other
      */
     MediaPlayerTrack(const MediaPlayerTrack &other);
 
-    /**
+    /*!
      * Copy assignment operator.
      *
      * @param other
      */
     MediaPlayerTrack &operator=(const MediaPlayerTrack &other);
 
-    /**
+    /*!
      * Returns whether the track is valid.
      *
      * @return true if track is valid
      */
     bool isValid() const;
 
-    /**
+    /*!
      * Returns a title of the track.
      *
      * @return track title
      */
     QString title() const;
 
-    /**
+    /*!
      * Returns an artist of the track.
      *
      * @return track artist
      */
     QString artist() const;
 
-    /**
+    /*!
      * Returns an album of the track.
      *
      * @return track album
      */
     QString album() const;
 
-    /**
+    /*!
      * Returns a genre of the track.
      *
      * @return track genre
      */
     QString genre() const;
 
-    /**
+    /*!
      * Returns a total number of tracks.
      *
      * @return total number of tracks
      */
     quint32 numberOfTracks() const;
 
-    /**
+    /*!
      * Returns a track number of the track.
      *
      * @return track number
      */
     quint32 trackNumber() const;
 
-    /**
+    /*!
      * Returns a duration of the track.
      *
      * @return track duration

@@ -11,7 +11,7 @@
 
 namespace BluezQt
 {
-/** Assigned number of codec that the endpoint/transport supports.
+/*! Assigned number of codec that the endpoint/transport supports.
     Currently limited to most common codecs. Further codecs reserved. */
 enum class AudioCodec {
     Invalid = 0x0000,
@@ -26,7 +26,7 @@ enum class AudioCodec {
     // Ldac = 0x0100,
 };
 
-/** Assigned number of sample rate that the endpoint/transport supports.
+/*! Assigned number of sample rate that the endpoint/transport supports.
     Currently limited to most common rates. Further rates reserved. */
 enum class AudioSampleRate {
     Invalid = 0x0000,

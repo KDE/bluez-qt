@@ -20,20 +20,18 @@ class NoInputNoOutputAgent : public BluezQt::Agent
     Q_OBJECT
 
 public:
-    /**
+    /*
      * Creates a new NoInputNoOutputAgent object.
-     *
-     * @param parent
      */
     explicit NoInputNoOutputAgent(const QStringList &uuids, QObject *parent = nullptr);
 
-    /**
+    /*
      * Destroys a NoInputNoOutputAgent object.
      */
     ~NoInputNoOutputAgent() override;
 
 Q_SIGNALS:
-    /**
+    /*
      * Indicates that a service was authorized.
      */
     void serviceAuthorized(BluezQt::DevicePtr device, const QString &uuid, bool allowed);

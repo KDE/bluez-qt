@@ -20,7 +20,7 @@ namespace BluezQt
 class MediaEndpoint;
 class PendingCall;
 
-/**
+/*!
  * @class BluezQt::Media Media.h <BluezQt/Media>
  *
  * Bluetooth Media.
@@ -42,12 +42,12 @@ class BLUEZQT_EXPORT Media : public QObject
     Q_OBJECT
 
 public:
-    /**
+    /*!
      * Destroys a Media object.
      */
     ~Media() override;
 
-    /**
+    /*!
      * Registers endpoint.
      *
      * Register a local end point to sender, the sender can register as many end points as it likes.
@@ -61,7 +61,7 @@ public:
      */
     PendingCall *registerEndpoint(MediaEndpoint *endpoint);
 
-    /**
+    /*!
      * Unregisters endpoint.
      *
      * @param endpoint endpoint to be unregistered
