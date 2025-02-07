@@ -21,7 +21,7 @@ namespace BluezQt
 {
 class Device;
 
-/**
+/*!
  * @class BluezQt::Agent agent.h <BluezQt/Agent>
  *
  * Bluetooth agent.
@@ -40,7 +40,7 @@ class BLUEZQT_EXPORT Agent : public QObject
     Q_PROPERTY(Capability capability READ capability)
 
 public:
-    /**
+    /*!
      * The input/output capabilities of Agent.
      */
     enum Capability {
@@ -51,14 +51,14 @@ public:
     };
     Q_ENUM(Capability)
 
-    /**
+    /*!
      * Creates a new Agent object.
      *
      * @param parent
      */
     explicit Agent(QObject *parent = nullptr);
 
-    /**
+    /*!
      * D-Bus object path of the agent.
      *
      * The path where the agent will be registered.
@@ -69,7 +69,7 @@ public:
      */
     virtual QDBusObjectPath objectPath() const = 0;
 
-    /**
+    /*!
      * Input/output capability of the agent.
      *
      * By default, this method returns DisplayYesNo.
@@ -78,7 +78,7 @@ public:
      */
     virtual Capability capability() const;
 
-    /**
+    /*!
      * Requests a PIN code from the agent.
      *
      * This method gets called when the Bluetooth daemon
@@ -92,7 +92,7 @@ public:
      */
     virtual void requestPinCode(DevicePtr device, const Request<QString> &request);
 
-    /**
+    /*!
      * Requests the agent to display a PIN code.
      *
      * This method gets called when the Bluetooth daemon
@@ -106,7 +106,7 @@ public:
      */
     virtual void displayPinCode(DevicePtr device, const QString &pinCode);
 
-    /**
+    /*!
      * Requests a passkey from the agent.
      *
      * This method gets called when the Bluetooth daemon
@@ -119,7 +119,7 @@ public:
      */
     virtual void requestPasskey(DevicePtr device, const Request<quint32> &request);
 
-    /**
+    /*!
      * Requests the agent to display a passkey.
      *
      * This method gets called when the Bluetooth daemon
@@ -134,7 +134,7 @@ public:
      */
     virtual void displayPasskey(DevicePtr device, const QString &passkey, const QString &entered);
 
-    /**
+    /*!
      * Requests the agent to confirm a passkey.
      *
      * This method gets called when the Bluetooth daemon
@@ -146,7 +146,7 @@ public:
      */
     virtual void requestConfirmation(DevicePtr device, const QString &passkey, const Request<> &request);
 
-    /**
+    /*!
      * Requests the agent to authorize an incoming pairing attempt.
      *
      * This method gets called to request the user to authorize
@@ -158,7 +158,7 @@ public:
      */
     virtual void requestAuthorization(DevicePtr device, const Request<> &request);
 
-    /**
+    /*!
      * Requests the agent to authorize a connection/service request.
      *
      * This method gets called when the Bluetooth daemon
@@ -170,7 +170,7 @@ public:
      */
     virtual void authorizeService(DevicePtr device, const QString &uuid, const Request<> &request);
 
-    /**
+    /*!
      * Indicate that the agent request failed before receiving reply.
      *
      * This method gets called to indicate that the agent
@@ -180,7 +180,7 @@ public:
      */
     virtual void cancel();
 
-    /**
+    /*!
      * Indicates that the agent was unregistered.
      *
      * This method gets called when the Bluetooth daemon

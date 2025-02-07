@@ -20,7 +20,7 @@ namespace BluezQt
 class GattApplication;
 class PendingCall;
 
-/**
+/*!
  * @class BluezQt::GattManager GattManager.h <BluezQt/GattManager>
  *
  * Bluetooth GattManager.
@@ -48,12 +48,12 @@ class BLUEZQT_EXPORT GattManager : public QObject
     Q_OBJECT
 
 public:
-    /**
+    /*!
      * Destroys a GattManager object.
      */
     ~GattManager() override;
 
-    /**
+    /*!
      * Registers a local GATT services hierarchy as described
      * above (GATT Server) and/or GATT profiles (GATT Client).
      *
@@ -70,7 +70,7 @@ public:
      */
     PendingCall *registerApplication(GattApplication *application);
 
-    /**
+    /*!
      * This unregisters the services that has been
      * previously registered. The object path parameter
      * must match the same value that has been used

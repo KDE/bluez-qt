@@ -26,7 +26,7 @@ class Profile;
 class PendingCall;
 class InitManagerJob;
 
-/**
+/*!
  * @class BluezQt::Manager manager.h <BluezQt/Manager>
  *
  * Bluetooth manager.
@@ -90,33 +90,33 @@ class BLUEZQT_EXPORT Manager : public QObject
     Q_PROPERTY(BluezQt::Rfkill *rfkill READ rfkill CONSTANT)
 
 public:
-    /**
+    /*!
      * Creates a new Manager object.
      *
      * @param parent
      */
     explicit Manager(QObject *parent = nullptr);
 
-    /**
+    /*!
      * Destroys a Manager object.
      */
     ~Manager() override;
 
-    /**
+    /*!
      * Creates a new init job.
      *
      * @return init manager job
      */
     InitManagerJob *init();
 
-    /**
+    /*!
      * Returns whether the manager is initialized.
      *
      * @return true if manager is initialized
      */
     bool isInitialized() const;
 
-    /**
+    /*!
      * Returns whether the manager is operational.
      *
      * The manager is operational when initialization was successful and
@@ -126,7 +126,7 @@ public:
      */
     bool isOperational() const;
 
-    /**
+    /*!
      * Returns whether Bluetooth is operational.
      *
      * Bluetooth is operational when manager is operational and there is
@@ -136,7 +136,7 @@ public:
      */
     bool isBluetoothOperational() const;
 
-    /**
+    /*!
      * Returns whether Bluetooth is blocked.
      *
      * Bluetooth is blocked if rfkill state for Bluetooth is either
@@ -148,7 +148,7 @@ public:
      */
     bool isBluetoothBlocked() const;
 
-    /**
+    /*!
      * Sets a Bluetooth blocked state.
      *
      * This may fail either due to insufficient permissions or
@@ -159,7 +159,7 @@ public:
      */
     void setBluetoothBlocked(bool blocked);
 
-    /**
+    /*!
      * Returns a usable adapter.
      *
      * Usable adapter is any adapter that is currently powered on.
@@ -168,21 +168,21 @@ public:
      */
     AdapterPtr usableAdapter() const;
 
-    /**
+    /*!
      * Returns a list of all adapters.
      *
      * @return list of adapters
      */
     QList<AdapterPtr> adapters() const;
 
-    /**
+    /*!
      * Returns a list of all devices.
      *
      * @return list of devices
      */
     QList<DevicePtr> devices() const;
 
-    /**
+    /*!
      * Attempts to start org.bluez service by D-Bus activation.
      *
      * Possible return values are 1 if the service was started,
@@ -193,7 +193,7 @@ public:
      */
     static PendingCall *startService();
 
-    /**
+    /*!
      * Returns an adapter for specified address.
      *
      * @param address address of adapter (eg. "1C:E5:C3:BC:94:7E")
@@ -201,7 +201,7 @@ public:
      */
     AdapterPtr adapterForAddress(const QString &address) const;
 
-    /**
+    /*!
      * Returns an adapter for specified UBI.
      *
      * @param ubi UBI of adapter (eg. "/org/bluez/hci0")
@@ -209,7 +209,7 @@ public:
      */
     AdapterPtr adapterForUbi(const QString &ubi) const;
 
-    /**
+    /*!
      * Returns a device for specified address.
      *
      * @note There may be more devices with the same address (same device
@@ -221,7 +221,7 @@ public:
      */
     DevicePtr deviceForAddress(const QString &address) const;
 
-    /**
+    /*!
      * Returns a device for specified UBI.
      *
      * @param ubi UBI of device (eg. "/org/bluez/hci0/dev_40_79_6A_0C_39_75")
@@ -229,7 +229,7 @@ public:
      */
     DevicePtr deviceForUbi(const QString &ubi) const;
 
-    /**
+    /*!
      * Registers agent.
      *
      * This agent will be used for for all actions triggered by the application.
@@ -242,7 +242,7 @@ public:
      */
     PendingCall *registerAgent(Agent *agent);
 
-    /**
+    /*!
      * Unregisters agent.
      *
      * Possible errors: PendingCall::DoesNotExist
@@ -252,7 +252,7 @@ public:
      */
     PendingCall *unregisterAgent(Agent *agent);
 
-    /**
+    /*!
      * Requests default agent.
      *
      * This requests to make the application agent the default agent.
@@ -264,7 +264,7 @@ public:
      */
     PendingCall *requestDefaultAgent(Agent *agent);
 
-    /**
+    /*!
      * Registers profile.
      *
      * Possible errors: PendingCall::InvalidArguments, PendingCall::AlreadyExists
@@ -274,7 +274,7 @@ public:
      */
     PendingCall *registerProfile(Profile *profile);
 
-    /**
+    /*!
      * Unregisters profile.
      *
      * Possible errors: PendingCall::DoesNotExist
@@ -287,57 +287,57 @@ public:
     Rfkill *rfkill() const;
 
 Q_SIGNALS:
-    /**
+    /*!
      * Indicates that operational state have changed.
      */
     void operationalChanged(bool operational);
 
-    /**
+    /*!
      * Indicates that Bluetooth operational state have changed.
      */
     void bluetoothOperationalChanged(bool operational);
 
-    /**
+    /*!
      * Indicates that Bluetooth blocked state have changed.
      */
     void bluetoothBlockedChanged(bool blocked);
 
-    /**
+    /*!
      * Indicates that adapter was added.
      */
     void adapterAdded(AdapterPtr adapter);
 
-    /**
+    /*!
      * Indicates that adapter was removed.
      */
     void adapterRemoved(AdapterPtr adapter);
 
-    /**
+    /*!
      * Indicates that at least one of the adapter's properties have changed.
      */
     void adapterChanged(AdapterPtr adapter);
 
-    /**
+    /*!
      * Indicates that a new device was added (eg. found by discovery).
      */
     void deviceAdded(DevicePtr device);
 
-    /**
+    /*!
      * Indicates that a device was removed.
      */
     void deviceRemoved(DevicePtr device);
 
-    /**
+    /*!
      * Indicates that at least one of the device's properties have changed.
      */
     void deviceChanged(DevicePtr device);
 
-    /**
+    /*!
      * Indicates that usable adapter have changed.
      */
     void usableAdapterChanged(AdapterPtr adapter);
 
-    /**
+    /*!
      * Indicates that all adapters were removed.
      */
     void allAdaptersRemoved();

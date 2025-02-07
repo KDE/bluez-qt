@@ -21,7 +21,7 @@ namespace BluezQt
 {
 class ObexTransfer;
 
-/**
+/*!
  * @class BluezQt::ObexAgent obexagent.h <BluezQt/ObexAgent>
  *
  * Bluetooth OBEX agent.
@@ -38,14 +38,14 @@ class BLUEZQT_EXPORT ObexAgent : public QObject
     Q_OBJECT
 
 public:
-    /**
+    /*!
      * Creates a new ObexAgent object.
      *
      * @param parent
      */
     explicit ObexAgent(QObject *parent = nullptr);
 
-    /**
+    /*!
      * D-Bus object path of the agent.
      *
      * The path where the agent will be registered.
@@ -56,7 +56,7 @@ public:
      */
     virtual QDBusObjectPath objectPath() const = 0;
 
-    /**
+    /*!
      * Requests the agent to authorize an incoming object push request.
      *
      * This method gets called when the Bluetooth daemon
@@ -77,7 +77,7 @@ public:
      */
     virtual void authorizePush(ObexTransferPtr transfer, ObexSessionPtr session, const Request<QString> &request);
 
-    /**
+    /*!
      * Indicate that the agent request failed before receiving reply.
      *
      * This method gets called to indicate that the agent
@@ -87,7 +87,7 @@ public:
      */
     virtual void cancel();
 
-    /**
+    /*!
      * Indicates that the agent was unregistered.
      *
      * This method gets called when the Bluetooth daemon

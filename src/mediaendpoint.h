@@ -20,7 +20,7 @@ class QDBusObjectPath;
 
 namespace BluezQt
 {
-/**
+/*!
  * @class BluezQt::MediaEndpoint MediaEndpoint.h <BluezQt/MediaEndpoint>
  *
  * Bluetooth MediaEndpoint.
@@ -32,38 +32,38 @@ class BLUEZQT_EXPORT MediaEndpoint : public QObject
     Q_OBJECT
 
 public:
-    /** Role which this MediaEndpoint acts as. */
+    /*! Role which this MediaEndpoint acts as. */
     enum class Role {
         AudioSource,
         AudioSink,
     };
 
     // KF6 TODO: use types from mediatypes.h
-    /** Codec which this MediaEndpoint supports. */
+    /*! Codec which this MediaEndpoint supports. */
     enum class Codec {
         Sbc,
         Aac,
     };
 
-    /** Configuration for MediaEndpoint construction. */
+    /*! Configuration for MediaEndpoint construction. */
     struct Configuration {
         Role role;
         Codec codec;
     };
 
-    /**
+    /*!
      * Creates a new MediaEndpoint object.
      *
      * @param parent
      */
     explicit MediaEndpoint(const Configuration &configuration, QObject *parent = nullptr);
 
-    /**
+    /*!
      * Destroys a MediaEndpoint object.
      */
     ~MediaEndpoint() override;
 
-    /**
+    /*!
      * D-Bus object path of the MediaEndpoint.
      *
      * The path where the MediaEndpoint will be registered.
@@ -74,14 +74,14 @@ public:
      */
     virtual QDBusObjectPath objectPath() const;
 
-    /**
+    /*!
      * Properties of the endpoint.
      *
      * @return Properties of the endpoint
      */
     virtual const QVariantMap &properties() const;
 
-    /**
+    /*!
      * Set configuration for the transport.
      *
      * @param transport transport to be configured
@@ -89,7 +89,7 @@ public:
      */
     virtual void setConfiguration(const QString &transportObjectPath, const QVariantMap &properties);
 
-    /**
+    /*!
      * Select preferable configuration from the supported capabilities.
      *
      * @note There is no need to cache the selected configuration since on success
@@ -100,12 +100,12 @@ public:
      */
     virtual void selectConfiguration(const QByteArray &capabilities, const Request<QByteArray> &request);
 
-    /**
+    /*!
      * Clear transport configuration.
      */
     virtual void clearConfiguration(const QString &transportObjectPath);
 
-    /**
+    /*!
      * Indicates that the MediaEndpoint was unregistered.
      *
      * This method gets called when the Bluetooth daemon
@@ -118,17 +118,17 @@ public:
     virtual void release();
 
 Q_SIGNALS:
-    /**
+    /*!
      * Indicates that configuration was selected.
      */
     void configurationSelected(const QByteArray &capabilities, const QByteArray &configuration);
 
-    /**
+    /*!
      * Indicates that configuration was set for transport.
      */
     void configurationSet(const QString &transportObjectPath, const QVariantMap &properties);
 
-    /**
+    /*!
      * Indicates that configuration was cleared for transport.
      */
     void configurationCleared(const QString &transportObjectPath);

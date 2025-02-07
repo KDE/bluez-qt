@@ -24,7 +24,7 @@ enum RequestOriginatingType {
     OrgBluezMediaEndpoint,
 };
 
-/**
+/*!
  * @class BluezQt::Request request.h <BluezQt/Request>
  *
  * D-Bus request.
@@ -38,31 +38,31 @@ template<typename T = void>
 class BLUEZQT_EXPORT Request
 {
 public:
-    /**
+    /*!
      * Creates a new Request object.
      */
     explicit Request();
 
-    /**
+    /*!
      * Destroys a Request object.
      */
     virtual ~Request();
 
-    /**
+    /*!
      * Copy constructor.
      *
      * @param other
      */
     Request(const Request &other);
 
-    /**
+    /*!
      * Copy assignment operator.
      *
      * @param other
      */
     Request &operator=(const Request &other);
 
-    /**
+    /*!
      * Accepts the request.
      *
      * This method should be called to send a reply to indicate
@@ -75,7 +75,7 @@ public:
      */
     void accept(T returnValue) const;
 
-    /**
+    /*!
      * Rejects the request.
      *
      * This method should be called to send an error reply to
@@ -83,7 +83,7 @@ public:
      */
     void reject() const;
 
-    /**
+    /*!
      * Cancels the request.
      *
      * This method should be called to send an error reply to

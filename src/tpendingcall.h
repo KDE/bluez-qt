@@ -17,7 +17,7 @@ namespace BluezQt
 {
 using namespace std::placeholders;
 
-/**
+/*!
  * @class BluezQt::TPendingCall tpendingcall.h <BluezQt/TPendingCall>
  *
  * Pending method call (template version).
@@ -43,7 +43,7 @@ private:
     };
 
 public:
-    /**
+    /*!
      * Returns a return value at given index of the call.
      *
      * Returns the return value at position Index (which is a template parameter) cast to type Type.
