@@ -3,6 +3,9 @@ cmake_minimum_required(VERSION 3.16)
 set(KF_VERSION "6.12.0") # handled by release scripts
 project(BluezQt VERSION ${KF_VERSION})
 
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 include(FeatureSummary)
 find_package(ECM 6.11.0 NO_MODULE)
 set_package_properties(ECM PROPERTIES TYPE REQUIRED DESCRIPTION "Extra CMake Modules." URL "https://commits.kde.org/extra-cmake-modules")
