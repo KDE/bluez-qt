@@ -54,7 +54,7 @@ find_package(Qt6QuickTest ${REQUIRED_QT_VERSION} CONFIG)
 set_package_properties(Qt6QuickTest PROPERTIES DESCRIPTION "QML autotests for BluezQt" TYPE OPTIONAL)
 
 ecm_set_disabled_deprecation_versions(
-    QT 6.8.0
+    QT 6.9.0
 )
 
 # Subdirectories
