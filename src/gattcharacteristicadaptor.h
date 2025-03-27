@@ -17,27 +17,52 @@ namespace BluezQt
 {
 class GattCharacteristic;
 
+/*!
+ * \inmodule BluezQt
+ * \class BluezQt::GattCharacteristicAdaptor
+ * \inheaderfile BluezQt/GattCharacteristicAdaptor
+ */
 class GattCharacteristicAdaptor : public QDBusAbstractAdaptor
 {
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.bluez.GattCharacteristic1")
+
+    /*! \property QString::UUID */
     Q_PROPERTY(QString UUID READ uuid)
+    /*! \property QDBusObjectPath::Service */
     Q_PROPERTY(QDBusObjectPath Service READ service)
+    /*! \property QStringList::Flags */
     Q_PROPERTY(QStringList Flags READ flags)
 
 public:
+    /*!
+     */
     explicit GattCharacteristicAdaptor(GattCharacteristic *parent);
 
+    /*!
+     */
     QString uuid() const;
 
+    /*!
+     */
     QDBusObjectPath service() const;
 
+    /*!
+     */
     QStringList flags() const;
 
 public Q_SLOTS:
+    /*!
+     */
     QByteArray ReadValue(const QVariantMap &options);
+    /*!
+     */
     void WriteValue(const QByteArray &value, const QVariantMap &options);
+    /*!
+     */
     void StartNotify();
+    /*!
+     */
     void StopNotify();
 
 private:
