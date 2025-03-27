@@ -15,18 +15,31 @@ namespace BluezQt
 {
 class GattService;
 
+/*!
+ * \inmodule BluezQt
+ * \class BluezQt::GattServiceAdaptor
+ * \inheaderfile BluezQt/GattServiceAdaptor
+ */
 class GattServiceAdaptor : public QDBusAbstractAdaptor
 {
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.bluez.GattService1")
+    /*! \property QString::UUID */
     Q_PROPERTY(QString UUID READ uuid)
+    /*! \property bool::Primary */
     Q_PROPERTY(bool Primary READ primary)
 
 public:
+    /*!
+     */
     explicit GattServiceAdaptor(GattService *parent);
 
+    /*!
+     */
     QString uuid() const;
 
+    /*!
+     */
     bool primary() const;
 
 private:
