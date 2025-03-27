@@ -36,37 +36,37 @@ class BLUEZQT_EXPORT Adapter : public QObject
 {
     Q_OBJECT
 
-    /*! */
+    /*! \property QString::ubi */
     Q_PROPERTY(QString ubi READ ubi)
-    /*! */
+    /*! \property QString::address */
     Q_PROPERTY(QString address READ address)
-    /*! */
+    /*! \property QString::name */
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
-    /*! */
+    /*! \property QString::systemName */
     Q_PROPERTY(QString systemName READ systemName NOTIFY systemNameChanged)
-    /*! */
+    /*! \property quint32::adapterClass */
     Q_PROPERTY(quint32 adapterClass READ adapterClass NOTIFY adapterClassChanged)
-    /*! */
+    /*! \property bool::powered */
     Q_PROPERTY(bool powered READ isPowered WRITE setPowered NOTIFY poweredChanged)
-    /*! */
+    /*! \property bool::discoverable */
     Q_PROPERTY(bool discoverable READ isDiscoverable WRITE setDiscoverable NOTIFY discoverableChanged)
-    /*! */
+    /*! \property QString::quint32 discoverableTimeout */
     Q_PROPERTY(quint32 discoverableTimeout READ discoverableTimeout WRITE setDiscoverableTimeout NOTIFY discoverableTimeoutChanged)
-    /*! */
+    /*! \property bool::pairable */
     Q_PROPERTY(bool pairable READ isPairable WRITE setPairable NOTIFY pairableChanged)
-    /*! */
+    /*! \property quint32::pairableTimeout */
     Q_PROPERTY(quint32 pairableTimeout READ pairableTimeout WRITE setPairableTimeout NOTIFY pairableTimeoutChanged)
-    /*! */
+    /*! \property bool::discovering */
     Q_PROPERTY(bool discovering READ isDiscovering NOTIFY discoveringChanged)
-    /*! */
+    /*! \property QStringList::uuids */
     Q_PROPERTY(QStringList uuids READ uuids NOTIFY uuidsChanged)
-    /*! */
+    /*! \property QString::modalias */
     Q_PROPERTY(QString modalias READ modalias NOTIFY modaliasChanged)
-    /*! */
+    /*! \property LEAdvertisingManagerPtr::leAdvertisingManager */
     Q_PROPERTY(LEAdvertisingManagerPtr leAdvertisingManager READ leAdvertisingManager NOTIFY leAdvertisingManagerChanged)
-    /*! */
+    /*! \property MediaPtr::media */
     Q_PROPERTY(MediaPtr media READ media NOTIFY mediaChanged)
-    /*! */
+    /*! \property QList<DevicePtr>::devices */
     Q_PROPERTY(QList<DevicePtr> devices READ devices)
 
 public:
