@@ -18,18 +18,33 @@ namespace BluezQt
 {
 class MediaEndpoint;
 
+/*!
+ * \inmodule BluezQt
+ * \class BluezQt::MediaEndpointAdaptor
+ * \inheaderfile BluezQt/MediaEndpointAdaptor
+ */
 class MediaEndpointAdaptor : public QDBusAbstractAdaptor
 {
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.bluez.MediaEndpoint1")
 
 public:
+    /*!
+     */
     explicit MediaEndpointAdaptor(MediaEndpoint *parent);
 
 public Q_SLOTS:
+    /*!
+     */
     void SetConfiguration(const QDBusObjectPath &transport, const QVariantMap &properties);
+    /*!
+     */
     QByteArray SelectConfiguration(const QByteArray &capabilities, const QDBusMessage &msg);
+    /*!
+     */
     void ClearConfiguration(const QDBusObjectPath &transport);
+    /*!
+     */
     Q_NOREPLY void Release();
 
 private:
