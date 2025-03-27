@@ -28,7 +28,7 @@ class PendingCall;
  * \class BluezQt::Adapter
  * \inheaderfile BluezQt/Adapter
  *
- * Bluetooth adapter.
+ * \brief Bluetooth adapter.
  *
  * This class represents a Bluetooth adapter.
  */
