@@ -17,15 +17,17 @@ namespace BluezQt
 class ObexManager;
 
 /*!
- * @class BluezQt::InitObexManagerJob initobexmanagerjob.h <BluezQt/InitObexManagerJob>
- *
- * Init obex manager job.
+ * \inmodule BluezQt
+ * \class BluezQt::InitObexManagerJob
+ * \inheaderfile BluezQt/InitObexManagerJob
+ * \brief Init obex manager job.
  *
  * This class represents a job that initializes ObexManager.
  */
 class BLUEZQT_EXPORT InitObexManagerJob : public Job
 {
     Q_OBJECT
+    /*! \property ObexManager*::manager */
     Q_PROPERTY(ObexManager *manager READ manager)
 
 public:
@@ -36,8 +38,6 @@ public:
 
     /*!
      * Returns a manager that is being initialized.
-     *
-     * @return manager
      */
     ObexManager *manager() const;
 
