@@ -22,15 +22,16 @@ namespace BluezQt
 class ObexTransfer;
 
 /*!
- * @class BluezQt::ObexAgent obexagent.h <BluezQt/ObexAgent>
- *
- * Bluetooth OBEX agent.
+ * \inmodule BluezQt
+ * \class BluezQt::ObexAgent
+ * \inheaderfile BluezQt/ObexAgent
+ * \brief Bluetooth OBEX agent.
  *
  * This class represents a Bluetooth OBEX agent.
  *
  * The agent is used to authorize an incoming object push requests.
  *
- * @note The return value of request will be sent asynchronously with Request class.
+ * \note The return value of request will be sent asynchronously with Request class.
  *       It is also possible to cancel/reject the request.
  */
 class BLUEZQT_EXPORT ObexAgent : public QObject
@@ -39,20 +40,16 @@ class BLUEZQT_EXPORT ObexAgent : public QObject
 
 public:
     /*!
-     * Creates a new ObexAgent object.
-     *
-     * @param parent
+     * Creates a new ObexAgent object as a child of \a parent.
      */
     explicit ObexAgent(QObject *parent = nullptr);
 
     /*!
-     * D-Bus object path of the agent.
+     * Returns the D-Bus object path of the agent.
      *
      * The path where the agent will be registered.
      *
-     * @note You must provide valid object path!
-     *
-     * @return object path of agent
+     * \note You must provide valid object path!
      */
     virtual QDBusObjectPath objectPath() const = 0;
 
@@ -68,17 +65,19 @@ public:
      * The ObexTransfer::fileName() contains the default location
      * and name that can be returned.
      *
-     * You can use @p session to get device and adapter this transfer
+     * You can use \a session to get the device and adapter this transfer
      * belongs to.
      *
-     * @param transfer transfer object
-     * @param session transfer session
-     * @param request request to be used for sending reply
+     * \a transfer The transfer object.
+     *
+     * \a session The transfer session.
+     *
+     * \a request The request to be used for sending a reply.
      */
     virtual void authorizePush(ObexTransferPtr transfer, ObexSessionPtr session, const Request<QString> &request);
 
     /*!
-     * Indicate that the agent request failed before receiving reply.
+     * Indicates that the agent request failed before receiving reply.
      *
      * This method gets called to indicate that the agent
      * request failed before a reply was returned.
