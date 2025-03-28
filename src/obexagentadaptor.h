@@ -22,18 +22,31 @@ namespace BluezQt
 class ObexAgent;
 class ObexManager;
 
+/*!
+ * \inmodule BluezQt
+ * \class BluezQt::ObexAgentAdaptor
+ * \inheaderfile BluezQt/ObexAgentAdaptor
+ */
 class ObexAgentAdaptor : public QDBusAbstractAdaptor
 {
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.bluez.obex.Agent1")
 
 public:
+    /*!
+     */
     explicit ObexAgentAdaptor(ObexAgent *parent, ObexManager *manager);
 
 public Q_SLOTS:
+    /*!
+     */
     QString AuthorizePush(const QDBusObjectPath &transfer, const QDBusMessage &msg);
 
+    /*!
+     */
     Q_NOREPLY void Cancel();
+    /*!
+     */
     Q_NOREPLY void Release();
 
 private Q_SLOTS:
