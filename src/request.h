@@ -17,6 +17,14 @@ class QDBusMessage;
 
 namespace BluezQt
 {
+
+/*!
+ * \enum BluezQt::RequestOriginatingType
+ * \value OrgBluezAgent
+ * \value OrgBluezProfile
+ * \value OrgBluezObexAgent
+ * \value OrgBluezMediaEndpoint
+ */
 enum RequestOriginatingType {
     OrgBluezAgent,
     OrgBluezProfile,
@@ -25,14 +33,15 @@ enum RequestOriginatingType {
 };
 
 /*!
- * @class BluezQt::Request request.h <BluezQt/Request>
- *
- * D-Bus request.
+ * \inmodule BluezQt
+ * \class BluezQt::Request
+ * \inheaderfile BluezQt/Request
+ * \brief D-Bus request.
  *
  * This class represents a request from a Bluetooth daemon. It is a convenient
  * wrapper around QDBusMessage and easily allows sending replies and handling errors.
  *
- * @see Agent, ObexAgent, Profile
+ * \sa Agent, ObexAgent, Profile
  */
 template<typename T = void>
 class BLUEZQT_EXPORT Request
@@ -49,16 +58,12 @@ public:
     virtual ~Request();
 
     /*!
-     * Copy constructor.
-     *
-     * @param other
+     * Constructs a new Request object from \a other.
      */
     Request(const Request &other);
 
     /*!
-     * Copy assignment operator.
-     *
-     * @param other
+     * Copies the Request object from \a other.
      */
     Request &operator=(const Request &other);
 
@@ -71,7 +76,7 @@ public:
      * In case the request is of type void, this method does not
      * take any parameter.
      *
-     * @param returnValue return value of request
+     * \a returnValue The return value of the request.
      */
     void accept(T returnValue) const;
 
