@@ -17,19 +17,32 @@ namespace BluezQt
 {
 class GattApplication;
 
+/*!
+ * \inmodule BluezQt
+ * \class BluezQt::ObjectManagerAdaptor
+ * \inheaderfile BluezQt/ObjectManagerAdaptor
+ */
 class ObjectManagerAdaptor : public QDBusAbstractAdaptor
 {
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.freedesktop.DBus.ObjectManager")
 
 public:
+    /*!
+     */
     explicit ObjectManagerAdaptor(QObject *parent);
 
 public Q_SLOTS:
+    /*!
+     */
     DBusManagerStruct GetManagedObjects();
 
 Q_SIGNALS:
+    /*!
+     */
     void InterfacesAdded(const QDBusObjectPath &object, const QVariantMapMap &interfaces);
+    /*!
+     */
     void InterfacesRemoved(const QDBusObjectPath &object, const QStringList &interfaces);
 
 private:
