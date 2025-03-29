@@ -55,7 +55,7 @@ public:
 
     /*!
      * Creates a GattDescriptor with the given \a uuid, \a flags
-     * and \a initialValue as a child of a \parent characteristic.
+     * and \a initialValue as a child of a \a parent characteristic.
      */
     GattDescriptor(const QString &uuid, const QStringList &flags, const QByteArray &initialValue, GattCharacteristic *parent);
 
