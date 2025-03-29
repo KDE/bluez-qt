@@ -20,17 +20,30 @@ namespace BluezQt
 class Manager;
 class Profile;
 
+/*!
+ * \inmodule BluezQt
+ * \class BluezQt::ProfileAdaptor
+ * \inheaderfile BluezQt/ProfileAdaptor
+ */
 class ProfileAdaptor : public QDBusAbstractAdaptor
 {
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.bluez.Profile1")
 
 public:
+    /*!
+     */
     explicit ProfileAdaptor(Profile *parent, Manager *manager);
 
 public Q_SLOTS:
+    /*!
+     */
     void NewConnection(const QDBusObjectPath &device, const QDBusUnixFileDescriptor &fd, const QVariantMap &properties, const QDBusMessage &msg);
+    /*!
+     */
     void RequestDisconnection(const QDBusObjectPath &device, const QDBusMessage &msg);
+    /*!
+     */
     Q_NOREPLY void Release();
 
 private:
