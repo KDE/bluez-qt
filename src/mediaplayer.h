@@ -22,156 +22,149 @@ namespace BluezQt
 class PendingCall;
 
 /*!
- * @class BluezQt::MediaPlayer mediaplayer.h <BluezQt/MediaPlayer>
- *
- * Media player.
+ * \inmodule BluezQt
+ * \class BluezQt::MediaPlayer
+ * \inheaderfile BluezQt/MediaPlayer
+ * \brief Media player.
  *
  * This class represents a media player interface.
  */
 class BLUEZQT_EXPORT MediaPlayer : public QObject
 {
     Q_OBJECT
+    /*! \property BluezQt::MediaPlayer::name */
     Q_PROPERTY(QString name READ name NOTIFY nameChanged)
+    /*! \property BluezQt::MediaPlayer::equalizer */
     Q_PROPERTY(Equalizer equalizer READ equalizer WRITE setEqualizer NOTIFY equalizerChanged)
+    /*! \property BluezQt::MediaPlayer::repeat */
     Q_PROPERTY(Repeat repeat READ repeat WRITE setRepeat NOTIFY repeatChanged)
+    /*! \property BluezQt::MediaPlayer::shuffle */
     Q_PROPERTY(Shuffle shuffle READ shuffle WRITE setShuffle NOTIFY shuffleChanged)
+    /*! \property BluezQt::MediaPlayer::status */
     Q_PROPERTY(Status status READ status NOTIFY statusChanged)
+    /*! \property BluezQt::MediaPlayer::track */
     Q_PROPERTY(MediaPlayerTrack track READ track NOTIFY trackChanged)
+    /*! \property BluezQt::MediaPlayer::position */
     Q_PROPERTY(quint32 position READ position NOTIFY positionChanged)
 
 public:
-    /*! Equalizer state. */
+    /*!
+     * \enum BluezQt::MediaPlayer::Equalizer
+     * \value EqualizerOn
+     * \value EqualizerOff
+     */
     enum Equalizer {
-        /*! Equalizer on. */
         EqualizerOn,
-        /*! Equalizer off. */
         EqualizerOff,
     };
     Q_ENUM(Equalizer)
 
-    /*! Repeat state. */
+    /*!
+     * \enum BluezQt::MediaPlayer::Repeat
+     * \value RepeatOff
+     * \value RepeatSingleTrack
+     * \value RepeatAllTracks
+     * \value RepeatGroup
+     */
     enum Repeat {
-        /*! Repeat off. */
         RepeatOff,
-        /*! Repeat single track. */
         RepeatSingleTrack,
-        /*! Repeat all tracks. */
         RepeatAllTracks,
-        /*! Repeat group. */
         RepeatGroup,
     };
     Q_ENUM(Repeat)
 
-    /*! Shuffle state. */
+    /*! \enum BluezQt::MediaPlayer::Shuffle
+     * \value ShuffleOff
+     * \value ShuffleAllTracks
+     * \value ShuffleGroup
+     */
     enum Shuffle {
-        /*! Shuffle off. */
         ShuffleOff,
-        /*! Shuffle all tracks. */
         ShuffleAllTracks,
-        /*! Shuffle group. */
         ShuffleGroup,
     };
     Q_ENUM(Shuffle)
 
-    /*! Player status. */
+    /*!
+     * \enum BluezQt::MediaPlayer::Player
+     * \value Playing
+     * \value Stopped
+     * \value Paused
+     * \value ForwardSeek
+     * \value ReverseSeek
+     * \value Error
+     */
     enum Status {
-        /*! Player is playing. */
         Playing,
-        /*! Player is stopped. */
         Stopped,
-        /*! Player is paused. */
         Paused,
-        /*! Player is forward seeking. */
         ForwardSeek,
-        /*! Player is reverse seeking. */
         ReverseSeek,
-        /*! Error */
         Error,
     };
     Q_ENUM(Status)
 
-    /*!
-     * Destroys a MediaPlayer object.
-     */
     ~MediaPlayer() override;
 
     /*!
      * Returns a shared pointer from this.
-     *
-     * @return MediaPlayerPtr
      */
     MediaPlayerPtr toSharedPtr() const;
 
     /*!
      * Returns the name of the player.
-     *
-     * @return name of player
      */
     QString name() const;
 
     /*!
      * Returns the equalizer state of the player.
-     *
-     * @return equalizer state of player
      */
     Equalizer equalizer() const;
 
     /*!
-     * Sets the equalizer state of the player.
+     * Sets the \a equalizer state of the player.
      *
-     * @param equalizer equalizer state
-     * @return void pending call
+     * Returns void pending call.
      */
     PendingCall *setEqualizer(Equalizer equalizer);
 
     /*!
      * Returns the repeat state of the player.
-     *
-     * @return repeat state of player
      */
     Repeat repeat() const;
 
     /*!
-     * Sets the repeat state of the player.
+     * Sets the \a repeat state of the player.
      *
-     * @param repeat repeat state
-     * @return void pending call
+     * Returns void pending call.
      */
     PendingCall *setRepeat(Repeat repeat);
 
     /*!
      * Returns the shuffle state of the player.
-     *
-     * @return shuffle state of player
      */
     Shuffle shuffle() const;
 
     /*!
-     * Sets the shuffle state of the player.
+     * Sets the \a shuffle state of the player.
      *
-     * @param shuffle shuffle state
-     * @return void pending call
+     * Returns void pending call.
      */
     PendingCall *setShuffle(Shuffle shuffle);
 
     /*!
      * Returns the status of the player.
-     *
-     * @return status of player
      */
     Status status() const;
 
     /*!
      * Returns the current track.
-     *
-     * @return current track
      */
     MediaPlayerTrack track() const;
 
     /*!
      * Returns the playback position in milliseconds.
-     *
-     * @return playback position
      */
     quint32 position() const;
 
@@ -179,99 +172,134 @@ public Q_SLOTS:
     /*!
      * Resumes playback.
      *
-     * Possible errors: PendingCall::NotSupported, PendingCall::Failed
+     * Possible errors:
      *
-     * @return void pending call
+     * \list
+     * \li PendingCall::NotSupported
+     * \li PendingCall::Failed
+     * \endlist
+     *
+     * Returns void pending call.
      */
     PendingCall *play();
 
     /*!
      * Pauses playback.
      *
-     * Possible errors: PendingCall::NotSupported, PendingCall::Failed
+     * Possible errors:
      *
-     * @return void pending call
+     * \list
+     * \li PendingCall::NotSupported
+     * \li PendingCall::Failed
+     * \endlist
+     *
+     * Returns void pending call.
      */
     PendingCall *pause();
 
     /*!
      * Stops playback.
      *
-     * Possible errors: PendingCall::NotSupported, PendingCall::Failed
+     * Possible errors:
      *
-     * @return void pending call
+     * \list
+     * \li PendingCall::NotSupported
+     * \li PendingCall::Failed
+     * \endlist
+     *
+     * Returns void pending call.
      */
     PendingCall *stop();
 
     /*!
-     * Switch to next track.
+     * Switches to the next track.
      *
-     * Possible errors: PendingCall::NotSupported, PendingCall::Failed
+     * Possible errors:
      *
-     * @return void pending call
+     * \list
+     * \li PendingCall::NotSupported
+     * \li PendingCall::Failed
+     * \endlist
+     *
+     * Returns void pending call.
      */
     PendingCall *next();
 
     /*!
      * Switch to previous track.
      *
-     * Possible errors: PendingCall::NotSupported, PendingCall::Failed
+     * Possible errors:
      *
-     * @return void pending call
+     * \list
+     * \li PendingCall::NotSupported
+     * \li PendingCall::Failed
+     * \endlist
+     *
+     * Returns void pending call.
      */
     PendingCall *previous();
 
     /*!
      * Fast forwards playback.
      *
-     * Possible errors: PendingCall::NotSupported, PendingCall::Failed
+     * Possible errors:
      *
-     * @return void pending call
+     * \list
+     * \li PendingCall::NotSupported
+     * \li PendingCall::Failed
+     * \endlist
+     *
+     * Returns void pending call.
      */
     PendingCall *fastForward();
 
     /*!
      * Rewinds playback.
      *
-     * Possible errors: PendingCall::NotSupported, PendingCall::Failed
+     * Possible errors:
      *
-     * @return void pending call
+     * \list
+     * \li PendingCall::NotSupported
+     * \li PendingCall::Failed
+     * \endlist
+     *
+     * Returns void pending call.
      */
     PendingCall *rewind();
 
 Q_SIGNALS:
     /*!
-     * Indicates that player's name have changed.
+     * Indicates that the player's \a name has changed.
      */
     void nameChanged(const QString &name);
 
     /*!
-     * Indicates that player's equalizer state have changed.
+     * Indicates that the player's \a equalizer state has changed.
      */
     void equalizerChanged(Equalizer equalizer);
 
     /*!
-     * Indicates that player's repeat state have changed.
+     * Indicates that the player's \a repeat state has changed.
      */
     void repeatChanged(Repeat repeat);
 
     /*!
-     * Indicates that player's shuffle state have changed.
+     * Indicates that the player's \a shuffle state has changed.
      */
     void shuffleChanged(Shuffle shuffle);
 
     /*!
-     * Indicates that player's status have changed.
+     * Indicates that the player's \a status has changed.
      */
     void statusChanged(Status status);
 
     /*!
-     * Indicates that player's current track have changed.
+     * Indicates that the player's current \a track has changed.
      */
     void trackChanged(MediaPlayerTrack track);
 
     /*!
-     * Indicates that player's playback position have changed.
+     * Indicates that the player's playback \a position has changed.
      */
     void positionChanged(quint32 position);
 

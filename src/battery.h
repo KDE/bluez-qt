@@ -19,40 +19,38 @@
 namespace BluezQt
 {
 /*!
- * @class BluezQt::Battery battery.h <BluezQt/Battery>
+ * \inmodule BluezQt
+ * \class BluezQt::Battery
+ * \inheaderfile BluezQt/Battery
  *
- * %Device battery.
+ * \brief Device battery.
  *
  * This class represents a battery interface.
  */
 class BLUEZQT_EXPORT Battery : public QObject
 {
     Q_OBJECT
+    /*!
+     * \property BluezQt::Battery::percentage
+     */
     Q_PROPERTY(int percentage READ percentage NOTIFY percentageChanged)
 
 public:
-    /*!
-     * Destroys a Battery object.
-     */
     ~Battery() override;
 
     /*!
      * Returns a shared pointer from this.
-     *
-     * @return BatteryPtr
      */
     BatteryPtr toSharedPtr() const;
 
     /*!
      * Returns the battery percentage.
-     *
-     * @return battery percentage
      */
     int percentage() const;
 
 Q_SIGNALS:
     /*!
-     * Indicates that battery's percentage has changed.
+     * Indicates that battery's \a percentage has changed.
      */
     void percentageChanged(int percentage);
 

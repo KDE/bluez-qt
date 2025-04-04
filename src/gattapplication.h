@@ -20,9 +20,11 @@ class QDBusObjectPath;
 namespace BluezQt
 {
 /*!
- * @class BluezQt::GattApplication GattApplication.h <BluezQt/GattApplication>
+ * \inmodule BluezQt
+ * \class BluezQt::GattApplication
+ * \inheaderfile BluezQt/GattApplication
  *
- * Bluetooth GattApplication.
+ * \brief Bluetooth GattApplication.
  *
  * This class represents a Bluetooth GattApplication, which is the root node of
  * a GATT object hierarchy. Its child nodes can be GattServices,
@@ -40,38 +42,28 @@ class BLUEZQT_EXPORT GattApplication : public QObject
 
 public:
     /*!
-     * Creates a new GattApplication object with default object path prefix.
+     * Creates a new GattApplication object with default object path prefix as a child of \a parent.
      *
      * Object path: /org/kde/bluezqt/appXX/serviceYY/charZZ
-     *
-     * @param parent
      */
     explicit GattApplication(QObject *parent = nullptr);
 
     /*!
-     * Creates a new GattApplication object with custom object path prefix.
+     * Creates a new GattApplication object with custom object path prefix \a objectPathPrefix as a child of \a parent.
      *
      * Object path: [objectPathPrefix]/appXX/serviceYY/charZZ
-     *
-     * @param objectPathPrefix
-     * @param parent
      */
     explicit GattApplication(const QString &objectPathPrefix, QObject *parent = nullptr);
 
-    /*!
-     * Destroys a GattApplication object.
-     */
     ~GattApplication() override;
 
 private:
-    /*!
-     * D-Bus object path of the GATT application.
+    /*
+     * Returns the D-Bus object path of the GATT application.
      *
      * The path where the GATT application will be registered.
      *
-     * @note You must provide valid object path!
-     *
-     * @return object path of GATT application
+     * Note: You must provide valid object path!
      */
     virtual QDBusObjectPath objectPath() const;
 

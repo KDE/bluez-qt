@@ -1,12 +1,12 @@
 include($KDE_DOCS/global/qt-module-defaults.qdocconf)
 
 project = BluezQt
-description = Additions to Qt Core
+description = Qt wrapper for BlueZ 5 DBus API
 
 documentationinheaders = true
 
-headerdirs = .
-sourcedirs = .
+headerdirs += .
+sourcedirs += .
 
 outputformats = HTML
 

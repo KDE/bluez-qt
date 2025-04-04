@@ -202,4 +202,4 @@ ecm_qt_install_logging_categories(
     DESTINATION ${KDE_INSTALL_LOGGINGCATEGORIESDIR}
 )
 
-ecm_generate_qdoc(KF6BluezQt bluez-qt.qdocconf)
+ecm_generate_qdoc(KF6BluezQt bluezqt.qdocconf)

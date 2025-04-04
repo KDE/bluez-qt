@@ -27,9 +27,10 @@ class PendingCall;
 class InitManagerJob;
 
 /*!
- * @class BluezQt::Manager manager.h <BluezQt/Manager>
- *
- * Bluetooth manager.
+ * \inmodule BluezQt
+ * \class BluezQt::Manager
+ * \inheaderfile BluezQt/Manager
+ * \brief Bluetooth manager.
  *
  * The entry point to communicate with system BlueZ daemon.
  *
@@ -42,18 +43,18 @@ class InitManagerJob;
  * functions: isBluetoothBlocked() and setBluetoothBlocked().
  *
  * Example use in C++ code:
- * @code
+ * \code
  * BluezQt::Manager *manager = new BluezQt::Manager();
  * BluezQt::InitManagerJob *job = manager->init();
  * job->start();
  * connect(job, &BluezQt::InitManagerJob::result, ...);
- * @endcode
+ * \endcode
  *
  * In QML, manager is a singleton and initialization is started when first using
  * the manager. You don't need to track initialized state, just use property binding.
  *
  * Example use in QML code:
- * @code
+ * \code
  * import QtQuick
  * import org.kde.bluezqt as BluezQt
  *
@@ -66,53 +67,52 @@ class InitManagerJob;
  *         console.log("Manager operational:", manager.operational)
  *     }
  * }
- * @endcode
+ * \endcode
  *
- * @note All communication with BlueZ daemon happens asynchronously. Almost all methods
+ * \note All communication with BlueZ daemon happens asynchronously. Almost all methods
  *       returns PendingCall to help track the call progress and to check for any errors.
  *
- * @note If manager is not operational, all methods that returns a PendingCall will fail
+ * \note If manager is not operational, all methods that returns a PendingCall will fail
  *       with PendingCall::InternalError.
  *
- * @see InitManagerJob
+ * \sa InitManagerJob
  */
 class BLUEZQT_EXPORT Manager : public QObject
 {
     Q_OBJECT
 
+    /*! \property BluezQt::Manager::initialized */
     Q_PROPERTY(bool initialized READ isInitialized)
+    /*! \property BluezQt::Manager::operational */
     Q_PROPERTY(bool operational READ isOperational NOTIFY operationalChanged)
+    /*! \property BluezQt::Manager::bluetoothOperational */
     Q_PROPERTY(bool bluetoothOperational READ isBluetoothOperational NOTIFY bluetoothOperationalChanged)
+    /*! \property BluezQt::Manager::bluetoothBlocked */
     Q_PROPERTY(bool bluetoothBlocked READ isBluetoothBlocked WRITE setBluetoothBlocked NOTIFY bluetoothBlockedChanged)
+    /*! \property BluezQt::Manager::usableAdapter */
     Q_PROPERTY(AdapterPtr usableAdapter READ usableAdapter NOTIFY usableAdapterChanged)
+    /*! \property BluezQt::Manager::adapters */
     Q_PROPERTY(QList<AdapterPtr> adapters READ adapters)
+    /*! \property BluezQt::Manager::devices */
     Q_PROPERTY(QList<DevicePtr> devices READ devices)
+    /*! \property BluezQt::Manager::rfkill */
     Q_PROPERTY(BluezQt::Rfkill *rfkill READ rfkill CONSTANT)
 
 public:
     /*!
-     * Creates a new Manager object.
-     *
-     * @param parent
+     * Creates a new Manager object as a child of \a parent.
      */
     explicit Manager(QObject *parent = nullptr);
 
-    /*!
-     * Destroys a Manager object.
-     */
     ~Manager() override;
 
     /*!
      * Creates a new init job.
-     *
-     * @return init manager job
      */
     InitManagerJob *init();
 
     /*!
      * Returns whether the manager is initialized.
-     *
-     * @return true if manager is initialized
      */
     bool isInitialized() const;
 
@@ -121,8 +121,6 @@ public:
      *
      * The manager is operational when initialization was successful and
      * BlueZ system daemon is running.
-     *
-     * @return true if manager is operational
      */
     bool isOperational() const;
 
@@ -131,8 +129,6 @@ public:
      *
      * Bluetooth is operational when manager is operational and there is
      * a valid usable adapter.
-     *
-     * @return true if Bluetooth is operational
      */
     bool isBluetoothOperational() const;
 
@@ -142,9 +138,7 @@ public:
      * Bluetooth is blocked if rfkill state for Bluetooth is either
      * SOFT_BLOCKED or HARD_BLOCKED.
      *
-     * @note This requires read access to /dev/rfkill.
-     *
-     * @return true if Bluetooth is blocked
+     * \note This requires read access to /dev/rfkill.
      */
     bool isBluetoothBlocked() const;
 
@@ -155,30 +149,24 @@ public:
      * because rfkill state is HARD_BLOCKED. In that case,
      * this function returns false.
      *
-     * @note This requires write access to /dev/rfkill.
+     * \note This requires write access to /dev/rfkill.
      */
     void setBluetoothBlocked(bool blocked);
 
     /*!
      * Returns a usable adapter.
      *
-     * Usable adapter is any adapter that is currently powered on.
-     *
-     * @return usable adapter
+     * A usable adapter is any adapter that is currently powered on.
      */
     AdapterPtr usableAdapter() const;
 
     /*!
      * Returns a list of all adapters.
-     *
-     * @return list of adapters
      */
     QList<AdapterPtr> adapters() const;
 
     /*!
      * Returns a list of all devices.
-     *
-     * @return list of devices
      */
     QList<DevicePtr> devices() const;
 
@@ -189,151 +177,166 @@ public:
      * 2 if the service is already running or error if the service
      * could not be started.
      *
-     * @return quint32 pending call
+     * Returns quint32 pending call.
      */
     static PendingCall *startService();
 
     /*!
-     * Returns an adapter for specified address.
+     * Returns an adapter for the specified \a address.
      *
-     * @param address address of adapter (eg. "1C:E5:C3:BC:94:7E")
-     * @return null if there is no adapter with specified address
+     * \a address The address of adapter (eg. "1C:E5:C3:BC:94:7E").
      */
     AdapterPtr adapterForAddress(const QString &address) const;
 
     /*!
      * Returns an adapter for specified UBI.
      *
-     * @param ubi UBI of adapter (eg. "/org/bluez/hci0")
-     * @return null if there is no adapter with specified UBI
+     * \a ubi The UBI of adapter (eg. "/org/bluez/hci0")
      */
     AdapterPtr adapterForUbi(const QString &ubi) const;
 
     /*!
-     * Returns a device for specified address.
+     * Returns a device for the specified address.
      *
-     * @note There may be more devices with the same address (same device
+     * \note There may be more devices with the same address (same device
      *       in multiple adapters). In this case, the first found device will
      *       be returned while preferring powered adapters in search.
      *
-     * @param address address of device (eg. "40:79:6A:0C:39:75")
-     * @return null if there is no device with specified address
+     * \a address The address of device (eg. "40:79:6A:0C:39:75")
      */
     DevicePtr deviceForAddress(const QString &address) const;
 
     /*!
      * Returns a device for specified UBI.
      *
-     * @param ubi UBI of device (eg. "/org/bluez/hci0/dev_40_79_6A_0C_39_75")
-     * @return null if there is no device with specified UBI
+     * \a ubi The UBI of device (eg. "/org/bluez/hci0/dev_40_79_6A_0C_39_75")
      */
     DevicePtr deviceForUbi(const QString &ubi) const;
 
     /*!
-     * Registers agent.
+     * Registers an \a agent.
      *
      * This agent will be used for for all actions triggered by the application.
      * Eg. show a PIN code in pairing process.
      *
-     * Possible errors: PendingCall::InvalidArguments, PendingCall::AlreadyExists
+     * Possible errors:
      *
-     * @param agent agent to be registered
-     * @return void pending call
+     * \list
+     * \li PendingCall::InvalidArguments
+     * \li PendingCall::AlreadyExists
+     * \endlist
+     *
+     * Returns void pending call.
      */
     PendingCall *registerAgent(Agent *agent);
 
     /*!
-     * Unregisters agent.
+     * Unregisters an \a agent.
      *
-     * Possible errors: PendingCall::DoesNotExist
+     * Possible errors:
      *
-     * @param agent agent to be unregistered
-     * @return void pending call
+     * \list
+     * \li PendingCall::DoesNotExist
+     * \endlist
+     *
+     * Returns void pending call.
      */
     PendingCall *unregisterAgent(Agent *agent);
 
     /*!
-     * Requests default agent.
+     * Requests the default \a agent.
      *
      * This requests to make the application agent the default agent.
      *
-     * Possible errors: PendingCall::DoesNotExist
+     * Possible errors:
      *
-     * @param agent registered agent
-     * @return void pending call
+     * \list
+     * \li PendingCall::DoesNotExist
+     * \endlist
+     *
+     * Returns void pending call.
      */
     PendingCall *requestDefaultAgent(Agent *agent);
 
     /*!
-     * Registers profile.
+     * Registers a \a profile.
      *
-     * Possible errors: PendingCall::InvalidArguments, PendingCall::AlreadyExists
+     * Possible errors:
      *
-     * @param profile profile to be registered
-     * @return void pending call
+     * \list
+     * \li PendingCall::InvalidArguments
+     * \li PendingCall::AlreadyExists
+     * \endlist
+     *
+     * Returns void pending call.
      */
     PendingCall *registerProfile(Profile *profile);
 
     /*!
-     * Unregisters profile.
+     * Unregisters a \a profile.
      *
-     * Possible errors: PendingCall::DoesNotExist
+     * Possible errors:
      *
-     * @param profile profile to be unregistered
-     * @return void pending call
+     * \list
+     * \li PendingCall::DoesNotExist
+     * \endlist
+     *
+     * Returns void pending call.
      */
     PendingCall *unregisterProfile(Profile *profile);
 
+    /*!
+     */
     Rfkill *rfkill() const;
 
 Q_SIGNALS:
     /*!
-     * Indicates that operational state have changed.
+     * Indicates that the \a operational state has changed.
      */
     void operationalChanged(bool operational);
 
     /*!
-     * Indicates that Bluetooth operational state have changed.
+     * Indicates that the Bluetooth \a operational state has changed.
      */
     void bluetoothOperationalChanged(bool operational);
 
     /*!
-     * Indicates that Bluetooth blocked state have changed.
+     * Indicates that Bluetooth \a blocked state has changed.
      */
     void bluetoothBlockedChanged(bool blocked);
 
     /*!
-     * Indicates that adapter was added.
+     * Indicates that an \a adapter was added.
      */
     void adapterAdded(AdapterPtr adapter);
 
     /*!
-     * Indicates that adapter was removed.
+     * Indicates that an \a adapter was removed.
      */
     void adapterRemoved(AdapterPtr adapter);
 
     /*!
-     * Indicates that at least one of the adapter's properties have changed.
+     * Indicates that at least one of the \a adapter's properties has changed.
      */
     void adapterChanged(AdapterPtr adapter);
 
     /*!
-     * Indicates that a new device was added (eg. found by discovery).
+     * Indicates that a new \a device was added (found by discovery).
      */
     void deviceAdded(DevicePtr device);
 
     /*!
-     * Indicates that a device was removed.
+     * Indicates that a \a device was removed.
      */
     void deviceRemoved(DevicePtr device);
 
     /*!
-     * Indicates that at least one of the device's properties have changed.
+     * Indicates that at least one of the \a device's properties has changed.
      */
     void deviceChanged(DevicePtr device);
 
     /*!
-     * Indicates that usable adapter have changed.
+     * Indicates that a usable \a adapter has changed.
      */
     void usableAdapterChanged(AdapterPtr adapter);
 

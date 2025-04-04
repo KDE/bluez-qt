@@ -18,55 +18,45 @@
 
 namespace BluezQt
 {
+class GattApplication;
 /*!
- * @class BluezQt::GattService GattService.h <BluezQt/GattService>
- *
- * Bluetooth GattService.
+ * \inmodule BluezQt
+ * \class BluezQt::GattService
+ * \inheaderfile BluezQt/GattService
+ * \brief Bluetooth GattService.
  *
  * This class represents a Bluetooth GattService.
  */
-class GattApplication;
 class BLUEZQT_EXPORT GattService : public QObject
 {
     Q_OBJECT
 
 public:
     /*!
-     * Creates a new GattService object.
-     *
-     * @param parent
+     * Creates a new GattService object as a child of a \a parent application.
      */
     explicit GattService(const QString &uuid, bool isPrimary, GattApplication *parent);
 
-    /*!
-     * Destroys a GattService object.
-     */
     ~GattService() override;
 
     /*!
-     * 128-bit service UUID.
-     *
-     * @return uuid of gatt service
+     * Returns the 128-bit service UUID.
      */
     QString uuid() const;
 
     /*!
      * Indicates whether or not this GATT service is a
-     * primary service. If false, the service is secondary.
+     * primary service.
      *
-     * @return true if gatt service is primary
+     * Returns \c true if this GATT service is primary, \c false if secondary.
      */
     bool isPrimary() const;
 
 protected:
     /*!
-     * D-Bus object path of the GattService.
+     * Returns the D-Bus object path registered for the GattService.
      *
-     * The path where the GattService will be registered.
-     *
-     * @note You must provide valid object path!
-     *
-     * @return object path of GattService
+     * \note You must provide valid object path!
      */
     virtual QDBusObjectPath objectPath() const;
 

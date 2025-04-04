@@ -23,9 +23,10 @@ namespace BluezQt
 class PendingCall;
 
 /*!
- * @class BluezQt::ObexFileTransfer obexfiletransfer.h <BluezQt/ObexFileTransfer>
- *
- * OBEX file transfer.
+ * \inmodule BluezQt
+ * \class BluezQt::ObexFileTransfer
+ * \inheaderfile BluezQt/ObexFileTransfer
+ * \brief OBEX file transfer.
  *
  * This class represents an OBEX file transfer interface.
  */
@@ -35,114 +36,134 @@ class BLUEZQT_EXPORT ObexFileTransfer : public QObject
 
 public:
     /*!
-     * Creates a new ObexFileTransfer object.
+     * Creates a new ObexFileTransfer object at the given session \a path as a child of \a parent.
      *
-     * This class will be typically used with a @p path
+     * This class will be typically used with a \a path
      * from result of ObexManager::createSession().
-     *
-     * @param path path of session
-     * @param parent
      */
     explicit ObexFileTransfer(const QDBusObjectPath &path, QObject *parent = nullptr);
 
-    /*!
-     * Destroys an ObexFileTransfer object.
-     */
     ~ObexFileTransfer() override;
 
     /*!
-     * D-Bus object path of the file transfer session.
-     *
-     * @return object path of session
+     * Returns the D-Bus object path of the file transfer session.
      */
     QDBusObjectPath objectPath() const;
 
     /*!
-     * Changes the current folder.
+     * Changes the current \a folder.
      *
-     * Possible errors: PendingCall::InvalidArguments, PendingCall::Failed
+     * Possible errors:
      *
-     * @param folder folder to be changed
-     * @return void pending call
+     * \list
+     * \li PendingCall::InvalidArguments
+     * \li PendingCall::Failed
+     * \endlist
+     *
+     * Returns void pending call.
      */
     PendingCall *changeFolder(const QString &folder);
 
     /*!
-     * Creates a new folder.
+     * Creates a new \a folder.
      *
-     * Possible errors: PendingCall::InvalidArguments, PendingCall::Failed
+     * Possible errors:
      *
-     * @param folder name of new folder
-     * @return void pending call
+     * \list
+     * \li PendingCall::InvalidArguments
+     * \li PendingCall::Failed
+     * \endlist
+     *
+     * Returns void pending call.
      */
     PendingCall *createFolder(const QString &folder);
 
     /*!
      * Lists a current folder.
      *
-     * Possible errors: PendingCall::Failed
+     * Possible errors:
      *
-     * @return QList<ObexFileTransferEntry> pending call
+     * \list
+     * \li PendingCall::Failed
+     * \endlist
+     *
+     * Returns QList<ObexFileTransferEntry> pending call.
      */
     PendingCall *listFolder();
 
     /*!
-     * Gets the file from the remote device.
+     * Gets the file at full path \a sourceFileName from the remote device and saves it to \a targetFileName.
      *
-     * If an empty @p targetFileName is given, a name will be
+     * If an empty \a targetFileName is given, a name will be
      * automatically calculated for the temporary file.
      *
-     * Possible errors: PendingCall::InvalidArguments, PendingCall::Failed
+     * Possible errors:
      *
-     * @param targetFileName full local path where the file will be saved
-     * @param sourceFileName file within the remote device
-     * @return ObexTransferPtr pending call
+     * \list
+     * \li PendingCall::InvalidArguments
+     * \li PendingCall::Failed
+     * \endlist
+     *
+     * Returns ObexTransferPtr pending call.
      */
     PendingCall *getFile(const QString &targetFileName, const QString &sourceFileName);
 
     /*!
-     * Puts the file to the remote device.
+     * Puts the file at full path \a sourceFileName to the remote device in \a targetFileName.
      *
-     * If an empty @p targetFileName is given, a name will be
+     * If an empty \a targetFileName is given, a name will be
      * automatically calculated for the temporary file.
      *
-     * Possible errors: PendingCall::InvalidArguments, PendingCall::Failed
+     * Possible errors:
      *
-     * @param sourceFileName full path of the local file
-     * @param targetFileName file to be saved within the remote device
-     * @return ObexTransferPtr pending call
+     * \list
+     * \li PendingCall::InvalidArguments
+     * \li PendingCall::Failed
+     * \endlist
+     *
+     * Returns ObexTransferPtr pending call.
      */
     PendingCall *putFile(const QString &sourceFileName, const QString &targetFileName);
 
     /*!
-     * Copies a file within the remote device.
+     * Copies a file at \a sourceFileName to \a targetFileName, both within the remote device.
      *
-     * Possible errors: PendingCall::InvalidArguments, PendingCall::Failed
+     * Possible errors:
      *
-     * @param sourceFileName source within the remote device
-     * @param targetFileName target file within the remote device
-     * @return void pending call
+     * \list
+     * \li PendingCall::InvalidArguments
+     * \li PendingCall::Failed
+     * \endlist
+     *
+     * Returns void pending call.
      */
     PendingCall *copyFile(const QString &sourceFileName, const QString &targetFileName);
 
     /*!
-     * Moves a file within the remote device.
+     * Moves a file \a sourceFileName to \a targetFileName, both within the remote device.
      *
-     * Possible errors: PendingCall::InvalidArguments, PendingCall::Failed
+     * Possible errors:
      *
-     * @param sourceFileName source file within the remote device
-     * @param targetFileName target file within the remote device
-     * @return void pending call
+     * \list
+     * \li PendingCall::InvalidArguments
+     * \li PendingCall::Failed
+     * \endlist
+     *
+     * Returns void pending call.
      */
     PendingCall *moveFile(const QString &sourceFileName, const QString &targetFileName);
 
     /*!
-     * Deletes a file/folder within the remote device.
+     * Deletes a file/folder at \a fileName within the remote device.
      *
-     * Possible errors: PendingCall::InvalidArguments, PendingCall::Failed
+     * Possible errors:
      *
-     * @param fileName file within the remote device
-     * @return void pending call
+     * \list
+     * \li PendingCall::InvalidArguments
+     * \li PendingCall::Failed
+     * \endlist
+     *
+     * Returns void pending call.
      */
     PendingCall *deleteFile(const QString &fileName);
 

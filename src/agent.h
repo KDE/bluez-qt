@@ -22,26 +22,34 @@ namespace BluezQt
 class Device;
 
 /*!
- * @class BluezQt::Agent agent.h <BluezQt/Agent>
- *
- * Bluetooth agent.
+ * \inmodule BluezQt
+ * \class BluezQt::Agent
+ * \inheaderfile BluezQt/Agent
+ * \brief Bluetooth agent.
  *
  * This class represents a Bluetooth agent.
  *
  * The agent is used in pairing process to do various actions.
  *
- * @note The return value of requests will be sent asynchronously with Request class.
+ * \note The return value of requests will be sent asynchronously with Request class.
  *       It is also possible to cancel/reject all requests.
  */
 class BLUEZQT_EXPORT Agent : public QObject
 {
     Q_OBJECT
 
+    /*!
+     * \property BluezQt::Agent::capability
+     */
     Q_PROPERTY(Capability capability READ capability)
 
 public:
     /*!
      * The input/output capabilities of Agent.
+     * \value DisplayOnly
+     * \value DisplayYesNo
+     * \value KeyboardOnly
+     * \value NoInputNoOutput
      */
     enum Capability {
         DisplayOnly = 0,
@@ -52,29 +60,21 @@ public:
     Q_ENUM(Capability)
 
     /*!
-     * Creates a new Agent object.
-     *
-     * @param parent
+     * Creates a new Agent object as a child of \a parent.
      */
     explicit Agent(QObject *parent = nullptr);
 
     /*!
-     * D-Bus object path of the agent.
+     * Returns the D-Bus object path where the agent will be registered.
      *
-     * The path where the agent will be registered.
-     *
-     * @note You must provide valid object path!
-     *
-     * @return object path of agent
+     * \note You must provide valid object path!
      */
     virtual QDBusObjectPath objectPath() const = 0;
 
     /*!
-     * Input/output capability of the agent.
+     * Returns the input/output capability of the agent.
      *
      * By default, this method returns DisplayYesNo.
-     *
-     * @return capability of agent
      */
     virtual Capability capability() const;
 
@@ -87,8 +87,9 @@ public:
      * The return value should be a string of 1-16 characters
      * length. The string can be alphanumeric.
      *
-     * @param device device that invoked the action
-     * @param request request to be used for sending reply
+     * \a device The device that invoked the action.
+     *
+     * \a request The request to be used for sending reply.
      */
     virtual void requestPinCode(DevicePtr device, const Request<QString> &request);
 
@@ -101,8 +102,9 @@ public:
      * When the PIN code needs no longer to be displayed,
      * the cancel() method will be called.
      *
-     * @param device device that invoked the action
-     * @param pinCode PIN code to be displayed
+     * \a device The device that invoked the action.
+     *
+     * \a pinCode The PIN code to be displayed.
      */
     virtual void displayPinCode(DevicePtr device, const QString &pinCode);
 
@@ -114,8 +116,9 @@ public:
      *
      * The return value should be a numeric value between 0-999999.
      *
-     * @param device device that invoked the action
-     * @param request request to be used for sending reply
+     * \a device The device that invoked the action.
+     *
+     * \a request The request to be used for sending a reply.
      */
     virtual void requestPasskey(DevicePtr device, const Request<quint32> &request);
 
@@ -128,9 +131,11 @@ public:
      * When the passkey needs no longer to be displayed,
      * the cancel() method will be called.
      *
-     * @param device device that invoked the action
-     * @param passkey passkey to be displayed
-     * @param entered number of already typed keys on the remote side
+     * \a device The device that invoked the action.
+     *
+     * \a passkey The passkey to be displayed.
+     *
+     * \a entered The number of already typed keys on the remote side.
      */
     virtual void displayPasskey(DevicePtr device, const QString &passkey, const QString &entered);
 
@@ -140,9 +145,11 @@ public:
      * This method gets called when the Bluetooth daemon
      * needs to confirm a passkey for an authentication.
      *
-     * @param device device that invoked the action
-     * @param passkey passkey to be confirmed
-     * @param request request to be used for sending reply
+     * \a device The device that invoked the action.
+     *
+     * \a passkey The passkey to be confirmed.
+     *
+     * \a request The request to be used for sending reply.
      */
     virtual void requestConfirmation(DevicePtr device, const QString &passkey, const Request<> &request);
 
@@ -153,8 +160,9 @@ public:
      * an incoming pairing attempt which would in other circumstances
      * trigger the just-works model.
      *
-     * @param device device that invoked the action
-     * @param request request to be used for sending reply
+     * \a device The device that invoked the action.
+     *
+     * \a request The request to be used for sending reply.
      */
     virtual void requestAuthorization(DevicePtr device, const Request<> &request);
 
@@ -164,9 +172,11 @@ public:
      * This method gets called when the Bluetooth daemon
      * needs to authorize a connection/service request.
      *
-     * @param device device that invoked the action
-     * @param uuid UUID of service
-     * @param request request to be used for sending reply
+     * \a device The device that invoked the action.
+     *
+     * \a uuid The UUID of the service.
+     *
+     * \a request The request to be used for sending a reply.
      */
     virtual void authorizeService(DevicePtr device, const QString &uuid, const Request<> &request);
 

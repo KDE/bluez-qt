@@ -20,12 +20,25 @@ namespace BluezQt
 {
 struct RfkillPrivate;
 
+/*!
+ * \inmodule BluezQt
+ * \class BluezQt::Rfkill
+ * \inheaderfile BluezQt/Rfkill
+ */
 class BLUEZQT_EXPORT Rfkill : public QObject
 {
     Q_OBJECT
+    /*! \property BluezQt::Rfkill::state */
     Q_PROPERTY(State state READ state NOTIFY stateChanged)
 
 public:
+    /*!
+     * \enum BluezQt::Rfkill::State
+     * \value Unblocked
+     * \value SoftBlocked
+     * \value HardBlocked
+     * \value Unknown
+     */
     enum State {
         Unblocked = 0,
         SoftBlocked = 1,
@@ -34,14 +47,25 @@ public:
     };
     Q_ENUM(State)
 
+    /*!
+     */
     explicit Rfkill(QObject *parent = nullptr);
+
     ~Rfkill() override;
 
+    /*!
+     */
     State state() const;
+    /*!
+     */
     void block();
+    /*!
+     */
     void unblock();
 
 Q_SIGNALS:
+    /*!
+     */
     void stateChanged(State state);
 
 private Q_SLOTS:

@@ -5,7 +5,5 @@
     \cmakepackage KF6
     \cmakecomponent BluezQt
 
-    \brief IO.
-
-    Stuff
+    \brief Qt wrapper for BlueZ 5 DBus API.
 */

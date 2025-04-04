@@ -19,35 +19,32 @@ namespace BluezQt
 {
 class GattService;
 
+/*!
+ * \inmodule BluezQt
+ * \class BluezQt::GattCharacteristic
+ * \inheaderfile BluezQt/GattCharacteristic
+ */
 class BLUEZQT_EXPORT GattCharacteristic : public QObject
 {
     Q_OBJECT
 
 public:
     /*!
-     * Creates a new GattCharacteristic object.
+     * Creates a new GattCharacteristic object with the given \a uuid and a parent \a service.
      *
      * This constructor creates a characteristic with the Read and Write flags set.
-     *
-     * @param uuid The UUID of the characteristic.
-     * @param service The parent service.
      */
     explicit GattCharacteristic(const QString &uuid, GattService *service);
 
     /*!
-     * Creates a new GattCharacteristic object.
+     * Creates a new GattCharacteristic object with the given \a uuid and a parent \a service.
      *
-     * @param uuid The UUID of the characteristic.
-     * @param flags Flags indicating the characteristic usage.
-     * @param service The parent service.
+     * The \a flags can be used to indicate the characteristic usage.
      *
-     * @since 6.0
+     * \since 6.0
      */
     GattCharacteristic(const QString &uuid, const QStringList &flags, GattService *service);
 
-    /*!
-     * Destroys a GattCharacteristic object.
-     */
     ~GattCharacteristic() override;
 
     /*!
@@ -56,77 +53,63 @@ public:
     QByteArray readValue();
 
     /*!
-     * Writes the value of the characteristic.
+     * Writes the \a value of the characteristic.
      */
     void writeValue(const QByteArray &value);
 
     /*!
-     * Provide a read callback to operate in *pull* mode.
+     * Provide a read \a callback to operate in \e pull mode.
      */
     using ReadCallback = std::function<QByteArray()>;
     void setReadCallback(ReadCallback callback);
 
     /*!
-     * 128-bit GATT characteristic UUID.
-     *
-     * @return uuid of characteristic
+     * Returns the 128-bit GATT characteristic UUID.
      */
     QString uuid() const;
 
     /*!
      * The GATT service the characteristic belongs to.
-     *
-     * @return service this characteristic belongs to
      */
     const GattService *service() const;
 
     /*!
-     * The flags of this characteristic.
-     *
-     * @return flags associated with this characteristic
-     *
-     * @since 6.0
+     * Returns flags associated with this characteristic.
+     * \since 6.0
      */
     QStringList flags() const;
 
     /*!
      * Enables notifications for this characteristic, if supported. Does nothing otherwise.
-     *
-     * @since 6.0
+     * \since 6.0
      */
     void startNotify();
 
     /*!
      * Disables notifications for this characteristic.
-     *
-     * @since 6.0
+     * \since 6.0
      */
     void stopNotify();
 
     /*!
      * Indicates if this characteristic currently has notifications enabled.
-     *
-     * @return True if notifications are enabled, false otherwise
-     *
-     * @since 6.0
+     * \since 6.0
      */
     bool isNotifying() const;
 
 Q_SIGNALS:
     /*!
-     * Indicates that a value was written.
+     * Indicates that a \a value was written.
      */
     void valueWritten(const QByteArray &value);
 
 protected:
     /*!
-     * D-Bus object path of the GattCharacteristic.
+     * Returns the D-Bus object path of the GattCharacteristic.
      *
      * The path where the GattCharacteristic will be registered.
      *
-     * @note You must provide valid object path!
-     *
-     * @return object path of GattCharacteristic
+     * \note You must provide valid object path!
      */
     virtual QDBusObjectPath objectPath() const;
 

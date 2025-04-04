@@ -21,9 +21,10 @@ class QDBusObjectPath;
 namespace BluezQt
 {
 /*!
- * @class BluezQt::MediaEndpoint MediaEndpoint.h <BluezQt/MediaEndpoint>
- *
- * Bluetooth MediaEndpoint.
+ * \inmodule BluezQt
+ * \class BluezQt::MediaEndpoint
+ * \inheaderfile BluezQt/MediaEndpoint
+ * \brief Bluetooth MediaEndpoint.
  *
  * This class represents a Bluetooth MediaEndpoint.
  */
@@ -32,14 +33,24 @@ class BLUEZQT_EXPORT MediaEndpoint : public QObject
     Q_OBJECT
 
 public:
-    /*! Role which this MediaEndpoint acts as. */
+    /*!
+     * \enum BluezQt::MediaEndpoint::Role
+     * \brief Role which this MediaEndpoint acts as.
+     * \value AudioSource
+     * \value AudioSink
+     */
     enum class Role {
         AudioSource,
         AudioSink,
     };
 
     // KF6 TODO: use types from mediatypes.h
-    /*! Codec which this MediaEndpoint supports. */
+    /*!
+     * \enum BluezQt::MediaEndpoint::Codec
+     * \brief Codec which this MediaEndpoint supports.
+     * \value Sbc
+     * \value Aac
+     */
     enum class Codec {
         Sbc,
         Aac,
@@ -52,56 +63,43 @@ public:
     };
 
     /*!
-     * Creates a new MediaEndpoint object.
-     *
-     * @param parent
+     * Creates a new MediaEndpoint object with the given \a configuration
+     * as a child of \a parent.
      */
     explicit MediaEndpoint(const Configuration &configuration, QObject *parent = nullptr);
 
-    /*!
-     * Destroys a MediaEndpoint object.
-     */
     ~MediaEndpoint() override;
 
     /*!
-     * D-Bus object path of the MediaEndpoint.
+     * Returns the D-Bus object path of the MediaEndpoint.
      *
      * The path where the MediaEndpoint will be registered.
      *
-     * @note You must provide valid object path!
-     *
-     * @return object path of MediaEndpoint
+     * \note You must provide valid object path!
      */
     virtual QDBusObjectPath objectPath() const;
 
     /*!
-     * Properties of the endpoint.
-     *
-     * @return Properties of the endpoint
+     * Returns the properties of the endpoint.
      */
     virtual const QVariantMap &properties() const;
 
     /*!
-     * Set configuration for the transport.
-     *
-     * @param transport transport to be configured
-     * @param properties properties to be set for transport
+     * Set configuration for the transport at the \a transportObjectPath
+     * with the given \a properties.
      */
     virtual void setConfiguration(const QString &transportObjectPath, const QVariantMap &properties);
 
     /*!
-     * Select preferable configuration from the supported capabilities.
+     * Select preferable configuration from the supported \a capabilities with a \a request to be used for sending the reply.
      *
-     * @note There is no need to cache the selected configuration since on success
+     * \note There is no need to cache the selected configuration since on success
      *       the configuration is send back as parameter of SetConfiguration.
-     *
-     * @param capabilities supported capabilities
-     * @param request request to be used for sending reply
      */
     virtual void selectConfiguration(const QByteArray &capabilities, const Request<QByteArray> &request);
 
     /*!
-     * Clear transport configuration.
+     * Clear the transport configuration at \a transportObjectPath.
      */
     virtual void clearConfiguration(const QString &transportObjectPath);
 
@@ -111,7 +109,7 @@ public:
      * This method gets called when the Bluetooth daemon
      * unregisters the MediaEndpoint.
      *
-     * An MediaEndpoint can use it to do cleanup tasks. There is no need
+     * A MediaEndpoint can use it to do cleanup tasks. There is no need
      * to unregister the MediaEndpoint, because when this method gets called
      * it has already been unregistered.
      */
@@ -119,17 +117,17 @@ public:
 
 Q_SIGNALS:
     /*!
-     * Indicates that configuration was selected.
+     * Indicates that the configuration was selected.
      */
     void configurationSelected(const QByteArray &capabilities, const QByteArray &configuration);
 
     /*!
-     * Indicates that configuration was set for transport.
+     * Indicates that the configuration was set for transport.
      */
     void configurationSet(const QString &transportObjectPath, const QVariantMap &properties);
 
     /*!
-     * Indicates that configuration was cleared for transport.
+     * Indicates that the configuration was cleared for transport.
      */
     void configurationCleared(const QString &transportObjectPath);
 

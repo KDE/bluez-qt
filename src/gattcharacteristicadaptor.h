@@ -21,6 +21,7 @@ class GattCharacteristicAdaptor : public QDBusAbstractAdaptor
 {
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.bluez.GattCharacteristic1")
+
     Q_PROPERTY(QString UUID READ uuid)
     Q_PROPERTY(QDBusObjectPath Service READ service)
     Q_PROPERTY(QStringList Flags READ flags)

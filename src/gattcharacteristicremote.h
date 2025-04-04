@@ -22,126 +22,110 @@ class GattServiceRemote;
 class PendingCall;
 
 /*!
- * @class BluezQt::GattCharacteristicRemote gattcharacteristicremote.h <BluezQt/GattCharacteristicRemote>
+ * \inmodule BluezQt
+ * \class BluezQt::GattCharacteristicRemote
+ * \inheaderfile BluezQt/GattCharacteristicRemote
  *
- * Bluetooth LE GATT characteristic.
+ * \brief Bluetooth LE GATT characteristic.
  *
  * This class represents a Bluetooth LE GATT characteristic for the clients.
  */
 class BLUEZQT_EXPORT GattCharacteristicRemote : public QObject
 {
     Q_OBJECT
+    /*! \property BluezQt::GattCharacteristicRemote::ubi */
     Q_PROPERTY(QString ubi READ ubi CONSTANT)
+    /*! \property BluezQt::GattCharacteristicRemote::uuid */
     Q_PROPERTY(QString uuid READ uuid NOTIFY uuidChanged)
+    /*! \property BluezQt::GattCharacteristicRemote::value */
     Q_PROPERTY(QByteArray value READ value NOTIFY valueChanged)
+    /*! \property BluezQt::GattCharacteristicRemote::writeAcquired */
     Q_PROPERTY(bool writeAcquired READ isWriteAcquired NOTIFY writeAcquiredChanged)
+    /*! \property BluezQt::GattCharacteristicRemote::notifyAcquired */
     Q_PROPERTY(bool notifyAcquired READ isNotifyAcquired NOTIFY notifyAcquiredChanged)
+    /*! \property BluezQt::GattCharacteristicRemote::notifying */
     Q_PROPERTY(bool notifying READ isNotifying NOTIFY notifyingChanged)
+    /*! \property BluezQt::GattCharacteristicRemote::flags */
     Q_PROPERTY(QStringList flags READ flags NOTIFY flagsChanged)
+    /*! \property BluezQt::GattCharacteristicRemote::handle */
     Q_PROPERTY(quint16 handle READ handle NOTIFY handleChanged)
+    /*! \property BluezQt::GattCharacteristicRemote::MTU */
     Q_PROPERTY(quint16 MTU READ MTU NOTIFY MTUChanged)
+    /*! \property BluezQt::GattCharacteristicRemote::service */
     Q_PROPERTY(GattServiceRemotePtr service READ service CONSTANT)
+    /*! \property BluezQt::GattCharacteristicRemote::descriptors */
     Q_PROPERTY(QList<GattDescriptorRemotePtr> descriptors READ descriptors NOTIFY descriptorsChanged)
 
-
 public:
-    /*!
-     * Destroys a GattCharacteristic object.
-     */
     ~GattCharacteristicRemote() override;
 
     /*!
      * Returns a shared pointer from this.
-     *
-     * @return DevicePtr
      */
     GattCharacteristicRemotePtr toSharedPtr() const;
 
     /*!
-     * Returns an UBI of the GATT characteristic.
+     * Returns the UBI of the GATT characteristic.
      *
      * Example UBI: "/org/bluez/hci0/dev_40_79_6A_0C_39_75"
-     *
-     * @return UBI of device
      */
     QString ubi() const;
 
     /*!
-     * Returns an uuid of the characteristic.
-     *
-     * @return uuid of the characteristic
+     * Returns the UUID of the characteristic.
      */
     QString uuid() const;
 
     /*!
-     * Returns an value of the characteristic.
-     *
-     * @return value of the characteristic
+     * Returns the value of the characteristic.
      */
     QByteArray value() const;
 
     /*!
-     * Returns whether writeAcquired for the characteristic.
-     *
-     * @return true if write is acquired
+     * Returns whether writeAcquired() is \c true for the characteristic.
      */
     bool isWriteAcquired() const;
 
     /*!
-     * Returns whether notifyAcquired for the characteristic.
-     *
-     * @return true if notify is acquired
+     * Returns whether notifyAcquired() is \c true for the characteristic.
      */
     bool isNotifyAcquired() const;
 
     /*!
      * Returns whether the characteristic is notifying.
-     *
-     * @return true if notifying
      */
     bool isNotifying() const;
 
     /*!
-     * Returns flags the characteristic.
-     *
-     * @return flags of characteristic
+     * Returns the characteristic's flags.
      */
     QStringList flags() const;
 
     /*!
-     * Returns characteristic handle.
-     *
-     * @return qint16 characteristic handle
+     * Returns the characteristic's handle.
      */
     quint16 handle() const;
 
     /*!
-     * Sets the characteristic handle.
+     * Sets the characteristic's \a handle.
      *
-     * @param handle characteristic handle
-     * @return void pending call
+     * Returns void pending call.
      */
     PendingCall *setHandle(quint16 handle);
 
     /*!
-     * Returns characteristic MTU.
-     *
-     * @return qint16 characteristic MTU
+     * Returns the characteristic's MTU.
      */
     quint16 MTU() const;
 
     /*!
      * Returns a service that owns that characteristic.
-     *
-     * @return service of characteristic
      */
     GattServiceRemotePtr service() const;
 
     /*!
      * Returns object paths representing the included
      * services of this service.
-     *
-     * @return Object paths of included services
      */
     QList<GattDescriptorRemotePtr> descriptors() const;
 
@@ -152,10 +136,16 @@ public Q_SLOTS:
      * Issues a request to read the value of the characteristic and
      * returns the value if the	operation was successful.
      *
-     * Possible errors: PendingCall::NotReady, PendingCall::Failed,
-     *                  PendingCall::InProgress, PendingCall::AlreadyConnected
+     * Possible errors:
      *
-     * @return QByteArray pending call
+     * \list
+     * \li PendingCall::NotReady
+     * \li PendingCall::Failed
+     * \li PendingCall::InProgress
+     * \li PendingCall::AlreadyConnected
+     * \endlist
+     *
+     * Returns QByteArray pending call.
      */
     PendingCall *readValue(const QVariantMap &options);
 
@@ -164,10 +154,16 @@ public Q_SLOTS:
      *
      * Issues a request to write the value of the characteristic.
      *
-     * Possible errors: PendingCall::NotReady, PendingCall::Failed,
-     *                  PendingCall::InProgress, PendingCall::AlreadyConnected
+     * Possible errors:
      *
-     * @return void pending call
+     * \list
+     * \li PendingCall::NotReady
+     * \li PendingCall::Failed
+     * \li PendingCall::InProgress
+     * \li PendingCall::AlreadyConnected
+     * \endlist
+     *
+     * Returns void pending call.
      */
     PendingCall *writeValue(const QByteArray &value, const QVariantMap &options);
 
@@ -177,10 +173,16 @@ public Q_SLOTS:
      * Starts a notification session from this characteristic if it supports
      * value notifications or indications.
      *
-     * Possible errors: PendingCall::NotReady, PendingCall::Failed,
-     *                  PendingCall::InProgress, PendingCall::AlreadyConnected
+     * Possible errors:
      *
-     * @return void pending call
+     * \list
+     * \li PendingCall::NotReady
+     * \li PendingCall::Failed
+     * \li PendingCall::InProgress
+     * \li PendingCall::AlreadyConnected
+     * \endlist
+     *
+     * Returns void pending call.
      */
     PendingCall *startNotify();
 
@@ -191,10 +193,16 @@ public Q_SLOTS:
      * Note that notifications from a characteristic are shared between
      * sessions thus calling StopNotify will release a single session.
      *
-     * Possible errors: PendingCall::NotReady, PendingCall::Failed,
-     *                  PendingCall::InProgress, PendingCall::AlreadyConnected
+     * Possible errors:
      *
-     * @return void pending call
+     * \list
+     * \li PendingCall::NotReady
+     * \li PendingCall::Failed
+     * \li PendingCall::InProgress
+     * \li PendingCall::AlreadyConnected
+     * \endlist
+     *
+     * Returns void pending call.
      */
     PendingCall *stopNotify();
 
@@ -204,76 +212,82 @@ public Q_SLOTS:
      * This method doesn't expect a reply so it is just a confirmation
      * that value was received.
      *
-     * Possible errors: PendingCall::NotReady, PendingCall::Failed,
-     *                  PendingCall::InProgress, PendingCall::AlreadyConnected
+     * Possible errors:
      *
-     * @return void pending call
+     * \list
+     * \li PendingCall::NotReady
+     * \li PendingCall::Failed
+     * \li PendingCall::InProgress
+     * \li PendingCall::AlreadyConnected
+     * \endlist
+     *
+     * Returns void pending call.
      */
     PendingCall *confirm();
 
 Q_SIGNALS:
     /*!
-     * Indicates that at least one of the characteristic's properties have changed.
+     * Indicates that at least one of the \a characteristic's properties has changed.
      */
     void characteristicChanged(GattCharacteristicRemotePtr characteristic);
 
     /*!
-     * Indicates that a new descriptor was added (eg. found by connection).
+     * Indicates that a new \a descriptor was added (eg. found by connection).
      */
     void gattDescriptorAdded(GattDescriptorRemotePtr descriptor);
 
     /*!
-     * Indicates that characteristic descriptors list has changed
+     * Indicates that the characteristic's \a descriptors list has changed.
      */
     void descriptorsChanged(QList<GattDescriptorRemotePtr> descriptors);
 
     /*!
-     * Indicates that a descriptor was removed.
+     * Indicates that a \a descriptor was removed.
      */
     void gattDescriptorRemoved(GattDescriptorRemotePtr descriptor);
 
     /*!
-     * Indicates that at least one of the descriptor's properties have changed.
+     * Indicates that at least one of the \a descriptor properties has changed.
      */
     void gattDescriptorChanged(GattDescriptorRemotePtr descriptor);
 
     /*!
-     * Indicates that characteristic's uuid have changed.
+     * Indicates that the characteristic's \a uuid has changed.
      */
     void uuidChanged(const QString &uuid);
 
     /*!
-     * Indicates that characteristic's value have changed.
+     * Indicates that the characteristic's \a value has changed.
      */
     void valueChanged(const QByteArray value);
 
     /*!
-     * Indicates that characteristic's writeAcquired state have changed.
+     * Indicates that the characteristic's \a writeAcquired state has changed.
      */
     void writeAcquiredChanged(bool writeAcquired);
 
     /*!
-     * Indicates that characteristic's notifyAcquired state have changed.
+     * Indicates that the characteristic's \a notifyAcquired state has changed.
      */
     void notifyAcquiredChanged(bool notifyAcquired);
 
     /*!
-     * Indicates that characteristic's notifying state have changed.
+     * Indicates that the characteristic's \a notifying state has changed.
      */
     void notifyingChanged(bool notifying);
 
     /*!
-     * Indicates that characteristic's flags have changed.
+     * Indicates that the characteristic's \a flags has changed.
      */
     void flagsChanged(QStringList flags);
 
     /*!
-     * Indicates that characteristic's handle have changed.
+     * Indicates that the characteristic's handle has changed.
      */
     void handleChanged(quint16 handle);
 
     /*!
-     * Indicates that characteristic's MTU have changed.
+     * Indicates that the characteristic's \a MTU have changed.
      */
     void MTUChanged(quint16 MTU);
 

@@ -21,9 +21,10 @@ class MediaEndpoint;
 class PendingCall;
 
 /*!
- * @class BluezQt::Media Media.h <BluezQt/Media>
- *
- * Bluetooth Media.
+ * \inmodule BluezQt
+ * \class BluezQt::Media
+ * \inheaderfile BluezQt/Media
+ * \brief Bluetooth Media.
  *
  * This allows media endpoints to be established in accordance with the
  * capabilities of a specific media service profile.
@@ -35,37 +36,37 @@ class PendingCall;
  * implements the required behaviours of the endpoint. The service object
  * must be created at a given path before it is registered.
  *
- * @see MediaEndpoint
+ * \sa MediaEndpoint
  */
 class BLUEZQT_EXPORT Media : public QObject
 {
     Q_OBJECT
 
 public:
-    /*!
-     * Destroys a Media object.
-     */
     ~Media() override;
 
     /*!
-     * Registers endpoint.
+     * Registers an \a endpoint.
      *
      * Register a local end point to sender, the sender can register as many end points as it likes.
      *
-     * Note: If the sender disconnects the end points are automatically unregistered.
+     * \note If the sender disconnects the end points are automatically unregistered.
      *
-     * Possible errors: PendingCall::InvalidArguments, PendingCall::NotSupported
+     * Possible errors:
      *
-     * @param endpoint endpoint to be registered
-     * @return void pending call
+     * \list
+     * \li PendingCall::InvalidArguments
+     * \li PendingCall::NotSupported
+     * \endlist
+     *
+     * Returns void pending call.
      */
     PendingCall *registerEndpoint(MediaEndpoint *endpoint);
 
     /*!
-     * Unregisters endpoint.
+     * Unregisters an \a endpoint.
      *
-     * @param endpoint endpoint to be unregistered
-     * @return void pending call
+     * Returns void pending call.
      */
     PendingCall *unregisterEndpoint(MediaEndpoint *endpoint);
 

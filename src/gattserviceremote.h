@@ -23,9 +23,10 @@ class Device;
 class PendingCall;
 
 /*!
- * @class BluezQt::GattService gattservice.h <BluezQt/GattService>
- *
- * Bluetooth LE GATT service.
+ * \inmodule BluezQt
+ * \class BluezQt::GattService
+ * \inheaderfile BluezQt/GattService
+ * \brief Bluetooth LE GATT service.
  *
  * This class represents a Bluetooth LE GATT service.
  */
@@ -33,131 +34,119 @@ class BLUEZQT_EXPORT GattServiceRemote : public QObject
 {
     Q_OBJECT
 
+    /*! \property BluezQt::GattService::uuid */
     Q_PROPERTY(QString uuid READ uuid NOTIFY uuidChanged)
+    /*! \property BluezQt::GattService::primary */
     Q_PROPERTY(bool primary READ isPrimary NOTIFY primaryChanged)
+    /*! \property BluezQt::GattService::device */
     Q_PROPERTY(DevicePtr device READ device CONSTANT)
+    /*! \property BluezQt::GattService::includes */
     Q_PROPERTY(QList<QDBusObjectPath> includes READ includes NOTIFY includesChanged)
+    /*! \property BluezQt::GattService::handle */
     Q_PROPERTY(quint16 handle READ handle WRITE setHandle NOTIFY handleChanged)
+    /*! \property BluezQt::GattService::characteristics */
     Q_PROPERTY(QList<GattCharacteristicRemotePtr> characteristics READ characteristics NOTIFY characteristicsChanged)
 
 public:
-    /*!
-     * Destroys a GattService object.
-     */
     ~GattServiceRemote() override;
 
     /*!
      * Returns a shared pointer from this.
-     *
-     * @return GattServicePtr
      */
     GattServiceRemotePtr toSharedPtr() const;
 
     /*!
-     * Returns an UBI of the gatt service.
+     * Returns the UBI of the gatt service.
      *
      * Example UBI: "/org/bluez/hci0/dev_40_79_6A_0C_39_75/service01"
-     *
-     * @return UBI of gatt service
      */
     QString ubi() const;
 
     /*!
-     * Returns an uuid of the service.
-     *
-     * @return uuid of the service
+     * Returns the UUID of the service.
      */
     QString uuid() const;
 
     /*!
      * Returns whether the service is primary.
-     *
-     * @return true if service is primary
      */
     bool isPrimary() const;
 
     /*!
-     * Returns a device that has this service.
-     *
-     * @return device of service
+     * Returns the device that has this service.
      */
     DevicePtr device() const;
 
     /*!
      * Returns object paths representing the included
      * services of this service.
-     *
-     * @return Object paths of included services
      */
     QList<QDBusObjectPath> includes() const;
 
     /*!
      * Returns service handle.
      *
-     * @return qint16 service handle
+     * Returns qint16 service handle
      */
     quint16 handle() const;
 
     /*!
-     * Sets the service handle.
+     * Sets the service \a handle.
      *
-     * @param handle service handle
-     * @return void pending call
+     * Returns void pending call.
      */
     PendingCall *setHandle(quint16 handle);
 
     /*!
      * Returns object paths representing the included
      * services of this service.
-     *
-     * @return Object paths of included services
      */
     QList<GattCharacteristicRemotePtr> characteristics() const;
 
 Q_SIGNALS:
     /*!
-     * Indicates that at least one of the service's properties have changed.
+     * Indicates that at least one of the \a service's properties has changed.
      */
     void serviceChanged(GattServiceRemotePtr service);
 
     /*!
-     * Indicates that a new characteristic was added (eg. found by connection).
+     * Indicates that a new \a characteristic was added (eg. found by connection).
      */
     void gattCharacteristicAdded(GattCharacteristicRemotePtr characteristic);
 
     /*!
-     * Indicates that service characteristics list has changed
+     * Indicates that the service \a characteristics list has changed.
      */
     void characteristicsChanged(QList<GattCharacteristicRemotePtr> characteristics);
 
     /*!
-     * Indicates that a characteristic was removed.
+     * Indicates that a \a characteristic was removed.
      */
     void gattCharacteristicRemoved(GattCharacteristicRemotePtr characteristic);
 
     /*!
-     * Indicates that at least one of the characteristic's properties have changed.
+     * Indicates that at least one of the \a characteristic's properties has changed.
      */
     void gattCharacteristicChanged(GattCharacteristicRemotePtr characteristic);
 
     /*!
-     * Indicates that services's uuid have changed.
+     * Indicates that the service's \a uuid has changed.
      */
     void uuidChanged(const QString &uuid);
 
     /*!
-     * Indicates that services's primary state have changed.
+     * Indicates that the services's \a primary state has changed.
      */
     void primaryChanged(bool primary);
 
     /*!
-     * Indicates that services's handle have changed.
+     * Indicates that the services's \a handle has changed.
      */
     void handleChanged(quint16 handle);
 
     /*!
-     * Indicates that object paths representing the included
-     * services have changed.
+     * Indicates that the object paths representing the included
+     * services \a includes have changed.
      */
     void includesChanged(const QList<QDBusObjectPath> &includes);
 
