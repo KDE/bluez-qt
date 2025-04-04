@@ -1,6 +1,8 @@
 /*!
-    \page bluez-qt-index.html
+    \page bluezqt-index.html
     \title BluezQt
+
+    Qt wrapper for BlueZ 5 DBus API
 
     \section1 Using the Module
 
@@ -8,15 +10,11 @@
 
     \section2 Building with CMake
 
-    \include {module-use.qdocinc} {building with cmake} {Widgets}
+    \include {module-use.qdocinc} {building with cmake} {KF6} {BluezQt} {KF6::BluezQt}
 
     \section1 API Reference
 
     \list
         \li \l{BluezQt C++ Classes}
     \endlist
-
-    \section1 Licenses
-
-    TODO
 */

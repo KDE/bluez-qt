@@ -22,11 +22,13 @@ namespace BluezQt
 class GattCharacteristic;
 
 /*!
- * Bluetooth GATT Descriptor
+ * \inmodule BluezQt
+ * \class BluezQt::GattDescriptor
+ * \inheaderfile BluezQt/GattDescriptor
+ * \brief Bluetooth GATT Descriptor.
  *
  * GATT Descriptors contain additional information and attributes of a GATT characteristic.
-
- * @since 6.0
+ * \since 6.0
  */
 class BLUEZQT_EXPORT GattDescriptor : public QObject
 {
@@ -34,82 +36,59 @@ class BLUEZQT_EXPORT GattDescriptor : public QObject
 
 public:
     /*!
-     * Convenience method to create a User Description for the given charactersitic.
+     * Convenience method to create a User Description
+     * \a description for the given \a charactersitic.
      *
-     * @param description The User Description the characteristic should have
-     * @param characteristic The characteristic to assign the descriptor to
-     * @return A pointer to the created descriptor
+     * Returns A pointer to the created descriptor.
      */
     static GattDescriptor *createUserDescription(const QString &description, GattCharacteristic *characteristic);
 
     /*!
-     * Creates a GattDescriptor with the given UUID.
-     *
-     * @param uuid UUID of the descriptor
-     * @param parent Parent characteristic
+     * Creates a GattDescriptor with the given \a uuid as a child of a \a parent characteristic.
      */
     GattDescriptor(const QString &uuid, GattCharacteristic *parent);
 
     /*!
-     * Creates a GattDescriptor with the given UUID and flags.
-     *
-     * @param uuid UUID of the descriptor
-     * @param flags The flags of the descriptor
-     * @param parent Parent characteristic
+     * Creates a GattDescriptor with the given \a uuid and \a flags as a child of a \a parent characteristic.
      */
     GattDescriptor(const QString &uuid, const QStringList &flags, GattCharacteristic *parent);
 
     /*!
-     * Creates a GattDescriptor with the given UUID, flags and initial value.
-     *
-     * @param uuid UUID of the descriptor
-     * @param flags The flags of the descriptor
-     * @param initialValue The value of the descriptor
-     * @param parent Parent characteristic
+     * Creates a GattDescriptor with the given \a uuid, \a flags
+     * and \a initialValue as a child of a \a parent characteristic.
      */
     GattDescriptor(const QString &uuid, const QStringList &flags, const QByteArray &initialValue, GattCharacteristic *parent);
 
-    /*!
-     * Destroys the GattDescriptor.
-     */
     ~GattDescriptor() override;
 
     /*!
      * Reads the current value of the descriptor.
-     *
-     * @return A QByteArray representing the current value
      */
     QByteArray readValue();
 
     /*!
-     * Writes the value of the descriptor.
-     *
-     * @param value A QByteArray representing the new value
+     * Writes the new \a value of the descriptor.
      */
     void writeValue(const QByteArray &value);
 
     /*!
      * Returns the UUID of the descriptor.
-     *
-     * @return A QString representing the UUID
      */
     QString uuid() const;
 
     /*!
-     * Return the DBus object path of the parent characteristic.
-     *
-     * @return A QDBusObjectPath representing the DBus object path
+     * Return the D-Bus object path of the parent characteristic.
      */
     QDBusObjectPath characteristic() const;
 
     /*!
      * Return the flags of the descriptor.
-     *
-     * @return A QStringList representing the flags
      */
     QStringList flags() const;
 
 protected:
+    /*!
+     */
     virtual QDBusObjectPath objectPath() const;
 
 private:

@@ -17,22 +17,29 @@
 namespace BluezQt
 {
 /*!
- * @class BluezQt::ObexFileTransferEntry obexfiletransferentry.h <BluezQt/ObexFileTransferEntry>
+ * \inmodule BluezQt
+ * \class BluezQt::ObexFileTransferEntry
+ * \inheaderfile BluezQt/ObexFileTransferEntry
+ * \brief OBEX file transfer entry.
  *
- * OBEX file transfer entry.
- *
- * This class represents an entry in remote file system.
+ * This class represents an entry in the remote file system.
  */
 class BLUEZQT_EXPORT ObexFileTransferEntry
 {
 public:
-    /*! Type of entry. */
+    /*!
+     * \enum BluezQt::ObexFileTransferEntry::Type
+     * \brief Type of entry.
+     * \value File
+     *        Indicates that the entry is a file.
+     * \value Folder
+     *        Indicates that the entry is a folder.
+     * \value Invalid
+     *        Indicates that the entry is invalid.
+     */
     enum Type {
-        /*! Indicates that the entry is a file. */
         File,
-        /*! Indicates that the entry is a folder. */
         Folder,
-        /*! Indicates that the entry is invalid. */
         Invalid,
     };
 
@@ -41,22 +48,15 @@ public:
      */
     explicit ObexFileTransferEntry();
 
-    /*!
-     * Destroys an ObexFileTransferEntry object.
-     */
     virtual ~ObexFileTransferEntry();
 
     /*!
-     * Copy constructor.
-     *
-     * @param other
+     * Constructs a new ObexFileTransferEntry object from \a other.
      */
     ObexFileTransferEntry(const ObexFileTransferEntry &other);
 
     /*!
-     * Copy assignment operator.
-     *
-     * @param other
+     * Copies the ObexFileTransferEntry object from \a other.
      */
     ObexFileTransferEntry &operator=(const ObexFileTransferEntry &other);
 
@@ -64,61 +64,45 @@ public:
      * Returns whether the entry is valid.
      *
      * This only checks if type() != Invalid.
-     *
-     * @return true if entry is valid
      */
     bool isValid() const;
 
     /*!
-     * Returns a name of the entry.
-     *
-     * @return name of entry
+     * Returns the name of the entry.
      */
     QString name() const;
 
     /*!
-     * Returns a label of the entry.
-     *
-     * @return label of entry
+     * Returns the label of the entry.
      */
     QString label() const;
 
     /*!
-     * Returns a type of the entry.
+     * Returns the type of the entry.
      *
-     * Entry can be either a file or folder.
-     *
-     * @return type of entry
+     * The entry can be either a file or folder.
      */
     Type type() const;
 
     /*!
-     * Returns a size of the entry.
+     * Returns the size of the entry.
      *
-     * Size is a number of items in the folder or file size in bytes.
-     *
-     * @return size of entry
+     * The size is a number of items in the folder or file size in bytes.
      */
     quint64 size() const;
 
     /*!
-     * Returns a permissions of the entry.
-     *
-     * @return permissions of entry
+     * Returns the permissions of the entry.
      */
     QString permissions() const;
 
     /*!
-     * Returns a memory type where the entry is stored.
-     *
-     * @return memory type
+     * Returns memory type where the entry is stored.
      */
     QString memoryType() const;
 
     /*!
-     * Returns a modification time of the entry.
-     *
-     * @return modification time of entry
+     * Returns the modification time of the entry.
      */
     QDateTime modificationTime() const;
 

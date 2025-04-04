@@ -22,9 +22,11 @@ class Adapter;
 class PendingCall;
 
 /*!
- * @class BluezQt::Device device.h <BluezQt/Device>
+ * \inmodule BluezQt
+ * \class BluezQt::Device
+ * \inheaderfile BluezQt/Device
  *
- * Bluetooth device.
+ * \brief Bluetooth device.
  *
  * This class represents a Bluetooth device.
  */
@@ -32,292 +34,290 @@ class BLUEZQT_EXPORT Device : public QObject
 {
     Q_OBJECT
 
+    /*! \property BluezQt::Device::ubi */
     Q_PROPERTY(QString ubi READ ubi)
+    /*! \property BluezQt::Device::address */
     Q_PROPERTY(QString address READ address NOTIFY addressChanged)
+    /*! \property BluezQt::Device::name */
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
+    /*! \property BluezQt::Device::friendlyName */
     Q_PROPERTY(QString friendlyName READ friendlyName NOTIFY friendlyNameChanged)
+    /*! \property BluezQt::Device::remoteName */
     Q_PROPERTY(QString remoteName READ remoteName NOTIFY remoteNameChanged)
+    /*! \property BluezQt::Device::deviceClass */
     Q_PROPERTY(quint32 deviceClass READ deviceClass NOTIFY deviceClassChanged)
+    /*! \property BluezQt::Device::type */
     Q_PROPERTY(Type type READ type NOTIFY typeChanged)
+    /*! \property BluezQt::Device::appearance */
     Q_PROPERTY(quint16 appearance READ appearance NOTIFY appearanceChanged)
+    /*! \property BluezQt::Device::icon */
     Q_PROPERTY(QString icon READ icon NOTIFY iconChanged)
+    /*! \property BluezQt::Device::paired */
     Q_PROPERTY(bool paired READ isPaired NOTIFY pairedChanged)
+    /*! \property BluezQt::Device::trusted */
     Q_PROPERTY(bool trusted READ isTrusted WRITE setTrusted NOTIFY trustedChanged)
+    /*! \property BluezQt::Device::blocked */
     Q_PROPERTY(bool blocked READ isBlocked WRITE setBlocked NOTIFY blockedChanged)
+    /*! \property BluezQt::Device::legacyPairing */
     Q_PROPERTY(bool legacyPairing READ hasLegacyPairing NOTIFY legacyPairingChanged)
+    /*! \property BluezQt::Device::rssi */
     Q_PROPERTY(qint16 rssi READ rssi NOTIFY rssiChanged)
+    /*! \property BluezQt::Device::manufacturerData */
     Q_PROPERTY(ManData manufacturerData READ manufacturerData NOTIFY manufacturerDataChanged)
+    /*! \property BluezQt::Device::servicesResolved */
     Q_PROPERTY(bool servicesResolved READ isServicesResolved NOTIFY servicesResolvedChanged)
+    /*! \property BluezQt::Device::connected */
     Q_PROPERTY(bool connected READ isConnected NOTIFY connectedChanged)
+    /*! \property BluezQt::Device::uuids */
     Q_PROPERTY(QStringList uuids READ uuids NOTIFY uuidsChanged)
+    /*! \property BluezQt::Device::modalias */
     Q_PROPERTY(QString modalias READ modalias NOTIFY modaliasChanged)
+    /*! \property BluezQt::Device::battery */
     Q_PROPERTY(BatteryPtr battery READ battery NOTIFY batteryChanged)
+    /*! \property BluezQt::Device::input */
     Q_PROPERTY(InputPtr input READ input NOTIFY inputChanged)
+    /*! \property BluezQt::Device::mediaPlayer */
     Q_PROPERTY(MediaPlayerPtr mediaPlayer READ mediaPlayer NOTIFY mediaPlayerChanged)
+    /*! \property BluezQt::Device::mediaTransport */
     Q_PROPERTY(MediaTransportPtr mediaTransport READ mediaTransport NOTIFY mediaTransportChanged)
+    /*! \property BluezQt::Device::adapter */
     Q_PROPERTY(AdapterPtr adapter READ adapter)
+    /*! \property BluezQt::Device::gattServices */
     Q_PROPERTY(QList<GattServiceRemotePtr> gattServices READ gattServices NOTIFY gattServicesChanged)
 
 public:
     /*!
-     * %Device types.
+     * Device types.
+     * \value Phone
+     *        The device is a phone.
+     * \value Modem
+     *        The device is a modem.
+     * \value Computer
+     *        The device is a computer.
+     * \value Network
+     *        The device is a computer.
+     * \value Headset
+     *        The device is a headset.
+     * \value Headphones
+     *        The device is a headphone.
+     * \value AudioVideo
+     *        The device is an uncategorized audio/video device.
+     * \value Keyboard
+     *        The device is a keyboard.
+     * \value Mouse
+     *        The device is a mouse.
+     * \value Joypad
+     *        The device is a joypad.
+     * \value Tablet
+     *        The device is a graphics tablet (input device).
+     * \value Peripheral
+     *        The device is an uncategorized peripheral device.
+     * \value Camera
+     *        The device is a camera.
+     * \value Printer
+     *        The device is a printer.
+     * \value Imaging
+     *        The device is an uncategorized imaging device.
+     * \value Wearable
+     *        The device is a wearable device.
+     * \value Toy
+     *        The device is a toy.
+     * \value Health
+     *        The device is a health device.
+     * \value Uncategorized
+     *        The device is not of any of the known types.
      */
     enum Type {
-        /*! The device is a phone. */
         Phone,
-        /*! The device is a modem. */
         Modem,
-        /*! The device is a computer. */
         Computer,
-        /*! The device is a network. */
         Network,
-        /*! The device is a headset. */
         Headset,
-        /*! The device is a headphones. */
         Headphones,
-        /*! The device is an uncategorized audio video device. */
         AudioVideo,
-        /*! The device is a keyboard. */
         Keyboard,
-        /*! The device is a mouse. */
         Mouse,
-        /*! The device is a joypad. */
         Joypad,
-        /*! The device is a graphics tablet (input device). */
         Tablet,
-        /*! The device is an uncategorized peripheral device. */
         Peripheral,
-        /*! The device is a camera. */
         Camera,
-        /*! The device is a printer. */
         Printer,
-        /*! The device is an uncategorized imaging device. */
         Imaging,
-        /*! The device is a wearable device. */
         Wearable,
-        /*! The device is a toy. */
         Toy,
-        /*! The device is a health device. */
         Health,
-        /*! The device is not of any of the known types. */
         Uncategorized,
     };
     Q_ENUM(Type)
 
-    /*!
-     * Destroys a Device object.
-     */
     ~Device() override;
 
     /*!
      * Returns a shared pointer from this.
-     *
-     * @return DevicePtr
      */
     DevicePtr toSharedPtr() const;
 
     /*!
-     * Returns an UBI of the device.
+     * Returns the UBI of the device.
      *
      * Example UBI: "/org/bluez/hci0/dev_40_79_6A_0C_39_75"
-     *
-     * @return UBI of device
      */
     QString ubi() const;
 
     /*!
-     * Returns an address of the device.
+     * Returns the address of the device.
      *
      * Example address: "40:79:6A:0C:39:75"
-     *
-     * @return address of device
      */
     QString address() const;
 
     /*!
-     * Returns a name of the device.
+     * Returns the name of the device.
      *
      * If the name of the device wasn't previously changed,
      * remoteName is returned.
-     *
-     * @return name of device
      */
     QString name() const;
 
     /*!
-     * Sets the name of the device.
+     * Sets the \a name of the device.
      *
-     * @param name name for device
-     * @return void pending call
+     * Returns a void pending call.
      */
     PendingCall *setName(const QString &name);
 
     /*!
-     * Returns a friendly name of the device.
+     * Returns the friendly name of the device.
      *
      * Friendly name is a string "name (remoteName)".
      * If the remoteName is same as name, it returns just name.
-     *
-     * @return friendly name of device
      */
     QString friendlyName() const;
 
     /*!
-     * Returns a remote name of the device.
-     *
-     * @return remote name of device
+     * Returns the remote name of the device.
      */
     QString remoteName() const;
 
     /*!
-     * Returns a class of the device.
+     * Returns the class of the device.
      *
      * In case of Bluetooth Low Energy only devices,
      * device class is invalid (0).
      *
-     * @see type() const
-     *
-     * @return class of device
+     * \sa type()
      */
     quint32 deviceClass() const;
 
     /*!
-     * Returns a type of the device.
+     * Returns the type of the device.
      *
      * Type of device is deduced from its class (for Bluetooth Classic devices)
      * or its appearance (for Bluetooth Low Energy devices).
      *
-     * @see deviceClass() const
-     * @see appearance() const
-     *
-     * @return type of device
+     * \sa deviceClass()
+     * \sa appearance()
      */
     Device::Type type() const;
 
     /*!
-     * Returns an appearance of the device.
-     *
-     * @return appearance of device
+     * Returns the appearance of the device.
      */
     quint16 appearance() const;
 
     /*!
-     * Returns an icon name of the device.
+     * Returns the icon name of the device.
      *
      * In case the icon is empty, "preferences-system-bluetooth" is returned.
-     *
-     * @return icon name of device
      */
     QString icon() const;
 
     /*!
      * Returns whether the device is paired.
-     *
-     * @return true if device is paired
      */
     bool isPaired() const;
 
     /*!
      * Returns whether the device is trusted.
-     *
-     * @return true if device is trusted
      */
     bool isTrusted() const;
 
     /*!
-     * Sets the trusted state of the device.
+     * Sets the \a trusted state of the device.
      *
-     * @param trusted trusted state
-     * @return void pending call
+     * Returns void pending call.
      */
     PendingCall *setTrusted(bool trusted);
 
     /*!
      * Returns whether the device is blocked.
-     *
-     * @return true if device is blocked
      */
     bool isBlocked() const;
 
     /*!
-     * Sets the blocked state of the device.
+     * Sets the \a blocked state of the device.
      *
-     * @param blocked blocked state
-     * @return void pending call
+     * Returns void pending call.
      */
     PendingCall *setBlocked(bool blocked);
 
     /*!
      * Returns whether the device has legacy pairing.
-     *
-     * @return true if device has legacy pairing
      */
     bool hasLegacyPairing() const;
 
     /*!
-     * Returns Received Signal Strength Indicator of the device.
+     * Returns the Received Signal Strength Indicator of the device.
      *
      * The bigger value indicates better signal strength.
      *
-     * @note RSSI is only updated during discovery.
-     *
-     * @return RSSI of device
+     * \note RSSI is only updated during discovery.
      */
     qint16 rssi() const;
 
     /*!
      * Returns manufacturer specific advertisement data.
      *
-     * @note Keys are 16 bits Manufacturer ID followed by
+     * \note Keys are 16 bits Manufacturer ID followed by
      * its byte array value.
-     *
-     * @return manufacturerData of device.
      */
     ManData manufacturerData() const;
 
     /*!
      * Returns whether or not service discovery has been resolved.
-     *
-     * @return true if servicesResolved
      */
     bool isServicesResolved() const;
 
     /*!
      * Returns whether the device is connected.
-     *
-     * @return true if connected
      */
     bool isConnected() const;
 
     /*!
-     * Returns UUIDs of supported services by the device.
+     * Returns UUIDs of services supported by the device.
      *
      * UUIDs will always be returned in uppercase.
-     *
-     * @return UUIDs of supported services
      */
     QStringList uuids() const;
 
     /*!
      * Returns remote device ID in modalias format.
-     *
-     * @return device modalias
      */
     QString modalias() const;
 
     /*!
      * Returns the service advertisement data.
      *
-     * @returns A hash with keys being the UUIDs in and values being the raw service data value.
-     * @since 5.72
+     * Returns a hash with keys being the UUIDs in and values being the raw service data value.
+     * \since 5.72
      */
     QHash<QString, QByteArray> serviceData() const;
 
     /*!
      * Returns the battery interface for the device.
      *
-     * @return null if device has no battery
-     * @since 5.66
+     * Returns null if device has no battery.
+     * \since 5.66
      */
     BatteryPtr battery() const;
 
@@ -326,7 +326,7 @@ public:
      *
      * Only input devices will have valid input interface.
      *
-     * @return null if device have no input
+     * Returns null if device has no input.
      */
     InputPtr input() const;
 
@@ -336,7 +336,7 @@ public:
      * Only devices with connected appropriate profile will
      * have valid media player interface.
      *
-     * @return null if device have no media player
+     * Returns null if device has no media player.
      */
     MediaPlayerPtr mediaPlayer() const;
 
@@ -346,36 +346,26 @@ public:
      * Only devices with connected appropriate profile will
      * have valid media transport interface.
      *
-     * @return null if device have no media transport
+     * Returns null if device has no media transport.
      */
     MediaTransportPtr mediaTransport() const;
 
     /*!
-     * Returns an adapter that discovered this device.
-     *
-     * @return adapter of device
+     * Returns the adapter that discovered this device.
      */
     AdapterPtr adapter() const;
 
     /*!
-     * Returns list of services known by the device.
-     *
-     * @return list of services
+     * Returns a list of services known by the device.
      */
     QList<GattServiceRemotePtr> gattServices() const;
     /*!
-     * Returns a string for device type.
-     *
-     * @param type device type
-     * @return device type string
+     * Returns a string of the device \a type.
      */
     static QString typeToString(Device::Type type);
 
     /*!
-     * Returns a device type for string.
-     *
-     * @param typeString type string
-     * @return device type
+     * Returns a string for the device type \a typeString.
      */
     static Device::Type stringToType(const QString &typeString);
 
@@ -385,10 +375,16 @@ public Q_SLOTS:
      *
      * This method indicates success if at least one profile was connected.
      *
-     * Possible errors: PendingCall::NotReady, PendingCall::Failed,
-     *                  PendingCall::InProgress, PendingCall::AlreadyConnected
+     * Possible errors:
      *
-     * @return void pending call
+     * \list
+     * \li PendingCall::NotReady
+     * \li PendingCall::Failed
+     * \li PendingCall::InProgress
+     * \li PendingCall::AlreadyConnected
+     * \endlist
+     *
+     * Returns void pending call.
      */
     PendingCall *connectToDevice();
 
@@ -397,43 +393,64 @@ public Q_SLOTS:
      *
      * This method can be used to cancel not-yet finished connectDevice() call.
      *
-     * Possible errors: PendingCall::NotConnected
+     * Possible errors:
      *
-     * @return void pending call
+     * \list
+     * \li PendingCall::NotConnected
+     * \endlist
+     *
+     * Returns void pending call.
      */
     PendingCall *disconnectFromDevice();
 
     /*!
-     * Connects a specific profile of the device.
+     * Connects a specific profile of the device with the given service \a uuid.
      *
-     * Possible errors: PendingCall::DoesNotExist, PendingCall::AlreadyConnected,
-     *                  PendingCall::ConnectFailed
+     * Possible errors:
      *
-     * @param uuid service UUID
-     * @return void pending call
+     * \list
+     * \li PendingCall::DoesNotExist
+     * \li PendingCall::AlreadyConnected
+     * \li PendingCall::ConnectFailed
+     * \endlist
+     *
+     * Returns void pending call.
      */
     PendingCall *connectProfile(const QString &uuid);
 
     /*!
-     * Disconnects a specific profile of the device.
+     * Disconnects a specific profile of the device with the given service \a uuid.
      *
-     * Possible errors: PendingCall::DoesNotExist, PendingCall::Failed,
-     *                  PendingCall::NotConnected, PendingCall::NotSupported
+     * Possible errors:
      *
-     * @param uuid service UUID
-     * @return void pending call
+     * \list
+     * \li PendingCall::DoesNotExist
+     * \li PendingCall::Failed
+     * \li PendingCall::NotConnected
+     * \li PendingCall::NotSupported
+     * \endlist
+     *
+     * Returns void pending call.
      */
     PendingCall *disconnectProfile(const QString &uuid);
 
     /*!
      * Initiates a pairing with the device.
      *
-     * Possible errors: PendingCall::InvalidArguments, PendingCall::Failed,
-     *                  PendingCall::AlreadyExists, PendingCall::AuthenticationCanceled,
-     *                  PendingCall::AuthenticationFailed, PendingCall::AuthenticationRejected,
-     *                  PendingCall::AuthenticationTimeout, PendingCall::ConnectionAttemptFailed
+     * Possible errors:
      *
-     * @return void pending call
+     * \list
+     * \li PendingCall::InvalidArguments
+     * \li PendingCall::Failed
+     * \li PendingCall::AlreadyExists
+     * \li PendingCall::AuthenticationCanceled
+     * \li PendingCall::AuthenticationFailed
+     * \li PendingCall::AuthenticationRejected
+     * \li PendingCall::AuthenticationTimeout
+     * \li PendingCall::ConnectionAttemptFailed
+     * \endlist
+     *
+     * Returns void pending call.
      */
     PendingCall *pair();
 
@@ -442,9 +459,14 @@ public Q_SLOTS:
      *
      * This method can be used to cancel pairing operation initiated with pair().
      *
-     * Possible errors: PendingCall::DoesNotExist, PendingCall::Failed
+     * Possible errors:
      *
-     * @return void pending call
+     * \list
+     * \li PendingCall::DoesNotExist
+     * \li PendingCall::Failed
+     * \endlist
+     *
+     * Returns void pending call.
      */
     PendingCall *cancelPairing();
 
@@ -455,7 +477,7 @@ Q_SIGNALS:
     void deviceRemoved(DevicePtr device);
 
     /*!
-     * Indicates that at least one of the device's properties have changed.
+     * Indicates that at least one of the device's properties has changed.
      */
     void deviceChanged(DevicePtr device);
 
@@ -465,7 +487,7 @@ Q_SIGNALS:
     void gattServiceAdded(GattServiceRemotePtr service);
 
     /*!
-     * Indicates that device GATT services list has changed
+     * Indicates that the device GATT services list has changed.
      */
     void gattServicesChanged(QList<GattServiceRemotePtr> services);
 
@@ -475,123 +497,123 @@ Q_SIGNALS:
     void gattServiceRemoved(GattServiceRemotePtr service);
 
     /*!
-     * Indicates that at least one of the device's services have changed.
+     * Indicates that at least one of the device's services has changed.
      */
     void gattServiceChanged(GattServiceRemotePtr service);
 
     /*!
-     * Indicates that device's name have changed.
+     * Indicates that the device's name has changed.
      */
     void nameChanged(const QString &name);
 
     /*!
-     * Indicates that device's address have changed.
+     * Indicates that the device's address has changed.
      */
     void addressChanged(const QString &address);
 
     /*!
-     * Indicates that device's friendly name have changed.
+     * Indicates that the device's friendly name has changed.
      */
     void friendlyNameChanged(const QString &friendlyName);
 
     /*!
-     * Indicates that device's remote name have changed.
+     * Indicates that the device's remote name has changed.
      */
     void remoteNameChanged(const QString &remoteName);
 
     /*!
-     * Indicates that device's class have changed.
+     * Indicates that the device's class has changed.
      */
     void deviceClassChanged(quint32 deviceClass);
 
     /*!
-     * Indicates that device's type have changed.
+     * Indicates that the device's type has changed.
      */
     void typeChanged(Type type);
 
     /*!
-     * Indicates that device's appearance have changed.
+     * Indicates that the device's appearance has changed.
      */
     void appearanceChanged(quint16 appearance);
 
     /*!
-     * Indicates that device's icon have changed.
+     * Indicates that the device's icon has changed.
      */
     void iconChanged(const QString &icon);
 
     /*!
-     * Indicates that device's paired state have changed.
+     * Indicates that the device's paired state has changed.
      */
     void pairedChanged(bool paired);
 
     /*!
-     * Indicates that device's trusted state have changed.
+     * Indicates that the device's trusted state has changed.
      */
     void trustedChanged(bool trusted);
 
     /*!
-     * Indicates that device's blocked state have changed.
+     * Indicates that the device's blocked state has changed.
      */
     void blockedChanged(bool blocked);
 
     /*!
-     * Indicates that device's legacy pairing state have changed.
+     * Indicates that the device's legacy pairing state has changed.
      */
     void legacyPairingChanged(bool legacyPairing);
 
     /*!
-     * Indicates that device's RSSI have changed.
+     * Indicates that the device's RSSI has changed.
      */
     void rssiChanged(qint16 rssi);
 
     /*!
-     * Indicates that device's manufacturer data have changed.
+     * Indicates that the device's manufacturer data has changed.
      */
     void manufacturerDataChanged(ManData man);
 
     /*!
-     * Indicates that device's servicesResolved state have changed.
+     * Indicates that the device's servicesResolved state has changed.
      */
     void servicesResolvedChanged(bool servicesResolved);
 
     /*!
-     * Indicates that device's connected state have changed.
+     * Indicates that the device's connected state has changed.
      */
     void connectedChanged(bool connected);
 
     /*!
-     * Indicates that device's UUIDs have changed.
+     * Indicates that the device's UUIDs has changed.
      */
     void uuidsChanged(const QStringList &uuids);
 
     /*!
-     * Indicates that device's modalias have changed.
+     * Indicates that the device's modalias has changed.
      */
     void modaliasChanged(const QString &modalias);
 
     /*!
      * Indicates that the device's service data has changed.
-     * @since 5.72
+     * \since 5.72
      */
     void serviceDataChanged(const QHash<QString, QByteArray> &serviceData);
 
     /*!
-     * Indicates that device's battery has changed.
+     * Indicates that the device's battery has changed.
      */
     void batteryChanged(BatteryPtr battery);
 
     /*!
-     * Indicates that device's input have changed.
+     * Indicates that the device's input has changed.
      */
     void inputChanged(InputPtr input);
 
     /*!
-     * Indicates that device's media player have changed.
+     * Indicates that the device's media player has changed.
      */
     void mediaPlayerChanged(MediaPlayerPtr mediaPlayer);
 
     /*!
-     * Indicates that device's media transport have changed.
+     * Indicates that the device's media transport has changed.
      */
     void mediaTransportChanged(MediaTransportPtr mediaTransport);
 

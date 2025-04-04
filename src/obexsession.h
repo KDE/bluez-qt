@@ -23,9 +23,10 @@ namespace BluezQt
 class PendingCall;
 
 /*!
- * @class BluezQt::ObexSession obexsession.h <BluezQt/ObexSession>
- *
- * OBEX session.
+ * \inmodule BluezQt
+ * \class BluezQt::ObexSession
+ * \inheaderfile BluezQt/ObexSession
+ * \brief OBEX session.
  *
  * This class represents an OBEX session.
  */
@@ -33,77 +34,68 @@ class BLUEZQT_EXPORT ObexSession : public QObject
 {
     Q_OBJECT
 
+    /*! \property BluezQt::ObexSession::source */
     Q_PROPERTY(QString source READ source)
+    /*! \property BluezQt::ObexSession::destination */
     Q_PROPERTY(QString destination READ destination)
+    /*! \property BluezQt::ObexSession::channel */
     Q_PROPERTY(quint8 channel READ channel)
+    /*! \property BluezQt::ObexSession::target */
     Q_PROPERTY(QString target READ target)
+    /*! \property BluezQt::ObexSession::root */
     Q_PROPERTY(QString root READ root)
 
 public:
-    /*!
-     * Destroys an ObexSession object.
-     */
     ~ObexSession() override;
 
     /*!
      * Returns a shared pointer from this.
-     *
-     * @return ObexSessionPtr
      */
     ObexSessionPtr toSharedPtr() const;
 
     /*!
-     * D-Bus object path of the session.
-     *
-     * @return object path of session
+     * Returns the D-Bus object path of the session.
      */
     QDBusObjectPath objectPath() const;
 
     /*!
-     * Returns address of the Bluetooth adapter.
-     *
-     * @see Manager::adapterForAddress() const
-     *
-     * @return address of adapter
+     * Returns the address of the Bluetooth adapter.
+     * \sa Manager::adapterForAddress()
      */
     QString source() const;
 
     /*!
-     * Returns address of the Bluetooth device.
-     *
-     * @see Manager::deviceForAddress() const
-     *
-     * @return address of device
+     * Returns the address of the Bluetooth device.
+     * \sa Manager::deviceForAddress()
      */
     QString destination() const;
 
     /*!
      * Returns the Bluetooth channel.
-     *
-     * @return channel
      */
     quint8 channel() const;
 
     /*!
      * Returns the target UUID.
-     *
-     * @return target UUID
      */
     QString target() const;
 
     /*!
      * Returns the root path.
-     *
-     * @return root path
      */
     QString root() const;
 
     /*!
      * Returns the remote device capabilities.
      *
-     * Possible errors: PendingCall::NotSupported, PendingCall::Failed
+     * Possible errors:
      *
-     * @return QString pending call
+     * \list
+     * \li PendingCall::NotSupported
+     * \li PendingCall::Failed
+     * \endlist
+     *
+     * Returns QString pending call.
      */
     PendingCall *getCapabilities();
 

@@ -22,20 +22,29 @@ namespace BluezQt
 class PendingCall;
 
 /*!
- * @class BluezQt::MediaTransport mediatransport.h <BluezQt/MediaTransport>
- *
- * Media transport.
+ * \inmodule BluezQt
+ * \class BluezQt::MediaTransport
+ * \inheaderfile BluezQt/MediaTransport
+ * \brief Media transport.
  *
  * This class represents a media transport interface.
  */
 class BLUEZQT_EXPORT MediaTransport : public QObject
 {
     Q_OBJECT
+    /*! \property BluezQt::MediaTransport::state */
     Q_PROPERTY(State state READ state NOTIFY stateChanged)
+    /*! \property BluezQt::MediaTransport::volume */
     Q_PROPERTY(quint16 volume READ volume NOTIFY volumeChanged)
 
 public:
-    /*! Indicates the state of the transport. */
+    /*!
+     * \enum BluezQt::MediaTransport::State
+     * \brief Indicates the state of the transport.
+     * \value Idle
+     * \value Pending
+     * \value Active
+     */
     enum class State {
         Idle,
         Pending,
@@ -43,22 +52,15 @@ public:
     };
     Q_ENUM(State)
 
-    /*!
-     * Destroys a MediaTransport object.
-     */
     ~MediaTransport() override;
 
     /*!
      * Returns the (audio) configuration of the transport.
-     *
-     * @return configuration of transport
      */
     AudioConfiguration audioConfiguration() const;
 
     /*!
      * Returns the state of the transport.
-     *
-     * @return state of transport
      */
     State state() const;
 
@@ -67,35 +69,41 @@ public:
      *
      * The volume is a percentage of the maximum. The value 0x00 corresponds to 0%.
      * The value 0x7F corresponds to 100%. Scaling should be applied to achieve
-     * values between these two. The existence of this scale does not impose any
+     * values between these two.
+     *
+     * The existence of this scale does not impose any
      * restriction on the granularity of the volume control scale on the target.
+     *
      * As this command specifies a percentage rather than an absolute dB level
      * the controller should exercise caution when sending this command.
-     *
-     * @return volume of transport
      */
     quint16 volume() const;
 
     /*!
-     * Sets the volume of the transport.
+     * Sets the \a volume of the transport.
      *
      * Only works when the transport was acquired by the sender.
      *
-     * @param quint16 volume of the transport in the range [0x00..0x7F] (0-127)
+     * The volume of the transport should be within the range [0x00..0x7F] (0-127)
      *
-     * @return void pending call
-     * @since 6.6
+     * Returns void pending call.
+     * \since 6.6
      */
     PendingCall *setVolume(quint16 volume);
 
 public Q_SLOTS:
     /*!
-     * Acquire transport file descriptor and the MTU for read
+     * Acquires the transport file descriptor and the MTU for read
      * and write respectively.
      *
-     * Possible errors: PendingCall::NotAuthorized, PendingCall::Failed
+     * Possible errors:
      *
-     * @return <fd, uint16, uint16> pending call
+     * \list
+     * \li PendingCall::NotAuthorized
+     * \li PendingCall::Failed
+     * \endlist
+     *
+     * Returns <fd, uint16, uint16> pending call.
      */
     TPendingCall<QDBusUnixFileDescriptor, uint16_t, uint16_t> *acquire();
 
@@ -106,27 +114,31 @@ public Q_SLOTS:
      * to the remote device and the function will just fail
      * with org.bluez.Error.NotAvailable.
      *
-     * Possible errors: PendingCall::NotAuthorized, PendingCall::Failed, PendingCall::NotAvailable
+     * Possible errors:
      *
-     * @return <fd, uint16, uint16> pending call
+     * \list
+     * \li PendingCall::NotAuthorized
+     * \li PendingCall::Failed
+     * \li PendingCall::NotAvailable
+     * \endlist
+     *
+     * Returns <fd, uint16, uint16> pending call.
      */
     TPendingCall<QDBusUnixFileDescriptor, uint16_t, uint16_t> *tryAcquire();
 
     /*!
      * Releases file descriptor.
-     *
-     * @return void pending call
      */
     TPendingCall<void> *release();
 
 Q_SIGNALS:
     /*!
-     * Indicates that transport's state have changed.
+     * Indicates that the transport's \a state has changed.
      */
     void stateChanged(State state);
 
     /*!
-     * Indicates that transport's volume have changed.
+     * Indicates that the transport's \a volume has changed.
      */
     void volumeChanged(quint16 volume);
 

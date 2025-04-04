@@ -17,9 +17,10 @@
 namespace BluezQt
 {
 /*!
- * @class BluezQt::MediaPlayerTrack mediaplayertrack.h <BluezQt/MediaPlayerTrack>
- *
- * Media player track.
+ * \inmodule BluezQt
+ * \class BluezQt::MediaPlayerTrack
+ * \inheaderfile BluezQt/MediaPlayerTrack
+ * \brief Media player track.
  *
  * This class represents a track in media player.
  */
@@ -31,78 +32,55 @@ public:
      */
     explicit MediaPlayerTrack();
 
-    /*!
-     * Destroys a MediaPlayerTrack object.
-     */
     virtual ~MediaPlayerTrack();
 
     /*!
-     * Copy constructor.
-     *
-     * @param other
+     * Constructs a new MediaPlayerTrack object from \a other.
      */
     MediaPlayerTrack(const MediaPlayerTrack &other);
 
     /*!
-     * Copy assignment operator.
-     *
-     * @param other
+     * Copies the MediaPlayerTrack object from \a other.
      */
     MediaPlayerTrack &operator=(const MediaPlayerTrack &other);
 
     /*!
      * Returns whether the track is valid.
-     *
-     * @return true if track is valid
      */
     bool isValid() const;
 
     /*!
-     * Returns a title of the track.
-     *
-     * @return track title
+     * Returns the track title.
      */
     QString title() const;
 
     /*!
-     * Returns an artist of the track.
-     *
-     * @return track artist
+     * Returns the track artist.
      */
     QString artist() const;
 
     /*!
-     * Returns an album of the track.
-     *
-     * @return track album
+     * Returns the track album.
      */
     QString album() const;
 
     /*!
-     * Returns a genre of the track.
-     *
-     * @return track genre
+     * Returns the track genre.
      */
     QString genre() const;
 
     /*!
-     * Returns a total number of tracks.
-     *
-     * @return total number of tracks
+     * Returns the total number of tracks.
      */
     quint32 numberOfTracks() const;
 
     /*!
-     * Returns a track number of the track.
-     *
-     * @return track number
+     * Returns the track number.
      */
     quint32 trackNumber() const;
 
     /*!
-     * Returns a duration of the track.
-     *
-     * @return track duration
+     * Returns the track duration.
      */
     quint32 duration() const;
 

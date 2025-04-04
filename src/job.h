@@ -21,7 +21,10 @@ namespace BluezQt
 class JobPrivate;
 
 /*!
- * @class BluezQt::Job job.h <BluezQt/Job>
+ * \inmodule BluezQt
+ * \class BluezQt::Job
+ * \inheaderfile BluezQt/Job
+ * \brief Async job.
  *
  * This class represents an asynchronous job performed by BluezQt,
  * it is usually not used directly but instead it is inherit by some
@@ -34,45 +37,45 @@ class JobPrivate;
  * Please, think twice before using exec(), it should be used only in either
  * unittest or cli apps.
  *
- * @note Job and its subclasses are meant to be used in a fire-and-forget way.
+ * \note Job and its subclasses are meant to be used in a fire-and-forget way.
  * Jobs will delete themselves when they finish using deleteLater().
  *
- * @note Even given their asynchronous nature, Jobs are still executed in the
+ * \note Even given their asynchronous nature, Jobs are still executed in the
  * main thread, so any blocking code executed in it will block the app calling it.
  *
- * @see InitManagerJob
- * @see InitObexManagerJob
+ * \sa InitManagerJob
+ * \sa InitObexManagerJob
  */
 class BLUEZQT_EXPORT Job : public QObject
 {
     Q_OBJECT
+    /*! \property BluezQt::Job::error */
     Q_PROPERTY(int error READ error)
+    /*! \property BluezQt::Job::errorText */
     Q_PROPERTY(QString errorText READ errorText)
+    /*! \property BluezQt::Job::running */
     Q_PROPERTY(bool running READ isRunning)
+    /*! \property BluezQt::Job::finished */
     Q_PROPERTY(bool finished READ isFinished)
 
 public:
     /*!
-     * Creates a new Job object.
-     *
-     * @param parent
+     * Creates a new Job object as a child of \a parent.
      */
     explicit Job(QObject *parent = nullptr);
 
-    /*!
-     * Destroys a Job object.
-     */
     ~Job() override;
 
     /*!
-     * Error type
-     *
-     * @see error() const
+     * \enum BluezQt::Job::Error
+     * \value NoError
+     *        Indicates there is no error.
+     * \value UserDefinedError
+     *        Subclasses should define error codes starting at this value.
+     * \sa error()
      */
     enum Error {
-        /*! Indicates there is no error */
         NoError = 0,
-        /*! Subclasses should define error codes starting at this value */
         UserDefinedError = 100
     };
     Q_ENUM(Error)
@@ -93,18 +96,16 @@ public:
      * still being processed. The advantage of not processing user input events is that the chance of
      * accidental reentrancy is greatly reduced. Still you should avoid calling this function.
      *
-     * @warning This method blocks until the job finishes!
+     * \warning This method blocks until the job finishes!
      *
-     * @return true if the job has been executed without error, false otherwise
+     * Returns \c true if the job has been executed without error, \c false otherwise.
      */
     bool exec();
 
     /*!
-     * Returns the error code, if there has been an error.
+     * Returns the error code for this job if there has been an error.
      *
-     * Make sure to call this once result() has been emitted
-     *
-     * @return the error code for this job, 0 if no error.
+     * Make sure to call this once result() has been emitted.
      */
     int error() const;
 
@@ -116,22 +117,16 @@ public:
      * This is usually some extra data associated with the error,
      * such as a URL.  Use errorString() to get a human-readable,
      * translated message.
-     *
-     * @return a string to help understand the error
      */
     QString errorText() const;
 
     /*!
-     * Returns whether the job is currently running
-     *
-     * @return true if the job is running
+     * Returns whether the job is currently running.
      */
     bool isRunning() const;
 
     /*!
-     * Returns whether the job have already finished
-     *
-     * @return true if the job already finished
+     * Returns whether the job has already finished.
      */
     bool isFinished() const;
 
@@ -152,7 +147,7 @@ public Q_SLOTS:
      * This method will kill the job and then call deleteLater().
      * Only jobs started with start() can be killed.
      *
-     * It will not emit result signal.
+     * It will not emit the result signal.
      */
     void kill();
 
@@ -170,7 +165,7 @@ protected Q_SLOTS:
 
 protected:
     /*!
-     * Sets the error code.
+     * Sets the \a errorCode.
      *
      * It should be called when an error
      * is encountered in the job, just before calling emitResult().
@@ -178,20 +173,19 @@ protected:
      * You should define an enum of error codes,
      * with values starting at Job::UserDefinedError, and use
      * those. For example:
-     * @code
+     * \code
      * enum ExampleErrors{
      *   InvalidFoo = UserDefinedError,
      *   BarNotFound
      * };
-     * @endcode
+     * \endcode
      *
-     * @param errorCode the error code
-     * @see emitResult()
+     * \sa emitResult()
      */
     void setError(int errorCode);
 
     /*!
-     * Sets the error text.
+     * Sets the \a errorText.
      *
      * It should be called when an error
      * is encountered in the job, just before calling emitResult().
@@ -200,24 +194,23 @@ protected:
      * determined directly from the error code.  For example, a
      * URL or filename.  This string is not normally translatable.
      *
-     * @param errorText the error text
-     * @see emitResult(), setError()
+     * \sa emitResult(), setError()
      */
     void setErrorText(const QString &errorText);
 
     /*!
      * Utility function to emit the result signal, and remove this job.
      *
-     * @note Deletes this job using deleteLater().
-     * @see result() const
+     * \note Deletes this job using deleteLater().
+     * \sa result()
      */
     void emitResult();
 
     /*!
-     * Implementation for emitting the result signal
+     * Implementation for emitting the result signal.
      *
      * This function is needed to be able to emit result() signal
-     * with the job pointer's type being subclass
+     * with the job pointer's type being subclass.
      */
     virtual void doEmitResult() = 0;
 

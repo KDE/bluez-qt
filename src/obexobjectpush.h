@@ -22,9 +22,10 @@ namespace BluezQt
 class PendingCall;
 
 /*!
- * @class BluezQt::ObexObjectPush obexobjectpush.h <BluezQt/ObexObjectPush>
- *
- * OBEX object push.
+ * \inmodule BluezQt
+ * \class BluezQt::ObexObjectPush
+ * \inheaderfile BluezQt/ObexObjectPush
+ * \brief OBEX object push.
  *
  * This class represents an OBEX object push interface.
  */
@@ -34,72 +35,75 @@ class BLUEZQT_EXPORT ObexObjectPush : public QObject
 
 public:
     /*!
-     * Creates a new ObexObjectPush object.
+     * Creates a new ObexObjectPush object with the given session \a path as a child of \a parent.
      *
-     * This class will be typically used with a @p path
+     * This class will be typically used with a \a path
      * from result of ObexManager::createSession().
-     *
-     * @param path path of session
-     * @param parent
      */
     explicit ObexObjectPush(const QDBusObjectPath &path, QObject *parent = nullptr);
 
-    /*!
-     * Destroys an ObexObjectPush object.
-     */
     ~ObexObjectPush() override;
 
     /*!
-     * D-Bus object path of the object push session.
-     *
-     * @return object path of session
+     * Returns the D-Bus object path of the object push session.
      */
     QDBusObjectPath objectPath() const;
 
     /*!
-     * Sends one local file to the remote device.
+     * Sends one local file \a fileName to the remote device.
      *
      * The returned ObexTransfer can be used to track progress of transfer.
      *
-     * Possible errors: PendingCall::InvalidArguments, PendingCall::Failed
+     * Possible errors:
      *
-     * @param fileName full path of file to send
-     * @return ObexTransfer * pending call
+     * \list
+     * \li PendingCall::InvalidArguments
+     * \li PendingCall::Failed
+     * \endlist
+     *
+     * Returns ObexTransfer * pending call.
      */
     PendingCall *sendFile(const QString &fileName);
 
     /*!
-     * Pulls the business card from a remote device.
+     * Pulls the business card from \targetFileName within a remote device.
      *
-     * If an empty @p targetFileName is given, a name will be
+     * If an empty \a targetFileName is given, a name will be
      * automatically calculated for the temporary file.
      *
      * The returned ObexTransfer can be used to track progress of transfer.
      *
-     * Possible errors: PendingCall::InvalidArguments, PendingCall::Failed
+     * Possible errors:
      *
-     * @param targetFileName full path where the business card will be saved
-     * @return ObexTransfer * pending call
+     * \list
+     * \li PendingCall::InvalidArguments
+     * \li PendingCall::Failed
+     * \endlist
+     *
+     * Returns ObexTransfer * pending call.
      */
     PendingCall *pullBusinessCard(const QString &targetFileName);
 
     /*!
-     * Exchanges the business cards on the remote device.
+     * Exchanges the business cards \a clientFileName and \a targetFileName on the remote device.
      *
      * This method pushes the local business card to the remote
      * device and then retrieve the remote business card and store
      * it in a local file.
      *
-     * If an empty @p targetFileName is given, a name will be
+     * If an empty \a targetFileName is given, a name will be
      * automatically calculated for the temporary file.
      *
      * The returned ObexTransfer can be used to track progress of transfer.
      *
-     * Possible errors: PendingCall::InvalidArguments, PendingCall::Failed
+     * Possible errors:
      *
-     * @param clientFileName full path to local business card
-     * @param targetFileName full path where the business card will be saved
-     * @return ObexTransfer * pending call
+     * \list
+     * \li PendingCall::InvalidArguments
+     * \li PendingCall::Failed
+     * \endlist
+     *
+     * Returns ObexTransfer * pending call.
      */
     PendingCall *exchangeBusinessCards(const QString &clientFileName, const QString &targetFileName);
 

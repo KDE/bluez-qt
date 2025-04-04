@@ -21,9 +21,10 @@ class GattApplication;
 class PendingCall;
 
 /*!
- * @class BluezQt::GattManager GattManager.h <BluezQt/GattManager>
- *
- * Bluetooth GattManager.
+ * \inmodule BluezQt
+ * \class BluezQt::GattManager
+ * \inheaderfile BluezQt/GattManager
+ * \brief Bluetooth GattManager.
  *
  * GATT Manager allows external applications to register GATT services and
  * profiles.
@@ -41,46 +42,51 @@ class PendingCall;
  * interface to expose their properties. These objects collectively represent a
  * GATT service definition.
  *
- * @see GattApplication
+ * \sa GattApplication
  */
 class BLUEZQT_EXPORT GattManager : public QObject
 {
     Q_OBJECT
 
 public:
-    /*!
-     * Destroys a GattManager object.
-     */
     ~GattManager() override;
 
     /*!
      * Registers a local GATT services hierarchy as described
-     * above (GATT Server) and/or GATT profiles (GATT Client).
+     * above (GATT Server) and/or GATT profiles (GATT Client)
+     * for a given \a application.
      *
      * The application object path together with the D-Bus
      * system bus connection ID define the identification of
      * the application registering a GATT based
      * service or profile.
      *
-     * Possible errors: org.bluez.Error.InvalidArguments
-     *             org.bluez.Error.AlreadyExists
+     * Possible errors:
      *
-     * @param application application to be registered
-     * @return void pending call
+     * \list
+     * \li org.bluez.Error.InvalidArguments
+     * \li org.bluez.Error.AlreadyExists
+     * \endlist
+     *
+     * Returns void pending call.
      */
     PendingCall *registerApplication(GattApplication *application);
 
     /*!
-     * This unregisters the services that has been
-     * previously registered. The object path parameter
-     * must match the same value that has been used
-     * on registration.
+     * Unregisters the services that have been
+     * previously registered for the given \a application.
      *
-     * Possible errors: org.bluez.Error.InvalidArguments
-     *             org.bluez.Error.DoesNotExist
+     * The object path parameter must match the same value
+     * that has been used upon registration.
      *
-     * @param application application to be unregistered
-     * @return void pending call
+     * Possible errors:
+     *
+     * \list
+     * \li org.bluez.Error.InvalidArguments
+     * \li org.bluez.Error.DoesNotExist
+     * \endlist
+     *
+     * Returns void pending call.
      */
     PendingCall *unregisterApplication(GattApplication *application);
 

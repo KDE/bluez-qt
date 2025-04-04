@@ -18,9 +18,10 @@ namespace BluezQt
 using namespace std::placeholders;
 
 /*!
- * @class BluezQt::TPendingCall tpendingcall.h <BluezQt/TPendingCall>
- *
- * Pending method call (template version).
+ * \inmodule BluezQt
+ * \class BluezQt::TPendingCall
+ * \inheaderfile BluezQt/TPendingCall
+ * \brief Pending method call (template version).
  *
  * This class represents a pending method call. It is a convenient wrapper
  * around QDBusPendingReply and QDBusPendingCallWatcher.
@@ -49,8 +50,6 @@ public:
      * Returns the return value at position Index (which is a template parameter) cast to type Type.
      * This function uses template code to determine the proper Type type, according to the type
      * list used in the construction of this object.
-     *
-     * @return return value at index
      */
     template<int Index>
     inline const typename Select<Index, T...>::Type valueAt() const

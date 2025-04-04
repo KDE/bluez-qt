@@ -19,33 +19,30 @@ namespace BluezQt
 class Manager;
 
 /*!
- * @class BluezQt::InitManagerJob initmanagerjob.h <BluezQt/InitManagerJob>
- *
- * Init manager job.
+ * \inmodule BluezQt
+ * \class BluezQt::InitManagerJob
+ * \inheaderfile BluezQt/InitManagerJob
+ * \brief Init manager job.
  *
  * This class represents a job that initializes Manager.
  */
 class BLUEZQT_EXPORT InitManagerJob : public Job
 {
     Q_OBJECT
+    /*! \property BluezQt::InitManagerJob::manager */
     Q_PROPERTY(Manager *manager READ manager)
 
 public:
-    /*!
-     * Destroys an InitManagerJob object.
-     */
     ~InitManagerJob() override;
 
     /*!
      * Returns a manager that is being initialized.
-     *
-     * @return manager
      */
     Manager *manager() const;
 
 Q_SIGNALS:
     /*!
-     * Indicates that the job have finished.
+     * Indicates that the \a job has finished.
      */
     void result(InitManagerJob *job);
 
