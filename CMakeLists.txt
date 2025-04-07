@@ -40,7 +40,7 @@ ecm_setup_version(PROJECT
 )
 
 # Dependencies
-set(REQUIRED_QT_VERSION 6.6.0)
+set(REQUIRED_QT_VERSION 6.7.0)
 
 # Required Qt components to build this framework
 find_package(Qt6 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core DBus Network)
