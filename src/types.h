@@ -14,6 +14,7 @@
 
 /*!
  * \namespace BluezQt
+ * \inmodule BluezQt
  */
 namespace BluezQt
 {

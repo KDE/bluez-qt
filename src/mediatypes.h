@@ -11,8 +11,14 @@
 
 namespace BluezQt
 {
-/*! Assigned number of codec that the endpoint/transport supports.
-    Currently limited to most common codecs. Further codecs reserved. */
+/*!
+ * Assigned number of codec that the endpoint/transport supports.
+ * Currently limited to most common codecs. Further codecs reserved.
+ *
+ * \value Invalid
+ * \value Sbc
+ * \value Aac
+ */
 enum class AudioCodec {
     Invalid = 0x0000,
     Sbc = 0x0001,
@@ -26,8 +32,16 @@ enum class AudioCodec {
     // Ldac = 0x0100,
 };
 
-/*! Assigned number of sample rate that the endpoint/transport supports.
-    Currently limited to most common rates. Further rates reserved. */
+/*!
+ * Assigned number of sample rate that the endpoint/transport supports.
+ *
+ * Currently limited to most common rates. Further rates reserved.
+ *
+ * \value Invalid
+ * \value Rate44100
+ * \value Rate48000
+ *
+ */
 enum class AudioSampleRate {
     Invalid = 0x0000,
     // Rate8000  = 0x0001,
@@ -44,6 +58,9 @@ enum class AudioSampleRate {
     // Rate96000 = 0x0800
 };
 
+/*!
+ *
+ */
 struct AudioConfiguration {
     AudioCodec codec = AudioCodec::Invalid;
     AudioSampleRate sampleRate = AudioSampleRate::Invalid;

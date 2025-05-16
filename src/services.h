@@ -13,7 +13,11 @@
 
 namespace BluezQt
 {
-/*! Service UUIDs. */
+/*!
+ * \namespace BluezQt::Services
+ * \inmodule BluezQt
+ * Service UUIDs.
+ */
 namespace Services
 {
 // Note: If you add/remove/modify any UUIDs in this namespace, make sure to

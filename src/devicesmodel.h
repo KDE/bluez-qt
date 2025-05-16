@@ -48,7 +48,8 @@ class BLUEZQT_EXPORT DevicesModel : public QAbstractListModel
 
 public:
     /*!
-     * \enum BluezQt::DevicesModel::Device data roles.
+     * Device data roles.
+     *
      * \value UbiRole
      *        UBI of the device (QString).
      * \value AddressRole

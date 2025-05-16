@@ -49,7 +49,6 @@ class BLUEZQT_EXPORT MediaPlayer : public QObject
 
 public:
     /*!
-     * \enum BluezQt::MediaPlayer::Equalizer
      * \value EqualizerOn
      * \value EqualizerOff
      */
@@ -60,7 +59,6 @@ public:
     Q_ENUM(Equalizer)
 
     /*!
-     * \enum BluezQt::MediaPlayer::Repeat
      * \value RepeatOff
      * \value RepeatSingleTrack
      * \value RepeatAllTracks
@@ -74,7 +72,7 @@ public:
     };
     Q_ENUM(Repeat)
 
-    /*! \enum BluezQt::MediaPlayer::Shuffle
+    /*!
      * \value ShuffleOff
      * \value ShuffleAllTracks
      * \value ShuffleGroup
@@ -87,7 +85,6 @@ public:
     Q_ENUM(Shuffle)
 
     /*!
-     * \enum BluezQt::MediaPlayer::Player
      * \value Playing
      * \value Stopped
      * \value Paused

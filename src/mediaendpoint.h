@@ -56,9 +56,19 @@ public:
         Aac,
     };
 
-    /*! Configuration for MediaEndpoint construction. */
+    /*!
+     * Configuration for MediaEndpoint construction.
+     * \inmodule BluezQt
+     */
     struct Configuration {
+        /*!
+         *
+         */
         Role role;
+
+        /*!
+         *
+         */
         Codec codec;
     };
 

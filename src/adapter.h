@@ -244,7 +244,7 @@ public:
      * \endlist
      *
      * Returns void pending call.
-     * \sa discoverableTimeout() const
+     * \sa discoverableTimeout()
      */
     PendingCall *startDiscovery();
 

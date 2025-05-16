@@ -45,7 +45,7 @@ class BLUEZQT_EXPORT ObexManager : public QObject
     Q_PROPERTY(bool initialized READ isInitialized)
     /*! \property BluezQt::ObexManager::operational */
     Q_PROPERTY(bool operational READ isOperational NOTIFY operationalChanged)
-    /*! \property BluezQt::ObexManager<ObexSessionPtr>::sessions */
+    /*! \property BluezQt::ObexManager::sessions */
     Q_PROPERTY(QList<ObexSessionPtr> sessions READ sessions)
 
 public:

@@ -24,8 +24,8 @@ class PendingCall;
 
 /*!
  * \inmodule BluezQt
- * \class BluezQt::GattService
- * \inheaderfile BluezQt/GattService
+ * \class BluezQt::GattServiceRemote
+ * \inheaderfile BluezQt/GattServiceRemote
  * \brief Bluetooth LE GATT service.
  *
  * This class represents a Bluetooth LE GATT service.
@@ -34,17 +34,17 @@ class BLUEZQT_EXPORT GattServiceRemote : public QObject
 {
     Q_OBJECT
 
-    /*! \property BluezQt::GattService::uuid */
+    /*! \property BluezQt::GattServiceRemote::uuid */
     Q_PROPERTY(QString uuid READ uuid NOTIFY uuidChanged)
-    /*! \property BluezQt::GattService::primary */
+    /*! \property BluezQt::GattServiceRemote::primary */
     Q_PROPERTY(bool primary READ isPrimary NOTIFY primaryChanged)
-    /*! \property BluezQt::GattService::device */
+    /*! \property BluezQt::GattServiceRemote::device */
     Q_PROPERTY(DevicePtr device READ device CONSTANT)
-    /*! \property BluezQt::GattService::includes */
+    /*! \property BluezQt::GattServiceRemote::includes */
     Q_PROPERTY(QList<QDBusObjectPath> includes READ includes NOTIFY includesChanged)
-    /*! \property BluezQt::GattService::handle */
+    /*! \property BluezQt::GattServiceRemote::handle */
     Q_PROPERTY(quint16 handle READ handle WRITE setHandle NOTIFY handleChanged)
-    /*! \property BluezQt::GattService::characteristics */
+    /*! \property BluezQt::GattServiceRemote::characteristics */
     Q_PROPERTY(QList<GattCharacteristicRemotePtr> characteristics READ characteristics NOTIFY characteristicsChanged)
 
 public:

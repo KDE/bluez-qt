@@ -58,9 +58,13 @@ public:
     void writeValue(const QByteArray &value);
 
     /*!
-     * Provide a read \a callback to operate in \e pull mode.
+     * \typealias BluezQt::GattCharacteristic::ReadCallback
      */
     using ReadCallback = std::function<QByteArray()>;
+
+    /*!
+     * Provide a read \a callback to operate in \e pull mode.
+     */
     void setReadCallback(ReadCallback callback);
 
     /*!
