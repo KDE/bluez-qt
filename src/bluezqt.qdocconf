@@ -28,3 +28,5 @@ qhp.BluezQt.subprojects.classes.title = C++ Classes
 qhp.BluezQt.subprojects.classes.indexTitle = BluezQt C++ Classes
 qhp.BluezQt.subprojects.classes.selectors = class fake:headerfile
 qhp.BluezQt.subprojects.classes.sortPages = true
+
+tagfile = bluezqt.tags
