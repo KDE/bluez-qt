@@ -17,7 +17,7 @@ depends += \
 
 qhp.projects            = BluezQt
 
-qhp.BluezQt.file                = bluez-qt.qhp
+qhp.BluezQt.file                = blueqt.qhp
 qhp.BluezQt.namespace           = org.kde.bluez-qt.$QT_VERSION_TAG
 qhp.BluezQt.virtualFolder       = bluez-qt
 qhp.BluezQt.indexTitle          = BluezQt
