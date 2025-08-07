@@ -19,7 +19,6 @@ namespace BluezQt
 {
 struct RfkillPrivate {
     int m_readFd = -1;
-    int m_writeFd = -1;
     Rfkill::State m_state = Rfkill::State::Unknown;
     QHash<quint32, Rfkill::State> m_devices;
 };

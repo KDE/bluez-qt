@@ -18,7 +18,10 @@
 #include <unistd.h>
 #endif
 
+#include <QMutex>
+#include <QMutexLocker>
 #include <QSocketNotifier>
+#include <QThread>
 
 namespace BluezQt
 {
@@ -60,10 +63,6 @@ Rfkill::~Rfkill()
 #ifdef Q_OS_LINUX
     if (d->m_readFd != -1) {
         ::close(d->m_readFd);
-    }
-
-    if (d->m_writeFd != -1) {
-        ::close(d->m_writeFd);
     }
 #endif
 }
@@ -122,32 +121,6 @@ void Rfkill::init()
 
     QSocketNotifier *notifier = new QSocketNotifier(d->m_readFd, QSocketNotifier::Read, this);
     connect(notifier, &QSocketNotifier::activated, this, &Rfkill::devReadyRead);
-#endif
-}
-
-bool Rfkill::openForWriting()
-{
-#ifndef Q_OS_LINUX
-    return false;
-#else
-    if (d->m_writeFd != -1) {
-        return true;
-    }
-
-    d->m_writeFd = ::open("/dev/rfkill", O_WRONLY | O_CLOEXEC);
-
-    if (d->m_writeFd == -1) {
-        qCWarning(BLUEZQT) << "Cannot open /dev/rfkill for writing!";
-        return false;
-    }
-
-    if (::fcntl(d->m_writeFd, F_SETFL, O_NONBLOCK) < 0) {
-        ::close(d->m_writeFd);
-        d->m_writeFd = -1;
-        return false;
-    }
-
-    return true;
 #endif
 }
 
@@ -214,25 +187,38 @@ void Rfkill::updateRfkillDevices()
 #endif
 }
 
-bool Rfkill::setSoftBlock(quint8 soft)
+void Rfkill::setSoftBlock(quint8 soft)
 {
 #ifndef Q_OS_LINUX
     Q_UNUSED(soft)
-    return false;
 #else
-    if (!openForWriting()) {
-        return false;
-    }
+    auto writeThread = QThread::create([soft] {
+        static QMutex s_mutex;
 
-    rfkill_event event;
-    ::memset(&event, 0, sizeof(event));
-    event.op = RFKILL_OP_CHANGE_ALL;
-    event.type = RFKILL_TYPE_BLUETOOTH;
-    event.soft = soft;
+        QMutexLocker locker(&s_mutex);
 
-    bool ret = ::write(d->m_writeFd, &event, sizeof(event)) == sizeof(event);
-    qCDebug(BLUEZQT) << "Setting Rfkill soft block succeeded:" << ret;
-    return ret;
+        int fd = ::open("/dev/rfkill", O_WRONLY | O_CLOEXEC);
+        if (fd == -1) {
+            qCWarning(BLUEZQT) << "Cannot open /dev/rfkill for writing!";
+            return;
+        }
+
+        rfkill_event event;
+        ::memset(&event, 0, sizeof(event));
+        event.op = RFKILL_OP_CHANGE_ALL;
+        event.type = RFKILL_TYPE_BLUETOOTH;
+        event.soft = soft;
+
+        if (::write(fd, &event, sizeof(event)) == sizeof(event)) {
+            qCDebug(BLUEZQT) << "Setting Rfkill soft block succeeded";
+        } else {
+            qCWarning(BLUEZQT) << "Setting Rfkill soft block failed:" << errno;
+        }
+        ::close(fd);
+    });
+    writeThread->setObjectName(QStringLiteral("BluezQtRfkill"));
+    connect(writeThread, &QThread::finished, writeThread, &QObject::deleteLater);
+    writeThread->start();
 #endif
 }
 
