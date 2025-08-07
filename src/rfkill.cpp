@@ -18,7 +18,11 @@
 #include <unistd.h>
 #endif
 
+#include <QMutex>
+#include <QMutexLocker>
 #include <QSocketNotifier>
+#include <QThread>
+#include <QWaitCondition>
 
 namespace BluezQt
 {
@@ -48,6 +52,66 @@ struct rfkill_event {
 };
 #endif
 
+RfkillThread::RfkillThread(QObject *parent)
+    : QThread(parent)
+{
+}
+
+void RfkillThread::interrupt()
+{
+    requestInterruption();
+    m_waitCondition.wakeOne();
+}
+
+void RfkillThread::run()
+{
+    while (!isInterruptionRequested()) {
+        QMutexLocker locker(&m_mutex);
+
+        quint8 wantedBlocked;
+        do {
+            wantedBlocked = m_pendingBlocked;
+            locker.unlock();
+            doSetSoftBlocked(wantedBlocked);
+            locker.relock();
+            // Check again in case it changed while we were busy.
+        } while (!isInterruptionRequested() && wantedBlocked != m_pendingBlocked);
+
+        if (!isInterruptionRequested()) {
+            m_waitCondition.wait(&m_mutex);
+        }
+    }
+}
+
+void RfkillThread::setSoftBlocked(quint8 blocked)
+{
+    QMutexLocker locker(&m_mutex);
+    m_pendingBlocked = blocked;
+    m_waitCondition.wakeOne();
+}
+
+void RfkillThread::doSetSoftBlocked(quint8 blocked)
+{
+    int fd = ::open("/dev/rfkill", O_WRONLY | O_CLOEXEC);
+    if (fd == -1) {
+        qCWarning(BLUEZQT) << "Cannot open /dev/rfkill for writing!";
+        return;
+    }
+
+    rfkill_event event;
+    ::memset(&event, 0, sizeof(event));
+    event.op = RFKILL_OP_CHANGE_ALL;
+    event.type = RFKILL_TYPE_BLUETOOTH;
+    event.soft = blocked;
+
+    if (::write(fd, &event, sizeof(event)) == sizeof(event)) {
+        qCDebug(BLUEZQT) << "Setting Rfkill soft block succeeded";
+    } else {
+        qCWarning(BLUEZQT) << "Setting Rfkill soft block failed:" << errno;
+    }
+    ::close(fd);
+};
+
 Rfkill::Rfkill(QObject *parent)
     : QObject(parent)
     , d(new RfkillPrivate)
@@ -62,8 +126,9 @@ Rfkill::~Rfkill()
         ::close(d->m_readFd);
     }
 
-    if (d->m_writeFd != -1) {
-        ::close(d->m_writeFd);
+    if (d->m_thread) {
+        d->m_thread->interrupt();
+        d->m_thread->wait();
     }
 #endif
 }
@@ -122,32 +187,6 @@ void Rfkill::init()
 
     QSocketNotifier *notifier = new QSocketNotifier(d->m_readFd, QSocketNotifier::Read, this);
     connect(notifier, &QSocketNotifier::activated, this, &Rfkill::devReadyRead);
-#endif
-}
-
-bool Rfkill::openForWriting()
-{
-#ifndef Q_OS_LINUX
-    return false;
-#else
-    if (d->m_writeFd != -1) {
-        return true;
-    }
-
-    d->m_writeFd = ::open("/dev/rfkill", O_WRONLY | O_CLOEXEC);
-
-    if (d->m_writeFd == -1) {
-        qCWarning(BLUEZQT) << "Cannot open /dev/rfkill for writing!";
-        return false;
-    }
-
-    if (::fcntl(d->m_writeFd, F_SETFL, O_NONBLOCK) < 0) {
-        ::close(d->m_writeFd);
-        d->m_writeFd = -1;
-        return false;
-    }
-
-    return true;
 #endif
 }
 
@@ -214,25 +253,16 @@ void Rfkill::updateRfkillDevices()
 #endif
 }
 
-bool Rfkill::setSoftBlock(quint8 soft)
+void Rfkill::setSoftBlock(quint8 soft)
 {
 #ifndef Q_OS_LINUX
     Q_UNUSED(soft)
-    return false;
 #else
-    if (!openForWriting()) {
-        return false;
+    if (!d->m_thread) {
+        d->m_thread = new RfkillThread(this);
     }
-
-    rfkill_event event;
-    ::memset(&event, 0, sizeof(event));
-    event.op = RFKILL_OP_CHANGE_ALL;
-    event.type = RFKILL_TYPE_BLUETOOTH;
-    event.soft = soft;
-
-    bool ret = ::write(d->m_writeFd, &event, sizeof(event)) == sizeof(event);
-    qCDebug(BLUEZQT) << "Setting Rfkill soft block succeeded:" << ret;
-    return ret;
+    d->m_thread->setSoftBlocked(soft);
+    d->m_thread->start();
 #endif
 }
 
