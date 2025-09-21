@@ -12,7 +12,6 @@
 #include "adapter.h"
 #include "device.h"
 #include "gattapplication.h"
-#include "gattcharacteristic.h"
 #include "gattdescriptor.h"
 #include "gattmanager.h"
 #include "gattservice.h"

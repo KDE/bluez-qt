@@ -7,7 +7,6 @@
  */
 
 #include "declarativeadapter.h"
-#include "declarativedevice.h"
 static qsizetype devicesCountDeclarativeAdapterFunction(QQmlListProperty<DeclarativeDevice> *property)
 {
     Q_ASSERT(qobject_cast<DeclarativeAdapter *>(property->object));
