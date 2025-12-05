@@ -138,6 +138,7 @@ ecm_generate_headers(BluezQt_CamelCase_HEADERS
     HEADER_NAMES
         Types
         Manager
+        Battery
         Adapter
         Device
         GattApplication
