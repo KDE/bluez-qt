@@ -7,13 +7,12 @@
  */
 
 #include "device_p.h"
-#include "device.h"
-#include "gattserviceremote_p.h"
-#include "gattserviceremote.h"
 #include "adapter.h"
 #include "battery.h"
 #include "battery_p.h"
 #include "device.h"
+#include "gattserviceremote.h"
+#include "gattserviceremote_p.h"
 #include "input.h"
 #include "input_p.h"
 #include "macros.h"
