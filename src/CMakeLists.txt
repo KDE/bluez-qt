@@ -123,8 +123,8 @@ target_include_directories(KF6BluezQt INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTA
 target_link_libraries(KF6BluezQt
     PUBLIC
         Qt6::Core
-    PRIVATE
         Qt6::DBus
+    PRIVATE
         Qt6::Network
 )
 
