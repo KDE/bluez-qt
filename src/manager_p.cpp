@@ -104,7 +104,10 @@ void ManagerPrivate::load()
     DBusConnection::orgBluez().connect(Strings::orgBluez(), QStringLiteral("/"), Strings::orgFreedesktopDBus(), QStringLiteral("Dummy"), this, SLOT(dummy()));
 
     m_dbusObjectManager = new DBusObjectManager(Strings::orgBluez(), QStringLiteral("/"), DBusConnection::orgBluez(), this);
-
+    
+    connect(m_dbusObjectManager, &DBusObjectManager::InterfacesAdded, this, &ManagerPrivate::interfacesAdded);
+    connect(m_dbusObjectManager, &DBusObjectManager::InterfacesRemoved, this, &ManagerPrivate::interfacesRemoved);
+    
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(m_dbusObjectManager->GetManagedObjects(), this);
     connect(watcher, &QDBusPendingCallWatcher::finished, this, &ManagerPrivate::getManagedObjectsFinished);
 }
@@ -145,9 +148,6 @@ void ManagerPrivate::getManagedObjectsFinished(QDBusPendingCallWatcher *watcher)
         Q_EMIT initError(QStringLiteral("Cannot find org.bluez.ProfileManager1 object!"));
         return;
     }
-
-    connect(m_dbusObjectManager, &DBusObjectManager::InterfacesAdded, this, &ManagerPrivate::interfacesAdded);
-    connect(m_dbusObjectManager, &DBusObjectManager::InterfacesRemoved, this, &ManagerPrivate::interfacesRemoved);
 
     m_loaded = true;
     m_initialized = true;
