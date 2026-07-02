@@ -9,6 +9,11 @@
 #ifndef BLUEZQT_TYPES_H
 #define BLUEZQT_TYPES_H
 
+// All KF6 public headers should provide the version macros.
+// Include version header explicitly because the export header
+// (which usually takes care of that) isn't used here
+#include <bluezqt_version.h> // IWYU pragma: export
+
 #include <QMap>
 #include <QSharedPointer>
 

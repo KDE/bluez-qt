@@ -9,6 +9,11 @@
 #ifndef BLUEZQT_SERVICES_H
 #define BLUEZQT_SERVICES_H
 
+// All KF6 public headers should provide the version macros.
+// Include version header explicitly because the export header
+// (which usually takes care of that) isn't used here
+#include <bluezqt_version.h> // IWYU pragma: export
+
 #include <QString>
 
 namespace BluezQt
