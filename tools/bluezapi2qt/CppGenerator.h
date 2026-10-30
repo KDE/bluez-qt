@@ -12,7 +12,6 @@
 #include <QTextStream>
 
 class BluezApiParser;
-class Method;
 
 class CppGenerator
 {
@@ -35,12 +34,6 @@ protected:
 
     static QString interfaceToClassName(const QString &interface);
     static QString lowerFirstChars(const QString &string);
-    static void writeFooter(QTextStream &stream);
-    static void writeInterface(QTextStream &stream, const QString &name);
-    static void closeInterface(QTextStream &stream);
-    static bool writeMethod(QTextStream &stream, const Method &method);
-    static bool writeArg(QTextStream &stream, const QString &param, const QString &dir);
-    static void writeAnnotation(QTextStream &stream, const QString &param, const QString &dir, int i);
 
     void writeCopyrightHeader(QTextStream &stream);
 

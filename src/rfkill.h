@@ -73,7 +73,6 @@ private Q_SLOTS:
 
 private:
     BLUEZQT_NO_EXPORT void init();
-    BLUEZQT_NO_EXPORT bool openForWriting();
     BLUEZQT_NO_EXPORT void updateRfkillDevices();
     BLUEZQT_NO_EXPORT void setSoftBlock(quint8 soft);
 
