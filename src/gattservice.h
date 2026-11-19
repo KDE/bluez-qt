@@ -13,6 +13,7 @@
 #include "types.h"
 
 #include <QDBusObjectPath>
+#include <QObject>
 
 #include <memory>
 

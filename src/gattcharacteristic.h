@@ -12,6 +12,7 @@
 #include "bluezqt_export.h"
 
 #include <QDBusObjectPath>
+#include <QObject>
 
 #include <memory>
 
